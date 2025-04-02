@@ -36,7 +36,7 @@ public class Ingrediente implements Serializable {
     @Column (name="stock", nullable = false)
     private Integer stock;
     
-    @OneToMany(mappedBy = "ingrediente", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "ingrediente")
     private List<DetalleProductoIngrediente> detallesProducto;
 
     public Ingrediente(String nombre, UnidadMedida unidadMedida, Integer stock) {
