@@ -1,3 +1,4 @@
+
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
@@ -6,6 +7,7 @@ package entidades;
 
 import java.io.Serializable;
 import java.util.Calendar;
+import java.util.List;
 import javax.persistence.*;
 
 /**
@@ -39,6 +41,9 @@ public class Cliente implements Serializable {
 
     @Column(nullable = true, length = 320)
     private String correoElectronico;
+    
+    @OneToMany(mappedBy = "cliente")
+    private List<Comanda> comandas;
 
     //falta relacion con comanda
     public Cliente() {
@@ -115,3 +120,4 @@ public class Cliente implements Serializable {
     }
 
 }
+

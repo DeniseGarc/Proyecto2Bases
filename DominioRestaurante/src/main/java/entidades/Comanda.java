@@ -9,13 +9,18 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
 /**
@@ -30,7 +35,8 @@ public class Comanda implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
-    @Column (name="fechaHora",nullable = false )
+    @Column (name="fechaHora", nullable = false )
+    @Temporal(TemporalType.TIMESTAMP)
     private Calendar fechaHora;
     
     @Transient
@@ -39,8 +45,12 @@ public class Comanda implements Serializable {
     @Column (name = "estado", nullable=false)
     private Estado estado;
     
-    @OneToMany(mappedBy = "comanda")
+    @OneToMany(mappedBy = "comanda", cascade = {CascadeType.REMOVE, CascadeType.MERGE, CascadeType.PERSIST}, orphanRemoval = true)
     private List<DetalleComanda> detallesComanda = new ArrayList<>();
+    
+    @ManyToOne
+    @JoinColumn(name = "cliente", nullable = true)
+    private Cliente cliente;
 
     public Comanda(Calendar fechaHora, Double totalVenta, Estado estado) {
         this.fechaHora = fechaHora;
