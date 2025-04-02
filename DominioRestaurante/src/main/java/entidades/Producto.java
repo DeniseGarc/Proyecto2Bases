@@ -38,6 +38,8 @@ public class Producto implements Serializable {
     private TipoProducto tipo;
     @Column(name = "disponible", nullable = false)
     private boolean disponible;
+    @Column(name = "habilitada", nullable = false)
+    private boolean habilitada;
     @OneToMany(mappedBy = "producto")
     private List<DetalleProductoIngrediente> detallesProducto = new ArrayList<>();
 
