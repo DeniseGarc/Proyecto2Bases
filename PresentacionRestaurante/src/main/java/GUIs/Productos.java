@@ -15,6 +15,8 @@ public class Productos extends javax.swing.JFrame {
      */
     public Productos() {
         initComponents();
+        cargarBanner();
+
     }
 
     /**
@@ -35,7 +37,7 @@ public class Productos extends javax.swing.JFrame {
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
-        titulo1 = new plantillas.Titulo();
+        banner = new plantillas.Titulo();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 254, 245));
@@ -84,10 +86,8 @@ public class Productos extends javax.swing.JFrame {
         btnConsultarIngredientes.setBackground(new java.awt.Color(172, 204, 255));
         btnConsultarIngredientes.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 14)); // NOI18N
         btnConsultarIngredientes.setText("Consultar ingredientes");
-        btnConsultarIngredientes.setToolTipText("");
-        btnConsultarIngredientes.setAutoscrolls(true);
-        btnConsultarIngredientes.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        btnConsultarIngredientes.setOpaque(false);
+        btnConsultarIngredientes.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnConsultarIngredientes.setName(""); // NOI18N
         getContentPane().add(btnConsultarIngredientes, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 630, 210, 40));
 
         jButton2.setBackground(new java.awt.Color(255, 119, 170));
@@ -115,7 +115,7 @@ public class Productos extends javax.swing.JFrame {
 
         jPanel2.setBackground(new java.awt.Color(255, 254, 245));
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        jPanel2.add(titulo1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+        jPanel2.add(banner, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1070, 700));
 
@@ -163,7 +163,14 @@ public class Productos extends javax.swing.JFrame {
         });
     }
 
+    private void cargarBanner() {
+        banner.getLblTitulo().setText("Productos");
+        banner.setFrmPadre(this);
+        banner.setFrmTarget(new MenuPrincipal());
+    }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private plantillas.Titulo banner;
     private javax.swing.JButton btnConsultarIngredientes;
     private javax.swing.JComboBox<String> cBoxTipo;
     private javax.swing.JButton jButton2;
@@ -172,7 +179,6 @@ public class Productos extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable tblProductos;
-    private plantillas.Titulo titulo1;
     private javax.swing.JTextField txtBusqueda;
     // End of variables declaration//GEN-END:variables
 }

@@ -1,10 +1,14 @@
 GUIs\AdministrarProducto.class
 GUIs\DetallesProducto$1.class
-GUIs\DetallesProducto.class
-GUIs\Productos$2.class
+presentacion\GUI\frmMenuPrincipal.class
+GUIs\MenuPrincipal.class
 GUIs\AdministrarProducto$1.class
+plantillas\Titulo$1.class
 GUIs\Productos.class
-plantillas\Titulo.class
 GUIs\Productos$3.class
 com\presentacionrestaurante\PresentacionRestaurante.class
+GUIs\MenuPrincipal$1.class
+GUIs\DetallesProducto.class
+GUIs\Productos$2.class
+plantillas\Titulo.class
 GUIs\Productos$1.class
