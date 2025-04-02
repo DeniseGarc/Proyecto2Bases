@@ -41,11 +41,10 @@ public class Cliente implements Serializable {
 
     @Column(nullable = true, length = 320)
     private String correoElectronico;
-    
+
     @OneToMany(mappedBy = "cliente")
     private List<Comanda> comandas;
 
-    //falta relacion con comanda
     public Cliente() {
     }
 
@@ -114,10 +113,17 @@ public class Cliente implements Serializable {
         this.correoElectronico = correoElectronico;
     }
 
+    public List<Comanda> getComandas() {
+        return comandas;
+    }
+
+    public void setComandas(List<Comanda> comandas) {
+        this.comandas = comandas;
+    }
+
     @Override
     public String toString() {
         return "Cliente{" + "id=" + id + ", nombre=" + nombre + ", apellidoPaterno=" + apellidoPaterno + ", apellidoMaterno=" + apellidoMaterno + ", fechaRegistro=" + fechaRegistro + ", telefono=" + telefono + ", correoElectronico=" + correoElectronico + '}';
     }
 
 }
-
