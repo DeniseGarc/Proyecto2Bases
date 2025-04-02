@@ -6,11 +6,14 @@ package entidades;
 
 import enumeradores.UnidadMedida;
 import java.io.Serializable;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -32,6 +35,9 @@ public class Ingrediente implements Serializable {
     private UnidadMedida unidadMedida;
     @Column (name="stock", nullable = false)
     private Integer stock;
+    
+    @OneToMany(mappedBy = "ingrediente", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<DetalleProductoIngrediente> detallesProducto;
 
     public Ingrediente(String nombre, UnidadMedida unidadMedida, Integer stock) {
         this.nombre = nombre;
@@ -39,12 +45,23 @@ public class Ingrediente implements Serializable {
         this.stock = stock;
     }
 
-    public Ingrediente(Long id, String nombre, UnidadMedida unidadMedida, Integer stock) {
+    public Ingrediente(Long id, String nombre, UnidadMedida unidadMedida, Integer stock, List<DetalleProductoIngrediente> detallesProducto) {
         this.id = id;
         this.nombre = nombre;
         this.unidadMedida = unidadMedida;
         this.stock = stock;
+        this.detallesProducto = detallesProducto;
     }
+
+    public List<DetalleProductoIngrediente> getDetallesProducto() {
+        return detallesProducto;
+    }
+
+    public void setDetallesProducto(List<DetalleProductoIngrediente> detallesProducto) {
+        this.detallesProducto = detallesProducto;
+    }
+
+ 
 
     public Ingrediente() {
     }
