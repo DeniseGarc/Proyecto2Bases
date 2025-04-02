@@ -5,7 +5,7 @@
 package entidades;
 
 import java.io.Serializable;
-import java.time.LocalDate;
+import java.util.Calendar;
 import javax.persistence.*;
 
 /**
@@ -18,20 +18,20 @@ public class ClienteFrecuente extends Cliente implements Serializable {
 
     @Transient
     private int puntosFidelidad;
-    
+
     @Transient
     private int cantidadVisitas;
-    
+
     @Transient
-    private double gastoTotal;
+    private Double gastoTotal;
 
     public ClienteFrecuente() {
     }
 
-    public ClienteFrecuente(String nombre, String apellidoPaterno, String apellidoMaterno, LocalDate fechaRegistro, String telefono, String correoElectronico) {
+    public ClienteFrecuente(String nombre, String apellidoPaterno, String apellidoMaterno, Calendar fechaRegistro, String telefono, String correoElectronico) {
         super(nombre, apellidoPaterno, apellidoMaterno, fechaRegistro, telefono, correoElectronico);
     }
-    
+
 //    por mientras para ver como esta el rollo        
 //    public int calularPuntosFidelidad() {
 //        return puntosFidelidad;
@@ -44,7 +44,6 @@ public class ClienteFrecuente extends Cliente implements Serializable {
 //    public double calcularGastoTotal() {
 //        return gastoTotal;
 //    }
-
     public int getPuntosFidelidad() {
         return puntosFidelidad;
     }
@@ -61,13 +60,12 @@ public class ClienteFrecuente extends Cliente implements Serializable {
         this.cantidadVisitas = cantidadVisitas;
     }
 
-    public double getGastoTotal() {
+    public Double getGastoTotal() {
         return gastoTotal;
     }
 
-    public void setGastoTotal(double gastoTotal) {
+    public void setGastoTotal(Double gastoTotal) {
         this.gastoTotal = gastoTotal;
     }
-    
-    
+
 }

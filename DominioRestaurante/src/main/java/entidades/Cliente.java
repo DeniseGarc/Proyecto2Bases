@@ -5,7 +5,7 @@
 package entidades;
 
 import java.io.Serializable;
-import java.time.LocalDate;
+import java.util.Calendar;
 import javax.persistence.*;
 
 /**
@@ -21,30 +21,30 @@ public class Cliente implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 100)
     private String nombre;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 100)
     private String apellidoPaterno;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 100)
     private String apellidoMaterno;
 
     @Column(nullable = false)
-    private LocalDate fechaRegistro;
+    @Temporal(TemporalType.DATE)
+    private Calendar fechaRegistro;
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false, unique = true, length = 10)
     private String telefono;
 
-    @Column(nullable = true)
+    @Column(nullable = true, length = 320)
     private String correoElectronico;
-    
-    //falta relacion con comanda
 
+    //falta relacion con comanda
     public Cliente() {
     }
 
-    public Cliente(String nombre, String apellidoPaterno, String apellidoMaterno, LocalDate fechaRegistro, String telefono, String correoElectronico) {
+    public Cliente(String nombre, String apellidoPaterno, String apellidoMaterno, Calendar fechaRegistro, String telefono, String correoElectronico) {
         this.nombre = nombre;
         this.apellidoPaterno = apellidoPaterno;
         this.apellidoMaterno = apellidoMaterno;
@@ -85,11 +85,11 @@ public class Cliente implements Serializable {
         this.apellidoMaterno = apellidoMaterno;
     }
 
-    public LocalDate getFechaRegistro() {
+    public Calendar getFechaRegistro() {
         return fechaRegistro;
     }
 
-    public void setFechaRegistro(LocalDate fechaRegistro) {
+    public void setFechaRegistro(Calendar fechaRegistro) {
         this.fechaRegistro = fechaRegistro;
     }
 
