@@ -5,7 +5,7 @@
 package entidades;
 
 import java.io.Serializable;
-import java.time.LocalDate;
+import java.util.Calendar;
 import javax.persistence.*;
 
 /**
@@ -28,7 +28,7 @@ public class ClienteFrecuente extends Cliente implements Serializable {
     public ClienteFrecuente() {
     }
 
-    public ClienteFrecuente(String nombre, String apellidoPaterno, String apellidoMaterno, LocalDate fechaRegistro, String telefono, String correoElectronico) {
+    public ClienteFrecuente(String nombre, String apellidoPaterno, String apellidoMaterno, Calendar fechaRegistro, String telefono, String correoElectronico) {
         super(nombre, apellidoPaterno, apellidoMaterno, fechaRegistro, telefono, correoElectronico);
     }
     
