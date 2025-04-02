@@ -30,10 +30,38 @@ public class DetalleProductoIngrediente implements Serializable {
     @ManyToOne
     @JoinColumn(name = "id_producto", nullable = false)
     private Producto producto;
-    // falta union con ingrediente
-    // Contructor con todo y constructor sin id
-    // getter y setters restantes
-    // toString
+    
+    
+    @ManyToOne
+    @JoinColumn(name = "ingrediente_id", nullable = false)
+    private Ingrediente ingrediente;
+
+    public Ingrediente getIngrediente() {
+        return ingrediente;
+    }
+
+    public void setIngrediente(Ingrediente ingrediente) {
+        this.ingrediente = ingrediente;
+    }
+
+    @Override
+    public String toString() {
+        return "DetalleProductoIngrediente{" + "id=" + id + ", cantidad=" + cantidad + ", producto=" + producto + ", ingrediente=" + ingrediente + '}';
+    }
+
+
+    public DetalleProductoIngrediente(Integer cantidad, Producto producto, Ingrediente ingrediente) {
+        this.cantidad = cantidad;
+        this.producto = producto;
+        this.ingrediente = ingrediente;
+    }
+
+    public DetalleProductoIngrediente(Long id, Integer cantidad, Producto producto, Ingrediente ingrediente) {
+        this.id = id;
+        this.cantidad = cantidad;
+        this.producto = producto;
+        this.ingrediente = ingrediente;
+    }
 
     public DetalleProductoIngrediente() {
     }
