@@ -21,13 +21,13 @@ public class Cliente implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 100)
     private String nombre;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 100)
     private String apellidoPaterno;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 100)
     private String apellidoMaterno;
 
     @Column(nullable = false)
@@ -37,11 +37,10 @@ public class Cliente implements Serializable {
     @Column(nullable = false, unique = true, length = 10)
     private String telefono;
 
-    @Column(nullable = true)
+    @Column(nullable = true, length = 320)
     private String correoElectronico;
-    
-    //falta relacion con comanda
 
+    //falta relacion con comanda
     public Cliente() {
     }
 
