@@ -10,6 +10,7 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -36,7 +37,7 @@ public class Ingrediente implements Serializable {
     @Column (name="stock", nullable = false)
     private Integer stock;
     
-    @OneToMany(mappedBy = "ingrediente")
+    @OneToMany(mappedBy = "ingrediente",fetch = FetchType.LAZY)
     private List<DetalleProductoIngrediente> detallesProducto;
 
     public Ingrediente(String nombre, UnidadMedida unidadMedida, Integer stock) {
