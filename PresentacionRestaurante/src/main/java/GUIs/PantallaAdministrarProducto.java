@@ -4,6 +4,7 @@
  */
 package GUIs;
 
+import java.awt.Color;
 import javax.swing.BoxLayout;
 import plantillas.PanelIngredienteProducto;
 
@@ -25,7 +26,7 @@ public class PantallaAdministrarProducto extends javax.swing.JFrame {
         panelContenedorIngredientesProducto.add(new PanelIngredienteProducto());
         panelContenedorIngredientesProducto.add(new PanelIngredienteProducto());
         panelContenedorIngredientesProducto.add(new PanelIngredienteProducto());
-
+        cargarBarraBusqueda();
     }
 
     /**
@@ -52,7 +53,7 @@ public class PantallaAdministrarProducto extends javax.swing.JFrame {
         scrollPanelIngredientes = new javax.swing.JScrollPane();
         panelContenedorIngredientesProducto = new javax.swing.JPanel();
         banner = new plantillas.Titulo();
-        panelBusquedaProducto1 = new modulos.PanelBusquedaProducto();
+        panelBusquedaProducto = new modulos.PanelBusquedaProducto();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -124,7 +125,7 @@ public class PantallaAdministrarProducto extends javax.swing.JFrame {
 
         fondo.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 0, 310, 700));
         fondo.add(banner, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
-        fondo.add(panelBusquedaProducto1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 80, -1, -1));
+        fondo.add(panelBusquedaProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 80, -1, -1));
 
         getContentPane().add(fondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1070, 700));
 
@@ -172,6 +173,10 @@ public class PantallaAdministrarProducto extends javax.swing.JFrame {
         });
     }
 
+    private void cargarBarraBusqueda() {
+        panelBusquedaProducto.setBackground(new Color(255, 254, 245));
+    }
+
     private void cargarBanner() {
         banner.getLblTitulo().setText("Agregar producto");
         banner.setFrmPadre(this);
@@ -191,7 +196,7 @@ public class PantallaAdministrarProducto extends javax.swing.JFrame {
     private javax.swing.JLabel lblPrecio;
     private javax.swing.JLabel lblPrecioTitulo;
     private javax.swing.JLabel lblResumenProducto;
-    private modulos.PanelBusquedaProducto panelBusquedaProducto1;
+    private modulos.PanelBusquedaProducto panelBusquedaProducto;
     private javax.swing.JPanel panelContenedorIngredientesProducto;
     private javax.swing.JPanel pnlResumenProducto;
     private javax.swing.JScrollPane scrollPanelIngredientes;

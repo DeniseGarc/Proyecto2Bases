@@ -1,4 +1,5 @@
 plantillas\PanelProductoComanda$1.class
+GUIs\MenuPrincipal.class
 plantillas\Titulo$1.class
 GUIs\PantallaTomaComanda$1.class
 GUIs\PantallaProductos$1.class
@@ -13,11 +14,13 @@ GUIs\PantallaDetallesProducto$2.class
 com\presentacionrestaurante\PresentacionRestaurante.class
 GUIs\PantallaTomaComanda.class
 GUIs\PantallaDetallesProducto$1.class
+GUIs\MenuPrincipal$1.class
 GUIs\PantallaProductos$2.class
 GUIs\PantallaDetallesProducto.class
 plantillas\PanelProductoComanda.class
 modulos\PanelBusquedaProducto.class
 GUIs\PantallaAdministrarProducto.class
 modulos\PanelBusquedaProducto$1.class
+plantillas\PanelProducto.class
 plantillas\Titulo.class
 GUIs\PantallaAdministrarProducto$1.class

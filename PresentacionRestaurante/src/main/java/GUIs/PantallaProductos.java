@@ -4,15 +4,22 @@
  */
 package GUIs;
 
+import DTOs.ProductoDTO;
+import exception.NegocioException;
+import interfaces.IProductoBO;
 import java.awt.Color;
-import java.awt.Image;
-import javax.swing.ImageIcon;
+import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import manejadorBO.ManejadorBO;
 
 /**
  *
  * @author Alici
  */
 public class PantallaProductos extends javax.swing.JFrame {
+
+    private IProductoBO productoBO = ManejadorBO.crearProductoBO();
 
     /**
      * Creates new form FrmProductos
@@ -21,6 +28,7 @@ public class PantallaProductos extends javax.swing.JFrame {
         initComponents();
         cargarBanner();
         cargarBarraBusqueda();
+        cargarProductos();
     }
 
     /**
@@ -44,10 +52,10 @@ public class PantallaProductos extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 254, 245));
+        setResizable(false);
         setSize(new java.awt.Dimension(1064, 700));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        tblProductos.setBackground(new java.awt.Color(254, 255, 203));
         tblProductos.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
         tblProductos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -70,6 +78,8 @@ public class PantallaProductos extends javax.swing.JFrame {
         });
         tblProductos.setGridColor(new java.awt.Color(0, 0, 0));
         tblProductos.setShowGrid(true);
+        tblProductos.getTableHeader().setResizingAllowed(false);
+        tblProductos.getTableHeader().setReorderingAllowed(false);
         jScrollPane2.setViewportView(tblProductos);
         tblProductos.getAccessibleContext().setAccessibleName("");
         tblProductos.getAccessibleContext().setAccessibleDescription("");
@@ -167,17 +177,37 @@ public class PantallaProductos extends javax.swing.JFrame {
             }
         });
     }
-    
+
+    private void cargarProductos() {
+        DefaultTableModel modeloTablaProductos = (DefaultTableModel) tblProductos.getModel();
+        modeloTablaProductos.setRowCount(0);
+        try {
+            List<ProductoDTO> productos = productoBO.obtenerProductos();
+            for (ProductoDTO producto : productos) {
+
+                modeloTablaProductos.addRow(new Object[]{
+                    producto.getNombre(),
+                    producto.getTipo().toString().toLowerCase(),
+                    String.valueOf("$ " + producto.getPrecio()),
+                    producto.isEstado()
+                });
+            }
+
+        } catch (NegocioException ex) {
+            JOptionPane.showMessageDialog(this, "Error al obtener los productos", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
     private void cargarBanner() {
         banner.getLblTitulo().setText("Productos");
         banner.setFrmPadre(this);
         banner.setFrmTarget(new MenuPrincipal());
     }
-    
+
     private void cargarBarraBusqueda() {
         barraBusqueda.setBackground(new Color(255, 254, 245));
     }
-    
+
     private void agregarProducto() {
         PantallaAdministrarProducto administrarProductoFrm = new PantallaAdministrarProducto();
         administrarProductoFrm.setVisible(true);
