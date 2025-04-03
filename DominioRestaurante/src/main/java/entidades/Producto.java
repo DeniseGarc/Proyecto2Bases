@@ -103,6 +103,14 @@ public class Producto implements Serializable {
         this.disponible = disponible;
     }
 
+    public boolean isHabilitada() {
+        return habilitada;
+    }
+
+    public void setHabilitada(boolean habilitada) {
+        this.habilitada = habilitada;
+    }
+
     public List<DetalleProductoIngrediente> getDetallesProducto() {
         return detallesProducto;
     }
@@ -113,7 +121,7 @@ public class Producto implements Serializable {
 
     @Override
     public String toString() {
-        return "Producto{" + "id=" + id + ", nombre=" + nombre + ", precio=" + precio + ", tipo=" + tipo + ", disponible=" + disponible + '}';
+        return "Producto{" + "id=" + id + ", nombre=" + nombre + ", precio=" + precio + ", tipo=" + tipo + ", disponible=" + disponible + ", habilitada=" + habilitada + ", detallesProducto=" + detallesProducto + '}';
     }
 
 }
