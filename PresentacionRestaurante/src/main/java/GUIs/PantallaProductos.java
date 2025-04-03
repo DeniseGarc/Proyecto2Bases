@@ -4,19 +4,23 @@
  */
 package GUIs;
 
+import java.awt.Color;
+import java.awt.Image;
+import javax.swing.ImageIcon;
+
 /**
  *
  * @author Alici
  */
-public class Productos extends javax.swing.JFrame {
+public class PantallaProductos extends javax.swing.JFrame {
 
     /**
      * Creates new form FrmProductos
      */
-    public Productos() {
+    public PantallaProductos() {
         initComponents();
         cargarBanner();
-
+        cargarBarraBusqueda();
     }
 
     /**
@@ -30,18 +34,16 @@ public class Productos extends javax.swing.JFrame {
 
         jScrollPane2 = new javax.swing.JScrollPane();
         tblProductos = new javax.swing.JTable();
-        txtBusqueda = new javax.swing.JTextField();
-        cBoxTipo = new javax.swing.JComboBox<>();
         btnConsultarIngredientes = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         banner = new plantillas.Titulo();
+        barraBusqueda = new modulos.PanelBusquedaProducto();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 254, 245));
-        setUndecorated(true);
         setSize(new java.awt.Dimension(1064, 700));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -67,21 +69,12 @@ public class Productos extends javax.swing.JFrame {
             }
         });
         tblProductos.setGridColor(new java.awt.Color(0, 0, 0));
-        tblProductos.setRowSelectionAllowed(false);
         tblProductos.setShowGrid(true);
         jScrollPane2.setViewportView(tblProductos);
         tblProductos.getAccessibleContext().setAccessibleName("");
         tblProductos.getAccessibleContext().setAccessibleDescription("");
 
         getContentPane().add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 160, 990, 460));
-
-        txtBusqueda.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
-        txtBusqueda.setText("Busqueda");
-        getContentPane().add(txtBusqueda, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 110, 740, 30));
-
-        cBoxTipo.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
-        cBoxTipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        getContentPane().add(cBoxTipo, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 110, 240, 30));
 
         btnConsultarIngredientes.setBackground(new java.awt.Color(172, 204, 255));
         btnConsultarIngredientes.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 14)); // NOI18N
@@ -111,11 +104,17 @@ public class Productos extends javax.swing.JFrame {
         jButton4.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 14)); // NOI18N
         jButton4.setForeground(new java.awt.Color(255, 255, 255));
         jButton4.setText("Agregar producto");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
         getContentPane().add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(820, 630, 210, 40));
 
         jPanel2.setBackground(new java.awt.Color(255, 254, 245));
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
         jPanel2.add(banner, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+        jPanel2.add(barraBusqueda, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 80, 760, -1));
 
         getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1070, 700));
 
@@ -126,6 +125,10 @@ public class Productos extends javax.swing.JFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        agregarProducto();
+    }//GEN-LAST:event_jButton4ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -144,41 +147,52 @@ public class Productos extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Productos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(PantallaProductos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Productos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(PantallaProductos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Productos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(PantallaProductos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Productos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(PantallaProductos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Productos().setVisible(true);
+                new PantallaProductos().setVisible(true);
             }
         });
     }
-
+    
     private void cargarBanner() {
         banner.getLblTitulo().setText("Productos");
         banner.setFrmPadre(this);
         banner.setFrmTarget(new MenuPrincipal());
     }
+    
+    private void cargarBarraBusqueda() {
+        barraBusqueda.setBackground(new Color(255, 254, 245));
+    }
+    
+    private void agregarProducto() {
+        PantallaAdministrarProducto administrarProductoFrm = new PantallaAdministrarProducto();
+        administrarProductoFrm.setVisible(true);
+        this.dispose();
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private plantillas.Titulo banner;
+    private modulos.PanelBusquedaProducto barraBusqueda;
     private javax.swing.JButton btnConsultarIngredientes;
-    private javax.swing.JComboBox<String> cBoxTipo;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable tblProductos;
-    private javax.swing.JTextField txtBusqueda;
     // End of variables declaration//GEN-END:variables
 }
