@@ -15,16 +15,18 @@ public class ProductoDTO {
     private String nombre;
     private TipoProducto tipo;
     private double precio;
-    private boolean estado;
+    private boolean disponible;
+    private boolean habilitado;
 
     public ProductoDTO() {
     }
 
-    public ProductoDTO(String nombre, TipoProducto tipo, double precio, boolean estado) {
+    public ProductoDTO(String nombre, TipoProducto tipo, double precio, boolean disponible, boolean habilitado) {
         this.nombre = nombre;
         this.tipo = tipo;
         this.precio = precio;
-        this.estado = estado;
+        this.disponible = disponible;
+        this.habilitado = habilitado;
     }
 
     public String getNombre() {
@@ -51,12 +53,20 @@ public class ProductoDTO {
         this.precio = precio;
     }
 
-    public boolean isEstado() {
-        return estado;
+    public boolean isDisponible() {
+        return disponible;
     }
 
-    public void setEstado(boolean estado) {
-        this.estado = estado;
+    public void setDisponible(boolean disponible) {
+        this.disponible = disponible;
+    }
+
+    public boolean isHabilitado() {
+        return habilitado;
+    }
+
+    public void setHabilitado(boolean habilitado) {
+        this.habilitado = habilitado;
     }
 
 }

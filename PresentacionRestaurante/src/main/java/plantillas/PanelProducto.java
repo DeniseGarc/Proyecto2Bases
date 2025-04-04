@@ -4,6 +4,9 @@
  */
 package plantillas;
 
+import DTOs.ProductoDTO;
+import java.awt.Color;
+
 /**
  *
  * @author Alici
@@ -13,8 +16,9 @@ public class PanelProducto extends javax.swing.JPanel {
     /**
      * Creates new form PanelProducto
      */
-    public PanelProducto() {
+    public PanelProducto(ProductoDTO producto) {
         initComponents();
+        cargarDatos(producto);
     }
 
     /**
@@ -29,19 +33,27 @@ public class PanelProducto extends javax.swing.JPanel {
         lblEstado = new javax.swing.JLabel();
         btnProducto = new javax.swing.JButton();
 
+        setBackground(new java.awt.Color(255, 254, 245));
         setMaximumSize(new java.awt.Dimension(150, 150));
         setMinimumSize(new java.awt.Dimension(150, 150));
         setPreferredSize(new java.awt.Dimension(150, 150));
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         lblEstado.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblEstado.setText("estado...");
         add(lblEstado, new org.netbeans.lib.awtextra.AbsoluteConstraints(4, 6, 140, -1));
 
-        btnProducto.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 14)); // NOI18N
+        btnProducto.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 18)); // NOI18N
         btnProducto.setText("jButton1");
         add(btnProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 150, 150));
     }// </editor-fold>//GEN-END:initComponents
+    private void cargarDatos(ProductoDTO producto) {
+        btnProducto.setText(producto.getNombre());
+        btnProducto.setEnabled(producto.isDisponible());
+        if (!producto.isDisponible()) {
+            lblEstado.setText("No disponible");
+        }
+        btnProducto.setBackground(new Color(254, 255, 203));
+    }
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

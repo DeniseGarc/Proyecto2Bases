@@ -4,7 +4,13 @@
  */
 package GUIs;
 
+import DTOs.ProductoDTO;
+import control.CoordinadorAplicacion;
+import control.exception.CoordinadorException;
 import java.awt.Color;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.BoxLayout;
 import javax.swing.JScrollPane;
 import plantillas.PanelProducto;
@@ -15,7 +21,7 @@ import plantillas.PanelProductoComanda;
  * @author Alici
  */
 public class PantallaTomaComanda extends javax.swing.JFrame {
-
+    CoordinadorAplicacion control = new CoordinadorAplicacion();
     /**
      * Creates new form PantallaTomaComanda
      */
@@ -29,25 +35,11 @@ public class PantallaTomaComanda extends javax.swing.JFrame {
         panelContenedorProductosComanda.add(new PanelProductoComanda());
         panelContenedorProductosComanda.add(new PanelProductoComanda());
         panelContenedorProductosComanda.add(new PanelProductoComanda());
-
-        panelContenedorProductos.add(new PanelProducto());
-        panelContenedorProductos.add(new PanelProducto());
-        panelContenedorProductos.add(new PanelProducto());
-        panelContenedorProductos.add(new PanelProducto());
-        panelContenedorProductos.add(new PanelProducto());
-        panelContenedorProductos.add(new PanelProducto());
-        panelContenedorProductos.add(new PanelProducto());
-        panelContenedorProductos.add(new PanelProducto());
-        panelContenedorProductos.add(new PanelProducto());
-        panelContenedorProductos.add(new PanelProducto());
-        panelContenedorProductos.add(new PanelProducto());
-        panelContenedorProductos.add(new PanelProducto());
-        panelContenedorProductos.add(new PanelProducto());
-        panelContenedorProductos.add(new PanelProducto());
-        panelContenedorProductos.add(new PanelProducto());
-        panelContenedorProductos.add(new PanelProducto());
-        panelContenedorProductos.add(new PanelProducto());
-
+        try {
+            panelProductos.mostrarProductos(control.obtenerProductos());
+        } catch (CoordinadorException ex) {
+            Logger.getLogger(PantallaTomaComanda.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -72,8 +64,7 @@ public class PantallaTomaComanda extends javax.swing.JFrame {
         lblClienteTitulo = new javax.swing.JLabel();
         banner = new plantillas.Titulo();
         barraBusquedaProducto = new moduloProductos.PanelBusquedaProducto();
-        scrollPanelProductos = new javax.swing.JScrollPane();
-        panelContenedorProductos = new javax.swing.JPanel();
+        panelProductos = new moduloProductos.PanelVistaGridProductos();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -152,18 +143,7 @@ public class PantallaTomaComanda extends javax.swing.JFrame {
         jPanel1.add(lblClienteTitulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 30, -1, -1));
         jPanel1.add(banner, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
         jPanel1.add(barraBusquedaProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 70, -1, 80));
-
-        scrollPanelProductos.setBackground(new java.awt.Color(255, 254, 245));
-        scrollPanelProductos.setBorder(null);
-        scrollPanelProductos.setHorizontalScrollBar(null);
-
-        panelContenedorProductos.setBackground(new java.awt.Color(255, 254, 245));
-        panelContenedorProductos.setMaximumSize(new java.awt.Dimension(790, 578));
-        panelContenedorProductos.setMinimumSize(new java.awt.Dimension(790, 578));
-        panelContenedorProductos.setLayout(new java.awt.GridLayout(4, 5));
-        scrollPanelProductos.setViewportView(panelContenedorProductos);
-
-        jPanel1.add(scrollPanelProductos, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 150, 760, 550));
+        jPanel1.add(panelProductos, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 150, -1, -1));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1070, 700));
 
@@ -209,11 +189,11 @@ public class PantallaTomaComanda extends javax.swing.JFrame {
             }
         });
     }
-
+    
     private void cargarBarraBusqueda() {
         barraBusquedaProducto.setBackground(new Color(255, 176, 217));
     }
-
+    
     private void cargarBanner() {
         banner.getLblTitulo().setText("Mesa:");
         banner.setFrmPadre(this);
@@ -232,9 +212,8 @@ public class PantallaTomaComanda extends javax.swing.JFrame {
     private javax.swing.JLabel lblNumeroMesa;
     private javax.swing.JLabel lblTotal;
     private javax.swing.JLabel lblTotalTitulo;
-    private javax.swing.JPanel panelContenedorProductos;
     private javax.swing.JPanel panelContenedorProductosComanda;
+    private moduloProductos.PanelVistaGridProductos panelProductos;
     private javax.swing.JScrollPane scrollPaneProductosComanda;
-    private javax.swing.JScrollPane scrollPanelProductos;
     // End of variables declaration//GEN-END:variables
 }

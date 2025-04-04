@@ -23,7 +23,8 @@ public class ProductoMapper {
                             producto.getNombre(),
                             producto.getTipo(),
                             producto.getPrecio(),
-                            producto.isDisponible())
+                            producto.isDisponible(),
+                            producto.isHabilitada())
             );
         }
         return productosDTO;

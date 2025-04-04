@@ -4,13 +4,14 @@
  */
 package GUIs;
 
-import DTOs.ProductoDTO;
+import control.CoordinadorAplicacion;
+import control.exception.CoordinadorException;
 import exception.NegocioException;
 import interfaces.IProductoBO;
 import java.awt.Color;
-import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-import javax.swing.table.DefaultTableModel;
 import manejadorBO.ManejadorBO;
 
 /**
@@ -19,7 +20,7 @@ import manejadorBO.ManejadorBO;
  */
 public class PantallaProductos extends javax.swing.JFrame {
 
-    private IProductoBO productoBO = ManejadorBO.crearProductoBO();
+    private CoordinadorAplicacion control = new CoordinadorAplicacion();
 
     /**
      * Creates new form FrmProductos
@@ -28,7 +29,12 @@ public class PantallaProductos extends javax.swing.JFrame {
         initComponents();
         cargarBanner();
         cargarBarraBusqueda();
-        cargarProductos();
+        try {
+            tablaProductos.mostrarProductos(control.obtenerProductos());
+        } catch (CoordinadorException ex) {
+            Logger.getLogger(PantallaProductos.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, ex, "Ha ocurrido un error inesperado", JOptionPane.ERROR);
+        }
     }
 
     /**
@@ -40,12 +46,11 @@ public class PantallaProductos extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jScrollPane2 = new javax.swing.JScrollPane();
-        tblProductos = new javax.swing.JTable();
         btnConsultarIngredientes = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
+        tablaProductos = new moduloProductos.PanelVistaListaProductos();
         jPanel2 = new javax.swing.JPanel();
         banner = new plantillas.Titulo();
         barraBusqueda = new moduloProductos.PanelBusquedaProducto();
@@ -55,36 +60,6 @@ public class PantallaProductos extends javax.swing.JFrame {
         setResizable(false);
         setSize(new java.awt.Dimension(1064, 700));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        tblProductos.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
-        tblProductos.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Nombre", "Tipo", "Precio", "Disponibilidad"
-            }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false
-            };
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        tblProductos.setGridColor(new java.awt.Color(0, 0, 0));
-        tblProductos.setShowGrid(true);
-        tblProductos.getTableHeader().setResizingAllowed(false);
-        tblProductos.getTableHeader().setReorderingAllowed(false);
-        jScrollPane2.setViewportView(tblProductos);
-        tblProductos.getAccessibleContext().setAccessibleName("");
-        tblProductos.getAccessibleContext().setAccessibleDescription("");
-
-        getContentPane().add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 160, 990, 460));
 
         btnConsultarIngredientes.setBackground(new java.awt.Color(172, 204, 255));
         btnConsultarIngredientes.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 14)); // NOI18N
@@ -120,6 +95,7 @@ public class PantallaProductos extends javax.swing.JFrame {
             }
         });
         getContentPane().add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(820, 630, 210, 40));
+        getContentPane().add(tablaProductos, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 160, -1, -1));
 
         jPanel2.setBackground(new java.awt.Color(255, 254, 245));
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -178,26 +154,6 @@ public class PantallaProductos extends javax.swing.JFrame {
         });
     }
 
-    private void cargarProductos() {
-        DefaultTableModel modeloTablaProductos = (DefaultTableModel) tblProductos.getModel();
-        modeloTablaProductos.setRowCount(0);
-        try {
-            List<ProductoDTO> productos = productoBO.obtenerProductos();
-            for (ProductoDTO producto : productos) {
-
-                modeloTablaProductos.addRow(new Object[]{
-                    producto.getNombre(),
-                    producto.getTipo().toString().toLowerCase(),
-                    String.valueOf("$ " + producto.getPrecio()),
-                    producto.isEstado()
-                });
-            }
-
-        } catch (NegocioException ex) {
-            JOptionPane.showMessageDialog(this, "Error al obtener los productos", "Error", JOptionPane.ERROR_MESSAGE);
-        }
-    }
-
     private void cargarBanner() {
         banner.getLblTitulo().setText("Productos");
         banner.setFrmPadre(this);
@@ -222,7 +178,6 @@ public class PantallaProductos extends javax.swing.JFrame {
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable tblProductos;
+    private moduloProductos.PanelVistaListaProductos tablaProductos;
     // End of variables declaration//GEN-END:variables
 }
