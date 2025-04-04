@@ -6,13 +6,10 @@ package GUIs;
 
 import control.CoordinadorAplicacion;
 import control.exception.CoordinadorException;
-import exception.NegocioException;
-import interfaces.IProductoBO;
 import java.awt.Color;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-import manejadorBO.ManejadorBO;
 
 /**
  *
@@ -53,7 +50,7 @@ public class PantallaProductos extends javax.swing.JFrame {
         tablaProductos = new moduloProductos.PanelVistaListaProductos();
         jPanel2 = new javax.swing.JPanel();
         banner = new plantillas.Titulo();
-        barraBusqueda = new moduloProductos.PanelBusquedaProducto();
+        barraBusqueda = new moduloProductos.PanelBusquedaProducto(tablaProductos);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 254, 245));

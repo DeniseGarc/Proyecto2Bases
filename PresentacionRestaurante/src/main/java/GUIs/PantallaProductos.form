@@ -116,6 +116,9 @@
       </Constraints>
     </Component>
     <Component class="moduloProductos.PanelVistaListaProductos" name="tablaProductos">
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new moduloProductos.PanelVistaListaProductos()"/>
+      </AuxValues>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
           <AbsoluteConstraints x="40" y="160" width="-1" height="-1"/>
@@ -146,6 +149,9 @@
           </Constraints>
         </Component>
         <Component class="moduloProductos.PanelBusquedaProducto" name="barraBusqueda">
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new moduloProductos.PanelBusquedaProducto(new PanelVistaListaProductos())"/>
+          </AuxValues>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
               <AbsoluteConstraints x="160" y="80" width="760" height="-1"/>

@@ -47,7 +47,9 @@ public class PanelProducto extends javax.swing.JPanel {
         add(btnProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 150, 150));
     }// </editor-fold>//GEN-END:initComponents
     private void cargarDatos(ProductoDTO producto) {
-        btnProducto.setText(producto.getNombre());
+        String nombre = producto.getNombre();
+        btnProducto.setText("<html><center>" + nombre + "</center></html>");
+        btnProducto.setToolTipText(nombre);
         btnProducto.setEnabled(producto.isDisponible());
         if (!producto.isDisponible()) {
             lblEstado.setText("No disponible");

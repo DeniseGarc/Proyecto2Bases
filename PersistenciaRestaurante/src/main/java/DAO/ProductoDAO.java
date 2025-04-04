@@ -202,4 +202,27 @@ public class ProductoDAO implements IProductoDAO {
             em.close();
         }
     }
+
+    /**
+     * Obtiene una lista de productos los cuales pertenezcan a una categoría
+     * específica.
+     *
+     * @param categoria categoría del producto.
+     * @return lista de productos filtrados por categoria.
+     * @throws PersistenciaException si ocurre un error durante la consulta.
+     */
+    @Override
+    public List<Producto> obtenerProductosFiltrados(TipoProducto categoria) throws PersistenciaException {
+        EntityManager em = Conexion.crearConexion();
+        try {
+            return em.createQuery("SELECT p FROM Producto p WHERE  p.tipo = :categoria", Producto.class)
+                    .setParameter("categoria", categoria)
+                    .getResultList();
+        } catch (Exception e) {
+            throw new PersistenciaException("Error al consultar productos filtrados por categoria: ", e);
+        } finally {
+            em.close();
+        }
+    }
+
 }

@@ -85,4 +85,14 @@ public interface IProductoDAO {
      */
     public List<Producto> obtenerProductosFiltrados(String nombre, TipoProducto categoria) throws PersistenciaException;
 
+    /**
+     * Obtiene una lista de productos los cuales pertenezcan a una categoría
+     * específica.
+     *
+     * @param categoria categoría del producto.
+     * @return lista de productos filtrados por categoria.
+     * @throws PersistenciaException si ocurre un error durante la consulta.
+     */
+    public List<Producto> obtenerProductosFiltrados(TipoProducto categoria) throws PersistenciaException;
+
 }

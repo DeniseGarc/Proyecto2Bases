@@ -15,6 +15,7 @@ import GUIs.PantallaTomaComanda;
 import GUIs.RegistrarClienteNuevo;
 import GUIs.frmAgregarIngrediente;
 import control.exception.CoordinadorException;
+import enumeradores.TipoProducto;
 import exception.NegocioException;
 import interfaces.IProductoBO;
 import java.util.List;
@@ -101,6 +102,21 @@ public class CoordinadorAplicacion {
         } catch (NegocioException ex) {
             Logger.getLogger(CoordinadorAplicacion.class.getName()).log(Level.SEVERE, null, ex);
             throw new CoordinadorException("Ha ocurrido un error al obtener los productos");
+        }
+    }
+
+    public List<ProductoDTO> obtenerProductosFiltrados(String texto, TipoProducto categoria) throws CoordinadorException {
+        try {
+            if (texto != null && categoria != null) {
+                return productoBO.obtenerProductosFiltradosNombreyCategoria(texto, categoria);
+            } else if (texto == null) {
+                return productoBO.obtenerProductosFiltradosCategoria(categoria);
+            } else {
+                return productoBO.obtenerProductosFiltradosNombre(texto);
+            }
+        } catch (NegocioException ex) {
+            Logger.getLogger(CoordinadorAplicacion.class.getName()).log(Level.SEVERE, null, ex);
+            throw new CoordinadorException("Ha ocurrido un error al filtrar los productos");
         }
     }
 }

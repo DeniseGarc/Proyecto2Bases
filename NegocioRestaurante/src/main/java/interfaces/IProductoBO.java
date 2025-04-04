@@ -5,6 +5,7 @@
 package interfaces;
 
 import DTOs.ProductoDTO;
+import enumeradores.TipoProducto;
 import exception.NegocioException;
 import java.util.List;
 
@@ -15,4 +16,10 @@ import java.util.List;
 public interface IProductoBO {
 
     public List<ProductoDTO> obtenerProductos() throws NegocioException;
+
+    public List<ProductoDTO> obtenerProductosFiltradosNombre(String texto) throws NegocioException;
+
+    public List<ProductoDTO> obtenerProductosFiltradosNombreyCategoria(String texto, TipoProducto categoria) throws NegocioException;
+
+    public List<ProductoDTO> obtenerProductosFiltradosCategoria(TipoProducto categoria) throws NegocioException;
 }
