@@ -10,6 +10,8 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -32,6 +34,7 @@ public class Ingrediente implements Serializable {
     
     @Column(name = "nombre", nullable = false, length = 100)
     private String nombre;
+    @Enumerated(EnumType.STRING)
     @Column (name="unidad_medida", nullable = false)
     private UnidadMedida unidadMedida;
     @Column (name="stock", nullable = false)
@@ -122,7 +125,9 @@ public class Ingrediente implements Serializable {
 
     @Override
     public String toString() {
-        return "entidades.Ingrediente[ id=" + id + " ]";
+        return "Ingrediente{" + "id=" + id + ", nombre=" + nombre + ", unidadMedida=" + unidadMedida + ", stock=" + stock + ", detallesProducto=" + detallesProducto + '}';
     }
+
+    
     
 }
