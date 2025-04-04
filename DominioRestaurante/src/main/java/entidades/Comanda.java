@@ -12,6 +12,8 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -34,20 +36,21 @@ public class Comanda implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    
-    @Column (name="fechaHora", nullable = false )
+
+    @Column(name = "fechaHora", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private Calendar fechaHora;
-    
-    @Transient
+
+    @Column(name = "totalVenta", nullable = false)
     private Double totalVenta;
-    
-    @Column (name = "estado", nullable=false)
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "estado", nullable = false)
     private Estado estado;
-    
+
     @OneToMany(mappedBy = "comanda", cascade = {CascadeType.REMOVE, CascadeType.MERGE, CascadeType.PERSIST}, orphanRemoval = true)
     private List<DetalleComanda> detallesComanda = new ArrayList<>();
-    
+
     @ManyToOne
     @JoinColumn(name = "cliente", nullable = true)
     private Cliente cliente;
@@ -126,6 +129,4 @@ public class Comanda implements Serializable {
         return "Comanda{" + "id=" + id + ", fechaHora=" + fechaHora + ", totalVenta=" + totalVenta + ", estado=" + estado + ", detallesComanda=" + detallesComanda + '}';
     }
 
-   
-    
 }

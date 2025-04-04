@@ -13,7 +13,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
 /**
  *
@@ -30,18 +29,16 @@ public class DetalleComanda implements Serializable {
     private Double precioUnitario;
     @Column(name = "cantidad", nullable = false)
     private Integer cantidad;
-    @Transient //Ver como funcionan los calculados desde JPA
+    @Column(name = "importeTotal", nullable = false)
     private Double importeTotal;
     @Column(name = "notas", nullable = true, length = 500)
     private String notas;
     @ManyToOne
     @JoinColumn(name = "idProducto", nullable = false)
     private Producto producto;
-    
-   @ManyToOne
-   @JoinColumn (name = "idComanda",nullable = false)
+    @ManyToOne
+    @JoinColumn(name = "idComanda", nullable = false)
     private Comanda comanda;
-    // falta relacion con comanda, extras
 
     public DetalleComanda(Double precioUnitario, Integer cantidad, Double importeTotal, String notas, Producto producto, Comanda comanda) {
         this.precioUnitario = precioUnitario;
