@@ -53,7 +53,7 @@ public class PantallaAdministrarProducto extends javax.swing.JFrame {
         scrollPanelIngredientes = new javax.swing.JScrollPane();
         panelContenedorIngredientesProducto = new javax.swing.JPanel();
         banner = new plantillas.Titulo();
-        panelBusquedaProducto = new modulos.PanelBusquedaProducto();
+        panelBusquedaProducto = new moduloProductos.PanelBusquedaProducto();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -196,7 +196,7 @@ public class PantallaAdministrarProducto extends javax.swing.JFrame {
     private javax.swing.JLabel lblPrecio;
     private javax.swing.JLabel lblPrecioTitulo;
     private javax.swing.JLabel lblResumenProducto;
-    private modulos.PanelBusquedaProducto panelBusquedaProducto;
+    private moduloProductos.PanelBusquedaProducto panelBusquedaProducto;
     private javax.swing.JPanel panelContenedorIngredientesProducto;
     private javax.swing.JPanel pnlResumenProducto;
     private javax.swing.JScrollPane scrollPanelIngredientes;

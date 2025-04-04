@@ -229,7 +229,7 @@
             </Constraint>
           </Constraints>
         </Component>
-        <Component class="modulos.PanelBusquedaProducto" name="barraBusquedaProducto">
+        <Component class="moduloProductos.PanelBusquedaProducto" name="barraBusquedaProducto">
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
               <AbsoluteConstraints x="0" y="70" width="-1" height="80"/>

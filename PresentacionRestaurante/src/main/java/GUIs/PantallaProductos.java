@@ -48,7 +48,7 @@ public class PantallaProductos extends javax.swing.JFrame {
         jButton4 = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         banner = new plantillas.Titulo();
-        barraBusqueda = new modulos.PanelBusquedaProducto();
+        barraBusqueda = new moduloProductos.PanelBusquedaProducto();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 254, 245));
@@ -216,7 +216,7 @@ public class PantallaProductos extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private plantillas.Titulo banner;
-    private modulos.PanelBusquedaProducto barraBusqueda;
+    private moduloProductos.PanelBusquedaProducto barraBusqueda;
     private javax.swing.JButton btnConsultarIngredientes;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;

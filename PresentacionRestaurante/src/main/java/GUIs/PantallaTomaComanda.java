@@ -71,7 +71,7 @@ public class PantallaTomaComanda extends javax.swing.JFrame {
         lblNumeroMesa = new javax.swing.JLabel();
         lblClienteTitulo = new javax.swing.JLabel();
         banner = new plantillas.Titulo();
-        barraBusquedaProducto = new modulos.PanelBusquedaProducto();
+        barraBusquedaProducto = new moduloProductos.PanelBusquedaProducto();
         scrollPanelProductos = new javax.swing.JScrollPane();
         panelContenedorProductos = new javax.swing.JPanel();
 
@@ -222,7 +222,7 @@ public class PantallaTomaComanda extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private plantillas.Titulo banner;
-    private modulos.PanelBusquedaProducto barraBusquedaProducto;
+    private moduloProductos.PanelBusquedaProducto barraBusquedaProducto;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
