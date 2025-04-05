@@ -33,14 +33,79 @@ public class IngredienteBO implements IIngredienteBO{
             List<Ingrediente> ingredientes = ingredienteDAO.obtenerIngredientes();
             return IngredienteMapper.ToDTOList(ingredientes);
         }catch(PersistenciaException e) {
-            throw new NegocioException("Ocurrió un error al obtener los productos");
+            throw new NegocioException("Ocurrió un error al obtener los ingredientes");
         }
         
     }
 
     @Override
     public List<IngredienteDTO> obtenerIngredientesPorNombre(String nombre) throws NegocioException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        try{
+            List<Ingrediente> ingredientes = ingredienteDAO.buscarIngredientePorNombre(nombre);
+            return IngredienteMapper.ToDTOList(ingredientes);
+        }catch(PersistenciaException e) {
+            throw new NegocioException("Ocurrió un error al obtener los ingredientes");
+        }
+    }
+
+    @Override
+    public boolean eliminarIngrediente(Long id) throws NegocioException {
+        try {
+        Ingrediente ingrediente = ingredienteDAO.buscarIngredientePorId(id);
+        if (ingrediente == null) {
+            throw new NegocioException("El ingrediente con ID " + id + " no existe.");
+        }
+        ingredienteDAO.eliminarIngrediente(ingrediente.getId());
+        return true;
+    } catch (PersistenciaException e) {
+        throw new NegocioException("Error al eliminar el ingrediente.", e);
+    }
+    }
+
+    @Override
+    public IngredienteDTO actualizarStock(Long id, int stock) throws NegocioException {
+        try {
+        Ingrediente ingrediente = ingredienteDAO.buscarIngredientePorId(id);
+        if (ingrediente == null) {
+            throw new NegocioException("El ingrediente con ID " + id + " no existe.");
+        }
+        if (stock < 0) {
+            throw new NegocioException("El stock no puede ser negativo.");
+        }
+        ingrediente.setStock(stock);
+        ingredienteDAO.modificarStock(ingrediente.getId(),stock);
+        return IngredienteMapper.ToDTO(ingrediente);
+    } catch (PersistenciaException e) {
+        throw new NegocioException("Error al actualizar el stock.", e);
+    }
+    }
+
+    @Override
+    public IngredienteDTO agregarIngrediente(IngredienteDTO ingredienteDTO) throws NegocioException {
+        try {
+        // Buscar ingredientes que tengan el mismo nombre
+        List<Ingrediente> ingredientesConMismoNombre = ingredienteDAO.buscarIngredientePorNombre(ingredienteDTO.getNombre());
+
+        // Validar si ya existe un ingrediente con el mismo nombre Y unidad de medida
+        for (Ingrediente ingrediente : ingredientesConMismoNombre) {
+            if (ingrediente.getUnidadMedida().equals(ingredienteDTO.getUnidadMedida())) {
+                throw new NegocioException("Ya existe un ingrediente con el mismo nombre y unidad de medida.");
+            }
+        }
+
+        // Crear y guardar el nuevo ingrediente
+        Ingrediente nuevoIngrediente = new Ingrediente();
+        nuevoIngrediente.setNombre(ingredienteDTO.getNombre());
+        nuevoIngrediente.setUnidadMedida(ingredienteDTO.getUnidadMedida());
+        nuevoIngrediente.setStock(ingredienteDTO.getStock());
+
+        Ingrediente guardado = ingredienteDAO.guardarIngredinete(nuevoIngrediente);
+
+        return IngredienteMapper.ToDTO(guardado);
+
+    } catch (PersistenciaException e) {
+        throw new NegocioException("Error al agregar el ingrediente.", e);
+    }
     }
     
 }
