@@ -83,10 +83,24 @@ public class ProductoBO implements IProductoBO {
         }
         try {
             Producto producto = productoDAO.obtenerProductoPorNombre(nombre);
+            if (producto == null) {
+                return null;
+            }
             return ProductoMapper.toDTO(producto);
         } catch (PersistenciaException e) {
-            throw new NegocioException(e.getMessage());
+            throw new NegocioException("Error al obtener producto de la base de datos: " + e.getMessage());
         }
+    }
+
+    //Falta terminar metodo con parte de ingredientes
+    @Override
+    public ProductoDetalleDTO agregarProducto(ProductoDetalleDTO productoNuevo) throws NegocioException {
+        if (productoNuevo == null) {
+            throw new NegocioException("El producto a agregar es nulo");
+        }
+//        ProductoMapper.
+//        productoDAO.registrarProducto(producto);
+        return productoNuevo;
     }
 
 }

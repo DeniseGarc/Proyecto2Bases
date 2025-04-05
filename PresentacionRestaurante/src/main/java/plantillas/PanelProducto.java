@@ -15,6 +15,7 @@ public class PanelProducto extends javax.swing.JPanel {
 
     /**
      * Creates new form PanelProducto
+     * @param producto
      */
     public PanelProducto(ProductoDTO producto) {
         initComponents();

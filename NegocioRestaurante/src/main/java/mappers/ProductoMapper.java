@@ -4,13 +4,11 @@
  */
 package mappers;
 
-import DTOs.IngredienteDTO;
 import DTOs.IngredienteProductoDTO;
 import DTOs.ProductoDTO;
 import DTOs.ProductoDetalleDTO;
 import entidades.DetalleProductoIngrediente;
 import entidades.Producto;
-import enumeradores.UnidadMedida;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -50,6 +48,19 @@ public class ProductoMapper {
             detallesProducto.getIngredientes().add(ingrediente);
         }
         return detallesProducto;
+    }
+
+    // Aun falta terminar el metodo
+    public static Producto toEntity(ProductoDetalleDTO productoDTO) {
+        Producto producto = new Producto();
+        producto.setNombre(productoDTO.getNombre());
+        producto.setTipo(productoDTO.getTipo());
+        producto.setPrecio(productoDTO.getPrecio());
+        for (IngredienteProductoDTO ingrediente : productoDTO.getIngredientes()) {
+
+//            Ingrediente ingrediente = new Ingrediente();
+        }
+        return producto;
     }
 
 }

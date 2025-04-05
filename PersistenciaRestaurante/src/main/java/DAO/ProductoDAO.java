@@ -7,6 +7,7 @@ import exception.PersistenciaException;
 import interfaces.IProductoDAO;
 import java.util.List;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 
 /**
  * Clase que implementa las operaciones de acceso a datos para la entidad
@@ -64,7 +65,8 @@ public class ProductoDAO implements IProductoDAO {
      * Obtiene un producto por su nombre exacto.
      *
      * @param nombre el nombre del producto a buscar.
-     * @return el producto encontrado.
+     * @return el producto encontrado, si no se ha encontrado un producto con el
+     * nombre ingresado regresa null.
      * @throws PersistenciaException si no se encuentra o ocurre un error
      * durante la consulta.
      */
@@ -72,8 +74,12 @@ public class ProductoDAO implements IProductoDAO {
     public Producto obtenerProductoPorNombre(String nombre) throws PersistenciaException {
         EntityManager em = Conexion.crearConexion();
         try {
-            return em.createQuery("SELECT p FROM Producto p WHERE p.nombre = :nombre ", Producto.class)
-                    .setParameter("nombre", nombre).getSingleResult();
+            try {
+                return em.createQuery("SELECT p FROM Producto p WHERE p.nombre = :nombre ", Producto.class)
+                        .setParameter("nombre", nombre).getSingleResult();
+            } catch (NoResultException ex) {
+                return null;
+            }
         } catch (Exception e) {
             throw new PersistenciaException("Error al consultar producto por nombre: ", e);
         } finally {

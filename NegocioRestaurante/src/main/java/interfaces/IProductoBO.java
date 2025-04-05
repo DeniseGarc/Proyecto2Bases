@@ -25,4 +25,7 @@ public interface IProductoBO {
     public List<ProductoDTO> obtenerProductosFiltradosCategoria(TipoProducto categoria) throws NegocioException;
 
     public ProductoDetalleDTO obtenerProductoDetallesPorNombre(String nombre) throws NegocioException;
+
+    public ProductoDetalleDTO agregarProducto(ProductoDetalleDTO productoNuevo) throws NegocioException;
+
 }

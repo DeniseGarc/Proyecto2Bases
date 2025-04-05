@@ -10,6 +10,7 @@ import GUIs.ClienteFrecuente;
 import GUIs.EliminarIngrediente;
 import GUIs.Ingredientes;
 import GUIs.MenuPrincipal;
+import GUIs.PantallaAdministrarProducto;
 import GUIs.PantallaDetallesProducto;
 import GUIs.PantallaProductos;
 import GUIs.PantallaTomaComanda;
@@ -24,6 +25,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFrame;
 import manejadorBO.ManejadorBO;
+import modos.Modo;
 
 /**
  *
@@ -116,7 +118,10 @@ public class CoordinadorAplicacion {
         frame.dispose();
     }
 
-    public void pantallaAgregarProducto() {
+    public void pantallaAgregarProducto(JFrame frame) {
+        PantallaAdministrarProducto pantallaAdministrarProducto = new PantallaAdministrarProducto(Modo.AGREGAR, null);
+        pantallaAdministrarProducto.setVisible(true);
+        frame.dispose();
     }
 
     public void pantallaModificarProducto() {
@@ -172,10 +177,47 @@ public class CoordinadorAplicacion {
             throw new CoordinadorException("No ha sido posible recuperar el nombre del producto");
         }
         try {
-            return productoBO.obtenerProductoDetallesPorNombre(nombre);
+            ProductoDetalleDTO producto = productoBO.obtenerProductoDetallesPorNombre(nombre);
+            if (producto == null) {
+                throw new CoordinadorException("No ha sido posible recuperar el producto con el nombre recuperado");
+            }
+            return producto;
         } catch (NegocioException e) {
             Logger.getLogger(CoordinadorAplicacion.class.getName()).log(Level.SEVERE, null, e);
             throw new CoordinadorException("Ha ocurrido un error al obtener el producto y sus detalles");
         }
     }
+
+    public boolean validarNombre(String nombre) throws CoordinadorException {
+        if (nombre == null || nombre.trim().isEmpty() || nombre.length() > 100) {
+            return false;
+        }
+        try {
+            return productoBO.obtenerProductoDetallesPorNombre(nombre) == null;
+        } catch (NegocioException ex) {
+            Logger.getLogger(CoordinadorAplicacion.class.getName()).log(Level.SEVERE, null, ex);
+            throw new CoordinadorException("Ha ocurrido un error al validar la existencia de otro producto con el mismo nombre");
+        }
+    }
+
+    //falta terminar metodo con parte ingredientes
+    public ProductoDetalleDTO agregarProducto(ProductoDetalleDTO producto) throws CoordinadorException {
+        if (producto == null) {
+            throw new CoordinadorException("El producto a agregar no puede ser nulo");
+        }
+        if (producto.getNombre() == null || producto.getNombre().trim().isEmpty()) {
+            throw new CoordinadorException("El nombre del producto es nulo o esta vacio");
+        }
+        if (producto.getTipo() == null) {
+            throw new CoordinadorException("El producto no tiene una categoria asignada");
+        }
+        if (producto.getPrecio() <= 0) {
+            throw new CoordinadorException("El producto tiene un precio negativo");
+        }
+        if (producto.getIngredientes().isEmpty() || producto.getIngredientes() == null) {
+            throw new CoordinadorException("El producto no tiene ingredientes asociados");
+        }
+        return producto;
+    }
+
 }

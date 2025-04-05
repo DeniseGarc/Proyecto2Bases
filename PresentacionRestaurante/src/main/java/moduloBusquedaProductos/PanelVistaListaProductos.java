@@ -1,4 +1,4 @@
-package moduloProductos;
+package moduloBusquedaProductos;
 
 import DTOs.ProductoDTO;
 import java.util.List;

@@ -56,8 +56,8 @@ public class PantallaTomaComanda extends javax.swing.JFrame {
         lblNumeroMesa = new javax.swing.JLabel();
         lblClienteTitulo = new javax.swing.JLabel();
         banner = new plantillas.Titulo();
-        panelProductos = new moduloProductos.PanelVistaGridProductos();
-        panelBusquedaProducto = new moduloProductos.PanelBusquedaProducto();
+        panelProductos = new moduloBusquedaProductos.PanelVistaGridProductos();
+        panelBusquedaProducto = new moduloBusquedaProductos.PanelBusquedaProducto();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -207,9 +207,9 @@ public class PantallaTomaComanda extends javax.swing.JFrame {
     private javax.swing.JLabel lblNumeroMesa;
     private javax.swing.JLabel lblTotal;
     private javax.swing.JLabel lblTotalTitulo;
-    private moduloProductos.PanelBusquedaProducto panelBusquedaProducto;
+    private moduloBusquedaProductos.PanelBusquedaProducto panelBusquedaProducto;
     private javax.swing.JPanel panelContenedorProductosComanda;
-    private moduloProductos.PanelVistaGridProductos panelProductos;
+    private moduloBusquedaProductos.PanelVistaGridProductos panelProductos;
     private javax.swing.JScrollPane scrollPaneProductosComanda;
     // End of variables declaration//GEN-END:variables
 }
