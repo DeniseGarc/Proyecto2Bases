@@ -4,23 +4,25 @@
  */
 package GUIs;
 
-import BO.IngredienteBO;
-import exception.NegocioException;
 import DTOs.IngredienteDTO;
+import exception.NegocioException;
+import interfaces.IIngredienteBO;
 import java.awt.*;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import java.util.List;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
+import manejadorBO.ManejadorBO;
 
 /**
  *
  * @author erika
  */
 public class Ingredientes extends javax.swing.JFrame {
-    private IngredienteBO servicioIngrediente;
+    private IIngredienteBO ingredienteBO = ManejadorBO.crearIngredienteBO();
     /**
      * Creates new form Ingredientes
      */
@@ -30,11 +32,15 @@ public class Ingredientes extends javax.swing.JFrame {
     }
     
     private void MostrarIngredientes() {
-        List<IngredienteDTO> lista = servicioIngrediente.obtenerIngredientes(); 
-        mostrarIngredientes(lista);
+        try {
+            List<IngredienteDTO> lista = ingredienteBO.obtenerIngredientes();
+            mostrarIngredientes(lista);
+        }catch (NegocioException ex) {
+            JOptionPane.showMessageDialog(this, "Error al obtener los ingredientes", "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }
     public void mostrarIngredientes(List<IngredienteDTO> listaIngredientes) {
-        jPanel3.removeAll(); // Limpiar los componentes anteriores
+        
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(10, 10, 10, 10); // Espacio entre tarjetas
         gbc.anchor = GridBagConstraints.NORTHWEST;
@@ -201,8 +207,8 @@ public class Ingredientes extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 500, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 82, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 549, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 33, Short.MAX_VALUE))
         );
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));

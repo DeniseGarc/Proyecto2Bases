@@ -22,18 +22,13 @@
             <version>SNAPSHOT</version>
         </dependency>
         <dependency>
-            <groupId>com.mycompany</groupId>
-            <artifactId>presentacion</artifactId>
-            <version>1.0-SNAPSHOT</version>
-        </dependency>
-        <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>NegocioRestaurante</artifactId>
+            <artifactId>DominioRestaurante</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>DominioRestaurante</artifactId>
+            <artifactId>NegocioRestaurante</artifactId>
             <version>${project.version}</version>
         </dependency>
     </dependencies>

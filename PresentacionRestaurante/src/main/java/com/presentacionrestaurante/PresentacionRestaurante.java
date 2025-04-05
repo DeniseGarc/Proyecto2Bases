@@ -4,6 +4,10 @@
 
 package com.presentacionrestaurante;
 
+import GUIs.Ingredientes;
+
+
+
 /**
  *
  * @author Alici
@@ -11,6 +15,7 @@ package com.presentacionrestaurante;
 public class PresentacionRestaurante {
 
     public static void main(String[] args) {
-        System.out.println("Hello World!");
+        Ingredientes pantallaIngrediente = new Ingredientes();
+        pantallaIngrediente.setVisible(true);
     }
 }
