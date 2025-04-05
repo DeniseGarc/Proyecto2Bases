@@ -149,5 +149,18 @@ public class IngredienteDAO implements IIngredienteDAO {
             em.close();
         }
     } 
+
+    @Override
+    public Ingrediente buscarIngredientePorId(Long id) throws PersistenciaException {
+         EntityManager em = Conexion.crearConexion();
+        try {
+            return em.createQuery("SELECT i FROM Ingrediente i WHERE i.id = :id ", Ingrediente.class)
+                    .setParameter("id", id).getSingleResult();
+        } catch (Exception e) {
+            throw new PersistenciaException("Error al consultar ingredientes por unidad de medida: ", e);
+        } finally {
+            em.close();
+        }
+    }
     
 }
