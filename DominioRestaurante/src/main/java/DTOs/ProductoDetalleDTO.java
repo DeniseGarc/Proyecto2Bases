@@ -5,28 +5,28 @@
 package DTOs;
 
 import enumeradores.TipoProducto;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
  * @author Alici
  */
-public class ProductoDTO {
+public class ProductoDetalleDTO {
 
     private String nombre;
     private TipoProducto tipo;
     private double precio;
-    private boolean disponible;
-    private boolean habilitado;
+    List<IngredienteProductoDTO> ingredientes = new ArrayList<>();
 
-    public ProductoDTO() {
+    public ProductoDetalleDTO() {
     }
 
-    public ProductoDTO(String nombre, TipoProducto tipo, double precio, boolean disponible, boolean habilitado) {
+    public ProductoDetalleDTO(String nombre, TipoProducto tipo, double precio, List<IngredienteProductoDTO> ingredientes) {
         this.nombre = nombre;
         this.tipo = tipo;
         this.precio = precio;
-        this.disponible = disponible;
-        this.habilitado = habilitado;
+        this.ingredientes = ingredientes;
     }
 
     public String getNombre() {
@@ -53,20 +53,12 @@ public class ProductoDTO {
         this.precio = precio;
     }
 
-    public boolean isDisponible() {
-        return disponible;
+    public List<IngredienteProductoDTO> getIngredientes() {
+        return ingredientes;
     }
 
-    public void setDisponible(boolean disponible) {
-        this.disponible = disponible;
-    }
-
-    public boolean isHabilitado() {
-        return habilitado;
-    }
-
-    public void setHabilitado(boolean habilitado) {
-        this.habilitado = habilitado;
+    public void setIngredientes(List<IngredienteProductoDTO> ingredientes) {
+        this.ingredientes = ingredientes;
     }
 
 }

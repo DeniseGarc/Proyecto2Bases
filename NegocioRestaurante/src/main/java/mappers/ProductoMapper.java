@@ -4,7 +4,10 @@
  */
 package mappers;
 
+import DTOs.IngredienteProductoDTO;
 import DTOs.ProductoDTO;
+import DTOs.ProductoDetalleDTO;
+import entidades.DetalleProductoIngrediente;
 import entidades.Producto;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,10 +26,41 @@ public class ProductoMapper {
                             producto.getNombre(),
                             producto.getTipo(),
                             producto.getPrecio(),
-                            producto.isDisponible())
+                            producto.isDisponible(),
+                            producto.isHabilitada())
             );
         }
         return productosDTO;
+    }
+
+    public static ProductoDetalleDTO toDTO(Producto producto) {
+        ProductoDetalleDTO detallesProducto = new ProductoDetalleDTO();
+        detallesProducto.setNombre(producto.getNombre());
+        detallesProducto.setTipo(producto.getTipo());
+        detallesProducto.setPrecio(producto.getPrecio());
+        List<DetalleProductoIngrediente> listaDetallesProducto = producto.getDetallesProducto();
+        for (DetalleProductoIngrediente detalleProductoIngrediente : listaDetallesProducto) {
+            IngredienteProductoDTO ingrediente = new IngredienteProductoDTO(
+                    detalleProductoIngrediente.getIngrediente().getNombre(),
+                    detalleProductoIngrediente.getIngrediente().getUnidadMedida(),
+                    detalleProductoIngrediente.getCantidad()
+            );
+            detallesProducto.getIngredientes().add(ingrediente);
+        }
+        return detallesProducto;
+    }
+
+    // Aun falta terminar el metodo
+    public static Producto toEntity(ProductoDetalleDTO productoDTO) {
+        Producto producto = new Producto();
+        producto.setNombre(productoDTO.getNombre());
+        producto.setTipo(productoDTO.getTipo());
+        producto.setPrecio(productoDTO.getPrecio());
+        for (IngredienteProductoDTO ingrediente : productoDTO.getIngredientes()) {
+
+//            Ingrediente ingrediente = new Ingrediente();
+        }
+        return producto;
     }
 
 }

@@ -4,6 +4,7 @@
  */
 package plantillas;
 
+import control.CoordinadorAplicacion;
 import java.awt.Image;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -15,6 +16,7 @@ import javax.swing.JLabel;
  */
 public class Titulo extends javax.swing.JPanel {
 
+    private CoordinadorAplicacion control = new CoordinadorAplicacion();
     private JFrame frmPadre;
     private JFrame frmTarget;
 
@@ -69,8 +71,7 @@ public class Titulo extends javax.swing.JPanel {
     }
 
     private void regresar() {
-        frmTarget.setVisible(true);
-        frmPadre.dispose();
+        control.regresarPantalla(frmTarget, frmPadre);
     }
 
     public void setFrmPadre(JFrame frmPadre) {
