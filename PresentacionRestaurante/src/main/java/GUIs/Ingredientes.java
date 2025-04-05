@@ -11,6 +11,8 @@ import java.awt.*;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import java.util.List;
+import javax.swing.BorderFactory;
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -40,22 +42,29 @@ public class Ingredientes extends javax.swing.JFrame {
         }
     }
     public void mostrarIngredientes(List<IngredienteDTO> listaIngredientes) {
-        
+        // Configurar el diseño de jPanel3 como BorderLayout
+        jPanel3.setLayout(new BorderLayout());
+
+        // Crear un panel para las tarjetas y usar GridBagLayout para su distribución
+        JPanel panelTarjetas = new JPanel(new GridBagLayout());
+        panelTarjetas.setBackground(new Color(255,178,217));
         GridBagConstraints gbc = new GridBagConstraints();
-        gbc.insets = new Insets(10, 10, 10, 10); // Espacio entre tarjetas
+        gbc.insets = new Insets(10, 10, 10, 10);
         gbc.anchor = GridBagConstraints.NORTHWEST;
 
+        // Configuración inicial para la distribución en columnas y filas
         int columnas = 3;
         int fila = 0;
         int columna = 0;
 
+        // Agregar cada tarjeta al panelTarjetas
         for (IngredienteDTO ingrediente : listaIngredientes) {
             JPanel tarjeta = crearTarjetaIngrediente(ingrediente);
 
             gbc.gridx = columna;
             gbc.gridy = fila;
 
-            jPanel3.add(tarjeta, gbc);
+            panelTarjetas.add(tarjeta, gbc);
 
             columna++;
             if (columna >= columnas) {
@@ -64,26 +73,79 @@ public class Ingredientes extends javax.swing.JFrame {
             }
         }
 
+        //  botón Agregar
+        JButton btnAgregar = new JButton("Agregar");
+        btnAgregar.setFont(new Font("Arial", Font.BOLD, 14));
+        btnAgregar.setBackground(new Color(255, 119, 170)); 
+        btnAgregar.setForeground(Color.WHITE); // 
+        btnAgregar.setBorder(BorderFactory.createLineBorder(new Color(139, 0, 0), 2)); 
+        // boton eliminar
+        JButton btnEliminar = new JButton("Eliminar");
+        btnEliminar.setFont(new Font("Arial", Font.BOLD, 14));
+        btnEliminar.setBackground(new Color(255, 119, 170)); 
+        btnEliminar.setForeground(Color.WHITE); // 
+        btnEliminar.setBorder(BorderFactory.createLineBorder(new Color(139, 0, 0), 2)); 
+        //Panel para los botones
+        JPanel panelBotones = new JPanel(new GridLayout(2, 1, 10, 0));
+        panelBotones.add(btnAgregar);
+        panelBotones.add(btnEliminar);
+        
+        jPanel3.add(panelBotones, BorderLayout.WEST); 
+        jPanel3.add(panelTarjetas, BorderLayout.CENTER);
+
+        
         jPanel3.revalidate();
         jPanel3.repaint();
     }
+
     
     private JPanel crearTarjetaIngrediente(IngredienteDTO ingrediente) {
+        // Crear el panel principal
         JPanel panel = new JPanel();
         panel.setPreferredSize(new Dimension(200, 120));
-        panel.setBackground(new Color(255, 227, 242));
+        panel.setBackground(new Color(255, 227, 242)); 
         panel.setLayout(new BorderLayout());
 
+        // Panel central para el nombre
+        JPanel panelNombre = new JPanel();
+        panelNombre.setBackground(new Color(255, 192, 203)); 
         JLabel lblNombre = new JLabel(ingrediente.getNombre(), SwingConstants.CENTER);
-        JLabel lblStock = new JLabel("Stock: " + ingrediente.getStock(), SwingConstants.CENTER);
-        JLabel lblUnidad = new JLabel("Unidad: " + ingrediente.getUnidadMedida(), SwingConstants.CENTER);
+        lblNombre.setFont(new Font("Arial", Font.BOLD, 16));
+        panelNombre.add(lblNombre);
 
-        JPanel panelCentral = new JPanel(new GridLayout(2, 1));
-        panelCentral.add(lblStock);
-        panelCentral.add(lblUnidad);
+        // Panel para la información de stock y unidad
+        JLabel lblStock = new JLabel("Stock: " + ingrediente.getStock(), SwingConstants.LEFT);
+        lblStock.setFont(new Font("Arial", Font.PLAIN, 14));
+        JLabel lblUnidad = new JLabel("Unidad: " + ingrediente.getUnidadMedida(), SwingConstants.LEFT);
+        lblUnidad.setFont(new Font("Arial", Font.PLAIN, 14));
 
-        panel.add(lblNombre, BorderLayout.NORTH);
-        panel.add(panelCentral, BorderLayout.CENTER);
+        // Personalización de botones
+        JButton btnMenos = new JButton("-");
+        btnMenos.setFont(new Font("Arial", Font.BOLD, 14));
+        btnMenos.setBackground(new Color(240, 128, 128)); 
+        btnMenos.setForeground(Color.WHITE); 
+        btnMenos.setBorder(BorderFactory.createLineBorder(new Color(139, 0, 0), 2)); 
+
+        JButton btnMas = new JButton("+");
+        btnMas.setFont(new Font("Arial", Font.BOLD, 14));
+        btnMas.setBackground(new Color(60, 179, 113)); 
+        btnMas.setForeground(Color.WHITE);
+        btnMas.setBorder(BorderFactory.createLineBorder(new Color(0, 100, 0), 2)); 
+
+        // Panel para botones
+        JPanel panelBotones = new JPanel(new GridLayout(1, 2, 10, 0)); // Espaciado entre botones
+        panelBotones.add(btnMenos);
+        panelBotones.add(btnMas);
+
+        // Panel inferior 
+        JPanel panelInferior = new JPanel(new BorderLayout());
+        panelInferior.add(lblUnidad, BorderLayout.NORTH);
+        panelInferior.add(lblStock, BorderLayout.CENTER);
+        panelInferior.add(panelBotones, BorderLayout.SOUTH);
+
+        // Combinar todas las partes
+        panel.add(panelNombre, BorderLayout.NORTH);
+        panel.add(panelInferior, BorderLayout.CENTER);
 
         return panel;
     }
@@ -97,7 +159,6 @@ public class Ingredientes extends javax.swing.JFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
-        java.awt.GridBagConstraints gridBagConstraints;
 
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
@@ -105,8 +166,6 @@ public class Ingredientes extends javax.swing.JFrame {
         lblRegresar = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jPanel3 = new javax.swing.JPanel();
-        btnEliminar = new javax.swing.JButton();
-        btnAgregar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(1070, 700));
@@ -151,43 +210,6 @@ public class Ingredientes extends javax.swing.JFrame {
 
         jPanel3.setBackground(new java.awt.Color(255, 176, 217));
         jPanel3.setLayout(new java.awt.GridBagLayout());
-
-        btnEliminar.setBackground(new java.awt.Color(255, 227, 242));
-        btnEliminar.setText("eliminar");
-        btnEliminar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        btnEliminar.setPreferredSize(new java.awt.Dimension(120, 120));
-        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEliminarActionPerformed(evt);
-            }
-        });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.ipadx = 73;
-        gridBagConstraints.ipady = 100;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(51, 49, 244, 674);
-        jPanel3.add(btnEliminar, gridBagConstraints);
-
-        btnAgregar.setBackground(new java.awt.Color(255, 227, 242));
-        btnAgregar.setText("agregar");
-        btnAgregar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        btnAgregar.setPreferredSize(new java.awt.Dimension(120, 120));
-        btnAgregar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAgregarActionPerformed(evt);
-            }
-        });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.ipadx = 74;
-        gridBagConstraints.ipady = 100;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(60, 49, 0, 674);
-        jPanel3.add(btnAgregar, gridBagConstraints);
-
         jScrollPane1.setViewportView(jPanel3);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -216,19 +238,9 @@ public class Ingredientes extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnAgregarActionPerformed
-
-    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnEliminarActionPerformed
-
    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnAgregar;
-    private javax.swing.JButton btnEliminar;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
