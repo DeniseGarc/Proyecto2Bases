@@ -66,15 +66,18 @@ public class PanelVistaGridProductos extends javax.swing.JPanel implements Vista
     /**
      * Muestra una lista de productos en el panel. Cada producto es representado
      * por un PanelProducto que se añade dinámicamente al panel contenedor en
-     * formato de cuadrícula.
+     * formato de cuadrícula. Agrega solamente los productos habilitados.
      *
      * @param productos Lista de productos a mostrar.
      */
     @Override
     public void mostrarProductos(List<ProductoDTO> productos) {
+
         panelContenedorProductos.removeAll();
         for (ProductoDTO producto : productos) {
-            panelContenedorProductos.add(new PanelProducto(producto));
+            if (producto.isHabilitado()) {
+                panelContenedorProductos.add(new PanelProducto(producto));
+            }
         }
         panelContenedorProductos.revalidate();
         panelContenedorProductos.repaint();

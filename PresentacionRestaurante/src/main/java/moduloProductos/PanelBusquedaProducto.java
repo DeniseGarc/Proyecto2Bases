@@ -23,8 +23,7 @@ public class PanelBusquedaProducto extends javax.swing.JPanel {
     private CoordinadorAplicacion control = new CoordinadorAplicacion();
     private VistaProductos vista;
 
-    public PanelBusquedaProducto(VistaProductos vista) {
-        this.vista = vista;
+    public PanelBusquedaProducto() {
         initComponents();
         cargarCategorias();
         cargarListeners();
@@ -57,7 +56,7 @@ public class PanelBusquedaProducto extends javax.swing.JPanel {
 
         txtBusqueda.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         txtBusqueda.setHorizontalAlignment(javax.swing.JTextField.LEFT);
-        txtBusqueda.setBorder(null);
+        txtBusqueda.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255), 3));
         txtBusqueda.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
         add(txtBusqueda, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, 510, 30));
 
@@ -72,6 +71,10 @@ public class PanelBusquedaProducto extends javax.swing.JPanel {
 
         add(SearchPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 40, 30, 30));
     }// </editor-fold>//GEN-END:initComponents
+
+    public void setVista(VistaProductos vista) {
+        this.vista = vista;
+    }
 
     private void cargarCategorias() {
         cBoxTipo.addItem("Seleccione una categoria");

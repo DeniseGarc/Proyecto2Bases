@@ -2,6 +2,7 @@ package moduloProductos;
 
 import DTOs.ProductoDTO;
 import java.util.List;
+import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -99,4 +100,9 @@ public class PanelVistaListaProductos extends javax.swing.JPanel implements Vist
             });
         }
     }
+
+    public JTable getTblProductos() {
+        return tblProductos;
+    }
+
 }

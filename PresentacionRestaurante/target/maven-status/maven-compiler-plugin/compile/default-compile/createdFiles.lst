@@ -1,5 +1,6 @@
 GUIs\RegistrarClienteNuevo$2.class
 GUIs\MenuPrincipal$3.class
+GUIs\PantallaProductos$5.class
 plantillas\Titulo$1.class
 moduloProductos\PanelVistaListaProductos$1.class
 GUIs\PantallaTomaComanda$1.class
@@ -33,9 +34,9 @@ GUIs\MenuPrincipal$2.class
 GUIs\PantallaProductos$3.class
 GUIs\RegistrarClienteNuevo$3.class
 GUIs\frmAgregarIngrediente.class
+GUIs\PantallaProductos$4.class
 GUIs\EliminarIngrediente.class
 plantillas\PanelIngredienteProducto$1.class
-GUIs\PantallaDetallesProducto$2.class
 com\presentacionrestaurante\PresentacionRestaurante.class
 GUIs\PantallaTomaComanda.class
 GUIs\frmAgregarIngrediente$1.class

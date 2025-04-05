@@ -24,7 +24,7 @@ public class PantallaTomaComanda extends javax.swing.JFrame {
     public PantallaTomaComanda() {
         initComponents();
         cargarBanner();
-        cargarBarraBusqueda();
+        configurarBarraBusqueda();
         panelContenedorProductosComanda.setLayout(new BoxLayout(panelContenedorProductosComanda, BoxLayout.Y_AXIS));
         panelContenedorProductosComanda.add(new PanelProductoComanda());
         panelContenedorProductosComanda.add(new PanelProductoComanda());
@@ -41,7 +41,7 @@ public class PantallaTomaComanda extends javax.swing.JFrame {
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated
-    // Code">//GEN-BEGIN:initComponents
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
@@ -57,7 +57,7 @@ public class PantallaTomaComanda extends javax.swing.JFrame {
         lblClienteTitulo = new javax.swing.JLabel();
         banner = new plantillas.Titulo();
         panelProductos = new moduloProductos.PanelVistaGridProductos();
-        barraBusquedaProducto = new moduloProductos.PanelBusquedaProducto(panelProductos);
+        panelBusquedaProducto = new moduloProductos.PanelBusquedaProducto();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -102,15 +102,16 @@ public class PantallaTomaComanda extends javax.swing.JFrame {
 
         panelContenedorProductosComanda.setBackground(new java.awt.Color(255, 227, 242));
 
-        javax.swing.GroupLayout panelContenedorProductosComandaLayout = new javax.swing.GroupLayout(
-                panelContenedorProductosComanda);
+        javax.swing.GroupLayout panelContenedorProductosComandaLayout = new javax.swing.GroupLayout(panelContenedorProductosComanda);
         panelContenedorProductosComanda.setLayout(panelContenedorProductosComandaLayout);
         panelContenedorProductosComandaLayout.setHorizontalGroup(
-                panelContenedorProductosComandaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGap(0, 308, Short.MAX_VALUE));
+            panelContenedorProductosComandaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 308, Short.MAX_VALUE)
+        );
         panelContenedorProductosComandaLayout.setVerticalGroup(
-                panelContenedorProductosComandaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGap(0, 574, Short.MAX_VALUE));
+            panelContenedorProductosComandaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 574, Short.MAX_VALUE)
+        );
 
         scrollPaneProductosComanda.setViewportView(panelContenedorProductosComanda);
 
@@ -134,8 +135,10 @@ public class PantallaTomaComanda extends javax.swing.JFrame {
         lblClienteTitulo.setText("Cliente:");
         jPanel1.add(lblClienteTitulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 30, -1, -1));
         jPanel1.add(banner, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
-        jPanel1.add(barraBusquedaProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 70, -1, 80));
         jPanel1.add(panelProductos, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 150, -1, -1));
+
+        panelBusquedaProducto.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
+        jPanel1.add(panelBusquedaProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 70, -1, -1));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1070, 700));
 
@@ -151,7 +154,7 @@ public class PantallaTomaComanda extends javax.swing.JFrame {
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        
+
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
@@ -182,8 +185,9 @@ public class PantallaTomaComanda extends javax.swing.JFrame {
         });
     }
 
-    private void cargarBarraBusqueda() {
-        barraBusquedaProducto.setBackground(new Color(255, 176, 217));
+    private void configurarBarraBusqueda() {
+        panelBusquedaProducto.setVista(panelProductos);
+        panelBusquedaProducto.setBackground(new Color(255, 176, 217));
     }
 
     private void cargarBanner() {
@@ -194,7 +198,6 @@ public class PantallaTomaComanda extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private plantillas.Titulo banner;
-    private moduloProductos.PanelBusquedaProducto barraBusquedaProducto;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
@@ -204,6 +207,7 @@ public class PantallaTomaComanda extends javax.swing.JFrame {
     private javax.swing.JLabel lblNumeroMesa;
     private javax.swing.JLabel lblTotal;
     private javax.swing.JLabel lblTotalTitulo;
+    private moduloProductos.PanelBusquedaProducto panelBusquedaProducto;
     private javax.swing.JPanel panelContenedorProductosComanda;
     private moduloProductos.PanelVistaGridProductos panelProductos;
     private javax.swing.JScrollPane scrollPaneProductosComanda;
