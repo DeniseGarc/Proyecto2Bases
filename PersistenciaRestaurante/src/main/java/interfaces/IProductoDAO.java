@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Interface.java to edit this template
- */
 package interfaces;
 
 import entidades.Producto;
@@ -49,17 +45,25 @@ public interface IProductoDAO {
      * Actualiza los datos de un producto existente.
      *
      * @param producto el producto a actualizar.
-     * @return {@code true} si la actualización fue exitosa.
+     * @return true si la actualización fue exitosa.
      * @throws PersistenciaException si ocurre un error durante la
      * actualización.
      */
     public boolean actualizarProducto(Producto producto) throws PersistenciaException;
 
+    /**
+     * Cambia el estado de habilitado de un producto.
+     *
+     * @param nombre Nombre exacto del producto a modificar
+     * @param habilitado Nuevo estado de habilitado.
+     * @return true si la operación fue exitosa.
+     * @throws PersistenciaException Si el producto no existe o hay un error de
+     * acceso a datos.
+     */
     public boolean deshabilitarHabilitarProducto(String nombre, boolean habilitado) throws PersistenciaException;
 
     /**
-     * Obtiene una lista de productos cuyo nombre contenga el texto
-     * especificado.
+     * Busca productos cuyo nombre contenga el texto especificado
      *
      * @param nombre parte del nombre del producto a buscar.
      * @return lista de productos que coinciden con el filtro.
@@ -68,8 +72,7 @@ public interface IProductoDAO {
     public List<Producto> obtenerProductosFiltrados(String nombre) throws PersistenciaException;
 
     /**
-     * Obtiene una lista de productos cuyo nombre contenga el texto especificado
-     * y pertenezcan a una categoría específica.
+     * Busca productos por nombre parcial y categoría específica.
      *
      * @param nombre parte del nombre del producto a buscar.
      * @param categoria categoría del producto.
@@ -79,8 +82,7 @@ public interface IProductoDAO {
     public List<Producto> obtenerProductosFiltrados(String nombre, TipoProducto categoria) throws PersistenciaException;
 
     /**
-     * Obtiene una lista de productos los cuales pertenezcan a una categoría
-     * específica.
+     * Obtiene todos los productos de una categoría específica.
      *
      * @param categoria categoría del producto.
      * @return lista de productos filtrados por categoria.

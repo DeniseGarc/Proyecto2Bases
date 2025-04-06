@@ -283,7 +283,7 @@ public class PantallaAdministrarProducto extends javax.swing.JFrame {
     private boolean validarNombre() {
         boolean validez = false;
         try {
-            validez = control.validarNombre(txtNombre.getText());
+            validez = control.validarNombreProducto(txtNombre.getText());
         } catch (CoordinadorException ex) {
             Logger.getLogger(PantallaAdministrarProducto.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(null, ex.getMessage(), "Ha ocurrido un error inesperado", JOptionPane.ERROR_MESSAGE);

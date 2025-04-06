@@ -50,12 +50,12 @@ public class CoordinadorAplicacion {
         target.setVisible(true);
         padre.dispose();
     }
-    
-    public void PantallaInicio(){
+
+    public void PantallaInicio() {
         PantallaInicio inicio = new PantallaInicio();
         inicio.setVisible(true);
     }
-    
+
     public void PantallaPrinicipal(JFrame frame) {
         MenuPrincipal menu = new MenuPrincipal();
         menu.setVisible(true);
@@ -117,9 +117,9 @@ public class CoordinadorAplicacion {
      * Método para redirigir a la pantalla que muestra los detalles del producto
      * seleccionado.
      *
-     * @param frame Frame padre desde el cual se invoca la siguiente pantalla
+     * @param frame Frame padre desde el cual se invoca la siguiente pantalla.
      * @param producto Producto y sus ingredientes los cuales se van a cargar en
-     * la pantalla
+     * la pantalla.
      */
     public void pantallaDetallesProducto(JFrame frame, ProductoDetalleDTO producto) {
         PantallaDetallesProducto pantallaDetallesProducto = new PantallaDetallesProducto(producto);
@@ -127,12 +127,24 @@ public class CoordinadorAplicacion {
         frame.dispose();
     }
 
+    /**
+     * Método para redirigir a la pantalla que permite agregar un producto.
+     *
+     * @param frame Frame padre desde el cual se invoca la siguiente pantalla.
+     */
     public void pantallaAgregarProducto(JFrame frame) {
         PantallaAdministrarProducto pantallaAdministrarProducto = new PantallaAdministrarProducto(Modo.AGREGAR, null);
         pantallaAdministrarProducto.setVisible(true);
         frame.dispose();
     }
 
+    /**
+     * Método para redirigir a la pantalla que permite actualizar un producto.
+     *
+     * @param frame Frame padre desde el cual se invoca la siguiente pantalla.
+     * @param producto Producto y sus ingredientes los cuales se van a cargar en
+     * la pantalla.
+     */
     public void pantallaModificarProducto(JFrame frame, ProductoDetalleDTO producto) {
         PantallaAdministrarProducto pantallaAdministrarProducto = new PantallaAdministrarProducto(Modo.MODIFICAR, producto);
         pantallaAdministrarProducto.setVisible(true);
@@ -140,10 +152,11 @@ public class CoordinadorAplicacion {
     }
 
     /**
-     * Obtiene todos los productos registrados.
+     * Obtiene todos los productos registrados en el sistema.
      *
-     * @return
-     * @throws CoordinadorException
+     * @return Lista de DTOs con información básica de los productos
+     * @throws CoordinadorException Si ocurre un error al recuperar los
+     * productos
      */
     public List<ProductoDTO> obtenerProductos() throws CoordinadorException {
         try {
@@ -155,12 +168,12 @@ public class CoordinadorAplicacion {
     }
 
     /**
-     * Obtiene los productos filtrados.
+     * Obtiene productos filtrados por nombre y/o categoría.
      *
-     * @param texto
-     * @param categoria
-     * @return
-     * @throws CoordinadorException
+     * @param texto Texto para búsqueda parcial en nombres (puede ser null)
+     * @param categoria Categoría para filtrar (puede ser null)
+     * @return Lista de productos que coinciden con los criterios
+     * @throws CoordinadorException Si ocurre un error en el filtrado
      */
     public List<ProductoDTO> obtenerProductosFiltrados(String texto, TipoProducto categoria) throws CoordinadorException {
         try {
@@ -178,11 +191,12 @@ public class CoordinadorAplicacion {
     }
 
     /**
-     * Obtiene el producto y sus ingredientes a partir de su nombre
+     * Obtiene los detalles completos de un producto por su nombre.
      *
-     * @param nombre
-     * @return
-     * @throws CoordinadorException
+     * @param nombre Nombre exacto del producto a buscar
+     * @return DTO con todos los detalles del producto
+     * @throws CoordinadorException Si el producto no existe o hay un error al
+     * recuperarlo
      */
     public ProductoDetalleDTO obtenerDetallesDelProducto(String nombre) throws CoordinadorException {
         if (nombre == null || nombre.trim().isEmpty()) {
@@ -200,7 +214,17 @@ public class CoordinadorAplicacion {
         }
     }
 
-    public boolean validarNombre(String nombre) throws CoordinadorException {
+    /**
+     * Verifica si un nombre de producto es válido y no está duplicado en el
+     * sistema.
+     *
+     * @param nombre Nombre del producto a validar
+     * @return true si el nombre es válido y único, false si ya existe o es
+     * inválido
+     * @throws CoordinadorException Si ocurre un error al verificar la
+     * existencia del producto
+     */
+    public boolean validarNombreProducto(String nombre) throws CoordinadorException {
         if (nombre == null || nombre.trim().isEmpty() || nombre.length() > 100) {
             return false;
         }
@@ -212,6 +236,14 @@ public class CoordinadorAplicacion {
         }
     }
 
+    /**
+     * Registra un nuevo producto en el sistema después de validar sus datos.
+     *
+     * @param producto DTO con los datos del nuevo producto
+     * @return true si el registro fue exitoso
+     * @throws CoordinadorException Si los datos son inválidos o ocurre un error
+     * en el registro
+     */
     public boolean agregarProducto(ProductoDetalleDTO producto) throws CoordinadorException {
         if (validarDatosProducto(producto)) {
             try {
@@ -224,6 +256,14 @@ public class CoordinadorAplicacion {
         return false;
     }
 
+    /**
+     * Actualiza los datos de un producto existente después de validarlos.
+     *
+     * @param producto DTO con los datos actualizados del producto
+     * @return true si la actualización fue exitosa
+     * @throws CoordinadorException Si los datos son inválidos o ocurre un error
+     * en la actualización
+     */
     public boolean actualizarProducto(ProductoDetalleDTO producto) throws CoordinadorException {
         if (validarDatosProducto(producto)) {
             try {
@@ -236,6 +276,15 @@ public class CoordinadorAplicacion {
         return false;
     }
 
+    /**
+     * Valida los datos básicos de un producto antes de su registro o
+     * actualización.
+     *
+     * @param producto DTO con los datos del producto a validar
+     * @return true si todos los datos son válidos
+     * @throws CoordinadorException Si algún dato requerido es inválido o
+     * faltante
+     */
     private boolean validarDatosProducto(ProductoDetalleDTO producto) throws CoordinadorException {
         if (producto == null) {
             throw new CoordinadorException("El producto a agregar no puede ser nulo");
@@ -254,7 +303,7 @@ public class CoordinadorAplicacion {
         }
         return true;
     }
-    
+
     public IngredienteDTO agregarIngrediente(IngredienteDTO ingrediente) throws CoordinadorException{
         if(ingrediente==null){
             throw new CoordinadorException("El producto a agregar no puede ser nulo");
@@ -275,47 +324,56 @@ public class CoordinadorAplicacion {
         }
         return ingrediente;
     }
+
     /**
      * Muestra todos los ingredientes
+     *
      * @return lista de ingredientesDTO
-     * @throws CoordinadorException 
+     * @throws CoordinadorException
      */
     public List<IngredienteDTO> mostrarIngredientes () throws CoordinadorException{
         try {
-           return ingredienteBO.obtenerIngredientes();
+            return ingredienteBO.obtenerIngredientes();
         } catch (NegocioException ex) {
             Logger.getLogger(CoordinadorAplicacion.class.getName()).log(Level.SEVERE, null, ex);
             throw new CoordinadorException("Ha ocurrido un error al obtener los ingredientes");
         }
     }
-    
+
     public List<IngredienteDTO> mostrarIngredientesSinProducto() throws CoordinadorException{
         try {
-           return ingredienteBO.obtenerIngredientesSinProducto();
+            return ingredienteBO.obtenerIngredientesSinProducto();
         } catch (NegocioException ex) {
             Logger.getLogger(CoordinadorAplicacion.class.getName()).log(Level.SEVERE, null, ex);
             throw new CoordinadorException("Ha ocurrido un error al obtener los Ingredientes");
         }
     }
-    
+
     public IngredienteDTO modificarStock(Long id, int stock)throws CoordinadorException{
         try {
-           return ingredienteBO.actualizarStock(id, stock);
-        } catch (NegocioException ex) {
-            Logger.getLogger(CoordinadorAplicacion.class.getName()).log(Level.SEVERE, null, ex);
-            throw new CoordinadorException("Ha ocurrido un error al actualizar el stock");
-        }
-    }
-    
-    public IngredienteDTO buscarPorNombreYUnidad(String nombre, String unidad) throws CoordinadorException{
-        try{
-        return ingredienteBO.buscarPorNombreYUnidad(nombre, unidad);
+            return ingredienteBO.actualizarStock(id, stock);
         } catch (NegocioException ex) {
             Logger.getLogger(CoordinadorAplicacion.class.getName()).log(Level.SEVERE, null, ex);
             throw new CoordinadorException("Ha ocurrido un error al actualizar el stock");
         }
     }
 
+    public IngredienteDTO buscarPorNombreYUnidad(String nombre, String unidad) throws CoordinadorException{
+        try{
+            return ingredienteBO.buscarPorNombreYUnidad(nombre, unidad);
+        } catch (NegocioException ex) {
+            Logger.getLogger(CoordinadorAplicacion.class.getName()).log(Level.SEVERE, null, ex);
+            throw new CoordinadorException("Ha ocurrido un error al actualizar el stock");
+        }
+    }
+
+    /**
+     * Actualiza el estado de habilitado de un producto (activo/inactivo).
+     *
+     * @param nombre Nombre exacto del producto cuyo estado se desea cambiar
+     * @return true si la operación fue exitosa, false en caso contrario
+     * @throws CoordinadorException Si ocurre un error al actualizar el estado
+     */
     public boolean actualizarEstadoProducto(String nombre) throws CoordinadorException {
         try {
             return productoBO.cambiarEstadoProducto(nombre);
