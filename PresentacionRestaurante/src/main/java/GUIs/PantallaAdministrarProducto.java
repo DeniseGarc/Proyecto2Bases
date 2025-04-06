@@ -25,24 +25,28 @@ public class PantallaAdministrarProducto extends javax.swing.JFrame {
 
     private final Modo modo;
     private final CoordinadorAplicacion control = new CoordinadorAplicacion();
-    List<PanelIngredienteProducto> ingredientes = new ArrayList();
+    List<PanelIngredienteProducto> ingredientesPanelLateral;
     private final ProductoDetalleDTO producto;
 
     public PantallaAdministrarProducto(Modo modo, ProductoDetalleDTO producto) {
+        ingredientesPanelLateral = new ArrayList<>();
         this.modo = modo;
         this.producto = producto;
         initComponents();
+        configurarBanner();
+        cargarCategorias();
+        btnAccion.setEnabled(false);
         panelContenedorIngredientesProducto.setLayout(new BoxLayout(panelContenedorIngredientesProducto, BoxLayout.Y_AXIS));
+        agregarListeners();
         if (modo == Modo.MODIFICAR) {
+            btnAccion.setText("Actualizar producto");
             txtNombre.setEnabled(false);
             cBoxCategoria.setEnabled(false);
             cargarDatosProducto();
             cargarIngredientesProducto();
+            cargarResumen();
         }
-        btnAccion.setEnabled(false);
-        configurarBanner();
-        cargarCategorias();
-        agregarListeners();
+
     }
 
     @SuppressWarnings("unchecked")
@@ -171,25 +175,42 @@ public class PantallaAdministrarProducto extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAccionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAccionActionPerformed
-        if (modo == Modo.AGREGAR) {
-            agregarProducto();
-        } else {
-            actualizarProducto();
-        }
+        mandarProducto();
     }//GEN-LAST:event_btnAccionActionPerformed
 
     private void cargarDatosProducto() {
         txtNombre.setText(producto.getNombre());
         cBoxCategoria.setSelectedItem(producto.getTipo());
-
+        txtPrecio.setValue(producto.getPrecio());
     }
 
+    /**
+     * Carga los ingredientes del producto, cuando se esta en el modo actualizar
+     */
     private void cargarIngredientesProducto() {
         for (IngredienteProductoDTO ingrediente : producto.getIngredientes()) {
-            PanelIngredienteProducto panelIngrediente = new PanelIngredienteProducto(ingrediente);
-            panelContenedorIngredientesProducto.add(panelIngrediente);
-            ingredientes.add(panelIngrediente);
+            agregarIngrediente(ingrediente);
         }
+    }
+
+    private void agregarIngrediente(IngredienteProductoDTO ingrediente) {
+        PanelIngredienteProducto panelIngrediente = new PanelIngredienteProducto(ingrediente);
+        panelContenedorIngredientesProducto.add(panelIngrediente);
+        ingredientesPanelLateral.add(panelIngrediente);
+        panelContenedorIngredientesProducto.revalidate();
+        panelContenedorIngredientesProducto.repaint();
+        agregarListenerCantidadIngrediente(panelIngrediente);
+    }
+
+    private void agregarListenerCantidadIngrediente(PanelIngredienteProducto panelIngrediente) {
+        panelIngrediente.getTxtCantidad().addChangeListener(e -> {
+            if ((Integer) panelIngrediente.getTxtCantidad().getValue() == 0) {
+                panelContenedorIngredientesProducto.remove(panelIngrediente);
+                ingredientesPanelLateral.remove(panelIngrediente);
+                panelContenedorIngredientesProducto.revalidate();
+                panelContenedorIngredientesProducto.repaint();
+            }
+        });
     }
 
     private void cargarCategorias() {
@@ -230,11 +251,16 @@ public class PantallaAdministrarProducto extends javax.swing.JFrame {
     }
 
     private void cargarResumen() {
-        boolean lleno = (validarNombre()
-                && cBoxCategoria.getSelectedIndex() != 0
-                && validarPrecio()
-                && !ingredientes.isEmpty());
-
+        boolean lleno;
+        if (modo == Modo.AGREGAR) {
+            lleno = (validarNombre()
+                    && cBoxCategoria.getSelectedIndex() != 0
+                    && validarPrecio());
+        } else {
+            lleno = (!txtNombre.getText().isBlank()
+                    && cBoxCategoria.getSelectedIndex() != 0
+                    && validarPrecio());
+        }
         btnAccion.setEnabled(lleno);
 
         if (lleno) {
@@ -285,12 +311,6 @@ public class PantallaAdministrarProducto extends javax.swing.JFrame {
         fondo.repaint();
     }
 
-    private void agregarIngrediente(IngredienteProductoDTO ingrediente) {
-        PanelIngredienteProducto panelIngrediente = new PanelIngredienteProducto(ingrediente);
-        panelContenedorIngredientesProducto.add(panelIngrediente);
-        ingredientes.add(panelIngrediente);
-    }
-
     private void configurarBanner() {
         String titulo;
         if (modo == Modo.AGREGAR) {
@@ -303,17 +323,36 @@ public class PantallaAdministrarProducto extends javax.swing.JFrame {
         banner.setFrmTarget(new PantallaProductos());
     }
 
-    private void agregarProducto() {
-
+    private void mandarProducto() {
+        if (ingredientesPanelLateral.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Seleccione al menos un ingrediente para el producto", "", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            ProductoDetalleDTO producto = generarProducto();
+            try {
+                if (modo == Modo.AGREGAR) {
+                    control.agregarProducto(producto);
+                } else {
+                    control.actualizarProducto(producto);
+                }
+            } catch (CoordinadorException ex) {
+                Logger.getLogger(PantallaAdministrarProducto.class.getName()).log(Level.SEVERE, null, ex);
+                JOptionPane.showMessageDialog(null, ex.getMessage(), "Ha ocurrido un error inesperado", JOptionPane.ERROR_MESSAGE);
+            }
+        }
     }
 
-    private void actualizarProducto() {
-
-    }
-
+    /**
+     * Método que toma los valores de los campos para crear un
+     * IngredieneProductoDTO, para obtener los ingredientes se recorre la lista
+     * de paneles laterales, los cuales devuelven el IngredienteProductoDTO que
+     * contienen.
+     *
+     * @return ProductoDetalleDTO que guarda los datos del producto y sus
+     * ingredientes con cantidades.
+     */
     private ProductoDetalleDTO generarProducto() {
         List<IngredienteProductoDTO> ingredientesProducto = new ArrayList<>();
-        for (PanelIngredienteProducto panelIngrediente : ingredientes) {
+        for (PanelIngredienteProducto panelIngrediente : ingredientesPanelLateral) {
             ingredientesProducto.add(panelIngrediente.getIngrediente());
         }
         return new ProductoDetalleDTO(

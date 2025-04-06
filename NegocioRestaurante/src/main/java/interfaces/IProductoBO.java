@@ -26,7 +26,9 @@ public interface IProductoBO {
 
     public ProductoDetalleDTO obtenerProductoDetallesPorNombre(String nombre) throws NegocioException;
 
-    public ProductoDetalleDTO agregarProducto(ProductoDetalleDTO productoNuevo) throws NegocioException;
+    public boolean agregarProducto(ProductoDetalleDTO productoNuevo) throws NegocioException;
 
     public boolean cambiarEstadoProducto(String nombre) throws NegocioException;
+
+    public boolean actualizarProducto(ProductoDetalleDTO productoActualizar) throws NegocioException;
 }

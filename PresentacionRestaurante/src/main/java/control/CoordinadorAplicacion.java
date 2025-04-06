@@ -124,7 +124,10 @@ public class CoordinadorAplicacion {
         frame.dispose();
     }
 
-    public void pantallaModificarProducto() {
+    public void pantallaModificarProducto(JFrame frame, ProductoDetalleDTO producto) {
+        PantallaAdministrarProducto pantallaAdministrarProducto = new PantallaAdministrarProducto(Modo.MODIFICAR, producto);
+        pantallaAdministrarProducto.setVisible(true);
+        frame.dispose();
     }
 
     /**
@@ -200,8 +203,31 @@ public class CoordinadorAplicacion {
         }
     }
 
-    //falta terminar metodo con parte ingredientes
-    public ProductoDetalleDTO agregarProducto(ProductoDetalleDTO producto) throws CoordinadorException {
+    public boolean agregarProducto(ProductoDetalleDTO producto) throws CoordinadorException {
+        if (validarDatosProducto(producto)) {
+            try {
+                return productoBO.agregarProducto(producto);
+            } catch (NegocioException ex) {
+                Logger.getLogger(CoordinadorAplicacion.class.getName()).log(Level.SEVERE, null, ex);
+                throw new CoordinadorException("Ha ocurrido un error al intentar agregar el producto");
+            }
+        }
+        return false;
+    }
+
+    public boolean actualizarProducto(ProductoDetalleDTO producto) throws CoordinadorException {
+        if (validarDatosProducto(producto)) {
+            try {
+                return productoBO.actualizarProducto(producto);
+            } catch (NegocioException ex) {
+                Logger.getLogger(CoordinadorAplicacion.class.getName()).log(Level.SEVERE, null, ex);
+                throw new CoordinadorException("Ha ocurrido un error al intentar actualizar el producto");
+            }
+        }
+        return false;
+    }
+
+    private boolean validarDatosProducto(ProductoDetalleDTO producto) throws CoordinadorException {
         if (producto == null) {
             throw new CoordinadorException("El producto a agregar no puede ser nulo");
         }
@@ -217,7 +243,7 @@ public class CoordinadorAplicacion {
         if (producto.getIngredientes().isEmpty() || producto.getIngredientes() == null) {
             throw new CoordinadorException("El producto no tiene ingredientes asociados");
         }
-        return producto;
+        return true;
     }
 
     public boolean actualizarEstadoProducto(String nombre) throws CoordinadorException {

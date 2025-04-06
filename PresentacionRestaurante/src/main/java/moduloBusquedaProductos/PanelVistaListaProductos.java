@@ -95,7 +95,7 @@ public class PanelVistaListaProductos extends javax.swing.JPanel implements Vist
             modeloTablaProductos.addRow(new Object[]{
                 producto.getNombre(),
                 producto.getTipo().toString().toLowerCase(),
-                String.valueOf("$ " + producto.getPrecio()),
+                String.format("$ %.2f", producto.getPrecio()),
                 producto.isHabilitado() ? "Habilitado" : "Deshabilitado"
             });
         }

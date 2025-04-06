@@ -91,20 +91,18 @@ public class ProductoDAO implements IProductoDAO {
      * Registra un nuevo producto en la base de datos.
      *
      * @param producto el producto a registrar.
-     * @return el producto registrado con su ID asignado.
+     * @return true si es que fue posible registrar el producto, false en caso
+     * contrario.
      * @throws PersistenciaException si ocurre un error durante el registro.
      */
     @Override
-    public Producto registrarProducto(Producto producto) throws PersistenciaException {
+    public boolean registrarProducto(Producto producto) throws PersistenciaException {
         EntityManager em = Conexion.crearConexion();
         try {
             em.getTransaction().begin();
             em.persist(producto);
             em.getTransaction().commit();
-            if (producto.getId() == null) {
-                return null;
-            }
-            return producto;
+            return producto.getId() != null;
         } catch (Exception e) {
             throw new PersistenciaException("Error al registrar producto: ", e);
         } finally {

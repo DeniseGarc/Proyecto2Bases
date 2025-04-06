@@ -7,7 +7,6 @@ package GUIs;
 import DTOs.ProductoDetalleDTO;
 import control.CoordinadorAplicacion;
 import control.exception.CoordinadorException;
-import enumeradores.TipoProducto;
 import java.awt.Color;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -118,11 +117,13 @@ public class PantallaProductos extends javax.swing.JFrame {
     }
 
     private void btnActualizarProductoActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnActualizarProductoActionPerformed
+        String nombre = obtenerNombreSeleccionTabla();
+        pasarAActualizarProducto(nombre);
     }
 
     private void btnConsultarIngredientesActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnConsultarIngredientesActionPerformed
         String nombre = obtenerNombreSeleccionTabla();
-        cargarDetalleDelProducto(nombre);
+        verDetallesDelProducto(nombre);
     }
 
     private void cargarTablaProductos() {
@@ -219,11 +220,23 @@ public class PantallaProductos extends javax.swing.JFrame {
         }
     }
 
-    private void cargarDetalleDelProducto(String nombre) {
+    private void verDetallesDelProducto(String nombre) {
         if (nombre != null) {
             try {
                 ProductoDetalleDTO producto = control.obtenerDetallesDelProducto(nombre);
                 control.pantallaDetallesProducto(this, producto);
+            } catch (CoordinadorException ex) {
+                Logger.getLogger(PantallaProductos.class.getName()).log(Level.SEVERE, null, ex);
+                JOptionPane.showMessageDialog(null, ex.getMessage(), "Ha ocurrido un error inesperado", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }
+
+    private void pasarAActualizarProducto(String nombre) {
+        if (nombre != null) {
+            try {
+                ProductoDetalleDTO producto = control.obtenerDetallesDelProducto(nombre);
+                control.pantallaModificarProducto(this, producto);
             } catch (CoordinadorException ex) {
                 Logger.getLogger(PantallaProductos.class.getName()).log(Level.SEVERE, null, ex);
                 JOptionPane.showMessageDialog(null, ex.getMessage(), "Ha ocurrido un error inesperado", JOptionPane.ERROR_MESSAGE);
