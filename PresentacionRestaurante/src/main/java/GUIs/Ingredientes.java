@@ -5,6 +5,7 @@
 package GUIs;
 
 import DTOs.IngredienteDTO;
+import control.CoordinadorAplicacion;
 import exception.NegocioException;
 import interfaces.IIngredienteBO;
 import java.awt.*;
@@ -25,9 +26,7 @@ import manejadorBO.ManejadorBO;
  */
 public class Ingredientes extends javax.swing.JFrame {
     private IIngredienteBO ingredienteBO = ManejadorBO.crearIngredienteBO();
-    /**
-     * Creates new form Ingredientes
-     */
+    private CoordinadorAplicacion coordinador = new CoordinadorAplicacion();
     public Ingredientes() {
         initComponents();
         MostrarIngredientes();
@@ -73,24 +72,6 @@ public class Ingredientes extends javax.swing.JFrame {
             }
         }
 
-        //  botón Agregar
-        JButton btnAgregar = new JButton("Agregar");
-        btnAgregar.setFont(new Font("Arial", Font.BOLD, 14));
-        btnAgregar.setBackground(new Color(255, 119, 170)); 
-        btnAgregar.setForeground(Color.WHITE); // 
-        btnAgregar.setBorder(BorderFactory.createLineBorder(new Color(139, 0, 0), 2)); 
-        // boton eliminar
-        JButton btnEliminar = new JButton("Eliminar");
-        btnEliminar.setFont(new Font("Arial", Font.BOLD, 14));
-        btnEliminar.setBackground(new Color(255, 119, 170)); 
-        btnEliminar.setForeground(Color.WHITE); // 
-        btnEliminar.setBorder(BorderFactory.createLineBorder(new Color(139, 0, 0), 2)); 
-        //Panel para los botones
-        JPanel panelBotones = new JPanel(new GridLayout(2, 1, 10, 0));
-        panelBotones.add(btnAgregar);
-        panelBotones.add(btnEliminar);
-        
-        jPanel3.add(panelBotones, BorderLayout.WEST); 
         jPanel3.add(panelTarjetas, BorderLayout.CENTER);
 
         
@@ -163,9 +144,11 @@ public class Ingredientes extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         lblTitulo = new javax.swing.JLabel();
-        lblRegresar = new javax.swing.JLabel();
+        btnRegresar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jPanel3 = new javax.swing.JPanel();
+        btnAgregar = new javax.swing.JButton();
+        btnEliminar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(1070, 700));
@@ -182,27 +165,34 @@ public class Ingredientes extends javax.swing.JFrame {
         lblTitulo.setForeground(new java.awt.Color(255, 255, 255));
         lblTitulo.setText("Ingredientes");
 
-        lblRegresar.setText("Regresar");
+        btnRegresar.setText("Regresar");
+        btnRegresar.setBorderPainted(false);
+        btnRegresar.setContentAreaFilled(false);
+        btnRegresar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnRegresarMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(lblRegresar, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGap(20, 20, 20)
+                .addComponent(btnRegresar)
+                .addGap(73, 73, 73)
                 .addComponent(lblTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 502, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(469, Short.MAX_VALUE))
+                .addContainerGap(399, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblRegresar, javax.swing.GroupLayout.DEFAULT_SIZE, 88, Short.MAX_VALUE)
-                    .addComponent(lblTitulo))
-                .addContainerGap())
+                    .addComponent(lblTitulo)
+                    .addComponent(btnRegresar))
+                .addContainerGap(51, Short.MAX_VALUE))
         );
 
         jScrollPane1.setBackground(new java.awt.Color(255, 176, 217));
@@ -211,6 +201,26 @@ public class Ingredientes extends javax.swing.JFrame {
         jPanel3.setBackground(new java.awt.Color(255, 176, 217));
         jPanel3.setLayout(new java.awt.GridBagLayout());
         jScrollPane1.setViewportView(jPanel3);
+
+        btnAgregar.setBackground(new java.awt.Color(255, 178, 217));
+        btnAgregar.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 18)); // NOI18N
+        btnAgregar.setText("Agregar");
+        btnAgregar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btnAgregar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnAgregarMouseClicked(evt);
+            }
+        });
+
+        btnEliminar.setBackground(new java.awt.Color(255, 178, 217));
+        btnEliminar.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 18)); // NOI18N
+        btnEliminar.setText("Eliminar");
+        btnEliminar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btnEliminar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnEliminarMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -221,6 +231,10 @@ public class Ingredientes extends javax.swing.JFrame {
                 .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnAgregar)
+                    .addComponent(btnEliminar))
+                .addGap(29, 29, 29)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 800, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(122, 122, 122))
         );
@@ -228,8 +242,15 @@ public class Ingredientes extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 549, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 549, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(170, 170, 170)
+                        .addComponent(btnAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(78, 78, 78)
+                        .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(0, 33, Short.MAX_VALUE))
         );
 
@@ -238,14 +259,28 @@ public class Ingredientes extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnAgregarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAgregarMouseClicked
+        coordinador.PantallaAgregarIngrediente(this);
+    }//GEN-LAST:event_btnAgregarMouseClicked
+
+    private void btnEliminarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEliminarMouseClicked
+        coordinador.PantallaEliminarIngrediente(this);
+    }//GEN-LAST:event_btnEliminarMouseClicked
+
+    private void btnRegresarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRegresarMouseClicked
+        coordinador.PantallaPrinicipal(this);
+    }//GEN-LAST:event_btnRegresarMouseClicked
+
    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAgregar;
+    private javax.swing.JButton btnEliminar;
+    private javax.swing.JButton btnRegresar;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JLabel lblRegresar;
     private javax.swing.JLabel lblTitulo;
     // End of variables declaration//GEN-END:variables
 }
