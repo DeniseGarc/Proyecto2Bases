@@ -13,11 +13,10 @@ import java.util.List;
  *
  * @author Maryr
  */
-public interface IClienteDAO {
+public interface IClienteFrecuenteDAO {
 
-    public Cliente registrarNuevoCliente (Cliente cliente) throws PersistenciaException;
     public ClienteFrecuente registrarNuevoClienteFrecuente (ClienteFrecuente clienteFrecuente) throws PersistenciaException;
-    public List<ClienteFrecuente> obtenerClientes() throws PersistenciaException;
+    public List<ClienteFrecuente> obtenerClientesFrecuentes() throws PersistenciaException;
     public List<ClienteFrecuente> obtenerClientesPorNombre(String nombre) throws PersistenciaException;
     public List<ClienteFrecuente> obtenerClientesPorTelefono(String telefono) throws PersistenciaException;
     public List<ClienteFrecuente> obtenerClientesPorCorreo(String correo) throws PersistenciaException;

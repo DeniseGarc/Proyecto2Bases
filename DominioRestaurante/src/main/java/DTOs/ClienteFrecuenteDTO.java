@@ -19,7 +19,7 @@ public class ClienteFrecuenteDTO extends ClienteDTO {
     public ClienteFrecuenteDTO() {
     }
 
-    public ClienteFrecuenteDTO(int puntosFidelidad, int cantidadVisitas, Double gastoTotal, String nombre, Calendar fechaRegistro, String telefono, String correoElectronico) {
+    public ClienteFrecuenteDTO(String nombre, Calendar fechaRegistro, String telefono, String correoElectronico, int puntosFidelidad, int cantidadVisitas, Double gastoTotal) {
         super(nombre, fechaRegistro, telefono, correoElectronico);
         this.puntosFidelidad = puntosFidelidad;
         this.cantidadVisitas = cantidadVisitas;
