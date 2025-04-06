@@ -26,7 +26,11 @@ public class IngredienteBO implements IIngredienteBO{
     }
     
     
-    
+    /**
+     * Obtiene todos los ingredientes 
+     * @return Lista de ingredientes DTO
+     * @throws NegocioException 
+     */
     @Override
     public List<IngredienteDTO> obtenerIngredientes() throws NegocioException {
         try{
@@ -37,7 +41,12 @@ public class IngredienteBO implements IIngredienteBO{
         }
         
     }
-
+    /**
+     * Busca los ingredientes con el nombre indicaso
+     * @param nombre a buscar
+     * @return lista de ingredientes DTO
+     * @throws NegocioException 
+     */
     @Override
     public List<IngredienteDTO> obtenerIngredientesPorNombre(String nombre) throws NegocioException {
         try{
@@ -47,7 +56,12 @@ public class IngredienteBO implements IIngredienteBO{
             throw new NegocioException("Ocurrió un error al obtener los ingredientes");
         }
     }
-
+    /**
+     * Elimina el ingrediente indicado, llama al metodo en la DAO para eliminar
+     * @param id del ingrediente a eliminar
+     * @return true si se elimino el ingrediente
+     * @throws NegocioException 
+     */
     @Override
     public boolean eliminarIngrediente(Long id) throws NegocioException {
         try {
@@ -61,7 +75,13 @@ public class IngredienteBO implements IIngredienteBO{
         throw new NegocioException("Error al eliminar el ingrediente.", e);
     }
     }
-
+/**
+ * Llama al metodo en la dao para actualizar el stock
+ * @param id del ingrediente a actualizar
+ * @param stock a actualizar
+ * @return ingredienteDTO actualizado
+ * @throws NegocioException 
+ */
     @Override
     public IngredienteDTO actualizarStock(Long id, int stock) throws NegocioException {
         try {
@@ -79,7 +99,12 @@ public class IngredienteBO implements IIngredienteBO{
         throw new NegocioException("Error al actualizar el stock.", e);
     }
     }
-
+    /**
+     * Llama al metodo en la DAO para agregar ingredientes a la base de datos
+     * @param ingredienteDTO ingrediente a registrar
+     * @return ingrediente registrado
+     * @throws NegocioException 
+     */
     @Override
     public IngredienteDTO agregarIngrediente(IngredienteDTO ingredienteDTO) throws NegocioException {
         try {
@@ -106,6 +131,26 @@ public class IngredienteBO implements IIngredienteBO{
     } catch (PersistenciaException e) {
         throw new NegocioException("Error al agregar el ingrediente.", e);
     }
+    }
+    
+    @Override
+    public List<IngredienteDTO> obtenerIngredientesSinProducto() throws NegocioException{
+        try{
+            List<Ingrediente> ingredientes = ingredienteDAO.obtenerIngredientesSinProducto();
+            return IngredienteMapper.ToDTOList(ingredientes);
+        }catch(PersistenciaException e) {
+            throw new NegocioException("Ocurrió un error al obtener los ingredientes");
+        }
+    }
+
+    @Override
+    public IngredienteDTO buscarPorNombreYUnidad(String nombre, String unidad) throws NegocioException {
+        try{
+           Ingrediente ingrediente = ingredienteDAO.buscarPorNombreYUnidad(nombre, unidad);
+           return IngredienteMapper.ToDTO(ingrediente);
+        }catch(PersistenciaException e) {
+            throw new NegocioException("Ocurrió un error al obtener el ingrediente");
+        }
     }
     
 }

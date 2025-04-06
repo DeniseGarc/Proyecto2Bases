@@ -5,6 +5,7 @@
 package DTOs;
 
 import enumeradores.UnidadMedida;
+import java.util.List;
 
 /**
  *
@@ -15,15 +16,32 @@ public class IngredienteDTO {
     private String nombre; 
     private UnidadMedida unidadMedida;
     private Integer stock;
+    private List<IngredienteProductoDTO> ingredienteProducto;
+
+    public List<IngredienteProductoDTO> getIngredienteProducto() {
+        return ingredienteProducto;
+    }
+
+    public void setIngredienteProducto(List<IngredienteProductoDTO> ingredienteProducto) {
+        this.ingredienteProducto = ingredienteProducto;
+    }
 
     public IngredienteDTO() {
     }
 
-    public IngredienteDTO(Long id, String nombre, UnidadMedida unidadMedida, Integer stock) {
+    public IngredienteDTO(Long id, String nombre, UnidadMedida unidadMedida, Integer stock, List<IngredienteProductoDTO> ingredienteProducto) {
         this.id = id;
         this.nombre = nombre;
         this.unidadMedida = unidadMedida;
         this.stock = stock;
+        this.ingredienteProducto = ingredienteProducto;
+    }
+
+    public IngredienteDTO(String nombre, UnidadMedida unidadMedida, Integer stock, List<IngredienteProductoDTO> ingredienteProducto) {
+        this.nombre = nombre;
+        this.unidadMedida = unidadMedida;
+        this.stock = stock;
+        this.ingredienteProducto = ingredienteProducto;
     }
 
     public IngredienteDTO(String nombre, UnidadMedida unidadMedida, Integer stock) {
@@ -31,6 +49,8 @@ public class IngredienteDTO {
         this.unidadMedida = unidadMedida;
         this.stock = stock;
     }
+
+    
 
     @Override
     public String toString() {
