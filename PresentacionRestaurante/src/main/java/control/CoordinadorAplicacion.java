@@ -278,6 +278,17 @@ public class CoordinadorAplicacion {
         }
         return ingrediente;
     }
+    
+    public boolean eliminarIngrediente(IngredienteDTO ingrediente) throws CoordinadorException{
+        try {
+                ingredienteBO.eliminarIngrediente(ingrediente.getId());
+                return true;
+            } catch (NegocioException ex) {
+                Logger.getLogger(CoordinadorAplicacion.class.getName()).log(Level.SEVERE, null, ex);
+                throw new CoordinadorException("No se pudo eliminar el ingrediente");
+            }
+        
+    }
     /**
      * Muestra todos los ingredientes
      * @return lista de ingredientesDTO
