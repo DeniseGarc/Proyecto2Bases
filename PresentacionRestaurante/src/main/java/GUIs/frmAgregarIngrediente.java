@@ -4,6 +4,19 @@
  */
 package GUIs;
 
+import DTOs.IngredienteDTO;
+import control.CoordinadorAplicacion;
+import control.exception.CoordinadorException;
+import enumeradores.UnidadMedida;
+import java.awt.Image;
+import java.util.Arrays;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.ImageIcon;
+import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author erika
@@ -13,10 +26,18 @@ public class frmAgregarIngrediente extends javax.swing.JFrame {
     /**
      * Creates new form frmAgregarIngrediente
      */
+    private final CoordinadorAplicacion coordinador = new CoordinadorAplicacion();
+    
     public frmAgregarIngrediente() {
         initComponents();
-    }
+        String[] unidades = Arrays.stream(UnidadMedida.values())
+                          .map(Enum::name)
+                          .toArray(String[]::new);
 
+        cmbUnidadMedida.setModel(new DefaultComboBoxModel<>(unidades));
+
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -27,9 +48,6 @@ public class frmAgregarIngrediente extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jPanel2 = new javax.swing.JPanel();
-        lblTitulo = new javax.swing.JLabel();
-        lblRegresar = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         lblUnidadMedida = new javax.swing.JLabel();
         lblNombre = new javax.swing.JLabel();
@@ -39,43 +57,14 @@ public class frmAgregarIngrediente extends javax.swing.JFrame {
         txtStock = new javax.swing.JTextField();
         btnAceptar = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
+        jPanel4 = new javax.swing.JPanel();
+        lblTitulo = new javax.swing.JLabel();
+        lblRegresar = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jPanel1.setBackground(new java.awt.Color(255, 254, 245));
         jPanel1.setPreferredSize(new java.awt.Dimension(1070, 700));
-
-        jPanel2.setBackground(new java.awt.Color(255, 176, 217));
-        jPanel2.setPreferredSize(new java.awt.Dimension(1070, 100));
-
-        lblTitulo.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 36)); // NOI18N
-        lblTitulo.setForeground(new java.awt.Color(255, 255, 255));
-        lblTitulo.setText("Agregar Ingrediente");
-
-        lblRegresar.setText("Regresar");
-
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(lblRegresar, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(lblTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 502, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(469, Short.MAX_VALUE))
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(lblRegresar, javax.swing.GroupLayout.DEFAULT_SIZE, 88, Short.MAX_VALUE)
-                .addContainerGap())
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(16, 16, 16)
-                .addComponent(lblTitulo)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
 
         jPanel3.setBackground(new java.awt.Color(255, 178, 217));
 
@@ -94,6 +83,11 @@ public class frmAgregarIngrediente extends javax.swing.JFrame {
         btnAceptar.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 18)); // NOI18N
         btnAceptar.setForeground(new java.awt.Color(255, 255, 255));
         btnAceptar.setText("Aceptar");
+        btnAceptar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnAceptarMouseClicked(evt);
+            }
+        });
 
         btnCancelar.setBackground(new java.awt.Color(255, 119, 170));
         btnCancelar.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 18)); // NOI18N
@@ -152,23 +146,44 @@ public class frmAgregarIngrediente extends javax.swing.JFrame {
                 .addGap(43, 43, 43))
         );
 
+        jPanel4.setBackground(new java.awt.Color(255, 176, 217));
+        jPanel4.setPreferredSize(new java.awt.Dimension(1070, 78));
+        jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        lblTitulo.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 36)); // NOI18N
+        lblTitulo.setForeground(new java.awt.Color(255, 255, 255));
+        lblTitulo.setText("Titulo");
+        jPanel4.add(lblTitulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 20, 500, 40));
+
+        ImageIcon iconoOriginal = new ImageIcon(getClass().getResource("/imgs/flecha-regresar.png"));
+        Image imagenEscalada = iconoOriginal.getImage().getScaledInstance(108, 81, Image.SCALE_SMOOTH);
+        ImageIcon iconoEscalado = new ImageIcon(imagenEscalada);
+        lblRegresar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgs/flecha-regresar.png"))); // NOI18N
+        lblRegresar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        lblRegresar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblRegresarMouseClicked(evt);
+            }
+        });
+        jPanel4.add(lblRegresar, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -10, 100, 100));
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(84, 84, 84)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(48, 48, 48)
+                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(70, 70, 70)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 124, Short.MAX_VALUE))
         );
@@ -195,6 +210,28 @@ public class frmAgregarIngrediente extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnCancelarActionPerformed
 
+    private void lblRegresarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblRegresarMouseClicked
+        coordinador.PantallaIngredientes(this);
+    }//GEN-LAST:event_lblRegresarMouseClicked
+
+    private void btnAceptarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAceptarMouseClicked
+       String nombre = txtNombre.getText().trim();
+        
+        UnidadMedida unidadMedida = UnidadMedida.valueOf((String)cmbUnidadMedida.getSelectedItem());
+
+        int stock = Integer.parseInt(txtStock.getText());
+
+        IngredienteDTO ingrediente = new IngredienteDTO(nombre, unidadMedida, stock);
+        try {
+            coordinador.agregarIngrediente(ingrediente);
+            JOptionPane.showMessageDialog(this, "Ingrediente Agregado con exito", "Ingrediente Agregado", JOptionPane.PLAIN_MESSAGE);
+        } catch (CoordinadorException e) {
+            Logger.getLogger(frmAgregarIngrediente.class.getName()).log(Level.SEVERE, null, e);
+            JOptionPane.showMessageDialog(this, e.getMessage(), "Error al registrar", JOptionPane.ERROR_MESSAGE);
+        }
+                
+    }//GEN-LAST:event_btnAceptarMouseClicked
+
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -202,8 +239,8 @@ public class frmAgregarIngrediente extends javax.swing.JFrame {
     private javax.swing.JButton btnCancelar;
     private javax.swing.JComboBox<String> cmbUnidadMedida;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
     private javax.swing.JLabel lblNombre;
     private javax.swing.JLabel lblRegresar;
     private javax.swing.JLabel lblStock;
