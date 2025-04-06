@@ -1,5 +1,4 @@
 GUIs\RegistrarClienteNuevo$2.class
-GUIs\MenuPrincipal$3.class
 GUIs\PantallaProductos$5.class
 plantillas\Titulo$1.class
 GUIs\PantallaTomaComanda$1.class
@@ -16,7 +15,6 @@ GUIs\PantallaAdministrarProducto$2.class
 control\exception\CoordinadorException.class
 GUIs\RegistrarClienteNuevo$1.class
 GUIs\Ingredientes$2.class
-plantillas\PanelIngredienteProducto$2.class
 GUIs\PantallaDetallesProducto$1.class
 GUIs\PantallaProductos$2.class
 plantillas\PanelProductoComanda.class
@@ -37,7 +35,6 @@ moduloBusquedaProductos\PanelBusquedaProducto$1.class
 GUIs\frmAgregarIngrediente.class
 GUIs\PantallaProductos$4.class
 GUIs\EliminarIngrediente.class
-plantillas\PanelIngredienteProducto$1.class
 com\presentacionrestaurante\PresentacionRestaurante.class
 moduloBusquedaProductos\PanelBusquedaProducto.class
 GUIs\PantallaTomaComanda.class

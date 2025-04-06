@@ -27,12 +27,7 @@ public class PantallaProductos extends javax.swing.JFrame {
         initComponents();
         cargarBanner();
         configurarBarraBusqueda();
-        try {
-            panelTablaProductos.mostrarProductos(control.obtenerProductos());
-        } catch (CoordinadorException ex) {
-            Logger.getLogger(PantallaProductos.class.getName()).log(Level.SEVERE, null, ex);
-            JOptionPane.showMessageDialog(null, ex.getMessage(), "Ha ocurrido un error inesperado", JOptionPane.ERROR_MESSAGE);
-        }
+        cargarTablaProductos();
     }
 
     @SuppressWarnings("unchecked")
@@ -113,7 +108,8 @@ public class PantallaProductos extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnHabilitarDeshabilitarActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnHabilitarDeshabilitarActionPerformed
-        // TODO add your handling code here:
+        String nombre = obtenerNombreSeleccionTabla();
+        cambiarEstadoProducto(nombre);
     }
 
     private void btnAgregarProductoActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnAgregarProductoActionPerformed
@@ -121,11 +117,22 @@ public class PantallaProductos extends javax.swing.JFrame {
     }
 
     private void btnActualizarProductoActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnActualizarProductoActionPerformed
-        // TODO add your handling code here:
+        String nombre = obtenerNombreSeleccionTabla();
+        pasarAActualizarProducto(nombre);
     }
 
     private void btnConsultarIngredientesActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnConsultarIngredientesActionPerformed
-        cargarDetalleDelProducto();
+        String nombre = obtenerNombreSeleccionTabla();
+        verDetallesDelProducto(nombre);
+    }
+
+    private void cargarTablaProductos() {
+        try {
+            panelTablaProductos.mostrarProductos(control.obtenerProductos());
+        } catch (CoordinadorException ex) {
+            Logger.getLogger(PantallaProductos.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, ex.getMessage(), "Ha ocurrido un error inesperado", JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     /**
@@ -185,15 +192,51 @@ public class PantallaProductos extends javax.swing.JFrame {
         panelBusquedaProducto.setBackground(new Color(255, 254, 245));
     }
 
-    private void cargarDetalleDelProducto() {
+    private String obtenerNombreSeleccionTabla() {
         int filaSeleccionada = panelTablaProductos.getTblProductos().getSelectedRow();
         if (filaSeleccionada == -1) {
-            JOptionPane.showMessageDialog(null, "Seleccione un producto para ver sus detalles", "", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Seleccione un producto", "", JOptionPane.INFORMATION_MESSAGE);
+            return null;
         } else {
-            String nombre = (String) panelTablaProductos.getTblProductos().getValueAt(filaSeleccionada, 0);
+            return (String) panelTablaProductos.getTblProductos().getValueAt(filaSeleccionada, 0);
+        }
+    }
+
+    private void cambiarEstadoProducto(String nombre) {
+        if (nombre != null) {
+            try {
+                boolean resultado = control.actualizarEstadoProducto(nombre);
+                if (resultado) {
+                    JOptionPane.showMessageDialog(null, "Se ha cambiado el estado del producto " + nombre + " con éxito", "Se cambio de estado exitoso", JOptionPane.INFORMATION_MESSAGE);
+                    String texto = panelBusquedaProducto.getTxtBusqueda().getText();
+                    panelBusquedaProducto.getTxtBusqueda().setText(texto);
+                    Object categoria = panelBusquedaProducto.getcBoxTipo().getSelectedItem();
+                    panelBusquedaProducto.getcBoxTipo().setSelectedItem(categoria);
+                }
+            } catch (CoordinadorException ex) {
+                Logger.getLogger(PantallaProductos.class.getName()).log(Level.SEVERE, null, ex);
+                JOptionPane.showMessageDialog(null, ex.getMessage(), "Ha ocurrido un error inesperado", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }
+
+    private void verDetallesDelProducto(String nombre) {
+        if (nombre != null) {
             try {
                 ProductoDetalleDTO producto = control.obtenerDetallesDelProducto(nombre);
                 control.pantallaDetallesProducto(this, producto);
+            } catch (CoordinadorException ex) {
+                Logger.getLogger(PantallaProductos.class.getName()).log(Level.SEVERE, null, ex);
+                JOptionPane.showMessageDialog(null, ex.getMessage(), "Ha ocurrido un error inesperado", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }
+
+    private void pasarAActualizarProducto(String nombre) {
+        if (nombre != null) {
+            try {
+                ProductoDetalleDTO producto = control.obtenerDetallesDelProducto(nombre);
+                control.pantallaModificarProducto(this, producto);
             } catch (CoordinadorException ex) {
                 Logger.getLogger(PantallaProductos.class.getName()).log(Level.SEVERE, null, ex);
                 JOptionPane.showMessageDialog(null, ex.getMessage(), "Ha ocurrido un error inesperado", JOptionPane.ERROR_MESSAGE);

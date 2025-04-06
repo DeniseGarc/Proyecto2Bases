@@ -35,6 +35,7 @@ import modos.Modo;
  * @author erika
  */
 public class CoordinadorAplicacion {
+
     private IProductoBO productoBO = ManejadorBO.crearProductoBO();
     private IIngredienteBO ingredienteBO = ManejadorBO.crearIngredienteBO();
 
@@ -60,7 +61,7 @@ public class CoordinadorAplicacion {
         menu.setVisible(true);
         frame.dispose();
     }
-    
+
     public void PantallaComandas(JFrame frame) {
 
     }
@@ -76,13 +77,13 @@ public class CoordinadorAplicacion {
         pantallaAgregar.setVisible(true);
         frame.dispose();
     }
-    
+
     public void PantallaEliminarIngrediente(JFrame frame) {
         EliminarIngrediente pantallaEliminar = new EliminarIngrediente();
         pantallaEliminar.setVisible(true);
         frame.dispose();
     }
-    
+
     public void PantallaClienteFrecuente(JFrame frame) {
         ClienteFrecuente pantallaCliente = new ClienteFrecuente();
         pantallaCliente.setVisible(true);
@@ -132,7 +133,10 @@ public class CoordinadorAplicacion {
         frame.dispose();
     }
 
-    public void pantallaModificarProducto() {
+    public void pantallaModificarProducto(JFrame frame, ProductoDetalleDTO producto) {
+        PantallaAdministrarProducto pantallaAdministrarProducto = new PantallaAdministrarProducto(Modo.MODIFICAR, producto);
+        pantallaAdministrarProducto.setVisible(true);
+        frame.dispose();
     }
 
     /**
@@ -208,8 +212,31 @@ public class CoordinadorAplicacion {
         }
     }
 
-    //falta terminar metodo con parte ingredientes
-    public ProductoDetalleDTO agregarProducto(ProductoDetalleDTO producto) throws CoordinadorException {
+    public boolean agregarProducto(ProductoDetalleDTO producto) throws CoordinadorException {
+        if (validarDatosProducto(producto)) {
+            try {
+                return productoBO.agregarProducto(producto);
+            } catch (NegocioException ex) {
+                Logger.getLogger(CoordinadorAplicacion.class.getName()).log(Level.SEVERE, null, ex);
+                throw new CoordinadorException("Ha ocurrido un error al intentar agregar el producto");
+            }
+        }
+        return false;
+    }
+
+    public boolean actualizarProducto(ProductoDetalleDTO producto) throws CoordinadorException {
+        if (validarDatosProducto(producto)) {
+            try {
+                return productoBO.actualizarProducto(producto);
+            } catch (NegocioException ex) {
+                Logger.getLogger(CoordinadorAplicacion.class.getName()).log(Level.SEVERE, null, ex);
+                throw new CoordinadorException("Ha ocurrido un error al intentar actualizar el producto");
+            }
+        }
+        return false;
+    }
+
+    private boolean validarDatosProducto(ProductoDetalleDTO producto) throws CoordinadorException {
         if (producto == null) {
             throw new CoordinadorException("El producto a agregar no puede ser nulo");
         }
@@ -225,7 +252,7 @@ public class CoordinadorAplicacion {
         if (producto.getIngredientes().isEmpty() || producto.getIngredientes() == null) {
             throw new CoordinadorException("El producto no tiene ingredientes asociados");
         }
-        return producto;
+        return true;
     }
     
     public IngredienteDTO agregarIngrediente(IngredienteDTO ingrediente) throws CoordinadorException{
@@ -289,4 +316,11 @@ public class CoordinadorAplicacion {
         }
     }
 
+    public boolean actualizarEstadoProducto(String nombre) throws CoordinadorException {
+        try {
+            return productoBO.cambiarEstadoProducto(nombre);
+        } catch (NegocioException e) {
+            throw new CoordinadorException("Ha ocurrido un problema al actualizar el estado del producto");
+        }
+    }
 }

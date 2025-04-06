@@ -50,16 +50,18 @@ public class ProductoMapper {
         return detallesProducto;
     }
 
-    // Aun falta terminar el metodo
+    /**
+     * Devuelve un Producto sin el estado habilitado, estado disponibilidad, ni
+     * los detalles producto asociados
+     *
+     * @param productoDTO
+     * @return
+     */
     public static Producto toEntity(ProductoDetalleDTO productoDTO) {
         Producto producto = new Producto();
         producto.setNombre(productoDTO.getNombre());
         producto.setTipo(productoDTO.getTipo());
         producto.setPrecio(productoDTO.getPrecio());
-        for (IngredienteProductoDTO ingrediente : productoDTO.getIngredientes()) {
-
-//            Ingrediente ingrediente = new Ingrediente();
-        }
         return producto;
     }
 

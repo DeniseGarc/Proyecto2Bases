@@ -169,7 +169,7 @@ public class PantallaDetallesProducto extends javax.swing.JFrame {
     private void cargarInformacionProducto() {
         lblNombreProducto.setText(producto.getNombre());
         lblCategoriaProducto.setText(producto.getTipo().toString().toLowerCase());
-        lblPrecioProducto.setText("$ " + producto.getPrecio());
+        lblPrecioProducto.setText(String.format("$ %.2f", producto.getPrecio()));
 
         DefaultTableModel modeloTablaIngredientes = (DefaultTableModel) tablaIngredientes.getModel();
         modeloTablaIngredientes.setRowCount(0); // limpia las filas actuales

@@ -39,10 +39,11 @@ public interface IProductoDAO {
      * Registra un nuevo producto en la base de datos.
      *
      * @param producto el producto a registrar.
-     * @return el producto registrado con su ID asignado.
+     * @return true si es que fue posible registrar el producto, false en caso
+     * contrario.
      * @throws PersistenciaException si ocurre un error durante el registro.
      */
-    public Producto registrarProducto(Producto producto) throws PersistenciaException;
+    public boolean registrarProducto(Producto producto) throws PersistenciaException;
 
     /**
      * Actualiza los datos de un producto existente.
@@ -54,15 +55,7 @@ public interface IProductoDAO {
      */
     public boolean actualizarProducto(Producto producto) throws PersistenciaException;
 
-    /**
-     * Cambia el estado de un producto entre habilitado y deshabilitado.
-     *
-     * @param producto el producto cuyo estado se cambiará.
-     * @return {@code true} si el cambio fue exitoso.
-     * @throws PersistenciaException si ocurre un error al cambiar el estado del
-     * producto.
-     */
-    public boolean deshabilitarHabilitarProducto(Producto producto) throws PersistenciaException;
+    public boolean deshabilitarHabilitarProducto(String nombre, boolean habilitado) throws PersistenciaException;
 
     /**
      * Obtiene una lista de productos cuyo nombre contenga el texto
