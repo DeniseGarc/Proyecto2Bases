@@ -31,8 +31,8 @@ public class PantallaAdministrarProducto extends javax.swing.JFrame {
     public PantallaAdministrarProducto(Modo modo, ProductoDetalleDTO producto) {
         this.modo = modo;
         this.producto = producto;
-        panelContenedorIngredientesProducto.setLayout(new BoxLayout(panelContenedorIngredientesProducto, BoxLayout.Y_AXIS));
         initComponents();
+        panelContenedorIngredientesProducto.setLayout(new BoxLayout(panelContenedorIngredientesProducto, BoxLayout.Y_AXIS));
         if (modo == Modo.MODIFICAR) {
             txtNombre.setEnabled(false);
             cBoxCategoria.setEnabled(false);

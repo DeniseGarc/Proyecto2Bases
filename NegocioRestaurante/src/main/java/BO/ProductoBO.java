@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package BO;
 
 import DTOs.ProductoDTO;
@@ -33,7 +29,7 @@ public class ProductoBO implements IProductoBO {
             List<Producto> productos = productoDAO.obtenerProductos();
             return ProductoMapper.toDTOList(productos);
         } catch (PersistenciaException e) {
-            throw new NegocioException("Ocurrió un error al obtener los productos");
+            throw new NegocioException("Ocurrió un error al obtener los productos", e);
         }
     }
 
@@ -46,7 +42,7 @@ public class ProductoBO implements IProductoBO {
             List<Producto> productos = productoDAO.obtenerProductosFiltrados(texto);
             return ProductoMapper.toDTOList(productos);
         } catch (PersistenciaException e) {
-            throw new NegocioException("Ocurrió un error al obtener los productos filtrados por nombre");
+            throw new NegocioException("Ocurrió un error al obtener los productos filtrados por nombre", e);
         }
     }
 
@@ -59,7 +55,7 @@ public class ProductoBO implements IProductoBO {
             List<Producto> productos = productoDAO.obtenerProductosFiltrados(texto, categoria);
             return ProductoMapper.toDTOList(productos);
         } catch (PersistenciaException e) {
-            throw new NegocioException("Ocurrió un error al obtener los productos filtrados por nombre y categoria");
+            throw new NegocioException("Ocurrió un error al obtener los productos filtrados por nombre y categoria", e);
         }
     }
 
@@ -72,14 +68,14 @@ public class ProductoBO implements IProductoBO {
             List<Producto> productos = productoDAO.obtenerProductosFiltrados(categoria);
             return ProductoMapper.toDTOList(productos);
         } catch (PersistenciaException e) {
-            throw new NegocioException("Ocurrió un error al obtener los productos filtrados por categoria");
+            throw new NegocioException("Ocurrió un error al obtener los productos filtrados por categoria", e);
         }
     }
 
     @Override
     public ProductoDetalleDTO obtenerProductoDetallesPorNombre(String nombre) throws NegocioException {
         if (nombre == null) {
-            throw new NegocioException("El nombre del producto a buscar no puede ser nulo");
+            throw new NegocioException("El nombre del producto a buscar es nulo");
         }
         try {
             Producto producto = productoDAO.obtenerProductoPorNombre(nombre);
@@ -88,7 +84,7 @@ public class ProductoBO implements IProductoBO {
             }
             return ProductoMapper.toDTO(producto);
         } catch (PersistenciaException e) {
-            throw new NegocioException("Error al obtener producto de la base de datos: " + e.getMessage());
+            throw new NegocioException("Error al obtener producto de la base de datos: ", e);
         }
     }
 
@@ -101,6 +97,20 @@ public class ProductoBO implements IProductoBO {
 //        ProductoMapper.
 //        productoDAO.registrarProducto(producto);
         return productoNuevo;
+    }
+
+    @Override
+    public boolean cambiarEstadoProducto(String nombre) throws NegocioException {
+        if (nombre == null) {
+            throw new NegocioException("El nombre del producto a cambiar de estado es nulo");
+        }
+        try {
+            Producto producto = productoDAO.obtenerProductoPorNombre(nombre);
+            boolean estado = !producto.isHabilitada();
+            return productoDAO.deshabilitarHabilitarProducto(nombre, estado);
+        } catch (PersistenciaException ex) {
+            throw new NegocioException("Ha ocurrido un error al cambiar el estado del producto", ex);
+        }
     }
 
 }

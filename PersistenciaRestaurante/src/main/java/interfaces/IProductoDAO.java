@@ -54,15 +54,8 @@ public interface IProductoDAO {
      */
     public boolean actualizarProducto(Producto producto) throws PersistenciaException;
 
-    /**
-     * Cambia el estado de un producto entre habilitado y deshabilitado.
-     *
-     * @param producto el producto cuyo estado se cambiará.
-     * @return {@code true} si el cambio fue exitoso.
-     * @throws PersistenciaException si ocurre un error al cambiar el estado del
-     * producto.
-     */
-    public boolean deshabilitarHabilitarProducto(Producto producto) throws PersistenciaException;
+   
+    public boolean deshabilitarHabilitarProducto(String nombre, boolean habilitado) throws PersistenciaException;
 
     /**
      * Obtiene una lista de productos cuyo nombre contenga el texto
@@ -94,5 +87,6 @@ public interface IProductoDAO {
      * @throws PersistenciaException si ocurre un error durante la consulta.
      */
     public List<Producto> obtenerProductosFiltrados(TipoProducto categoria) throws PersistenciaException;
+
 
 }

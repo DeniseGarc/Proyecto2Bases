@@ -9,8 +9,10 @@ import control.exception.CoordinadorException;
 import enumeradores.TipoProducto;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
@@ -126,8 +128,20 @@ public class PanelBusquedaProducto extends javax.swing.JPanel {
         }
     }
 
-    public JPanel getSearchPanel() {
-        return SearchPanel;
+    public JComboBox<Object> getcBoxTipo() {
+        return cBoxTipo;
+    }
+
+    public JTextField getTxtBusqueda() {
+        return txtBusqueda;
+    }
+
+    public void setcBoxTipo(JComboBox<Object> cBoxTipo) {
+        this.cBoxTipo = cBoxTipo;
+    }
+
+    public void setTxtBusqueda(JTextField txtBusqueda) {
+        this.txtBusqueda = txtBusqueda;
     }
 
 

@@ -135,29 +135,20 @@ public class ProductoDAO implements IProductoDAO {
         }
     }
 
-    /**
-     * Cambia el estado de un producto entre habilitado y deshabilitado.
-     *
-     * @param producto el producto cuyo estado se cambiará.
-     * @return {@code true} si el cambio fue exitoso.
-     * @throws PersistenciaException si ocurre un error al cambiar el estado del
-     * producto.
-     */
     @Override
-    public boolean deshabilitarHabilitarProducto(Producto producto) throws PersistenciaException {
+    public boolean deshabilitarHabilitarProducto(String nombre, boolean habilitado) throws PersistenciaException {
         EntityManager em = Conexion.crearConexion();
         try {
             em.getTransaction().begin();
-            if (producto.isHabilitada()) {
-                producto.setHabilitada(false);
-            } else {
-                producto.setHabilitada(true);
-            }
-            em.merge(producto);
+            int numFilas = em.createQuery("UPDATE Producto p SET p.habilitada = :estado WHERE p.nombre = :nombre")
+                    .setParameter("estado", habilitado)
+                    .setParameter("nombre", nombre)
+                    .executeUpdate();
             em.getTransaction().commit();
-            return true;
+            return numFilas != 0;
         } catch (Exception e) {
-            throw new PersistenciaException("Error al intentar cambiar estado del producto: ", e);
+            em.getTransaction().rollback();
+            throw new PersistenciaException("Error al intentar actualizar el estado del producto: ", e);
         } finally {
             em.close();
         }

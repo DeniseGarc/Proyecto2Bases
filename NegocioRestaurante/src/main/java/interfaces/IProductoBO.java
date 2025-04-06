@@ -28,4 +28,5 @@ public interface IProductoBO {
 
     public ProductoDetalleDTO agregarProducto(ProductoDetalleDTO productoNuevo) throws NegocioException;
 
+    public boolean cambiarEstadoProducto(String nombre) throws NegocioException;
 }

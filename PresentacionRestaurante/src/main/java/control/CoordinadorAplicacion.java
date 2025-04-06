@@ -10,10 +10,6 @@ import GUIs.ClienteFrecuente;
 import GUIs.EliminarIngrediente;
 import GUIs.Ingredientes;
 import GUIs.MenuPrincipal;
-import GUIs.PantallaTomaComanda;
-import GUIs.RegistrarClienteNuevo;
-import GUIs.frmAgregarIngrediente;
-import javax.swing.JFrame;
 import GUIs.PantallaAdministrarProducto;
 import GUIs.PantallaDetallesProducto;
 import GUIs.PantallaProductos;
@@ -36,6 +32,7 @@ import modos.Modo;
  * @author erika
  */
 public class CoordinadorAplicacion {
+
     private IProductoBO productoBO = ManejadorBO.crearProductoBO();
 
     /**
@@ -55,7 +52,7 @@ public class CoordinadorAplicacion {
         menu.setVisible(true);
         frame.dispose();
     }
-    
+
     public void PantallaComandas(JFrame frame) {
 
     }
@@ -71,13 +68,13 @@ public class CoordinadorAplicacion {
         pantallaAgregar.setVisible(true);
         frame.dispose();
     }
-    
+
     public void PantallaEliminarIngrediente(JFrame frame) {
         EliminarIngrediente pantallaEliminar = new EliminarIngrediente();
         pantallaEliminar.setVisible(true);
         frame.dispose();
     }
-    
+
     public void PantallaClienteFrecuente(JFrame frame) {
         ClienteFrecuente pantallaCliente = new ClienteFrecuente();
         pantallaCliente.setVisible(true);
@@ -223,4 +220,11 @@ public class CoordinadorAplicacion {
         return producto;
     }
 
+    public boolean actualizarEstadoProducto(String nombre) throws CoordinadorException {
+        try {
+            return productoBO.cambiarEstadoProducto(nombre);
+        } catch (NegocioException e) {
+            throw new CoordinadorException("Ha ocurrido un problema al actualizar el estado del producto");
+        }
+    }
 }
