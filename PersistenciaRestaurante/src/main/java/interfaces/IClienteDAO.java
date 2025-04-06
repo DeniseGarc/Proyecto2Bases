@@ -17,8 +17,8 @@ public interface IClienteDAO {
 
     public Cliente registrarNuevoCliente (Cliente cliente) throws PersistenciaException;
     public ClienteFrecuente registrarNuevoClienteFrecuente (ClienteFrecuente clienteFrecuente) throws PersistenciaException;
-    public List<Cliente> obtenerClientes() throws PersistenciaException;
-    public List<Cliente> obtenerClientesPorNombre(String nombre) throws PersistenciaException;
-    public List<Cliente> obtenerClientesPorTelefono(String telefono) throws PersistenciaException;
-    public List<Cliente> obtenerClientesPorCorreo(String correo) throws PersistenciaException;
+    public List<ClienteFrecuente> obtenerClientes() throws PersistenciaException;
+    public List<ClienteFrecuente> obtenerClientesPorNombre(String nombre) throws PersistenciaException;
+    public List<ClienteFrecuente> obtenerClientesPorTelefono(String telefono) throws PersistenciaException;
+    public List<ClienteFrecuente> obtenerClientesPorCorreo(String correo) throws PersistenciaException;
 }
