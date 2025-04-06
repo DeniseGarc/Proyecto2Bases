@@ -4,14 +4,18 @@
  */
 package manejadorBO;
 
+import BO.ClienteFrecuenteBO;
 import BO.IngredienteBO;
 import BO.ProductoBO;
+import DAO.ClienteFrecuenteDAO;
 import DAO.IngredienteDAO;
 import DAO.ProductoDAO;
+import interfaces.IClienteFrecuenteDAO;
 import interfaces.IIngredienteBO;
 import interfaces.IIngredienteDAO;
 import interfaces.IProductoBO;
 import interfaces.IProductoDAO;
+import interfaces.IClienteFrecuenteBO;
 
 /**
  *
@@ -29,5 +33,11 @@ public class ManejadorBO {
         IIngredienteDAO ingredienteDAO = IngredienteDAO.getInstanceDAO();
         IIngredienteBO ingredienteBO = new IngredienteBO(ingredienteDAO);
         return ingredienteBO;
+    }
+    
+    public static IClienteFrecuenteBO crearClienteFrecuenteBO() {
+        IClienteFrecuenteDAO clienteFrecuenteDAO = ClienteFrecuenteDAO.getInstanciaDAO();
+        IClienteFrecuenteBO clienteFrecuenteBO = new ClienteFrecuenteBO(clienteFrecuenteDAO);
+        return clienteFrecuenteBO;
     }
 }
