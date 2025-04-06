@@ -93,7 +93,7 @@ public class IngredienteBO implements IIngredienteBO{
             throw new NegocioException("El stock no puede ser negativo.");
         }
         ingrediente.setStock(stock);
-        ingredienteDAO.modificarStock(ingrediente.getId(),stock);
+        ingredienteDAO.modificarStock(ingrediente);
         return IngredienteMapper.ToDTO(ingrediente);
     } catch (PersistenciaException e) {
         throw new NegocioException("Error al actualizar el stock.", e);

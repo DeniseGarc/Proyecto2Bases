@@ -24,7 +24,7 @@ public class IngredienteMapper {
         List<IngredienteDTO> ingredientesDTO = new ArrayList<>();
         for(Ingrediente ingrediente : ingredientes){
             ingredientesDTO.add(
-                    new IngredienteDTO(ingrediente.getNombre(), ingrediente.getUnidadMedida(), ingrediente.getStock())
+                    new IngredienteDTO(ingrediente.getId(),ingrediente.getNombre(), ingrediente.getUnidadMedida(), ingrediente.getStock())
             );
         }
         return ingredientesDTO;
@@ -35,7 +35,7 @@ public class IngredienteMapper {
      * @return IngredienteDTO
      */
     public static IngredienteDTO ToDTO(Ingrediente ingrediente){
-        IngredienteDTO ingredienteDTO = new IngredienteDTO(ingrediente.getNombre(), ingrediente.getUnidadMedida(), ingrediente.getStock());
+        IngredienteDTO ingredienteDTO = new IngredienteDTO(ingrediente.getId(), ingrediente.getNombre(), ingrediente.getUnidadMedida(), ingrediente.getStock());
         return ingredienteDTO;
     }
     

@@ -17,6 +17,7 @@ import java.awt.GridBagConstraints;
 import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.Insets;
+import java.awt.event.ActionListener;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -83,82 +84,73 @@ public class PantallaIngredientes extends javax.swing.JFrame {
     }
 
     private JPanel crearTarjetaIngrediente(IngredienteDTO ingrediente) {
-        // Crear el panel principal
         JPanel panel = new JPanel();
         panel.setPreferredSize(new Dimension(200, 120));
-        panel.setBackground(new Color(255, 227, 242)); // Fondo rosa
+        panel.setBackground(new Color(255, 227, 242));
         panel.setLayout(new BorderLayout());
 
-        // Panel central para el nombre
+        // Nombre del ingrediente
         JPanel panelNombre = new JPanel();
-        panelNombre.setBackground(new Color(255, 192, 203)); // Rosa claro
+        panelNombre.setBackground(new Color(255, 192, 203));
         JLabel lblNombre = new JLabel(ingrediente.getNombre(), SwingConstants.CENTER);
         lblNombre.setFont(new Font("Arial", Font.BOLD, 16));
         panelNombre.add(lblNombre);
 
-        // Panel para la información de stock y unidad
+        // Stock y unidad
         JLabel lblStock = new JLabel("Stock: " + ingrediente.getStock(), SwingConstants.LEFT);
         lblStock.setFont(new Font("Arial", Font.PLAIN, 14));
         JLabel lblUnidad = new JLabel("Unidad: " + ingrediente.getUnidadMedida(), SwingConstants.LEFT);
         lblUnidad.setFont(new Font("Arial", Font.PLAIN, 14));
 
-        // Personalización de botones
+        // Botón -
         JButton btnMenos = new JButton("-");
         btnMenos.setFont(new Font("Arial", Font.BOLD, 14));
-        btnMenos.setBackground(new Color(240, 128, 128)); 
+        btnMenos.setBackground(new Color(240, 128, 128));
         btnMenos.setForeground(Color.WHITE);
-        btnMenos.setBorder(BorderFactory.createLineBorder(new Color(139, 0, 0), 2)); 
-        
-        //action listener para que funcionen los botones
-       
-         btnMenos.addActionListener(e -> {
-        int nuevoStock = ingrediente.getStock() - 1;
-        if (nuevoStock >= 0) {
-            try {
-                IngredienteDTO actualizado = coordinador.modificarStock(ingrediente.getId(), nuevoStock);
-                ingrediente.setStock(actualizado.getStock());
-                lblStock.setText("Stock: " + actualizado.getStock());
-            } catch (CoordinadorException ex) {
-                JOptionPane.showMessageDialog(panel, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-            }
-        }
-    });
+        btnMenos.setBorder(BorderFactory.createLineBorder(new Color(139, 0, 0), 2));
 
+        // Botón +
         JButton btnMas = new JButton("+");
         btnMas.setFont(new Font("Arial", Font.BOLD, 14));
-        btnMas.setBackground(new Color(60, 179, 113)); 
-        btnMas.setForeground(Color.WHITE); 
-        btnMas.setBorder(BorderFactory.createLineBorder(new Color(0, 100, 0), 2)); 
-        
-        //action listener para que funcionen los botones
-        btnMas.addActionListener(e -> {
-        int nuevoStock = ingrediente.getStock() + 1;
-        try {
-            IngredienteDTO actualizado = coordinador.modificarStock(ingrediente.getId(), nuevoStock);
-            ingrediente.setStock(actualizado.getStock());
-            lblStock.setText("Stock: " + actualizado.getStock());
-        } catch (CoordinadorException ex) {
-            JOptionPane.showMessageDialog(panel, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-        }
-    });
+        btnMas.setBackground(new Color(60, 179, 113));
+        btnMas.setForeground(Color.WHITE);
+        btnMas.setBorder(BorderFactory.createLineBorder(new Color(0, 100, 0), 2));
 
-        // Panel para botones
-        JPanel panelBotones = new JPanel(new GridLayout(1, 2, 10, 0)); // Espaciado entre botones
+        
+        ActionListener actualizarStockListener = e -> {
+            int nuevoStock = ingrediente.getStock() + (e.getSource() == btnMas ? 1 : -1);
+            if (nuevoStock >= 0) {
+                try {
+                    IngredienteDTO actualizado = coordinador.modificarStock(ingrediente.getId(), nuevoStock);
+                    ingrediente.setStock(actualizado.getStock());
+                    lblStock.setText("Stock: " + actualizado.getStock());
+                } catch (CoordinadorException ex) {
+                    JOptionPane.showMessageDialog(panel, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        };
+
+        btnMas.addActionListener(actualizarStockListener);
+        btnMenos.addActionListener(actualizarStockListener);
+
+        // Botones en panel
+        JPanel panelBotones = new JPanel(new GridLayout(1, 2, 10, 0));
         panelBotones.add(btnMenos);
         panelBotones.add(btnMas);
 
-        // Panel inferior donde se combina stock y botones
+        // Panel inferior
         JPanel panelInferior = new JPanel(new BorderLayout());
         panelInferior.add(lblUnidad, BorderLayout.NORTH);
         panelInferior.add(lblStock, BorderLayout.CENTER);
         panelInferior.add(panelBotones, BorderLayout.SOUTH);
 
-        // Combinar todas las partes
+        
         panel.add(panelNombre, BorderLayout.NORTH);
         panel.add(panelInferior, BorderLayout.CENTER);
 
         return panel;
     }
+
     
     /**
      * This method is called from within the constructor to initialize the form.

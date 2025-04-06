@@ -16,33 +16,19 @@ public class IngredienteDTO {
     private String nombre; 
     private UnidadMedida unidadMedida;
     private Integer stock;
-    private List<IngredienteProductoDTO> ingredienteProducto;
+      
 
-    public List<IngredienteProductoDTO> getIngredienteProducto() {
-        return ingredienteProducto;
-    }
-
-    public void setIngredienteProducto(List<IngredienteProductoDTO> ingredienteProducto) {
-        this.ingredienteProducto = ingredienteProducto;
+    public IngredienteDTO(Long id, String nombre, UnidadMedida unidadMedida, Integer stock) {
+        this.id = id;
+        this.nombre = nombre;
+        this.unidadMedida = unidadMedida;
+        this.stock = stock;
     }
 
     public IngredienteDTO() {
     }
 
-    public IngredienteDTO(Long id, String nombre, UnidadMedida unidadMedida, Integer stock, List<IngredienteProductoDTO> ingredienteProducto) {
-        this.id = id;
-        this.nombre = nombre;
-        this.unidadMedida = unidadMedida;
-        this.stock = stock;
-        this.ingredienteProducto = ingredienteProducto;
-    }
-
-    public IngredienteDTO(String nombre, UnidadMedida unidadMedida, Integer stock, List<IngredienteProductoDTO> ingredienteProducto) {
-        this.nombre = nombre;
-        this.unidadMedida = unidadMedida;
-        this.stock = stock;
-        this.ingredienteProducto = ingredienteProducto;
-    }
+    
 
     public IngredienteDTO(String nombre, UnidadMedida unidadMedida, Integer stock) {
         this.nombre = nombre;
