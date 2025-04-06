@@ -4,6 +4,7 @@
  */
 package control;
 
+import DTOs.ClienteFrecuenteDTO;
 import DTOs.IngredienteDTO;
 import DTOs.ProductoDTO;
 import DTOs.ProductoDetalleDTO;
@@ -21,6 +22,7 @@ import GUIs.frmAgregarIngrediente;
 import control.exception.CoordinadorException;
 import enumeradores.TipoProducto;
 import exception.NegocioException;
+import interfaces.IClienteFrecuenteBO;
 import interfaces.IIngredienteBO;
 import interfaces.IProductoBO;
 import java.util.List;
@@ -38,6 +40,7 @@ public class CoordinadorAplicacion {
 
     private IProductoBO productoBO = ManejadorBO.crearProductoBO();
     private IIngredienteBO ingredienteBO = ManejadorBO.crearIngredienteBO();
+    private IClienteFrecuenteBO clienteFrecuenteBO = ManejadorBO.crearClienteFrecuenteBO();
 
     /**
      * Método que define a que pantalla se va redirigir cuando se le da a la
@@ -321,6 +324,46 @@ public class CoordinadorAplicacion {
             return productoBO.cambiarEstadoProducto(nombre);
         } catch (NegocioException e) {
             throw new CoordinadorException("Ha ocurrido un problema al actualizar el estado del producto");
+        }
+    }
+    
+    public ClienteFrecuenteDTO registrarNuevoClienteFrecuente(ClienteFrecuenteDTO clienteFrecuente) throws CoordinadorException {
+        try {
+            return clienteFrecuenteBO.registrarNuevoClienteFrecuente(clienteFrecuente);
+        } catch (NegocioException e) {
+            throw new CoordinadorException("No se pudo registrar el cliente.");
+        }
+    }
+    
+    public List<ClienteFrecuenteDTO> obtenerClientesFrecuentes() throws CoordinadorException {
+        try {
+            return clienteFrecuenteBO.obtenerClientesFrecuentes();
+        } catch (NegocioException e) {
+            throw new CoordinadorException("Ha ocurrido un error al consultar los clientes.");
+        }
+    }
+    
+    public List<ClienteFrecuenteDTO> obtenerClientesPorNombre(String nombre) throws CoordinadorException {
+        try {
+            return clienteFrecuenteBO.obtenerClientesPorNombre(nombre);
+        } catch (NegocioException e) {
+            throw new CoordinadorException("Ha ocurrido un error al consultar los clientes por su nombre.");
+        }
+    }
+    
+    public List<ClienteFrecuenteDTO> obtenerClientesPorTelefono(String telefono) throws CoordinadorException {
+        try {
+            return clienteFrecuenteBO.obtenerClientesPorTelefono(telefono);
+        } catch (NegocioException e) {
+            throw new CoordinadorException("Ha ocurrido un error al consultar los clientes por su teléfono.");
+        }
+    }
+    
+    public List<ClienteFrecuenteDTO> obtenerClientesPorCorreo(String correo) throws CoordinadorException {
+        try {
+            return clienteFrecuenteBO.obtenerClientesPorCorreo(correo);
+        } catch (NegocioException e) {
+            throw new CoordinadorException("Ha ocurrido un error al consultar los clientes por su correo.");
         }
     }
 }
