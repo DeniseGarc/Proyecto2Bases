@@ -84,10 +84,10 @@ public class ClienteDAO implements IClienteDAO {
      * @throws PersistenciaException 
      */
     @Override
-    public List<Cliente> obtenerClientes() throws PersistenciaException {
+    public List<ClienteFrecuente> obtenerClientes() throws PersistenciaException {
         EntityManager em = Conexion.crearConexion();
         try {
-            return em.createQuery("SELECT c FROM Cliente c", Cliente.class)
+            return em.createQuery("SELECT c FROM Cliente c", ClienteFrecuente.class)
                     .getResultList();
         } catch(Exception e) {
             throw new PersistenciaException("Error al obtener la lista de clientes: ", e);
@@ -103,10 +103,10 @@ public class ClienteDAO implements IClienteDAO {
      * @throws PersistenciaException 
      */
     @Override
-    public List<Cliente> obtenerClientesPorNombre(String nombre) throws PersistenciaException {
+    public List<ClienteFrecuente> obtenerClientesPorNombre(String nombre) throws PersistenciaException {
         EntityManager em = Conexion.crearConexion();
         try {
-            return em.createQuery("SELECT c FROM Cliente c WHERE c.nombre LIKE CONCAT('%',:nombre,'%')", Cliente.class)
+            return em.createQuery("SELECT c FROM Cliente c WHERE c.nombre LIKE CONCAT('%',:nombre,'%')", ClienteFrecuente.class)
                     .setParameter("nombre", nombre)
                     .getResultList();
         } catch (Exception e) {
@@ -123,10 +123,10 @@ public class ClienteDAO implements IClienteDAO {
      * @throws PersistenciaException 
      */
     @Override
-    public List<Cliente> obtenerClientesPorTelefono(String telefono) throws PersistenciaException {
+    public List<ClienteFrecuente> obtenerClientesPorTelefono(String telefono) throws PersistenciaException {
         EntityManager em = Conexion.crearConexion();
         try {
-            return em.createQuery("SELECT c FROM Cliente c WHERE c.telefono LIKE CONCAT('%',:telefono,'%')", Cliente.class)
+            return em.createQuery("SELECT c FROM Cliente c WHERE c.telefono LIKE CONCAT('%',:telefono,'%')", ClienteFrecuente.class)
                     .setParameter("telefono", telefono)
                     .getResultList();
         } catch (Exception e) {
@@ -143,10 +143,10 @@ public class ClienteDAO implements IClienteDAO {
      * @throws PersistenciaException 
      */
     @Override
-    public List<Cliente> obtenerClientesPorCorreo(String correo) throws PersistenciaException {
+    public List<ClienteFrecuente> obtenerClientesPorCorreo(String correo) throws PersistenciaException {
         EntityManager em = Conexion.crearConexion();
         try {
-            return em.createQuery("SELECT c FROM Cliente c WHERE c.correoElectronico LIKE CONCAT('%',:correo,'%')", Cliente.class)
+            return em.createQuery("SELECT c FROM Cliente c WHERE c.correoElectronico LIKE CONCAT('%',:correo,'%')", ClienteFrecuente.class)
                     .setParameter("correo", correo)
                     .getResultList();
         } catch (Exception e) {
