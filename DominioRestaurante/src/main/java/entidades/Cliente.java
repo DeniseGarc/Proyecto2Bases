@@ -30,7 +30,7 @@ public class Cliente implements Serializable {
     @Temporal(TemporalType.DATE)
     private Calendar fechaRegistro;
 
-    @Column(nullable = false, unique = true, length = 10)
+    @Column(nullable = false, unique = true)
     private String telefono;
 
     @Column(nullable = true, length = 320)

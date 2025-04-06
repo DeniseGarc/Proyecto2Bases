@@ -4,6 +4,7 @@
  */
 package GUIs;
 
+import control.CoordinadorAplicacion;
 import java.awt.Image;
 import javax.swing.ImageIcon;
 
@@ -13,6 +14,7 @@ import javax.swing.ImageIcon;
  */
 public class ClienteFrecuente extends javax.swing.JFrame {
 
+    private final CoordinadorAplicacion coordinador = new CoordinadorAplicacion();
     /**
      * Creates new form ClienteFrecuente
      */
@@ -59,12 +61,22 @@ public class ClienteFrecuente extends javax.swing.JFrame {
         ImageIcon iconoEscalado = new ImageIcon(imagenEscalada);
         lblRegresar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgs/flecha-regresar.png"))); // NOI18N
         lblRegresar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        lblRegresar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblRegresarMouseClicked(evt);
+            }
+        });
         jPanel1.add(lblRegresar, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -10, 100, 100));
 
         btnRegistrarCliente.setBackground(new java.awt.Color(255, 119, 170));
         btnRegistrarCliente.setForeground(new java.awt.Color(255, 255, 255));
         btnRegistrarCliente.setText("Registrar nuevo cliente");
         btnRegistrarCliente.setBorder(null);
+        btnRegistrarCliente.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnRegistrarClienteMouseClicked(evt);
+            }
+        });
         jPanel1.add(btnRegistrarCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(910, 20, 140, 30));
 
         lblBuscarPor.setBackground(new java.awt.Color(255, 255, 255));
@@ -136,10 +148,11 @@ public class ClienteFrecuente extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(72, 72, 72)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblBuscarPor)
-                    .addComponent(cbBoxTipoBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(lblBuscarPor)
+                        .addComponent(cbBoxTipoBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(57, 57, 57)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 63, Short.MAX_VALUE))
@@ -160,6 +173,14 @@ public class ClienteFrecuente extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void lblRegresarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblRegresarMouseClicked
+        coordinador.PantallaPrinicipal(this);
+    }//GEN-LAST:event_lblRegresarMouseClicked
+
+    private void btnRegistrarClienteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRegistrarClienteMouseClicked
+        coordinador.PantallaRegistrarCliente(this);
+    }//GEN-LAST:event_btnRegistrarClienteMouseClicked
 
     /**
      * @param args the command line arguments

@@ -53,7 +53,7 @@ public class Comanda implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "cliente", nullable = true)
-    private Cliente cliente;
+    private ClienteFrecuente cliente;
 
     public Comanda(Calendar fechaHora, Double totalVenta, Estado estado) {
         this.fechaHora = fechaHora;
@@ -102,6 +102,14 @@ public class Comanda implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public ClienteFrecuente getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(ClienteFrecuente cliente) {
+        this.cliente = cliente;
     }
 
     @Override

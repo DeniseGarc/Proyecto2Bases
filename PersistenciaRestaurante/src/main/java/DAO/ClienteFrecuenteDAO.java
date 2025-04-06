@@ -6,6 +6,7 @@ package DAO;
 
 import conexion.Conexion;
 import entidades.ClienteFrecuente;
+import entidades.Comanda;
 import exception.PersistenciaException;
 import interfaces.IClienteFrecuenteDAO;
 import java.util.List;
@@ -15,7 +16,7 @@ import javax.persistence.EntityManager;
  *
  * @author Maryr
  */
-public class ClienteFrecuenteDAO implements IClienteFrecuenteDAO{
+public class ClienteFrecuenteDAO implements IClienteFrecuenteDAO {
 
     private static ClienteFrecuenteDAO instanciaClienteFrecuenteDAO;
 
@@ -53,15 +54,24 @@ public class ClienteFrecuenteDAO implements IClienteFrecuenteDAO{
 
     /**
      * Método para obtener una lista de todos los clientes frecuentes.
+     *
      * @return Lista de clientes frecuentes.
      * @throws PersistenciaException Si ocurre un error al ejecutar la consulta.
      */
     @Override
     public List<ClienteFrecuente> obtenerClientesFrecuentes() throws PersistenciaException {
         EntityManager em = Conexion.crearConexion();
+        ComandaDAO comandaDAO = ComandaDAO.getInstanciaDAO();
         try {
-            return em.createQuery("SELECT c FROM Cliente c WHERE TYPE(c) = ClienteFrecuente", ClienteFrecuente.class)
+            List<ClienteFrecuente> clientes = em.createQuery("SELECT c FROM Cliente c WHERE TYPE(c) = ClienteFrecuente", ClienteFrecuente.class)
                     .getResultList();
+            for (ClienteFrecuente cliente : clientes) {
+                List<Comanda> comandas = comandaDAO.obtenerComandasPorCliente(cliente);
+                cliente.setPuntosFidelidad(cliente.calcularPuntosFidelidad(comandas));
+                cliente.setCantidadVisitas(cliente.calcularCantidadVisitas(comandas));
+                cliente.setGastoTotal(cliente.calcularGastoTotal(comandas));
+            }
+            return clientes;
         } catch (Exception e) {
             throw new PersistenciaException("Error al obtener clientes frecuentes: ", e);
         } finally {
@@ -79,10 +89,18 @@ public class ClienteFrecuenteDAO implements IClienteFrecuenteDAO{
     @Override
     public List<ClienteFrecuente> obtenerClientesPorNombre(String nombre) throws PersistenciaException {
         EntityManager em = Conexion.crearConexion();
+        ComandaDAO comandaDAO = ComandaDAO.getInstanciaDAO();
         try {
-            return em.createQuery("SELECT c FROM Cliente c WHERE TYPE(c) = ClienteFrecuente AND c.nombre LIKE :nombre", ClienteFrecuente.class)
+            List<ClienteFrecuente> clientes = em.createQuery("SELECT c FROM Cliente c WHERE TYPE(c) = ClienteFrecuente AND c.nombre LIKE :nombre", ClienteFrecuente.class)
                     .setParameter("nombre", "%" + nombre + "%")
                     .getResultList();
+            for (ClienteFrecuente cliente : clientes) {
+                List<Comanda> comandas = comandaDAO.obtenerComandasPorCliente(cliente);
+                cliente.setPuntosFidelidad(cliente.calcularPuntosFidelidad(comandas));
+                cliente.setCantidadVisitas(cliente.calcularCantidadVisitas(comandas));
+                cliente.setGastoTotal(cliente.calcularGastoTotal(comandas));
+            }
+            return clientes;
         } catch (Exception e) {
             throw new PersistenciaException("Error al consultar clientes frecuentes por nombre: ", e);
         } finally {
@@ -101,10 +119,18 @@ public class ClienteFrecuenteDAO implements IClienteFrecuenteDAO{
     @Override
     public List<ClienteFrecuente> obtenerClientesPorTelefono(String telefono) throws PersistenciaException {
         EntityManager em = Conexion.crearConexion();
+        ComandaDAO comandaDAO = ComandaDAO.getInstanciaDAO();
         try {
-            return em.createQuery("SELECT c FROM Cliente c WHERE TYPE(c) = ClienteFrecuente AND c.telefono LIKE :telefono", ClienteFrecuente.class)
+            List<ClienteFrecuente> clientes = em.createQuery("SELECT c FROM Cliente c WHERE TYPE(c) = ClienteFrecuente AND c.telefono LIKE :telefono", ClienteFrecuente.class)
                     .setParameter("telefono", "%" + telefono + "%")
                     .getResultList();
+            for (ClienteFrecuente cliente : clientes) {
+                List<Comanda> comandas = comandaDAO.obtenerComandasPorCliente(cliente);
+                cliente.setPuntosFidelidad(cliente.calcularPuntosFidelidad(comandas));
+                cliente.setCantidadVisitas(cliente.calcularCantidadVisitas(comandas));
+                cliente.setGastoTotal(cliente.calcularGastoTotal(comandas));
+            }
+            return clientes;
         } catch (Exception e) {
             throw new PersistenciaException("Error al consultar clientes frecuentes por teléfono: ", e);
         } finally {
@@ -122,10 +148,18 @@ public class ClienteFrecuenteDAO implements IClienteFrecuenteDAO{
     @Override
     public List<ClienteFrecuente> obtenerClientesPorCorreo(String correo) throws PersistenciaException {
         EntityManager em = Conexion.crearConexion();
+        ComandaDAO comandaDAO = ComandaDAO.getInstanciaDAO();
         try {
-            return em.createQuery("SELECT c FROM Cliente c WHERE TYPE(c) = ClienteFrecuente AND c.correoElectronico LIKE :correo", ClienteFrecuente.class)
+            List<ClienteFrecuente> clientes = em.createQuery("SELECT c FROM Cliente c WHERE TYPE(c) = ClienteFrecuente AND c.correoElectronico LIKE :correo", ClienteFrecuente.class)
                     .setParameter("correo", "%" + correo + "%")
                     .getResultList();
+            for(ClienteFrecuente cliente : clientes) {
+                List<Comanda> comandas = comandaDAO.obtenerComandasPorCliente(cliente);
+                cliente.setPuntosFidelidad(cliente.calcularPuntosFidelidad(comandas));
+                cliente.setCantidadVisitas(cliente.calcularCantidadVisitas(comandas));
+                cliente.setGastoTotal(cliente.calcularGastoTotal(comandas));
+            }
+            return clientes;
         } catch (Exception e) {
             throw new PersistenciaException("Error al consultar clientes frecuentes por correo: ", e);
         } finally {
