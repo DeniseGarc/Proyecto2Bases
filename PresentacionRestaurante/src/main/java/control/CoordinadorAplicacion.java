@@ -16,6 +16,7 @@ import GUIs.frmAgregarIngrediente;
 import javax.swing.JFrame;
 import GUIs.PantallaAdministrarProducto;
 import GUIs.PantallaDetallesProducto;
+import GUIs.PantallaInicio;
 import GUIs.PantallaProductos;
 import GUIs.PantallaTomaComanda;
 import GUIs.RegistrarClienteNuevo;
@@ -49,7 +50,12 @@ public class CoordinadorAplicacion {
         target.setVisible(true);
         padre.dispose();
     }
-
+    
+    public void PantallaInicio(){
+        PantallaInicio inicio = new PantallaInicio();
+        inicio.setVisible(true);
+    }
+    
     public void PantallaPrinicipal(JFrame frame) {
         MenuPrincipal menu = new MenuPrincipal();
         menu.setVisible(true);

@@ -4,7 +4,8 @@
 
 package com.presentacionrestaurante;
 
-import GUIs.Ingredientes;
+
+import control.CoordinadorAplicacion;
 
 
 
@@ -13,9 +14,8 @@ import GUIs.Ingredientes;
  * @author Alici
  */
 public class PresentacionRestaurante {
-
+    private static CoordinadorAplicacion coordinador = new CoordinadorAplicacion();
     public static void main(String[] args) {
-        Ingredientes pantallaIngrediente = new Ingredientes();
-        pantallaIngrediente.setVisible(true);
+      coordinador.PantallaInicio();
     }
 }

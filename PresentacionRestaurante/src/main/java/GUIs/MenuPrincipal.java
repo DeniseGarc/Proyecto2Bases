@@ -4,12 +4,14 @@
  */
 package GUIs;
 
+import control.CoordinadorAplicacion;
+
 /**
  *
  * @author Alici
  */
 public class MenuPrincipal extends javax.swing.JFrame {
-
+    private CoordinadorAplicacion coordinador = new CoordinadorAplicacion();
     /**
      * Creates new form MenuPrincipal
      */
@@ -156,9 +158,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnClientesFrecuentesActionPerformed
 
     private void btnIngredientesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnIngredientesMouseClicked
-        Ingredientes frmIngredientes = new Ingredientes();
-        frmIngredientes.setVisible(true);
-        this.dispose();
+        coordinador.PantallaIngredientes(this);
     }//GEN-LAST:event_btnIngredientesMouseClicked
 
     
