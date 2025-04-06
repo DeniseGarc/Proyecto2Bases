@@ -48,19 +48,21 @@ public class Producto implements Serializable {
     public Producto() {
     }
 
-    public Producto(String nombre, Double precio, TipoProducto tipo, boolean disponible) {
-        this.nombre = nombre;
-        this.precio = precio;
-        this.tipo = tipo;
-        this.disponible = disponible;
-    }
-
-    public Producto(Long id, String nombre, Double precio, TipoProducto tipo, boolean disponible) {
+    public Producto(Long id, String nombre, Double precio, TipoProducto tipo, boolean disponible, boolean habilitada) {
         this.id = id;
         this.nombre = nombre;
         this.precio = precio;
         this.tipo = tipo;
         this.disponible = disponible;
+        this.habilitada = habilitada;
+    }
+
+    public Producto(String nombre, Double precio, TipoProducto tipo, boolean disponible, boolean habilitada) {
+        this.nombre = nombre;
+        this.precio = precio;
+        this.tipo = tipo;
+        this.disponible = disponible;
+        this.habilitada = habilitada;
     }
 
     public Long getId() {
@@ -123,5 +125,4 @@ public class Producto implements Serializable {
     public String toString() {
         return "Producto{" + "id=" + id + ", nombre=" + nombre + ", precio=" + precio + ", tipo=" + tipo + ", disponible=" + disponible + ", habilitada=" + habilitada + ", detallesProducto=" + detallesProducto + '}';
     }
-
 }
