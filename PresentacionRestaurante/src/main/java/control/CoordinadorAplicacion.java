@@ -8,14 +8,10 @@ import DTOs.ProductoDTO;
 import DTOs.ProductoDetalleDTO;
 import GUIs.ClienteFrecuente;
 import GUIs.EliminarIngrediente;
-import GUIs.Ingredientes;
 import GUIs.MenuPrincipal;
-import GUIs.PantallaTomaComanda;
-import GUIs.RegistrarClienteNuevo;
-import GUIs.frmAgregarIngrediente;
-import javax.swing.JFrame;
 import GUIs.PantallaAdministrarProducto;
 import GUIs.PantallaDetallesProducto;
+import GUIs.PantallaIngredientes;
 import GUIs.PantallaInicio;
 import GUIs.PantallaProductos;
 import GUIs.PantallaTomaComanda;
@@ -67,7 +63,7 @@ public class CoordinadorAplicacion {
     }
 
     public void PantallaIngredientes(JFrame frame) {
-        Ingredientes pantallaIngredientes = new Ingredientes();
+        PantallaIngredientes pantallaIngredientes = new PantallaIngredientes();
         pantallaIngredientes.setVisible(true);
         frame.dispose();
     }
