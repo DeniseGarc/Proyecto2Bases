@@ -7,6 +7,7 @@ package DAO;
 import conexion.Conexion;
 import entidades.ClienteFrecuente;
 import exception.PersistenciaException;
+import interfaces.IClienteFrecuenteDAO;
 import java.util.List;
 import javax.persistence.EntityManager;
 
@@ -14,14 +15,14 @@ import javax.persistence.EntityManager;
  *
  * @author Maryr
  */
-public class ClienteFrecuenteDAO {
+public class ClienteFrecuenteDAO implements IClienteFrecuenteDAO{
 
     private static ClienteFrecuenteDAO instanciaClienteFrecuenteDAO;
 
     private ClienteFrecuenteDAO() {
     }
 
-    public static ClienteFrecuenteDAO getInstanciaClienteFrecuenteDAO() {
+    public static ClienteFrecuenteDAO getInstanciaDAO() {
         if (instanciaClienteFrecuenteDAO == null) {
             instanciaClienteFrecuenteDAO = new ClienteFrecuenteDAO();
         }
@@ -35,6 +36,7 @@ public class ClienteFrecuenteDAO {
      * @return El cliente frecuente registrado.
      * @throws PersistenciaException Si ocurre un error durante la persistencia.
      */
+    @Override
     public ClienteFrecuente registrarNuevoClienteFrecuente(ClienteFrecuente clienteFrecuente) throws PersistenciaException {
         EntityManager em = Conexion.crearConexion();
         try {
@@ -54,6 +56,7 @@ public class ClienteFrecuenteDAO {
      * @return Lista de clientes frecuentes.
      * @throws PersistenciaException Si ocurre un error al ejecutar la consulta.
      */
+    @Override
     public List<ClienteFrecuente> obtenerClientesFrecuentes() throws PersistenciaException {
         EntityManager em = Conexion.crearConexion();
         try {
@@ -73,6 +76,7 @@ public class ClienteFrecuenteDAO {
      * @return Lista de clientes frecuentes cuyo nombre coincida con el filtro.
      * @throws PersistenciaException Si ocurre un error al ejecutar la consulta.
      */
+    @Override
     public List<ClienteFrecuente> obtenerClientesPorNombre(String nombre) throws PersistenciaException {
         EntityManager em = Conexion.crearConexion();
         try {
@@ -94,6 +98,7 @@ public class ClienteFrecuenteDAO {
      * filtro.
      * @throws PersistenciaException Si ocurre un error al ejecutar la consulta.
      */
+    @Override
     public List<ClienteFrecuente> obtenerClientesPorTelefono(String telefono) throws PersistenciaException {
         EntityManager em = Conexion.crearConexion();
         try {
@@ -114,6 +119,7 @@ public class ClienteFrecuenteDAO {
      * @return Lista de clientes frecuentes cuyo correo coincida con el filtro.
      * @throws PersistenciaException Si ocurre un error al ejecutar la consulta.
      */
+    @Override
     public List<ClienteFrecuente> obtenerClientesPorCorreo(String correo) throws PersistenciaException {
         EntityManager em = Conexion.crearConexion();
         try {

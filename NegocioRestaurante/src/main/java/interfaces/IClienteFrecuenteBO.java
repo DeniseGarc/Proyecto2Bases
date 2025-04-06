@@ -8,6 +8,6 @@ package interfaces;
  *
  * @author Maryr
  */
-public interface IClienteBO {
+public interface IClienteFrecuenteBO {
     
 }
