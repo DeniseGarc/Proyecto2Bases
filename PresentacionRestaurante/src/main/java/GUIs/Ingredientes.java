@@ -4,18 +4,84 @@
  */
 package GUIs;
 
+import BO.IngredienteBO;
+import exception.NegocioException;
+import DTOs.IngredienteDTO;
+import java.awt.*;
+import java.awt.GridBagConstraints;
+import java.awt.Insets;
+import java.util.List;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.SwingConstants;
+
 /**
  *
  * @author erika
  */
 public class Ingredientes extends javax.swing.JFrame {
-
+    private IngredienteBO servicioIngrediente;
     /**
      * Creates new form Ingredientes
      */
     public Ingredientes() {
         initComponents();
+        MostrarIngredientes();
     }
+    
+    private void MostrarIngredientes() {
+        List<IngredienteDTO> lista = servicioIngrediente.obtenerIngredientes(); 
+        mostrarIngredientes(lista);
+    }
+    public void mostrarIngredientes(List<IngredienteDTO> listaIngredientes) {
+        jPanel3.removeAll(); // Limpiar los componentes anteriores
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(10, 10, 10, 10); // Espacio entre tarjetas
+        gbc.anchor = GridBagConstraints.NORTHWEST;
+
+        int columnas = 3;
+        int fila = 0;
+        int columna = 0;
+
+        for (IngredienteDTO ingrediente : listaIngredientes) {
+            JPanel tarjeta = crearTarjetaIngrediente(ingrediente);
+
+            gbc.gridx = columna;
+            gbc.gridy = fila;
+
+            jPanel3.add(tarjeta, gbc);
+
+            columna++;
+            if (columna >= columnas) {
+                columna = 0;
+                fila++;
+            }
+        }
+
+        jPanel3.revalidate();
+        jPanel3.repaint();
+    }
+    
+    private JPanel crearTarjetaIngrediente(IngredienteDTO ingrediente) {
+        JPanel panel = new JPanel();
+        panel.setPreferredSize(new Dimension(200, 120));
+        panel.setBackground(new Color(255, 227, 242));
+        panel.setLayout(new BorderLayout());
+
+        JLabel lblNombre = new JLabel(ingrediente.getNombre(), SwingConstants.CENTER);
+        JLabel lblStock = new JLabel("Stock: " + ingrediente.getStock(), SwingConstants.CENTER);
+        JLabel lblUnidad = new JLabel("Unidad: " + ingrediente.getUnidadMedida(), SwingConstants.CENTER);
+
+        JPanel panelCentral = new JPanel(new GridLayout(2, 1));
+        panelCentral.add(lblStock);
+        panelCentral.add(lblUnidad);
+
+        panel.add(lblNombre, BorderLayout.NORTH);
+        panel.add(panelCentral, BorderLayout.CENTER);
+
+        return panel;
+    }
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -25,6 +91,7 @@ public class Ingredientes extends javax.swing.JFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+        java.awt.GridBagConstraints gridBagConstraints;
 
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
@@ -77,6 +144,7 @@ public class Ingredientes extends javax.swing.JFrame {
         jScrollPane1.setForeground(new java.awt.Color(255, 176, 217));
 
         jPanel3.setBackground(new java.awt.Color(255, 176, 217));
+        jPanel3.setLayout(new java.awt.GridBagLayout());
 
         btnEliminar.setBackground(new java.awt.Color(255, 227, 242));
         btnEliminar.setText("eliminar");
@@ -87,6 +155,14 @@ public class Ingredientes extends javax.swing.JFrame {
                 btnEliminarActionPerformed(evt);
             }
         });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.ipadx = 73;
+        gridBagConstraints.ipady = 100;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(51, 49, 244, 674);
+        jPanel3.add(btnEliminar, gridBagConstraints);
 
         btnAgregar.setBackground(new java.awt.Color(255, 227, 242));
         btnAgregar.setText("agregar");
@@ -97,27 +173,14 @@ public class Ingredientes extends javax.swing.JFrame {
                 btnAgregarActionPerformed(evt);
             }
         });
-
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(49, 49, 49)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(674, Short.MAX_VALUE))
-        );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(60, 60, 60)
-                .addComponent(btnAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(51, 51, 51)
-                .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(244, Short.MAX_VALUE))
-        );
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.ipadx = 74;
+        gridBagConstraints.ipady = 100;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(60, 49, 0, 674);
+        jPanel3.add(btnAgregar, gridBagConstraints);
 
         jScrollPane1.setViewportView(jPanel3);
 
@@ -131,15 +194,15 @@ public class Ingredientes extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 800, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(126, 126, 126))
+                .addGap(122, 122, 122))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(29, 29, 29)
+                .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 500, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 71, Short.MAX_VALUE))
+                .addGap(0, 82, Short.MAX_VALUE))
         );
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));

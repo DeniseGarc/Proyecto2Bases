@@ -6,7 +6,7 @@ package exception;
 
 /**
  *
- * @author Alici
+ * @author erika
  */
 public class NegocioException extends Exception {
 
