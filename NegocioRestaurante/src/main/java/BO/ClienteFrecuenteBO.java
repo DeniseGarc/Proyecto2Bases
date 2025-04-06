@@ -7,6 +7,7 @@ package BO;
 import DTOs.ClienteFrecuenteDTO;
 import entidades.ClienteFrecuente;
 import exception.NegocioException;
+import exception.PersistenciaException;
 import interfaces.IClienteFrecuenteBO;
 import interfaces.IClienteFrecuenteDAO;
 import java.util.List;
@@ -47,26 +48,52 @@ public class ClienteFrecuenteBO implements IClienteFrecuenteBO {
 
     @Override
     public List<ClienteFrecuenteDTO> obtenerClientesFrecuentes() throws NegocioException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        try {
+            List<ClienteFrecuente> clientes = clienteFrecuenteDAO.obtenerClientesFrecuentes();
+            desencriptarTelefonos(clientes);
+            return ClienteMapper.toDTOList(clientes);
+        } catch (PersistenciaException e) {
+            throw new NegocioException("Error al obtener clientes frecuentes: ", e);
+        }
     }
 
     @Override
     public List<ClienteFrecuenteDTO> obtenerClientesPorNombre(String nombre) throws NegocioException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        try {
+            List<ClienteFrecuente> clientes = clienteFrecuenteDAO.obtenerClientesPorNombre(nombre);
+            desencriptarTelefonos(clientes);
+            return ClienteMapper.toDTOList(clientes);
+        } catch (PersistenciaException e) {
+            throw new NegocioException("Error al buscar clientes frecuentes por nombre: ", e);
+        }
     }
 
     @Override
     public List<ClienteFrecuenteDTO> obtenerClientesPorTelefono(String telefono) throws NegocioException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        try {
+            String telefonoEncriptado = Seguridad.encriptar(telefono);
+            List<ClienteFrecuente> clientes = clienteFrecuenteDAO.obtenerClientesPorTelefono(telefonoEncriptado);
+            desencriptarTelefonos(clientes);
+            return ClienteMapper.toDTOList(clientes);
+        } catch (Exception e) {
+            throw new NegocioException("Error al buscar clientes frecuentes por teléfono: ", e);
+        }
     }
 
     @Override
     public List<ClienteFrecuenteDTO> obtenerClientesPorCorreo(String correo) throws NegocioException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        try {
+            List<ClienteFrecuente> clientes = clienteFrecuenteDAO.obtenerClientesPorCorreo(correo);
+            desencriptarTelefonos(clientes);
+            return ClienteMapper.toDTOList(clientes);
+        } catch (PersistenciaException e) {
+            throw new NegocioException("Error al buscar clientes frecuentes por correo: ", e);
+        }
     }
 
     /**
      * Valida los datos de un cliente.
+     *
      * @param clienteFrecuente Cliente a validar.
      * @throws NegocioException Si los datos son inválidos.
      */
@@ -82,6 +109,22 @@ public class ClienteFrecuenteBO implements IClienteFrecuenteBO {
         }
         if (!clienteFrecuente.getTelefono().matches("\\d{10,15}")) {
             throw new NegocioException("El teléfono debe contener entre 10 y 15 dígitos.");
+        }
+    }
+
+    /**
+     * Desencripta los teléfonos de una lista de clientes frecuentes.
+     *
+     * @param clientes Lista de clientes frecuentes.
+     * @throws PersistenciaException Si ocurre un error en la desencriptación.
+     */
+    private void desencriptarTelefonos(List<ClienteFrecuente> clientes) throws NegocioException {
+        try {
+            for (ClienteFrecuente cliente : clientes) {
+                cliente.setTelefono(Seguridad.desencriptar(cliente.getTelefono()));
+            }
+        } catch (Exception e) {
+            throw new NegocioException("Error al desencriptar los teléfonos: ", e);
         }
     }
 
