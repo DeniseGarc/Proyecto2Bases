@@ -4,6 +4,7 @@
  */
 package control;
 
+import DTOs.IngredienteDTO;
 import DTOs.ProductoDTO;
 import DTOs.ProductoDetalleDTO;
 import GUIs.ClienteFrecuente;
@@ -20,6 +21,7 @@ import GUIs.frmAgregarIngrediente;
 import control.exception.CoordinadorException;
 import enumeradores.TipoProducto;
 import exception.NegocioException;
+import interfaces.IIngredienteBO;
 import interfaces.IProductoBO;
 import java.util.List;
 import java.util.logging.Level;
@@ -34,6 +36,7 @@ import modos.Modo;
  */
 public class CoordinadorAplicacion {
     private IProductoBO productoBO = ManejadorBO.crearProductoBO();
+    private IIngredienteBO ingredienteBO = ManejadorBO.crearIngredienteBO();
 
     /**
      * Método que define a que pantalla se va redirigir cuando se le da a la
@@ -223,6 +226,27 @@ public class CoordinadorAplicacion {
             throw new CoordinadorException("El producto no tiene ingredientes asociados");
         }
         return producto;
+    }
+    
+    public IngredienteDTO agregarIngrediente(IngredienteDTO ingrediente) throws CoordinadorException{
+        if(ingrediente==null){
+            throw new CoordinadorException("El producto a agregar no puede ser nulo");
+        }
+        if(ingrediente.getNombre() == null){
+            throw new CoordinadorException("El nombre no puede ser nulo");
+        }
+        if(ingrediente.getUnidadMedida() == null){
+            throw new CoordinadorException("El ingrediente no tiene una Unidad de medida asignada");
+        }
+        else{
+            try {
+                ingredienteBO.agregarIngrediente(ingrediente);
+            } catch (NegocioException ex) {
+                Logger.getLogger(CoordinadorAplicacion.class.getName()).log(Level.SEVERE, null, ex);
+                throw new CoordinadorException("No se pudo guardar el ingrediente");
+            }
+        }
+        return ingrediente;
     }
 
 }

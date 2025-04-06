@@ -252,7 +252,7 @@ public class PantallaIngredientes extends javax.swing.JFrame {
     }//GEN-LAST:event_lblRegresarMouseClicked
 
     private void btnAgregarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAgregarMouseClicked
-      coordinador.pantallaAgregarProducto(this);
+      coordinador.PantallaAgregarIngrediente(this);
     }//GEN-LAST:event_btnAgregarMouseClicked
 
     private void btnEliminarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEliminarMouseClicked
