@@ -6,6 +6,8 @@ package com.presentacionrestaurante;
 
 
 
+
+
 import control.CoordinadorAplicacion;
 
 
@@ -18,10 +20,8 @@ import control.CoordinadorAplicacion;
 public class PresentacionRestaurante {
     private static CoordinadorAplicacion coordinador = new CoordinadorAplicacion();
     public static void main(String[] args) {
-      coordinador.PantallaInicio();
-      
-     
-        
-
+     coordinador.PantallaInicio();
+  
+    
     }
 }

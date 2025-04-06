@@ -21,5 +21,5 @@ public interface IIngredienteDAO {
     public boolean eliminarIngrediente (Long id) throws PersistenciaException;
     public Ingrediente guardarIngredinete (Ingrediente ingredienteGuardar) throws PersistenciaException; 
     public List<Ingrediente> obtenerIngredientesSinProducto() throws PersistenciaException;  
-    public Ingrediente buscarPorNombreYUnidad(String nombre,String unidad)throws PersistenciaException; 
+    public List<Ingrediente> buscarPorNombreYUnidad(String nombre,String unidad)throws PersistenciaException; 
 }

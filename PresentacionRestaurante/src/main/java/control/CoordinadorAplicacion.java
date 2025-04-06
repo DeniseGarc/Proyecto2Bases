@@ -303,6 +303,16 @@ public class CoordinadorAplicacion {
         }
     }
     
+    public List<IngredienteDTO> buscarIngredientePorUniad(String unidad)throws CoordinadorException{
+        try {
+           return ingredienteBO.buscarPorUnidad(unidad);
+        } catch (NegocioException ex) {
+            Logger.getLogger(CoordinadorAplicacion.class.getName()).log(Level.SEVERE, null, ex);
+            throw new CoordinadorException("Ha ocurrido un error al obtener los ingredientes");
+        }
+    
+    }
+    
     public List<IngredienteDTO> mostrarIngredientesSinProducto() throws CoordinadorException{
         try {
            return ingredienteBO.obtenerIngredientesSinProducto();
@@ -321,12 +331,21 @@ public class CoordinadorAplicacion {
         }
     }
     
-    public IngredienteDTO buscarPorNombreYUnidad(String nombre, String unidad) throws CoordinadorException{
+    public List<IngredienteDTO> buscarPorNombreYUnidad(String nombre, String unidad) throws CoordinadorException{
         try{
         return ingredienteBO.buscarPorNombreYUnidad(nombre, unidad);
         } catch (NegocioException ex) {
             Logger.getLogger(CoordinadorAplicacion.class.getName()).log(Level.SEVERE, null, ex);
-            throw new CoordinadorException("Ha ocurrido un error al actualizar el stock");
+            throw new CoordinadorException("Ha ocurrido un error al buscar el ingrediente");
+        }
+    }
+    
+    public List<IngredienteDTO> buscarPorNombre(String nombre) throws CoordinadorException{
+        try{
+        return ingredienteBO.obtenerIngredientesPorNombre(nombre);
+        } catch (NegocioException ex) {
+            Logger.getLogger(CoordinadorAplicacion.class.getName()).log(Level.SEVERE, null, ex);
+            throw new CoordinadorException("Ha ocurrido un error al buscar el ingrediente");
         }
     }
 
