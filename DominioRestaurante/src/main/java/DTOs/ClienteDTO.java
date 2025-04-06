@@ -1,45 +1,27 @@
-
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package entidades;
+package DTOs;
 
-import java.io.Serializable;
 import java.util.Calendar;
-import javax.persistence.*;
 
 /**
  *
  * @author Maryr
  */
-@Entity
-@Table(name = "clientes")
-@Inheritance(strategy = InheritanceType.JOINED)
-@DiscriminatorColumn(name = "TipoCliente", discriminatorType = DiscriminatorType.STRING)
-public class Cliente implements Serializable {
+public class ClienteDTO {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @Column(nullable = false, length = 300)
     private String nombre;
-
-    @Column(nullable = false)
-    @Temporal(TemporalType.DATE)
     private Calendar fechaRegistro;
-
-    @Column(nullable = false, unique = true, length = 10)
     private String telefono;
-
-    @Column(nullable = true, length = 320)
     private String correoElectronico;
 
-    public Cliente() {
+    public ClienteDTO() {
     }
 
-    public Cliente(String nombre, Calendar fechaRegistro, String telefono, String correoElectronico) {
+    public ClienteDTO(String nombre, Calendar fechaRegistro, String telefono, String correoElectronico) {
         this.nombre = nombre;
         this.fechaRegistro = fechaRegistro;
         this.telefono = telefono;
@@ -88,7 +70,7 @@ public class Cliente implements Serializable {
 
     @Override
     public String toString() {
-        return "Cliente{" + "id=" + id + ", nombre=" + nombre + ", fechaRegistro=" + fechaRegistro + ", telefono=" + telefono + ", correoElectronico=" + correoElectronico + '}';
+        return "ClienteDTO{" + "id=" + id + ", nombre=" + nombre + ", fechaRegistro=" + fechaRegistro + ", telefono=" + telefono + ", correoElectronico=" + correoElectronico + '}';
     }
 
 }
