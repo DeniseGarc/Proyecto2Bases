@@ -4,8 +4,10 @@
  */
 package entidades;
 
+import enumeradores.Estado;
 import java.io.Serializable;
 import java.util.Calendar;
+import java.util.List;
 import javax.persistence.*;
 
 /**
@@ -30,6 +32,36 @@ public class ClienteFrecuente extends Cliente implements Serializable {
 
     public ClienteFrecuente(String nombre, Calendar fechaRegistro, String telefono, String correoElectronico) {
         super(nombre, fechaRegistro, telefono, correoElectronico);
+    }
+
+    public int calcularPuntosFidelidad(List<Comanda> comandasCliente) {
+        int puntos = 0;
+        for (Comanda comanda : comandasCliente) {
+            if (comanda.getEstado() == Estado.ENTREGADA) {
+                puntos += comanda.getTotalVenta();
+            }
+        }
+        return (int) (puntos / 20);
+    }
+
+    public int calcularCantidadVisitas(List<Comanda> comandasCliente) {
+        int numVisitas = 0;
+        for (Comanda comanda : comandasCliente) {
+            if (comanda.getEstado() == Estado.ENTREGADA) {
+                numVisitas++;
+            }
+        }
+        return numVisitas;
+    }
+
+    public double calcularGastoTotal(List<Comanda> comandasCliente) {
+        double gasto = 0.0;
+        for (Comanda comanda : comandasCliente) {
+            if (comanda.getEstado() == Estado.ENTREGADA) {
+                gasto += comanda.getTotalVenta();
+            }
+        }
+        return gasto;
     }
 
     public int getPuntosFidelidad() {
