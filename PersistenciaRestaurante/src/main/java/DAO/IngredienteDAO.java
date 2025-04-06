@@ -72,33 +72,28 @@ public class IngredienteDAO implements IIngredienteDAO {
      * @throws PersistenciaException 
      */
     @Override
-    public Ingrediente modificarStock(Long id,int stock) throws PersistenciaException {
-         EntityManager em = Conexion.crearConexion();
-        EntityTransaction tx = em.getTransaction();
-
+    public Ingrediente modificarStock(Ingrediente ingrediente) throws PersistenciaException {
+    EntityManager em = Conexion.crearConexion();
     try {
-        tx.begin(); // Iniciar transacción
-
-        Ingrediente ingrediente = em.find(Ingrediente.class, id);
-        if (ingrediente == null) {
-            throw new PersistenciaException("Ingrediente no encontrado con ID: " + id);
+        Ingrediente existente = em.find(Ingrediente.class, ingrediente.getId());
+        if (existente == null) {
+            throw new PersistenciaException("Ingrediente no encontrado con ID: " + ingrediente.getId());
         }
+        existente.setStock(ingrediente.getStock());
+        
+        em.getTransaction().begin();
+        em.merge(existente);
+        em.getTransaction().commit();
 
-        ingrediente.setStock(stock);
-        em.merge(ingrediente);
+        return existente;
 
-        tx.commit(); // Confirmar transacción
-        return ingrediente;
-
-    } catch (Exception e) {
-        if (tx.isActive()) {
-            tx.rollback(); // Revertir en caso de error
-        }
+    } catch (PersistenciaException e) {
         throw new PersistenciaException("Error al modificar el stock del ingrediente", e);
     } finally {
-        em.close(); // Cerrar conexión
+        em.close();
     }
-    }
+}
+
 
     
     /**
@@ -179,14 +174,22 @@ public class IngredienteDAO implements IIngredienteDAO {
  */
     @Override
     public Ingrediente buscarIngredientePorId(Long id) throws PersistenciaException {
-         EntityManager em = Conexion.crearConexion();
+        EntityManager em = Conexion.crearConexion();
         try {
-            return em.createQuery("SELECT i FROM Ingrediente i WHERE i.id = :id ", Ingrediente.class)
-                    .setParameter("id", id).getSingleResult();
+            // Realizar la consulta para buscar el ingrediente por ID
+            return em.createQuery(
+                    "SELECT i FROM Ingrediente i WHERE i.id = :id", Ingrediente.class
+            )
+            .setParameter("id", id)
+            .getSingleResult();
+        } catch (NoResultException e) {
+            
+            throw new PersistenciaException("No se encontró un ingrediente con el ID: " + id, e);
         } catch (Exception e) {
-            throw new PersistenciaException("Error al consultar ingredientes por unidad de medida: ", e);
+            
+            throw new PersistenciaException("Error al buscar el ingrediente por ID.", e);
         } finally {
-            em.close();
+            em.close(); 
         }
     }
 /**
