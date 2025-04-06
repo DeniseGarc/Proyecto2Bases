@@ -15,6 +15,7 @@ import javax.swing.JOptionPane;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import modos.Modo;
+
 import plantillas.PanelIngredienteProducto;
 
 /**
@@ -46,8 +47,10 @@ public class PantallaAdministrarProducto extends javax.swing.JFrame {
             cargarIngredientesProducto();
             cargarResumen();
         }
-
+        
     }
+    
+    
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -75,6 +78,7 @@ public class PantallaAdministrarProducto extends javax.swing.JFrame {
         lblDisponibilidadNombre = new javax.swing.JLabel();
         lblCategoriaTitulo = new javax.swing.JLabel();
         lblPrecioTitulo = new javax.swing.JLabel();
+        Contenedor = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -167,6 +171,7 @@ public class PantallaAdministrarProducto extends javax.swing.JFrame {
         lblPrecioTitulo.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         lblPrecioTitulo.setText("Precio");
         fondo.add(lblPrecioTitulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 90, -1, -1));
+        fondo.add(Contenedor, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 150, 760, 490));
 
         getContentPane().add(fondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1070, 700));
 
@@ -363,6 +368,7 @@ public class PantallaAdministrarProducto extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel Contenedor;
     private plantillas.Titulo banner;
     private javax.swing.JButton btnAccion;
     private javax.swing.JComboBox<Object> cBoxCategoria;

@@ -144,10 +144,19 @@ public class IngredienteBO implements IIngredienteBO{
     }
 
     @Override
-    public IngredienteDTO buscarPorNombreYUnidad(String nombre, String unidad) throws NegocioException {
+    public List<IngredienteDTO> buscarPorNombreYUnidad(String nombre, String unidad) throws NegocioException {
         try{
-           Ingrediente ingrediente = ingredienteDAO.buscarPorNombreYUnidad(nombre, unidad);
-           return IngredienteMapper.ToDTO(ingrediente);
+           List<Ingrediente> ingredientes = ingredienteDAO.buscarPorNombreYUnidad(nombre, unidad);
+           return IngredienteMapper.ToDTOList(ingredientes);
+        }catch(PersistenciaException e) {
+            throw new NegocioException("Ocurrió un error al obtener el ingrediente");
+        }
+    }
+    
+    public List<IngredienteDTO> buscarPorUnidad(String unidad) throws NegocioException{
+        try{
+           List<Ingrediente> ingredientes = ingredienteDAO.buscarIngredientesPorUnidadMedida(unidad);
+           return IngredienteMapper.ToDTOList(ingredientes);
         }catch(PersistenciaException e) {
             throw new NegocioException("Ocurrió un error al obtener el ingrediente");
         }

@@ -218,7 +218,7 @@ public class IngredienteDAO implements IIngredienteDAO {
  * @throws PersistenciaException 
  */
     @Override
-    public Ingrediente buscarPorNombreYUnidad(String nombre, String unidad) throws PersistenciaException {
+    public List<Ingrediente> buscarPorNombreYUnidad(String nombre, String unidad) throws PersistenciaException {
         EntityManager em = Conexion.crearConexion(); 
     try {
         
@@ -228,7 +228,7 @@ public class IngredienteDAO implements IIngredienteDAO {
         )
         .setParameter("nombre", nombre)
         .setParameter("unidadMedida", UnidadMedida.valueOf(unidad)) 
-        .getSingleResult();
+        .getResultList();
     } catch (NoResultException e) {
         throw new PersistenciaException("No se encontró un ingrediente con el nombre '" + nombre + "' y la unidad '" + unidad + "'.", e);
     } catch (IllegalArgumentException e) {

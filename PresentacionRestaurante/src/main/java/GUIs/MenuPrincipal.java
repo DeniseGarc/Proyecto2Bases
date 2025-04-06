@@ -86,6 +86,11 @@ public class MenuPrincipal extends javax.swing.JFrame {
         btnProductos.setForeground(new java.awt.Color(255, 255, 255));
         btnProductos.setText("Productos");
         btnProductos.setPreferredSize(new java.awt.Dimension(150, 150));
+        btnProductos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnProductosMouseClicked(evt);
+            }
+        });
 
         btnClientesFrecuentes.setBackground(new java.awt.Color(255, 178, 217));
         btnClientesFrecuentes.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 18)); // NOI18N
@@ -168,6 +173,10 @@ public class MenuPrincipal extends javax.swing.JFrame {
     private void btnClientesFrecuentesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnClientesFrecuentesMouseClicked
         coordinador.PantallaClienteFrecuente(this);
     }//GEN-LAST:event_btnClientesFrecuentesMouseClicked
+
+    private void btnProductosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnProductosMouseClicked
+        
+    }//GEN-LAST:event_btnProductosMouseClicked
 
     
 
