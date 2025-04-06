@@ -4,13 +4,18 @@
 
 package com.presentacionrestaurante;
 
+
+import control.CoordinadorAplicacion;
+
+
+
 /**
  *
  * @author Alici
  */
 public class PresentacionRestaurante {
-
+    private static CoordinadorAplicacion coordinador = new CoordinadorAplicacion();
     public static void main(String[] args) {
-        System.out.println("Hello World!");
+      coordinador.PantallaInicio();
     }
 }
