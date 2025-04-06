@@ -53,12 +53,12 @@ public class CoordinadorAplicacion {
         target.setVisible(true);
         padre.dispose();
     }
-    
-    public void PantallaInicio(){
+
+    public void PantallaInicio() {
         PantallaInicio inicio = new PantallaInicio();
         inicio.setVisible(true);
     }
-    
+
     public void PantallaPrinicipal(JFrame frame) {
         MenuPrincipal menu = new MenuPrincipal();
         menu.setVisible(true);
@@ -257,18 +257,17 @@ public class CoordinadorAplicacion {
         }
         return true;
     }
-    
-    public IngredienteDTO agregarIngrediente(IngredienteDTO ingrediente) throws CoordinadorException{
-        if(ingrediente==null){
+
+    public IngredienteDTO agregarIngrediente(IngredienteDTO ingrediente) throws CoordinadorException {
+        if (ingrediente == null) {
             throw new CoordinadorException("El producto a agregar no puede ser nulo");
         }
-        if(ingrediente.getNombre() == null){
+        if (ingrediente.getNombre() == null) {
             throw new CoordinadorException("El nombre no puede ser nulo");
         }
-        if(ingrediente.getUnidadMedida() == null){
+        if (ingrediente.getUnidadMedida() == null) {
             throw new CoordinadorException("El ingrediente no tiene una Unidad de medida asignada");
-        }
-        else{
+        } else {
             try {
                 ingredienteBO.agregarIngrediente(ingrediente);
             } catch (NegocioException ex) {
@@ -278,7 +277,7 @@ public class CoordinadorAplicacion {
         }
         return ingrediente;
     }
-    
+
     public boolean eliminarIngrediente(IngredienteDTO ingrediente) throws CoordinadorException{
         try {
                 ingredienteBO.eliminarIngrediente(ingrediente.getId());
@@ -289,14 +288,16 @@ public class CoordinadorAplicacion {
             }
         
     }
+
     /**
      * Muestra todos los ingredientes
+     *
      * @return lista de ingredientesDTO
-     * @throws CoordinadorException 
+     * @throws CoordinadorException
      */
-    public List<IngredienteDTO> mostrarIngredientes () throws CoordinadorException{
+    public List<IngredienteDTO> mostrarIngredientes() throws CoordinadorException {
         try {
-           return ingredienteBO.obtenerIngredientes();
+            return ingredienteBO.obtenerIngredientes();
         } catch (NegocioException ex) {
             Logger.getLogger(CoordinadorAplicacion.class.getName()).log(Level.SEVERE, null, ex);
             throw new CoordinadorException("Ha ocurrido un error al obtener los ingredientes");
@@ -315,25 +316,26 @@ public class CoordinadorAplicacion {
     
     public List<IngredienteDTO> mostrarIngredientesSinProducto() throws CoordinadorException{
         try {
-           return ingredienteBO.obtenerIngredientesSinProducto();
+            return ingredienteBO.obtenerIngredientesSinProducto();
         } catch (NegocioException ex) {
             Logger.getLogger(CoordinadorAplicacion.class.getName()).log(Level.SEVERE, null, ex);
             throw new CoordinadorException("Ha ocurrido un error al obtener los Ingredientes");
         }
     }
-    
-    public IngredienteDTO modificarStock(Long id, int stock)throws CoordinadorException{
+
+    public IngredienteDTO modificarStock(Long id, int stock) throws CoordinadorException {
         try {
-           return ingredienteBO.actualizarStock(id, stock);
+            return ingredienteBO.actualizarStock(id, stock);
         } catch (NegocioException ex) {
             Logger.getLogger(CoordinadorAplicacion.class.getName()).log(Level.SEVERE, null, ex);
             throw new CoordinadorException("Ha ocurrido un error al actualizar el stock");
         }
     }
-    
+   
     public List<IngredienteDTO> buscarPorNombreYUnidad(String nombre, String unidad) throws CoordinadorException{
         try{
         return ingredienteBO.buscarPorNombreYUnidad(nombre, unidad);
+
         } catch (NegocioException ex) {
             Logger.getLogger(CoordinadorAplicacion.class.getName()).log(Level.SEVERE, null, ex);
             throw new CoordinadorException("Ha ocurrido un error al buscar el ingrediente");
@@ -356,15 +358,36 @@ public class CoordinadorAplicacion {
             throw new CoordinadorException("Ha ocurrido un problema al actualizar el estado del producto");
         }
     }
-    
+
     public ClienteFrecuenteDTO registrarNuevoClienteFrecuente(ClienteFrecuenteDTO clienteFrecuente) throws CoordinadorException {
         try {
+            validarCliente(clienteFrecuente);
             return clienteFrecuenteBO.registrarNuevoClienteFrecuente(clienteFrecuente);
         } catch (NegocioException e) {
-            throw new CoordinadorException("No se pudo registrar el cliente.");
+            throw new CoordinadorException("No se pudo registrar el cliente.", e);
         }
     }
-    
+
+    private void validarCliente(ClienteFrecuenteDTO clienteFrecuente) throws CoordinadorException {
+        if (clienteFrecuente == null) {
+            throw new CoordinadorException("El cliente no puede ser nulo.");
+        }
+        if (clienteFrecuente.getNombre() == null || clienteFrecuente.getNombre().trim().isEmpty()) {
+            throw new CoordinadorException("El nombre del cliente es obligatorio.");
+        }
+        if (clienteFrecuente.getTelefono() == null || clienteFrecuente.getTelefono().trim().isEmpty()) {
+            throw new CoordinadorException("El teléfono es obligatorio.");
+        }
+        if (!clienteFrecuente.getTelefono().matches("\\d{10,15}")) {
+            throw new CoordinadorException("El teléfono no es valido.");
+        }
+        if (clienteFrecuente.getCorreoElectronico() != null) {
+            if (!clienteFrecuente.getCorreoElectronico().matches("^[\\w.%+-]+@[\\w.-]+\\.[a-zA-Z]{2,}$")) {
+                throw new CoordinadorException("El formato del correo no es valido.");
+            }
+        }
+    }
+
     public List<ClienteFrecuenteDTO> obtenerClientesFrecuentes() throws CoordinadorException {
         try {
             return clienteFrecuenteBO.obtenerClientesFrecuentes();
@@ -372,7 +395,7 @@ public class CoordinadorAplicacion {
             throw new CoordinadorException("Ha ocurrido un error al consultar los clientes.");
         }
     }
-    
+
     public List<ClienteFrecuenteDTO> obtenerClientesPorNombre(String nombre) throws CoordinadorException {
         try {
             return clienteFrecuenteBO.obtenerClientesPorNombre(nombre);
@@ -380,7 +403,7 @@ public class CoordinadorAplicacion {
             throw new CoordinadorException("Ha ocurrido un error al consultar los clientes por su nombre.");
         }
     }
-    
+
     public List<ClienteFrecuenteDTO> obtenerClientesPorTelefono(String telefono) throws CoordinadorException {
         try {
             return clienteFrecuenteBO.obtenerClientesPorTelefono(telefono);
@@ -388,7 +411,7 @@ public class CoordinadorAplicacion {
             throw new CoordinadorException("Ha ocurrido un error al consultar los clientes por su teléfono.");
         }
     }
-    
+
     public List<ClienteFrecuenteDTO> obtenerClientesPorCorreo(String correo) throws CoordinadorException {
         try {
             return clienteFrecuenteBO.obtenerClientesPorCorreo(correo);

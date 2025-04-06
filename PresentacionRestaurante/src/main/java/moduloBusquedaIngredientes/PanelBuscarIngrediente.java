@@ -58,10 +58,13 @@ public class PanelBuscarIngrediente extends javax.swing.JPanel {
         String tipoSeleccionado = cBoxUnidad.getSelectedItem().toString();
 
         List<IngredienteDTO> ingredientes;
-
+        
         boolean buscarPorNombre = !texto.isEmpty();
         boolean buscarPorUnidad = !tipoSeleccionado.equalsIgnoreCase("Todos");
-
+        if(texto.isEmpty()){
+            UnidadMedida unidad = UnidadMedida.valueOf(tipoSeleccionado);
+            ingredientes = coordinador.buscarIngredientePorUniad(tipoSeleccionado);
+        }
         if (!buscarPorNombre && !buscarPorUnidad) {
             cargarIngredientes(); // Mostrar todo si no hay filtros
             return;

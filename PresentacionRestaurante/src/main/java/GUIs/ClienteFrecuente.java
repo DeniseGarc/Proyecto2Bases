@@ -237,14 +237,9 @@ public class ClienteFrecuente extends javax.swing.JFrame {
             }
             List<ClienteFrecuenteDTO> clientesFiltrados = null;
             switch (tipo) {
-                case "Nombre":
-                    clientesFiltrados = coordinador.obtenerClientesPorNombre(texto);
-                    break;
-                case "Telefono": 
-                    clientesFiltrados = coordinador.obtenerClientesPorTelefono(texto);
-                    break;
-                case "Correo electronico":
-                    clientesFiltrados = coordinador.obtenerClientesPorCorreo(texto);
+                case "Nombre" -> clientesFiltrados = coordinador.obtenerClientesPorNombre(texto);
+                case "Telefono" -> clientesFiltrados = coordinador.obtenerClientesPorTelefono(texto);
+                case "Correo electronico" -> clientesFiltrados = coordinador.obtenerClientesPorCorreo(texto);
             }
             cargarClientesEnTabla(clientesFiltrados);
         } catch (CoordinadorException e) {

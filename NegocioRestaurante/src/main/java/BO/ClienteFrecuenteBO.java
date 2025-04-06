@@ -1,3 +1,4 @@
+
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
@@ -37,7 +38,6 @@ public class ClienteFrecuenteBO implements IClienteFrecuenteBO {
     @Override
     public ClienteFrecuenteDTO registrarNuevoClienteFrecuente(ClienteFrecuenteDTO clienteFrecuente) throws NegocioException {
         try {
-            validarCliente(clienteFrecuente);
             clienteFrecuente.setTelefono(Seguridad.encriptar(clienteFrecuente.getTelefono()));
             ClienteFrecuente registrado = clienteFrecuenteDAO.registrarNuevoClienteFrecuente(ClienteMapper.toEntity(clienteFrecuente));
             registrado.setTelefono(Seguridad.desencriptar(registrado.getTelefono()));
@@ -94,27 +94,6 @@ public class ClienteFrecuenteBO implements IClienteFrecuenteBO {
             return ClienteMapper.toDTOList(clientes);
         } catch (PersistenciaException e) {
             throw new NegocioException("Error al buscar clientes frecuentes por correo: ", e);
-        }
-    }
-
-    /**
-     * Valida los datos de un cliente.
-     *
-     * @param clienteFrecuente Cliente a validar.
-     * @throws NegocioException Si los datos son inválidos.
-     */
-    private void validarCliente(ClienteFrecuenteDTO clienteFrecuente) throws NegocioException {
-        if (clienteFrecuente == null) {
-            throw new NegocioException("El cliente no puede ser nulo.");
-        }
-        if (clienteFrecuente.getNombre() == null || clienteFrecuente.getNombre().trim().isEmpty()) {
-            throw new NegocioException("El nombre del cliente es obligatorio.");
-        }
-        if (clienteFrecuente.getTelefono() == null || clienteFrecuente.getTelefono().trim().isEmpty()) {
-            throw new NegocioException("El teléfono es obligatorio.");
-        }
-        if (!clienteFrecuente.getTelefono().matches("\\d{10,15}")) {
-            throw new NegocioException("El teléfono debe contener entre 10 y 15 dígitos.");
         }
     }
 
