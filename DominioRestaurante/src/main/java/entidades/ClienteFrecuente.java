@@ -28,22 +28,10 @@ public class ClienteFrecuente extends Cliente implements Serializable {
     public ClienteFrecuente() {
     }
 
-    public ClienteFrecuente(String nombre, String apellidoPaterno, String apellidoMaterno, Calendar fechaRegistro, String telefono, String correoElectronico) {
-        super(nombre, apellidoPaterno, apellidoMaterno, fechaRegistro, telefono, correoElectronico);
+    public ClienteFrecuente(String nombre, Calendar fechaRegistro, String telefono, String correoElectronico) {
+        super(nombre, fechaRegistro, telefono, correoElectronico);
     }
 
-//    por mientras para ver como esta el rollo        
-//    public int calularPuntosFidelidad() {
-//        return puntosFidelidad;
-//    }
-//    
-//    public int calcularCantidadVisitas() {
-//        return cantidadVisitas;
-//    }
-//    
-//    public double calcularGastoTotal() {
-//        return gastoTotal;
-//    }
     public int getPuntosFidelidad() {
         return puntosFidelidad;
     }
