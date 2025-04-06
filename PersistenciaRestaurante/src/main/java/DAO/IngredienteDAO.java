@@ -6,10 +6,13 @@ package DAO;
 
 import conexion.Conexion;
 import entidades.Ingrediente;
+import enumeradores.UnidadMedida;
 import exception.PersistenciaException;
 import interfaces.IIngredienteDAO;
 import java.util.List;
 import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
+import javax.persistence.NoResultException;
 
 /**
  *
@@ -61,20 +64,39 @@ public class IngredienteDAO implements IIngredienteDAO {
             em.close();
         }
     }
-
+    /**
+     * Actualiza el stock 
+     * @param id del ingrediente a modificar
+     * @param stock
+     * @return ingrediente con stock modificado
+     * @throws PersistenciaException 
+     */
     @Override
     public Ingrediente modificarStock(Long id,int stock) throws PersistenciaException {
          EntityManager em = Conexion.crearConexion();
-         try {
+        EntityTransaction tx = em.getTransaction();
+
+    try {
+        tx.begin(); // Iniciar transacción
+
         Ingrediente ingrediente = em.find(Ingrediente.class, id);
         if (ingrediente == null) {
             throw new PersistenciaException("Ingrediente no encontrado con ID: " + id);
         }
+
         ingrediente.setStock(stock);
         em.merge(ingrediente);
+
+        tx.commit(); // Confirmar transacción
         return ingrediente;
+
     } catch (Exception e) {
+        if (tx.isActive()) {
+            tx.rollback(); // Revertir en caso de error
+        }
         throw new PersistenciaException("Error al modificar el stock del ingrediente", e);
+    } finally {
+        em.close(); // Cerrar conexión
     }
     }
 
@@ -149,7 +171,12 @@ public class IngredienteDAO implements IIngredienteDAO {
             em.close();
         }
     } 
-
+/**
+ * Busca el ingrediente con el id dado
+ * @param id del ingrediente a buscar
+ * @return ingrediente
+ * @throws PersistenciaException 
+ */
     @Override
     public Ingrediente buscarIngredientePorId(Long id) throws PersistenciaException {
          EntityManager em = Conexion.crearConexion();
@@ -161,6 +188,54 @@ public class IngredienteDAO implements IIngredienteDAO {
         } finally {
             em.close();
         }
+    }
+/**
+ * Muestra los ingredientes que no estan asociados a ningun producto
+ * @return
+ * @throws PersistenciaException 
+ */
+    @Override
+    public List<Ingrediente> obtenerIngredientesSinProducto() throws PersistenciaException {
+       EntityManager em = Conexion.crearConexion();
+    try {
+        return em.createQuery(
+            "SELECT i FROM Ingrediente i WHERE i.detallesProducto IS EMPTY", Ingrediente.class
+        ).getResultList();
+    } catch (Exception e) {
+        throw new PersistenciaException("Error al consultar ingredientes sin producto: ", e);
+    } finally {
+        em.close();
+    }
+    }
+/**
+ * Busca un ingrediente por nombre y unidad de medida
+ * @param nombre
+ * @param unidad
+ * @return ingrediente
+ * @throws PersistenciaException 
+ */
+    @Override
+    public Ingrediente buscarPorNombreYUnidad(String nombre, String unidad) throws PersistenciaException {
+        EntityManager em = Conexion.crearConexion(); 
+    try {
+        
+        return em.createQuery(
+                "SELECT i FROM Ingrediente i WHERE i.nombre = :nombre AND i.unidadMedida = :unidadMedida",
+                Ingrediente.class
+        )
+        .setParameter("nombre", nombre)
+        .setParameter("unidadMedida", UnidadMedida.valueOf(unidad)) 
+        .getSingleResult();
+    } catch (NoResultException e) {
+        throw new PersistenciaException("No se encontró un ingrediente con el nombre '" + nombre + "' y la unidad '" + unidad + "'.", e);
+    } catch (IllegalArgumentException e) {
+        throw new PersistenciaException("Unidad de medida inválida: " + unidad, e);
+    } catch (Exception e) {
+        throw new PersistenciaException("Error al consultar el ingrediente por nombre y unidad.", e);
+    } finally {
+        em.close(); 
+    }
+
     }
     
 }

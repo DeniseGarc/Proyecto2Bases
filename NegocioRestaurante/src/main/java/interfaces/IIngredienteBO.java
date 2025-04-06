@@ -18,5 +18,7 @@ public interface IIngredienteBO {
     public boolean eliminarIngrediente(Long id )throws NegocioException; 
     public IngredienteDTO actualizarStock(Long id, int stock) throws NegocioException; 
     public IngredienteDTO agregarIngrediente(IngredienteDTO ingrediente) throws NegocioException; 
+    public List<IngredienteDTO> obtenerIngredientesSinProducto() throws NegocioException;
+    public IngredienteDTO buscarPorNombreYUnidad(String nombre, String unidad) throws NegocioException;
     
 }

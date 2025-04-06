@@ -6,6 +6,7 @@ package GUIs;
 
 import DTOs.IngredienteDTO;
 import control.CoordinadorAplicacion;
+import control.exception.CoordinadorException;
 import exception.NegocioException;
 import interfaces.IIngredienteBO;
 import java.awt.BorderLayout;
@@ -107,12 +108,39 @@ public class PantallaIngredientes extends javax.swing.JFrame {
         btnMenos.setBackground(new Color(240, 128, 128)); 
         btnMenos.setForeground(Color.WHITE);
         btnMenos.setBorder(BorderFactory.createLineBorder(new Color(139, 0, 0), 2)); 
+        
+        //action listener para que funcionen los botones
+       
+         btnMenos.addActionListener(e -> {
+        int nuevoStock = ingrediente.getStock() - 1;
+        if (nuevoStock >= 0) {
+            try {
+                IngredienteDTO actualizado = coordinador.modificarStock(ingrediente.getId(), nuevoStock);
+                ingrediente.setStock(actualizado.getStock());
+                lblStock.setText("Stock: " + actualizado.getStock());
+            } catch (CoordinadorException ex) {
+                JOptionPane.showMessageDialog(panel, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    });
 
         JButton btnMas = new JButton("+");
         btnMas.setFont(new Font("Arial", Font.BOLD, 14));
         btnMas.setBackground(new Color(60, 179, 113)); 
         btnMas.setForeground(Color.WHITE); 
         btnMas.setBorder(BorderFactory.createLineBorder(new Color(0, 100, 0), 2)); 
+        
+        //action listener para que funcionen los botones
+        btnMas.addActionListener(e -> {
+        int nuevoStock = ingrediente.getStock() + 1;
+        try {
+            IngredienteDTO actualizado = coordinador.modificarStock(ingrediente.getId(), nuevoStock);
+            ingrediente.setStock(actualizado.getStock());
+            lblStock.setText("Stock: " + actualizado.getStock());
+        } catch (CoordinadorException ex) {
+            JOptionPane.showMessageDialog(panel, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    });
 
         // Panel para botones
         JPanel panelBotones = new JPanel(new GridLayout(1, 2, 10, 0)); // Espaciado entre botones
@@ -131,6 +159,7 @@ public class PantallaIngredientes extends javax.swing.JFrame {
 
         return panel;
     }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -258,7 +287,8 @@ public class PantallaIngredientes extends javax.swing.JFrame {
     private void btnEliminarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEliminarMouseClicked
         coordinador.PantallaEliminarIngrediente(this);
     }//GEN-LAST:event_btnEliminarMouseClicked
-
+    
+    
   
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
