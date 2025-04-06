@@ -10,6 +10,7 @@ import exception.NegocioException;
 import exception.PersistenciaException;
 import interfaces.IClienteFrecuenteBO;
 import interfaces.IClienteFrecuenteDAO;
+import java.util.ArrayList;
 import java.util.List;
 import mappers.ClienteMapper;
 import seguridad.Seguridad;
@@ -70,14 +71,19 @@ public class ClienteFrecuenteBO implements IClienteFrecuenteBO {
 
     @Override
     public List<ClienteFrecuenteDTO> obtenerClientesPorTelefono(String telefono) throws NegocioException {
+        List<ClienteFrecuenteDTO> filtrados = new ArrayList<>();
         try {
-            String telefonoEncriptado = Seguridad.encriptar(telefono);
-            List<ClienteFrecuente> clientes = clienteFrecuenteDAO.obtenerClientesPorTelefono(telefonoEncriptado);
+            List<ClienteFrecuente> clientes = clienteFrecuenteDAO.obtenerClientesFrecuentes();
             desencriptarTelefonos(clientes);
-            return ClienteMapper.toDTOList(clientes);
-        } catch (Exception e) {
-            throw new NegocioException("Error al buscar clientes frecuentes por teléfono: ", e);
+            for (ClienteFrecuente cliente : clientes) {
+                if (cliente.getTelefono().contains(telefono)) {
+                    filtrados.add(ClienteMapper.toDTO(cliente));
+                }
+            }
+        } catch (PersistenciaException e) {
+            throw new NegocioException("Error al desencriptar el teléfono: ", e);
         }
+        return filtrados;
     }
 
     @Override
