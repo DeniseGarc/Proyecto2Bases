@@ -67,7 +67,8 @@ public class PanelIngredienteProducto extends javax.swing.JPanel {
         txtCantidad.setBorder(null);
         add(txtCantidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 50, 90, 30));
     }// </editor-fold>//GEN-END:initComponents
-/**
+
+    /**
      * Método que carga los datos del ingrediente en el panel
      */
     private void cargarIngrediente() {

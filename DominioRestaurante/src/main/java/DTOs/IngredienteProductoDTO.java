@@ -1,6 +1,7 @@
 package DTOs;
 
 import enumeradores.UnidadMedida;
+import java.util.Objects;
 
 /**
  * DTO que representa un ingrediente asociado a un producto.
@@ -91,4 +92,31 @@ public class IngredienteProductoDTO {
     public void setCantidad(int cantidad) {
         this.cantidad = cantidad;
     }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 47 * hash + Objects.hashCode(this.nombre);
+        hash = 47 * hash + Objects.hashCode(this.unidadMedida);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final IngredienteProductoDTO other = (IngredienteProductoDTO) obj;
+        if (!Objects.equals(this.nombre, other.nombre)) {
+            return false;
+        }
+        return this.unidadMedida == other.unidadMedida;
+    }
+
 }

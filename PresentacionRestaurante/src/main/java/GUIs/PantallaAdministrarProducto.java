@@ -5,6 +5,7 @@ import DTOs.ProductoDetalleDTO;
 import control.CoordinadorAplicacion;
 import control.exception.CoordinadorException;
 import enumeradores.TipoProducto;
+import enumeradores.UnidadMedida;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,23 +13,50 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.BoxLayout;
 import javax.swing.JOptionPane;
+import javax.swing.JSpinner;
+import javax.swing.JTable;
+import javax.swing.ListSelectionModel;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import modos.Modo;
+import moduloBusquedaIngredientes.PanelBuscarIngrediente;
 
 import plantillas.PanelIngredienteProducto;
 
 /**
+ * Clase que representa una pantalla de interfaz gráfica para administrar
+ * productos, permitiendo agregar nuevos productos o modificar existentes.
  *
- * @author Alici
+ * @author Alicia Denise Garcia Acosta
  */
 public class PantallaAdministrarProducto extends javax.swing.JFrame {
 
+    /**
+     * Modo en el que se va a utilizar la pantalla (AGREGAR o MODIFICAR).
+     */
     private final Modo modo;
+    /**
+     * CoordinadorAplicacion para la comunicación con capa de negocio y flujo de
+     * pantallas.
+     */
     private final CoordinadorAplicacion control = new CoordinadorAplicacion();
+    /**
+     * Lista de paneles que muestran los ingredientes agregados al producto.
+     */
     List<PanelIngredienteProducto> ingredientesPanelLateral;
+    /**
+     * Producto que se esta editando, puede ser null si el producto es nuevo.
+     */
     private final ProductoDetalleDTO producto;
 
+    /**
+     * Constructor que inicializa la pantalla con el modo deseado.
+     *
+     * @param modo Modo de operación de la pantalla (AGREGAR o MODIFICAR0.)
+     * @param producto Producto a modificar, null en caso de ser modo AGREGAR
+     */
     public PantallaAdministrarProducto(Modo modo, ProductoDetalleDTO producto) {
         ingredientesPanelLateral = new ArrayList<>();
         this.modo = modo;
@@ -40,14 +68,9 @@ public class PantallaAdministrarProducto extends javax.swing.JFrame {
         panelContenedorIngredientesProducto.setLayout(new BoxLayout(panelContenedorIngredientesProducto, BoxLayout.Y_AXIS));
         agregarListeners();
         if (modo == Modo.MODIFICAR) {
-            btnAccion.setText("Actualizar producto");
-            txtNombre.setEnabled(false);
-            cBoxCategoria.setEnabled(false);
-            cargarDatosProducto();
-            cargarIngredientesProducto();
-            cargarResumen();
+            configurarModoModificar();
         }
-
+        configurarTablaIngredientes();
     }
 
     @SuppressWarnings("unchecked")
@@ -76,7 +99,7 @@ public class PantallaAdministrarProducto extends javax.swing.JFrame {
         lblDisponibilidadNombre = new javax.swing.JLabel();
         lblCategoriaTitulo = new javax.swing.JLabel();
         lblPrecioTitulo = new javax.swing.JLabel();
-        Contenedor = new javax.swing.JPanel();
+        panelContenedorIngredientes = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -170,7 +193,9 @@ public class PantallaAdministrarProducto extends javax.swing.JFrame {
         lblPrecioTitulo.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         lblPrecioTitulo.setText("Precio");
         fondo.add(lblPrecioTitulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 90, -1, -1));
-        fondo.add(Contenedor, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 150, 760, 490));
+
+        panelContenedorIngredientes.setBackground(new java.awt.Color(255, 228, 242));
+        fondo.add(panelContenedorIngredientes, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 160, 750, 520));
 
         getContentPane().add(fondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1070, 700));
 
@@ -182,6 +207,48 @@ public class PantallaAdministrarProducto extends javax.swing.JFrame {
         mandarProducto();
     }//GEN-LAST:event_btnAccionActionPerformed
 
+    /**
+     * Método que configura la pantalla cuando se inicia en modo MODIFICAR.
+     * Carga los datos del producto a modificar.
+     */
+    private void configurarModoModificar() {
+        btnAccion.setText("Actualizar producto");
+        txtNombre.setEnabled(false);
+        cBoxCategoria.setEnabled(false);
+        cargarDatosProducto();
+        cargarIngredientesProducto();
+        cargarResumen();
+    }
+
+    /**
+     * Método que configura el panel que contiene el buscador de ingredientes y
+     * la tabla para seleccionar el ingrediente.
+     */
+    private void configurarTablaIngredientes() {
+        PanelBuscarIngrediente panelBuscarIngrediente = new PanelBuscarIngrediente();
+        panelContenedorIngredientes.add(panelBuscarIngrediente);
+        JTable tablaIngredientes = panelBuscarIngrediente.getTblIngredientes();
+        ListSelectionModel seleccion = tablaIngredientes.getSelectionModel();
+        seleccion.addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent e) {
+                if (!e.getValueIsAdjusting()) {
+                    int filaSeleccionada = tablaIngredientes.getSelectedRow();
+                    if (filaSeleccionada != -1) {
+                        agregarIngrediente(new IngredienteProductoDTO(
+                                (String) tablaIngredientes.getValueAt(filaSeleccionada, 1),
+                                (UnidadMedida) tablaIngredientes.getValueAt(filaSeleccionada, 2),
+                                1));
+                    }
+                }
+            }
+        });
+    }
+
+    /**
+     * Método que carga los datos del producto en los campos para ingresar
+     * información. Se utiliza para el modo MODIFICAR.
+     */
     private void cargarDatosProducto() {
         txtNombre.setText(producto.getNombre());
         cBoxCategoria.setSelectedItem(producto.getTipo());
@@ -189,7 +256,8 @@ public class PantallaAdministrarProducto extends javax.swing.JFrame {
     }
 
     /**
-     * Carga los ingredientes del producto, cuando se esta en el modo actualizar
+     * Método que carga los ingredientes del producto en la barra lateral,
+     * cuando se esta en el modo MODIFICAR.
      */
     private void cargarIngredientesProducto() {
         for (IngredienteProductoDTO ingrediente : producto.getIngredientes()) {
@@ -197,7 +265,23 @@ public class PantallaAdministrarProducto extends javax.swing.JFrame {
         }
     }
 
+    /**
+     * Método que agrega el ingrediente dado a la barra lateral de ingredientes.
+     *
+     * @param ingrediente
+     */
     private void agregarIngrediente(IngredienteProductoDTO ingrediente) {
+        // Buscar si el ingrediente ya está en la barra lateral
+        for (PanelIngredienteProducto panelIngredienteProducto : ingredientesPanelLateral) {
+            if (panelIngredienteProducto.getIngrediente().equals(ingrediente)) {
+                // si ya está, incrementar el valor del spinner de cantidad en 1
+                JSpinner cantidadIngredienteSpinner = panelIngredienteProducto.getTxtCantidad();
+                int cantidadActual = (int) cantidadIngredienteSpinner.getValue();
+                cantidadIngredienteSpinner.setValue(cantidadActual + 1);
+                return; //salir del método
+            }
+        }
+        // si no se encontró, creaun un nuevo panel con el producto para agregarlo a la barra lateral
         PanelIngredienteProducto panelIngrediente = new PanelIngredienteProducto(ingrediente);
         panelContenedorIngredientesProducto.add(panelIngrediente);
         ingredientesPanelLateral.add(panelIngrediente);
@@ -206,9 +290,16 @@ public class PantallaAdministrarProducto extends javax.swing.JFrame {
         agregarListenerCantidadIngrediente(panelIngrediente);
     }
 
+    /**
+     * Método que agrega un listener al PanelIngredienteProducto que contiene el
+     * ingrediente. Este listener remueve el panel de la barra lateral cuando la
+     * cantidad del ingrediente es menor o igual a 0.
+     *
+     * @param panelIngrediente
+     */
     private void agregarListenerCantidadIngrediente(PanelIngredienteProducto panelIngrediente) {
         panelIngrediente.getTxtCantidad().addChangeListener(e -> {
-            if ((Integer) panelIngrediente.getTxtCantidad().getValue() == 0) {
+            if ((Integer) panelIngrediente.getTxtCantidad().getValue() <= 0) {
                 panelContenedorIngredientesProducto.remove(panelIngrediente);
                 ingredientesPanelLateral.remove(panelIngrediente);
                 panelContenedorIngredientesProducto.revalidate();
@@ -217,6 +308,9 @@ public class PantallaAdministrarProducto extends javax.swing.JFrame {
         });
     }
 
+    /**
+     * Método que carga las categorias de producto en el combo box.
+     */
     private void cargarCategorias() {
         cBoxCategoria.addItem("Categoria");
         for (TipoProducto categoria : TipoProducto.values()) {
@@ -224,6 +318,12 @@ public class PantallaAdministrarProducto extends javax.swing.JFrame {
         }
     }
 
+    /**
+     * Método que agrega los listeners para el campo de ingresar nombre del
+     * producto, combo box de categoria y spinner de precio. Cada que los campos
+     * se actualizan o cambian su valor se manda a comprobar si puede escribirse
+     * el resumen del producto.
+     */
     private void agregarListeners() {
         if (modo == Modo.AGREGAR) {
             txtNombre.getDocument().addDocumentListener(new DocumentListener() {
@@ -254,6 +354,10 @@ public class PantallaAdministrarProducto extends javax.swing.JFrame {
         });
     }
 
+    /**
+     * Método que comprueba si los campos estan llenos y tienen información
+     * correcta. Cuando los datos son correctos escribe el resumen del producto.
+     */
     private void cargarResumen() {
         boolean lleno;
         if (modo == Modo.AGREGAR) {
@@ -284,6 +388,12 @@ public class PantallaAdministrarProducto extends javax.swing.JFrame {
         }
     }
 
+    /**
+     * Método que valida si el nombre ingresado no se encuentra ya registrado en
+     * la base de datos.
+     *
+     * @return true si el nombre es valido, false en caso contrario.
+     */
     private boolean validarNombre() {
         boolean validez = false;
         try {
@@ -295,15 +405,26 @@ public class PantallaAdministrarProducto extends javax.swing.JFrame {
         return validez;
     }
 
+    /**
+     * Método que comprueba que el precio ingresado sea válido.
+     *
+     * @return true si el precio es un decimal (double) mayor a 0, false en caso
+     * contrario.
+     */
     private boolean validarPrecio() {
         try {
-            double precio = ((Number) txtPrecio.getValue()).doubleValue();
+            double precio = ((double) txtPrecio.getValue());
             return (precio > 0);
         } catch (Exception e) {
             return false;
         }
     }
 
+    /**
+     * Método que se encarga de cambiar el mensaje que indica si el nombre es
+     * válido o inválido. Comprueba la validez del nombre utilizando el método
+     * de que valida el nombre.
+     */
     private void cambiarMensajeValidezNombre() {
         if (validarNombre()) {
             lblDisponibilidadNombre.setForeground(new Color(26, 164, 33));
@@ -315,6 +436,11 @@ public class PantallaAdministrarProducto extends javax.swing.JFrame {
         fondo.repaint();
     }
 
+    /**
+     * Método que configura el titulo del panel superior de la pantalla y
+     * establece los frames destino y padre para la navegación del botón para
+     * regresar.
+     */
     private void configurarBanner() {
         String titulo;
         if (modo == Modo.AGREGAR) {
@@ -327,6 +453,10 @@ public class PantallaAdministrarProducto extends javax.swing.JFrame {
         banner.setFrmTarget(new PantallaProductos());
     }
 
+    /**
+     * Método que se encarga de mandar a guardar el producto a actualizar o
+     * agregar e informar si el producto fue posible de procesar.
+     */
     private void mandarProducto() {
         if (ingredientesPanelLateral.isEmpty()) {
             JOptionPane.showMessageDialog(null, "Seleccione al menos un ingrediente para el producto", "", JOptionPane.INFORMATION_MESSAGE);
@@ -370,13 +500,12 @@ public class PantallaAdministrarProducto extends javax.swing.JFrame {
         }
         return new ProductoDetalleDTO(
                 lblNombre.getText(),
-                TipoProducto.valueOf(lblCategoria.getText()),
-                Double.parseDouble(lblPrecio.getText()),
+                (TipoProducto) cBoxCategoria.getSelectedItem(),
+                (double) txtPrecio.getValue(),
                 ingredientesProducto);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPanel Contenedor;
     private plantillas.Titulo banner;
     private javax.swing.JButton btnAccion;
     private javax.swing.JComboBox<Object> cBoxCategoria;
@@ -394,6 +523,7 @@ public class PantallaAdministrarProducto extends javax.swing.JFrame {
     private javax.swing.JLabel lblPrecioTituloResumen;
     private javax.swing.JLabel lblProductoNombreTitulo;
     private javax.swing.JLabel lblResumenProducto;
+    private javax.swing.JPanel panelContenedorIngredientes;
     private javax.swing.JPanel panelContenedorIngredientesProducto;
     private javax.swing.JPanel pnlResumenProducto;
     private javax.swing.JScrollPane scrollPanelIngredientes;

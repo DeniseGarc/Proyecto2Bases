@@ -14,6 +14,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
@@ -129,6 +130,10 @@ public class PanelBuscarIngrediente extends javax.swing.JPanel {
         tblIngredientes.setModel(modelo);
 
     } 
+
+    public JTable getTblIngredientes() {
+        return tblIngredientes;
+    }
     
     
 
@@ -151,8 +156,9 @@ public class PanelBuscarIngrediente extends javax.swing.JPanel {
         jScrollPane1 = new javax.swing.JScrollPane();
         tblIngredientes = new javax.swing.JTable();
 
-        setBackground(new java.awt.Color(255, 254, 245));
+        setBackground(new java.awt.Color(255, 228, 242));
 
+        jPanel1.setBackground(new java.awt.Color(255, 228, 242));
         jPanel1.setMaximumSize(new java.awt.Dimension(940, 70));
         jPanel1.setMinimumSize(new java.awt.Dimension(760, 70));
         jPanel1.setPreferredSize(new java.awt.Dimension(1070, 100));
