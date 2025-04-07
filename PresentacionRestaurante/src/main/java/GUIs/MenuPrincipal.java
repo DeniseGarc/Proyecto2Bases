@@ -57,6 +57,11 @@ public class MenuPrincipal extends javax.swing.JFrame {
         btnComandas.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 18)); // NOI18N
         btnComandas.setText("Comandas");
         btnComandas.setPreferredSize(new java.awt.Dimension(150, 150));
+        btnComandas.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnComandasMouseClicked(evt);
+            }
+        });
 
         btnReportes.setBackground(new java.awt.Color(255, 140, 200));
         btnReportes.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 18)); // NOI18N
@@ -177,6 +182,10 @@ public class MenuPrincipal extends javax.swing.JFrame {
     private void btnProductosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnProductosMouseClicked
         
     }//GEN-LAST:event_btnProductosMouseClicked
+
+    private void btnComandasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnComandasMouseClicked
+        coordinador.PantallaComandas(this);
+    }//GEN-LAST:event_btnComandasMouseClicked
 
     
 
