@@ -2,6 +2,7 @@ package moduloBusquedaProductos;
 
 import DTOs.ProductoDTO;
 import java.util.List;
+import listeners.AgregarProductoComandaListener;
 import plantillas.PanelProducto;
 
 /**
@@ -12,6 +13,8 @@ import plantillas.PanelProducto;
  * @author Alicia Denise Garcia Acosta 00000252402
  */
 public class PanelVistaGridProductos extends javax.swing.JPanel implements VistaProductos {
+
+    private AgregarProductoComandaListener listener;
 
     /**
      * Crea el panel y se inicializan sus elementos
@@ -76,10 +79,14 @@ public class PanelVistaGridProductos extends javax.swing.JPanel implements Vista
         panelContenedorProductos.removeAll();
         for (ProductoDTO producto : productos) {
             if (producto.isHabilitado()) {
-                panelContenedorProductos.add(new PanelProducto(producto));
+                panelContenedorProductos.add(new PanelProducto(producto, listener));
             }
         }
         panelContenedorProductos.revalidate();
         panelContenedorProductos.repaint();
+    }
+
+    public void setListener(AgregarProductoComandaListener listener) {
+        this.listener = listener;
     }
 }

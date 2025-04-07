@@ -150,8 +150,9 @@ public class PantallaAdministrarProducto extends javax.swing.JFrame {
         cBoxCategoria.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         fondo.add(cBoxCategoria, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 110, 140, 30));
 
+        txtPrecio.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         txtPrecio.setModel(new javax.swing.SpinnerNumberModel(0.0d, 0.0d, null, 0.01d));
-        fondo.add(txtPrecio, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 110, 80, -1));
+        fondo.add(txtPrecio, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 110, 80, 30));
 
         lblProductoNombreTitulo.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         lblProductoNombreTitulo.setText("Nombre del producto");

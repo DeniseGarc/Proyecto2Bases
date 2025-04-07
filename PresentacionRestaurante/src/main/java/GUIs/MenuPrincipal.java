@@ -39,7 +39,6 @@ public class MenuPrincipal extends javax.swing.JFrame {
         btnClientesFrecuentes = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(1070, 700));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setBackground(new java.awt.Color(255, 254, 245));
@@ -87,6 +86,11 @@ public class MenuPrincipal extends javax.swing.JFrame {
         btnProductos.setForeground(new java.awt.Color(255, 255, 255));
         btnProductos.setText("Productos");
         btnProductos.setPreferredSize(new java.awt.Dimension(150, 150));
+        btnProductos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnProductosActionPerformed(evt);
+            }
+        });
 
         btnClientesFrecuentes.setBackground(new java.awt.Color(255, 178, 217));
         btnClientesFrecuentes.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 18)); // NOI18N
@@ -160,6 +164,10 @@ public class MenuPrincipal extends javax.swing.JFrame {
     private void btnIngredientesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnIngredientesMouseClicked
         coordinador.PantallaIngredientes(this);
     }//GEN-LAST:event_btnIngredientesMouseClicked
+
+    private void btnProductosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProductosActionPerformed
+        coordinador.pantallaProductos(this);
+    }//GEN-LAST:event_btnProductosActionPerformed
 
     
 

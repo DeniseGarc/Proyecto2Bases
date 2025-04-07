@@ -2,6 +2,8 @@ package plantillas;
 
 import DTOs.ProductoDTO;
 import java.awt.Color;
+import javax.swing.JButton;
+import listeners.AgregarProductoComandaListener;
 
 /**
  * Panel que representa visualmente un producto. Este panel muestra un botón el
@@ -11,6 +13,8 @@ import java.awt.Color;
  * @author Alicia Denise Garcia Acosta 00000252402
  */
 public class PanelProducto extends javax.swing.JPanel {
+    
+    private final ProductoDTO producto;
 
     /**
      * Constructor que inicializa los componentes del panel y carga los datos
@@ -18,11 +22,19 @@ public class PanelProducto extends javax.swing.JPanel {
      *
      * @param producto el producto que se a representar en el panel.
      */
-    public PanelProducto(ProductoDTO producto) {
+    public PanelProducto(ProductoDTO producto, AgregarProductoComandaListener listener) {
+        this.producto = producto;
         initComponents();
-        cargarDatos(producto);
+        cargarDatosProducto();
+        btnProducto.addActionListener(e -> {
+            listener.agregarProducto(producto);
+        });
     }
-
+    
+    public JButton getBtnProducto() {
+        return btnProducto;
+    }
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -43,14 +55,14 @@ public class PanelProducto extends javax.swing.JPanel {
         btnProducto.setText("jButton1");
         add(btnProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 150, 150));
     }// </editor-fold>//GEN-END:initComponents
-   /**
+
+    /**
      * Método que carga los datos del producto en los componentes del panel.
      * Establece el nombre del producto como el texto del botón e indica la
      * disponiblidad del mismo, asimismo ajusta los estilos.
      *
-     * @param producto el producto cuyos datos serán cargados.
      */
-    private void cargarDatos(ProductoDTO producto) {
+    private void cargarDatosProducto() {
         String nombre = producto.getNombre();
         btnProducto.setText("<html><center>" + nombre + "</center></html>");
         btnProducto.setToolTipText(nombre);
