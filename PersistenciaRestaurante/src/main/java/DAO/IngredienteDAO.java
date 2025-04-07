@@ -56,14 +56,16 @@ public class IngredienteDAO implements IIngredienteDAO {
     public List<Ingrediente> buscarIngredientePorNombre(String nombre) throws PersistenciaException {
         EntityManager em = Conexion.crearConexion();
         try {
-            return em.createQuery("SELECT i FROM Ingrediente i WHERE i.nombre = :nombre ", Ingrediente.class)
-                    .setParameter("nombre", nombre).getResultList();
+            return em.createQuery("SELECT i FROM Ingrediente i WHERE LOWER(i.nombre) LIKE :nombre", Ingrediente.class)
+                    .setParameter("nombre", "%" + nombre.toLowerCase() + "%")
+                    .getResultList();
         } catch (Exception e) {
             throw new PersistenciaException("Error al consultar ingredientes por nombre: ", e);
         } finally {
             em.close();
         }
     }
+
     /**
      * Actualiza el stock 
      * @param id del ingrediente a modificar
@@ -220,25 +222,49 @@ public class IngredienteDAO implements IIngredienteDAO {
     @Override
     public List<Ingrediente> buscarPorNombreYUnidad(String nombre, String unidad) throws PersistenciaException {
         EntityManager em = Conexion.crearConexion(); 
-    try {
-        
-        return em.createQuery(
-                "SELECT i FROM Ingrediente i WHERE i.nombre = :nombre AND i.unidadMedida = :unidadMedida",
+        try {
+            UnidadMedida unidadEnum = UnidadMedida.valueOf(unidad);  // Validamos aquí
+
+            return em.createQuery(
+                "SELECT i FROM Ingrediente i WHERE LOWER(i.nombre) LIKE :nombre AND i.unidadMedida = :unidadMedida",
                 Ingrediente.class
-        )
-        .setParameter("nombre", nombre)
-        .setParameter("unidadMedida", UnidadMedida.valueOf(unidad)) 
-        .getResultList();
-    } catch (NoResultException e) {
-        throw new PersistenciaException("No se encontró un ingrediente con el nombre '" + nombre + "' y la unidad '" + unidad + "'.", e);
-    } catch (IllegalArgumentException e) {
-        throw new PersistenciaException("Unidad de medida inválida: " + unidad, e);
-    } catch (Exception e) {
-        throw new PersistenciaException("Error al consultar el ingrediente por nombre y unidad.", e);
-    } finally {
-        em.close(); 
+            )
+            .setParameter("nombre", "%" + nombre.toLowerCase() + "%")
+            .setParameter("unidadMedida", unidadEnum)
+            .getResultList();
+
+        } catch (IllegalArgumentException e) {
+            throw new PersistenciaException("Unidad de medida inválida: " + unidad, e);
+        } catch (Exception e) {
+            throw new PersistenciaException("Error al consultar el ingrediente por nombre y unidad.", e);
+        } finally {
+            em.close(); 
+        }
     }
 
+
+    @Override
+    public Ingrediente buscarPorNombreYUnidad1(String nombre, String unidad) throws PersistenciaException {
+         EntityManager em = Conexion.crearConexion(); 
+        try {
+
+            return em.createQuery(
+                    "SELECT i FROM Ingrediente i WHERE i.nombre = :nombre AND i.unidadMedida = :unidadMedida",
+                    Ingrediente.class
+            )
+            .setParameter("nombre", nombre)
+            .setParameter("unidadMedida", UnidadMedida.valueOf(unidad)) 
+            .getSingleResult();
+        } catch (NoResultException e) {
+            throw new PersistenciaException("No se encontró un ingrediente con el nombre '" + nombre + "' y la unidad '" + unidad + "'.", e);
+        } catch (IllegalArgumentException e) {
+            throw new PersistenciaException("Unidad de medida inválida: " + unidad, e);
+        } catch (Exception e) {
+            throw new PersistenciaException("Error al consultar el ingrediente por nombre y unidad.", e);
+        } finally {
+            em.close(); 
+        }
+        
     }
     
 }

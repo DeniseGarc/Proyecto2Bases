@@ -161,5 +161,15 @@ public class IngredienteBO implements IIngredienteBO{
             throw new NegocioException("Ocurrió un error al obtener el ingrediente");
         }
     }
+
+    @Override
+    public IngredienteDTO buscarPorNombreYUnidad1(String nombre, String unidad) throws NegocioException {
+        try{
+           Ingrediente ingrediente = ingredienteDAO.buscarPorNombreYUnidad1(nombre, unidad);
+           return IngredienteMapper.ToDTO(ingrediente);
+        }catch(PersistenciaException e) {
+            throw new NegocioException("Ocurrió un error al obtener el ingrediente");
+        }
+    }
     
 }

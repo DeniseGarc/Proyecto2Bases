@@ -21,5 +21,6 @@ public interface IIngredienteBO {
     public List<IngredienteDTO> obtenerIngredientesSinProducto() throws NegocioException;
     public List<IngredienteDTO> buscarPorNombreYUnidad(String nombre, String unidad) throws NegocioException;
     public List<IngredienteDTO> buscarPorUnidad(String unidad) throws NegocioException;
+    public IngredienteDTO buscarPorNombreYUnidad1 (String nombre, String unidad) throws NegocioException;
     
 }
