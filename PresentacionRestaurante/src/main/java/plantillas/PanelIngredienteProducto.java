@@ -43,6 +43,8 @@ public class PanelIngredienteProducto extends javax.swing.JPanel {
         txtCantidad = new javax.swing.JSpinner();
 
         setBackground(new java.awt.Color(255, 228, 242));
+        setMaximumSize(new java.awt.Dimension(280, 109));
+        setMinimumSize(new java.awt.Dimension(280, 109));
         setPreferredSize(new java.awt.Dimension(280, 109));
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -58,13 +60,14 @@ public class PanelIngredienteProducto extends javax.swing.JPanel {
         lblCantidadTitulo.setText("Cantidad:");
         add(lblCantidadTitulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 20, 60, 20));
 
-        jSeparator1.setBackground(new java.awt.Color(0, 0, 0));
-        jSeparator1.setForeground(new java.awt.Color(0, 0, 0));
+        jSeparator1.setBackground(new java.awt.Color(207, 106, 158));
+        jSeparator1.setForeground(new java.awt.Color(207, 106, 158));
         add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 100, 280, 10));
 
+        txtCantidad.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         txtCantidad.setModel(new javax.swing.SpinnerNumberModel(0, 0, null, 1));
         txtCantidad.setBorder(null);
-        add(txtCantidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 50, 90, -1));
+        add(txtCantidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 50, 90, 30));
     }// </editor-fold>//GEN-END:initComponents
 
     /**

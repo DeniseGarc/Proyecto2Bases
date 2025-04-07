@@ -91,9 +91,10 @@ public class MenuPrincipal extends javax.swing.JFrame {
         btnProductos.setForeground(new java.awt.Color(255, 255, 255));
         btnProductos.setText("Productos");
         btnProductos.setPreferredSize(new java.awt.Dimension(150, 150));
-        btnProductos.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnProductosMouseClicked(evt);
+
+        btnProductos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnProductosActionPerformed(evt);
             }
         });
 
@@ -179,13 +180,13 @@ public class MenuPrincipal extends javax.swing.JFrame {
         coordinador.PantallaClienteFrecuente(this);
     }//GEN-LAST:event_btnClientesFrecuentesMouseClicked
 
-    private void btnProductosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnProductosMouseClicked
-        
-    }//GEN-LAST:event_btnProductosMouseClicked
-
     private void btnComandasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnComandasMouseClicked
         coordinador.PantallaComandas(this);
     }//GEN-LAST:event_btnComandasMouseClicked
+    
+    private void btnProductosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProductosActionPerformed
+        coordinador.pantallaProductos(this);
+    }//GEN-LAST:event_btnProductosActionPerformed
 
     
 

@@ -4,17 +4,26 @@
  */
 package plantillas;
 
+import DTOs.ProductoDTO;
+import javax.swing.JButton;
+
 /**
  *
  * @author Alici
  */
 public class PanelProductoComanda extends javax.swing.JPanel {
 
+    private final ProductoDTO producto;
+
     /**
      * Creates new form PanelIngredienteProducto
+     *
+     * @param producto
      */
-    public PanelProductoComanda() {
+    public PanelProductoComanda(ProductoDTO producto) {
+        this.producto = producto;
         initComponents();
+        cargarDatos();
     }
 
     /**
@@ -29,7 +38,7 @@ public class PanelProductoComanda extends javax.swing.JPanel {
         lblNombreProducto = new javax.swing.JLabel();
         lblPrecio = new javax.swing.JLabel();
         lblComentario = new javax.swing.JLabel();
-        btnMas = new javax.swing.JButton();
+        btnEliminar = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
@@ -52,20 +61,15 @@ public class PanelProductoComanda extends javax.swing.JPanel {
         lblComentario.setText("Comentario:");
         add(lblComentario, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 50, 80, -1));
 
-        btnMas.setBackground(new java.awt.Color(234, 50, 119));
-        btnMas.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
-        btnMas.setForeground(new java.awt.Color(255, 255, 255));
-        btnMas.setText("Eliminar");
-        btnMas.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnMas.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnMasActionPerformed(evt);
-            }
-        });
-        add(btnMas, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 158, 90, -1));
+        btnEliminar.setBackground(new java.awt.Color(234, 50, 119));
+        btnEliminar.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
+        btnEliminar.setForeground(new java.awt.Color(255, 255, 255));
+        btnEliminar.setText("Eliminar");
+        btnEliminar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        add(btnEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 158, 90, -1));
 
-        jSeparator1.setBackground(new java.awt.Color(0, 0, 0));
-        jSeparator1.setForeground(new java.awt.Color(0, 0, 0));
+        jSeparator1.setBackground(new java.awt.Color(207, 106, 158));
+        jSeparator1.setForeground(new java.awt.Color(207, 106, 158));
         add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 190, 280, 20));
 
         jTextArea1.setColumns(20);
@@ -75,13 +79,22 @@ public class PanelProductoComanda extends javax.swing.JPanel {
         add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 70, 260, 80));
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnMasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMasActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnMasActionPerformed
+    public JButton getBtnEliminar() {
+        return btnEliminar;
+    }
+
+    private void cargarDatos() {
+        lblNombreProducto.setText(producto.getNombre());
+        lblPrecio.setText(String.format("$ %.2f", producto.getPrecio()));
+    }
+
+    public ProductoDTO getProducto() {
+        return producto;
+    }
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnMas;
+    private javax.swing.JButton btnEliminar;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTextArea jTextArea1;

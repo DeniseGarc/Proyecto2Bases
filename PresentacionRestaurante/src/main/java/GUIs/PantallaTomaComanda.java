@@ -4,9 +4,18 @@
  */
 package GUIs;
 
+import DTOs.ComandaDTO;
+import DTOs.DetalleComandaDTO;
+import DTOs.ProductoDTO;
 import control.CoordinadorAplicacion;
 import control.exception.CoordinadorException;
+import enumeradores.Estado;
 import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.BoxLayout;
@@ -20,23 +29,17 @@ import plantillas.PanelProductoComanda;
 public class PantallaTomaComanda extends javax.swing.JFrame {
 
     CoordinadorAplicacion control = new CoordinadorAplicacion();
+    private List<PanelProductoComanda> productosComanda = new ArrayList<>();
 
     public PantallaTomaComanda() {
         initComponents();
         cargarBanner();
         configurarBarraBusqueda();
         panelContenedorProductosComanda.setLayout(new BoxLayout(panelContenedorProductosComanda, BoxLayout.Y_AXIS));
-        panelContenedorProductosComanda.add(new PanelProductoComanda());
-        panelContenedorProductosComanda.add(new PanelProductoComanda());
-        panelContenedorProductosComanda.add(new PanelProductoComanda());
-        panelContenedorProductosComanda.add(new PanelProductoComanda());
-        panelContenedorProductosComanda.add(new PanelProductoComanda());
-        try {
-            panelProductos.mostrarProductos(control.obtenerProductos());
-        } catch (CoordinadorException ex) {
-            Logger.getLogger(PantallaTomaComanda.class.getName()).log(Level.SEVERE, null, ex);
-            JOptionPane.showMessageDialog(null, ex, "Ha ocurrido un error inesperado", JOptionPane.ERROR);
-        }
+        panelProductos.setListener(producto -> {
+            agregarProducto(producto);
+        });
+        cargarProductosMenu();
     }
 
     @SuppressWarnings("unchecked")
@@ -185,6 +188,43 @@ public class PantallaTomaComanda extends javax.swing.JFrame {
         });
     }
 
+    private void cargarProductosMenu() {
+        try {
+            panelProductos.mostrarProductos(control.obtenerProductos());
+        } catch (CoordinadorException ex) {
+            Logger.getLogger(PantallaTomaComanda.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, ex, "Ha ocurrido un error inesperado", JOptionPane.ERROR);
+        }
+    }
+
+    private void agregarProducto(ProductoDTO producto) {
+        PanelProductoComanda panelProductoComanda = new PanelProductoComanda(producto);
+        panelContenedorProductosComanda.add(panelProductoComanda);
+        productosComanda.add(panelProductoComanda);
+        agregarListener(panelProductoComanda);
+
+        panelContenedorProductosComanda.revalidate();
+        panelContenedorProductosComanda.repaint();
+
+    }
+
+    private void agregarListener(PanelProductoComanda panelProductoComanda) {
+        panelProductoComanda.getBtnEliminar().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                eliminarProducto(panelProductoComanda);
+            }
+        });
+    }
+
+    private void eliminarProducto(PanelProductoComanda panelProductoComanda) {
+        panelContenedorProductosComanda.remove(panelProductoComanda);
+        productosComanda.remove(panelProductoComanda);
+
+        panelContenedorProductosComanda.revalidate();
+        panelContenedorProductosComanda.repaint();
+    }
+
     private void configurarBarraBusqueda() {
         panelBusquedaProducto.setVista(panelProductos);
         panelBusquedaProducto.setBackground(new Color(255, 176, 217));
@@ -194,6 +234,30 @@ public class PantallaTomaComanda extends javax.swing.JFrame {
         banner.getLblTitulo().setText("Mesa:");
         banner.setFrmPadre(this);
         banner.setFrmTarget(new MenuPrincipal());
+    }
+
+    private void mandarComanda() {
+
+    }
+
+    private void generarComanda() {
+//        ComandaDTO comanda = new ComandaDTO();
+//        comanda.setFechaHora(Calendar.getInstance());
+//        comanda.setNombrecliente(lblClienteNombre.getText().isBlank() ? null : lblClienteNombre.getText());
+//        comanda.setEstado(Estado.ACTIVA);
+//        
+//        List<DetalleComandaDTO> detallesComanda = new ArrayList<>();
+//        for (PanelProductoComanda panelProductoComanda : productosComanda) {
+//            int cantidad = 
+//            ProductoDTO producto = panelProductoComanda.getProducto();
+//            detallesComanda.add(new DetalleComandaDTO(
+//                    producto.getPrecio(),
+//            cantidad
+//                    (producto.getPrecio*cantidad))
+//                            notas,
+//                            producto.getNombre()
+//            ));
+//        }
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
