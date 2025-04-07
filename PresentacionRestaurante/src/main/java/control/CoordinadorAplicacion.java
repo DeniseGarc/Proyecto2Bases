@@ -350,6 +350,16 @@ public class CoordinadorAplicacion {
             throw new CoordinadorException("Ha ocurrido un error al buscar el ingrediente");
         }
     }
+    
+    public IngredienteDTO buscarPorNombreYUnidad1(String nombre, String unidad) throws CoordinadorException{
+        try{
+        return ingredienteBO.buscarPorNombreYUnidad1(nombre, unidad);
+
+        } catch (NegocioException ex) {
+            Logger.getLogger(CoordinadorAplicacion.class.getName()).log(Level.SEVERE, null, ex);
+            throw new CoordinadorException("Ha ocurrido un error al buscar el ingrediente");
+        }
+    }
 
     public boolean actualizarEstadoProducto(String nombre) throws CoordinadorException {
         try {
