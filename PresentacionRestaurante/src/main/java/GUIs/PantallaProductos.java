@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package GUIs;
 
 import DTOs.ProductoDetalleDTO;
@@ -13,15 +9,32 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
+ * Clase que representa la pantalla para la gestión de productos dentro del
+ * sistema.
+ * <p>
+ * Permite realizar acciones como:
+ * </p>
+ * <ul>
+ * <li>Visualizar la lista de productos disponibles</li>
+ * <li>Consultar los ingredientes de un producto</li>
+ * <li>Agregar un nuevo producto</li>
+ * <li>Actualizar la información de un producto</li>
+ * <li>Habilitar o deshabilitar un producto existente</li>
+ * </ul>
  *
- * @author Alici
+ * @author Alicia Denise Garcia Acosta 00000252402
  */
 public class PantallaProductos extends javax.swing.JFrame {
 
+    /**
+     * CoordinadorAplicacion para la comunicación con capa de negocio y flujo de
+     * pantallas.
+     */
     private CoordinadorAplicacion control = new CoordinadorAplicacion();
 
     /**
-     * Creates new form FrmProductos
+     * Constructor que inicializa los componentes de la pantalla, banner, barra
+     * de búsqueda y tabla de productos.
      */
     public PantallaProductos() {
         initComponents();
@@ -107,25 +120,46 @@ public class PantallaProductos extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Método que se ejecuta al presionar el botón de habilitar/deshabilitar,
+     * llama a los métodos necesarios para cambiar el estado del producto.
+     */
     private void btnHabilitarDeshabilitarActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnHabilitarDeshabilitarActionPerformed
         String nombre = obtenerNombreSeleccionTabla();
         cambiarEstadoProducto(nombre);
     }
 
+    /**
+     * Método que se ejecuta al presionar el botón de agregar producto, llama a
+     * los métodos necesarios para pasar a la pantalla de agregar producto.
+     */
     private void btnAgregarProductoActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnAgregarProductoActionPerformed
         control.pantallaAgregarProducto(this);
     }
 
+    /**
+     * Método que se ejecuta al presionar el botón de actualizar producto, llama
+     * a los métodos necesarios para poder actualizar el producto.
+     */
     private void btnActualizarProductoActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnActualizarProductoActionPerformed
         String nombre = obtenerNombreSeleccionTabla();
         pasarAActualizarProducto(nombre);
     }
 
+    /**
+     * Método que se ejecuta al presionar el botón de consultar ingredientes,
+     * llama a los métodos necesarios para pasar a la pantalla que permite
+     * visualizar los detalles del producto.
+     */
     private void btnConsultarIngredientesActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnConsultarIngredientesActionPerformed
         String nombre = obtenerNombreSeleccionTabla();
         verDetallesDelProducto(nombre);
     }
 
+    /**
+     * Método que indica al PanelVistaListaProductos que muestre los productos
+     * que recibe como parámetro.
+     */
     private void cargarTablaProductos() {
         try {
             panelTablaProductos.mostrarProductos(control.obtenerProductos());
@@ -136,62 +170,31 @@ public class PantallaProductos extends javax.swing.JFrame {
     }
 
     /**
-     * @param args the command line arguments
+     * Método que configura el titulo del panel superior de la pantalla y
+     * establece los frames destino y padre para la navegación del botón para
+     * regresar.
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        // <editor-fold defaultstate="collapsed" desc=" Look and feel setting code
-        // (optional) ">
-        /*
-         * If Nimbus (introduced in Java SE 6) is not available, stay with the default
-         * look and feel.
-         * For details see
-         * http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(PantallaProductos.class.getName()).log(java.util.logging.Level.SEVERE,
-                    null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(PantallaProductos.class.getName()).log(java.util.logging.Level.SEVERE,
-                    null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(PantallaProductos.class.getName()).log(java.util.logging.Level.SEVERE,
-                    null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(PantallaProductos.class.getName()).log(java.util.logging.Level.SEVERE,
-                    null, ex);
-        }
-        // </editor-fold>
-        // </editor-fold>
-        // </editor-fold>
-        // </editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new PantallaProductos().setVisible(true);
-            }
-        });
-    }
-
     private void cargarBanner() {
         banner.getLblTitulo().setText("Productos");
         banner.setFrmPadre(this);
         banner.setFrmTarget(new MenuPrincipal());
     }
 
+    /**
+     * Método que le indica a la barra de búsqueda el tipo de vista que se va a
+     * manejar y cambia el color del panel de fondo de la barra de búsqueda.
+     */
     private void configurarBarraBusqueda() {
         panelBusquedaProducto.setVista(panelTablaProductos);
         panelBusquedaProducto.setBackground(new Color(255, 254, 245));
     }
 
+    /**
+     * Método para obtner el nombre del producto que ha sido seleccionado en la
+     * tabla.
+     *
+     * @return Nombre del producto seleccionado.
+     */
     private String obtenerNombreSeleccionTabla() {
         int filaSeleccionada = panelTablaProductos.getTblProductos().getSelectedRow();
         if (filaSeleccionada == -1) {
@@ -202,6 +205,12 @@ public class PantallaProductos extends javax.swing.JFrame {
         }
     }
 
+    /**
+     * Método que cambia el estado del producto que ha sido seleccionado. Si su
+     * esta era habilitado cambia a deshabilitado y viceversa.
+     *
+     * @param nombre Nombre del producto seleccionado.
+     */
     private void cambiarEstadoProducto(String nombre) {
         if (nombre != null) {
             try {
@@ -220,6 +229,12 @@ public class PantallaProductos extends javax.swing.JFrame {
         }
     }
 
+    /**
+     * Método que manda el nombre del producto seleccionado para que se muestren
+     * sus detalles en otra pantalla.
+     *
+     * @param nombre Nombre del producto seleccionado.
+     */
     private void verDetallesDelProducto(String nombre) {
         if (nombre != null) {
             try {
@@ -232,6 +247,12 @@ public class PantallaProductos extends javax.swing.JFrame {
         }
     }
 
+    /**
+     * Método que manda el nombre del producto seleccionado para poder
+     * actualizarlo en otra pantalla.
+     *
+     * @param nombre Nombre del producto seleccionado.
+     */
     private void pasarAActualizarProducto(String nombre) {
         if (nombre != null) {
             try {

@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package mappers;
 
 import DTOs.IngredienteProductoDTO;
@@ -13,11 +9,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * Clase que se utiliza para mapear entre entidades Producto y sus respectivos
+ * DTOs.
  *
- * @author Alici
+ * @author Alicia Denise García Acosta 0000252402
  */
 public class ProductoMapper {
 
+    /**
+     * Convierte una lista de entidades Producto a una lista de ProductoDTO
+     *
+     * @param productos Lista de entidades Producto a convertir.
+     * @return Lista de ProductoDTO equivalentes.
+     */
     public static List<ProductoDTO> toDTOList(List<Producto> productos) {
         List<ProductoDTO> productosDTO = new ArrayList<>();
         for (Producto producto : productos) {
@@ -33,6 +37,12 @@ public class ProductoMapper {
         return productosDTO;
     }
 
+    /**
+     * Convierte una entidad Producto a un ProductoDetalleDTO
+     *
+     * @param producto Entidad Producto a convertir.
+     * @return ProductoDetalleDTo con toda la información del producto.
+     */
     public static ProductoDetalleDTO toDTO(Producto producto) {
         ProductoDetalleDTO detallesProducto = new ProductoDetalleDTO();
         detallesProducto.setNombre(producto.getNombre());
@@ -51,11 +61,12 @@ public class ProductoMapper {
     }
 
     /**
-     * Devuelve un Producto sin el estado habilitado, estado disponibilidad, ni
-     * los detalles producto asociados
+     * Convierte un ProductoDetalleDTO a una entidad Producto básica (nombre,
+     * tipo, precio).
      *
-     * @param productoDTO
-     * @return
+     * @param productoDTO ProductoDetalleDTO a convertir.
+     * @return Entidad Producto con la información básica (nombre, tipo,
+     * precio).
      */
     public static Producto toEntity(ProductoDetalleDTO productoDTO) {
         Producto producto = new Producto();

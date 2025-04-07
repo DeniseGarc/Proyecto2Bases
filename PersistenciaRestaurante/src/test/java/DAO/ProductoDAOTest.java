@@ -1,130 +1,278 @@
-///*
-// * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
-// * Click nbfs://nbhost/SystemFileSystem/Templates/UnitTests/JUnit5TestClass.java to edit this template
-// */
-//package DAO;
-//
-//import entidades.Producto;
-//import enumeradores.TipoProducto;
-//import java.util.List;
-//import org.junit.jupiter.api.AfterEach;
-//import org.junit.jupiter.api.AfterAll;
-//import org.junit.jupiter.api.BeforeEach;
-//import org.junit.jupiter.api.BeforeAll;
-//import org.junit.jupiter.api.Test;
-//import static org.junit.jupiter.api.Assertions.*;
-//
-///**
-// *
-// * @author Alici
-// */
-//public class ProductoDAOTest {
-//
-//    public ProductoDAOTest() {
-//    }
-//
-//    @BeforeAll
-//    public static void setUpClass() {
-//    }
-//
-//    @AfterAll
-//    public static void tearDownClass() {
-//    }
-//
-//    @BeforeEach
-//    public void setUp() {
-//    }
-//
-//    @AfterEach
-//    public void tearDown() {
-//    }
-//
-//    /**
-//     * Test of getInstanciaDAO method, of class ProductoDAO.
-//     */
-//    @Test
-//    public void testGetInstanciaDAO() {
-//        System.out.println("getInstanciaDAO");
-//        ProductoDAO expResult = null;
-//        ProductoDAO result = ProductoDAO.getInstanciaDAO();
-//        assertEquals(expResult, result);
-//        // TODO review the generated test code and remove the default call to fail.
-//        fail("The test case is a prototype.");
-//    }
-//
-//    /**
-//     * Test of obtenerProductos method, of class ProductoDAO.
-//     */
-//    @Test
-//    public void testObtenerProductos() throws Exception {
-//        System.out.println("obtenerProductos");
-//        ProductoDAO instance = ProductoDAO.getInstanciaDAO();
-//        List<Producto> expResult = null;
-//        List<Producto> result = instance.obtenerProductos();
-//        assertEquals(expResult, result);
-//        // TODO review the generated test code and remove the default call to fail.
-//        fail("The test case is a prototype.");
-//    }
-//
-//    /**
-//     * Test of obtenerProductoPorNombre method, of class ProductoDAO.
-//     */
-//    @Test
-//    public void testObtenerProductoPorNombre() throws Exception {
-//        System.out.println("obtenerProductoPorNombre");
-//        String nombre = "";
-//        ProductoDAO instance = null;
-//        Producto expResult = null;
-//        Producto result = instance.obtenerProductoPorNombre(nombre);
-//        assertEquals(expResult, result);
-//        // TODO review the generated test code and remove the default call to fail.
-//        fail("The test case is a prototype.");
-//    }
-//
-//    /**
-//     * Test of registrarProducto method, of class ProductoDAO.
-//     */
-//    @Test
-//    public void testRegistrarProducto() throws Exception {
-//        System.out.println("registrarProducto");
-//        Producto producto = new Producto("Hola", 20.2, TipoProducto.PLATILLO, true);
-//        ProductoDAO instance = ProductoDAO.getInstanciaDAO();
-//        Producto expResult = producto;
-//        Producto result = instance.registrarProducto(producto);
-//        assertEquals(expResult, result);
-//        // TODO review the generated test code and remove the default call to fail.
-//        fail("The test case is a prototype.");
-//    }
-//
-//    /**
-//     * Test of actualizarProducto method, of class ProductoDAO.
-//     */
-//    @Test
-//    public void testActualizarProducto() throws Exception {
-//        System.out.println("actualizarProducto");
-//        Producto producto = null;
-//        ProductoDAO instance = null;
-//        boolean expResult = false;
-//        boolean result = instance.actualizarProducto(producto);
-//        assertEquals(expResult, result);
-//        // TODO review the generated test code and remove the default call to fail.
-//        fail("The test case is a prototype.");
-//    }
-//
-//    /**
-//     * Test of deshabilitarHabilitarProducto method, of class ProductoDAO.
-//     */
-//    @Test
-//    public void testDeshabilitarHabilitarProducto() throws Exception {
-//        System.out.println("deshabilitarHabilitarProducto");
-//        Producto producto = null;
-//        ProductoDAO instance = null;
-//        boolean expResult = false;
-//        boolean result = instance.deshabilitarHabilitarProducto(producto);
-//        assertEquals(expResult, result);
-//        // TODO review the generated test code and remove the default call to fail.
-//        fail("The test case is a prototype.");
-//    }
-//    
-//
-//}
+package DAO;
+
+import conexion.Conexion;
+import entidades.Producto;
+import enumeradores.TipoProducto;
+import exception.PersistenciaException;
+import java.util.ArrayList;
+import java.util.List;
+import javax.persistence.EntityManager;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
+
+/**
+ * Clase de pruebas unitarias para ProductoDAO.
+ *
+ * @author Alicia Denise Garcia Acosta 00000252402
+ */
+public class ProductoDAOTest {
+
+    /**
+     * Instancia de ProductoDAO.
+     */
+    private final ProductoDAO instanciaProductoDAO = ProductoDAO.getInstanciaDAO();
+    /**
+     * Lista que guarda los productos de prueba.
+     */
+    private List<Producto> productosAgregados = new ArrayList<>();
+    /**
+     * Guarda el producto agregado durante la prueba de registrarProducto().
+     */
+    private Producto productoAgregado;
+
+    public ProductoDAOTest() {
+    }
+
+    /**
+     * Agrega 3 productos a la base de datos y los guarda en la lista de
+     * productos agregados para su utilización durante las pruebas.
+     */
+    @BeforeEach
+    public void setUp() {
+        Producto producto1 = new Producto("producto1", 50.0, TipoProducto.BEBIDA, true, true);
+        Producto producto2 = new Producto("producto2", 100.0, TipoProducto.BEBIDA, true, true);
+        Producto producto3 = new Producto("producto3", 150.0, TipoProducto.PLATILLO, true, true);
+        EntityManager em = Conexion.crearConexion();
+        try {
+            em.getTransaction().begin();
+            em.persist(producto1);
+            em.persist(producto2);
+            em.persist(producto3);
+            em.getTransaction().commit();
+            productosAgregados.add(producto1);
+            productosAgregados.add(producto2);
+            productosAgregados.add(producto3);
+        } catch (Exception e) {
+            em.getTransaction().rollback();
+            fail("Error al insertar productos de prueba: " + e.getMessage());
+        } finally {
+            em.close();
+        }
+    }
+
+    /**
+     * Elimina los productos que fueron agregados durante las pruebas.
+     */
+    @AfterEach
+    public void tearDown() {
+        EntityManager em = Conexion.crearConexion();
+        try {
+            em.getTransaction().begin();
+            if (productoAgregado != null) {
+                Producto productoGestionado = em.merge(productoAgregado);
+                em.remove(productoGestionado);
+                productoAgregado = null;
+            }
+            for (Producto productoAgregado : productosAgregados) {
+                Producto productoGestionado = em.merge(productoAgregado);
+                em.remove(productoGestionado);
+            }
+            em.getTransaction().commit();
+            productosAgregados.clear();
+        } catch (Exception e) {
+            em.getTransaction().rollback();
+            fail("Error al eliminar productos de prueba: " + e.getMessage());
+        } finally {
+            em.close();
+        }
+    }
+
+    /**
+     * Prueba del método obtenerProductos().
+     */
+    @Test
+    public void testObtenerProductos() throws Exception {
+        System.out.println("Prueba de método obtenerProductos()");
+        try {
+
+            List<Producto> resultado = instanciaProductoDAO.obtenerProductos();
+            assertTrue(!resultado.isEmpty());
+            assertNotNull(resultado);
+        } catch (PersistenciaException e) {
+            fail("Excepcion al obtener los productos: " + e.getMessage());
+        }
+    }
+
+    /**
+     * Prueba del método obtenerProductoPorNombre().
+     */
+    @Test
+    public void testObtenerProductoPorNombre() throws Exception {
+        System.out.println("Prueba de método obtenerProductoPorNombre()");
+        String nombre = "producto1";
+        try {
+            Producto resultado = instanciaProductoDAO.obtenerProductoPorNombre(nombre);
+            assertNotNull(resultado);
+            assertEquals(nombre, resultado.getNombre());
+        } catch (PersistenciaException e) {
+            fail("Excepcion al obtener el producto por su nombre: " + e.getMessage());
+        }
+    }
+
+    /**
+     * Prueba del método registrarProducto() cuando su funcionamiento debe ser
+     * correcto.
+     */
+    @Test
+    public void testRegistrarProductoOk() throws Exception {
+        System.out.println("Prueba de método registrarProducto()");
+        Producto producto = new Producto("productoNuevo", 50.0, TipoProducto.BEBIDA, true, true);
+        try {
+            boolean resultado = instanciaProductoDAO.registrarProducto(producto);
+            productoAgregado = instanciaProductoDAO.obtenerProductoPorNombre("productoNuevo");
+            assertTrue(resultado);
+            assertNotNull(productoAgregado);
+            assertAll(
+                    () -> assertEquals(producto.getNombre(), productoAgregado.getNombre()),
+                    () -> assertEquals(producto.getPrecio(), productoAgregado.getPrecio()),
+                    () -> assertEquals(producto.getTipo(), productoAgregado.getTipo())
+            );
+        } catch (PersistenciaException e) {
+            fail("Excepcion al registrar el producto: " + e.getMessage());
+        }
+    }
+
+    /**
+     * Prueba del método registrarProducto() cuando lanza excepción porque el
+     * producto es nulo.
+     *
+     */
+    @Test
+    public void testRegistrarProductoNulo() throws Exception {
+        System.out.println("Prueba de método registrarProducto() para un producto nulo");
+        Producto producto = null;
+        PersistenciaException ex = assertThrows(PersistenciaException.class, () -> instanciaProductoDAO.registrarProducto(producto));
+        assertNotNull(ex);
+    }
+
+    /**
+     * Prueba del método registrarProducto() cuando lanza excepción porque el
+     * nombre del producto ya esta registrado en otro producto.
+     *
+     */
+    @Test
+    public void testRegistrarProductoNombreRepetido() throws Exception {
+        System.out.println("Prueba de método registrarProducto() para un producto con nombre que ya esta en la base de datos");
+        Producto producto = new Producto("producto1", 25.0, TipoProducto.POSTRE, true, true);
+        PersistenciaException ex = assertThrows(PersistenciaException.class, () -> instanciaProductoDAO.registrarProducto(producto));
+        assertNotNull(ex);
+    }
+
+    /**
+     * Prueba del método registrarProducto() cuando lanza excepción porque el
+     * precio del producto es nulo.
+     *
+     */
+    @Test
+    public void testRegistrarProductoSinPrecio() throws Exception {
+        System.out.println("Prueba de método registrarProducto() para un producto con precio nulo");
+        Producto producto = new Producto("productoNuevo", null, TipoProducto.POSTRE, true, true);
+        PersistenciaException ex = assertThrows(PersistenciaException.class, () -> instanciaProductoDAO.registrarProducto(producto));
+        assertNotNull(ex);
+    }
+
+    /**
+     * Prueba del método registrarProducto() cuando lanza excepción porque la
+     * categoria del producto es nula.
+     *
+     */
+    @Test
+    public void testRegistrarProductoSinCategoria() throws Exception {
+        System.out.println("Prueba de método registrarProducto() para un producto con categoria nula");
+        Producto producto = new Producto("productoNuevo", 25.0, null, true, true);
+        PersistenciaException ex = assertThrows(PersistenciaException.class, () -> instanciaProductoDAO.registrarProducto(producto));
+        assertNotNull(ex);
+    }
+
+    /**
+     * Prueba del método registrarProducto() cuando lanza excepción porque el
+     * nombre del producto es nulo.
+     *
+     */
+    @Test
+    public void testRegistrarProductoSinNombre() throws Exception {
+        System.out.println("Prueba de método registrarProducto() para un producto con nombre nulo");
+        Producto producto = new Producto(null, 25.0, TipoProducto.POSTRE, true, true);
+        PersistenciaException ex = assertThrows(PersistenciaException.class, () -> instanciaProductoDAO.registrarProducto(producto));
+        assertNotNull(ex);
+    }
+
+    /**
+     * Prueba del método actualizarProducto().
+     */
+    @Test
+    public void testActualizarProducto() throws Exception {
+        System.out.println("prueba de método actualizarProducto()");
+        Producto producto = productosAgregados.get(1);
+        Double precio = 75.0;
+        producto.setPrecio(precio);
+        boolean actualizado = instanciaProductoDAO.actualizarProducto(producto);
+        Producto productoActualizado = instanciaProductoDAO.obtenerProductoPorNombre(producto.getNombre());
+        assertTrue(actualizado);
+        assertEquals(precio, productoActualizado.getPrecio());
+    }
+
+    /**
+     * Prueba del método deshabilitarHabilitarProducto()
+     *
+     */
+    @Test
+    public void testDeshabilitarHabilitarProducto() throws Exception {
+        System.out.println("Prueba de método deshabilitarHabilitarProducto()");
+        Producto producto = productosAgregados.get(0);
+        boolean nuevoEstado = !producto.isHabilitada();
+        boolean resultado = instanciaProductoDAO.deshabilitarHabilitarProducto(producto.getNombre(), nuevoEstado);
+        Producto modificado = instanciaProductoDAO.obtenerProductoPorNombre(producto.getNombre());
+        assertTrue(resultado);
+        assertEquals(nuevoEstado, modificado.isHabilitada());
+    }
+
+    /**
+     * Prueba del método obtenerProductosFiltrados(nombre).
+     */
+    @Test
+    public void testObtenerProductosFiltradosPorNombre() throws Exception {
+        System.out.println("Prueba de método obtenerProductosFiltrados(nombre)");
+        List<Producto> resultado = instanciaProductoDAO.obtenerProductosFiltrados("producto1");
+        assertNotNull(resultado);
+        assertEquals(1, resultado.size());
+        List<Producto> resultado2 = instanciaProductoDAO.obtenerProductosFiltrados("prod");
+        assertNotNull(resultado2);
+        assertTrue(resultado2.size() >= 3);
+    }
+
+    /**
+     * Prueba del método obtenerProductosFiltrados(nombre, categoria).
+     */
+    @Test
+    public void testObtenerProductosFiltradosPorNombreYCategoria() throws Exception {
+        System.out.println("Prueba de método obtenerProductosFiltrados(nombre, tipo)");
+        List<Producto> resultado = instanciaProductoDAO.obtenerProductosFiltrados("producto", TipoProducto.BEBIDA);
+        assertNotNull(resultado);
+        assertTrue(resultado.size() >= 2);
+    }
+
+    /**
+     * Prueba del método obtenerProductosFiltrados(categoria).
+     */
+    @Test
+    public void testObtenerProductosFiltradosPorCategoria() throws Exception {
+        System.out.println("Prueba de método obtenerProductosFiltrados(tipo)");
+        List<Producto> resultado = instanciaProductoDAO.obtenerProductosFiltrados(TipoProducto.PLATILLO);
+        assertNotNull(resultado);
+        assertTrue(resultado.size() >= 1);
+    }
+
+}
