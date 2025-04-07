@@ -12,6 +12,7 @@ import GUIs.ClienteFrecuente;
 import GUIs.EliminarIngrediente;
 import GUIs.MenuPrincipal;
 import GUIs.PantallaAdministrarProducto;
+import GUIs.PantallaComandas;
 import GUIs.PantallaDetallesProducto;
 import GUIs.PantallaIngredientes;
 import GUIs.PantallaInicio;
@@ -66,7 +67,9 @@ public class CoordinadorAplicacion {
     }
 
     public void PantallaComandas(JFrame frame) {
-
+        PantallaComandas comandas = new PantallaComandas();
+        comandas.setVisible(true);
+        frame.dispose();
     }
 
     public void PantallaIngredientes(JFrame frame) {
