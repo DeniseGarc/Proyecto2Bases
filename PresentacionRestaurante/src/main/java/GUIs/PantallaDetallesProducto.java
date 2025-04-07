@@ -5,23 +5,15 @@ import DTOs.ProductoDetalleDTO;
 import javax.swing.table.DefaultTableModel;
 
 /**
- * Clase que representa la pantalla de detalles e ingredientes de un producto.
  *
- * @author Alicia Denise García Acosta 00000252402
+ * @author Alici
  */
 public class PantallaDetallesProducto extends javax.swing.JFrame {
 
-    /**
-     * DTO del producto seleccionado del cual se van a mostrar su información.
-     */
     private ProductoDetalleDTO producto;
 
     /**
-     * Constructor que inicializa la pantalla con la información del producto
-     * dado.
-     *
-     * @param producto ProductoDetalleDTO que contiene los datos del producto
-     * que se mostrarán en pantalla.
+     * Creates new form DetallesProducto
      */
     public PantallaDetallesProducto(ProductoDetalleDTO producto) {
         this.producto = producto;
@@ -168,22 +160,12 @@ public class PantallaDetallesProducto extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    /**
-     * Método que configura el titulo del panel superior de la pantalla y
-     * establece los frames destino y padre para la navegación del botón para
-     * regresar.
-     */
     private void cargarBanner() {
         banner.getLblTitulo().setText("Detalles del producto");
         banner.setFrmPadre(this);
         banner.setFrmTarget(new PantallaProductos());
     }
 
-    /**
-     * Método que carga la infromación del producto en los componentes de la
-     * interfaz gráfica. Incluye nombre, categoría, precio y tabla con los
-     * ingredientes necesarios
-     */
     private void cargarInformacionProducto() {
         lblNombreProducto.setText(producto.getNombre());
         lblCategoriaProducto.setText(producto.getTipo().toString().toLowerCase());

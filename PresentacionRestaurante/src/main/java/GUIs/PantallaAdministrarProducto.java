@@ -288,7 +288,7 @@ public class PantallaAdministrarProducto extends javax.swing.JFrame {
     private boolean validarNombre() {
         boolean validez = false;
         try {
-            validez = control.validarNombreProducto(txtNombre.getText());
+            validez = control.validarNombre(txtNombre.getText());
         } catch (CoordinadorException ex) {
             Logger.getLogger(PantallaAdministrarProducto.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(null, ex.getMessage(), "Ha ocurrido un error inesperado", JOptionPane.ERROR_MESSAGE);
@@ -335,19 +335,10 @@ public class PantallaAdministrarProducto extends javax.swing.JFrame {
             ProductoDetalleDTO producto = generarProducto();
             try {
                 if (modo == Modo.AGREGAR) {
-                    if (control.agregarProducto(producto)) {
-                        JOptionPane.showMessageDialog(null, "Producto agregado con éxito", "", JOptionPane.INFORMATION_MESSAGE);
-                    } else {
-                        JOptionPane.showMessageDialog(null, "No ha sido posible agregar el producto", "", JOptionPane.INFORMATION_MESSAGE);
-                    }
+                    control.agregarProducto(producto);
                 } else {
-                    if (control.actualizarProducto(producto)) {
-                        JOptionPane.showMessageDialog(null, "Producto actualizado con éxito", "", JOptionPane.INFORMATION_MESSAGE);
-                    } else {
-                        JOptionPane.showMessageDialog(null, "No ha sido posible actualizar el producto", "", JOptionPane.INFORMATION_MESSAGE);
-                    }
+                    control.actualizarProducto(producto);
                 }
-                control.pantallaProductos(this);
             } catch (CoordinadorException ex) {
                 Logger.getLogger(PantallaAdministrarProducto.class.getName()).log(Level.SEVERE, null, ex);
                 JOptionPane.showMessageDialog(null, ex.getMessage(), "Ha ocurrido un error inesperado", JOptionPane.ERROR_MESSAGE);

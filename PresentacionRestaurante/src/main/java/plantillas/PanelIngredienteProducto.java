@@ -1,7 +1,11 @@
 package plantillas;
 
 import DTOs.IngredienteProductoDTO;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import javax.swing.JLabel;
 import javax.swing.JSpinner;
+import javax.swing.Timer;
 
 /**
  * Panel que muestra los datos de un ingrediente que forma parte de un producto.
@@ -18,11 +22,9 @@ public class PanelIngredienteProducto extends javax.swing.JPanel {
     private final IngredienteProductoDTO ingrediente;
 
     /**
-     * Constructor que inicializa los componentes del panel y carga los datos
-     * del ingrediente ingresado.
+     * Creates new form PanelIngredienteProducto
      *
-     * @param ingrediente ingrediente del cual se van a cargar sus datos en el
-     * panel.
+     * @param ingrediente
      */
     public PanelIngredienteProducto(IngredienteProductoDTO ingrediente) {
         this.ingrediente = ingrediente;
@@ -85,13 +87,6 @@ public class PanelIngredienteProducto extends javax.swing.JPanel {
         return ingrediente;
     }
 
-    /**
-     * Método que devuelve el JSpinner el cual contiene la cantidad del
-     * ingrediente necesaria para el producto.
-     *
-     * @return JSpinner el cual sirve para ingresar la cantidad de ingrediente
-     * necesaria.
-     */
     public JSpinner getTxtCantidad() {
         return txtCantidad;
     }

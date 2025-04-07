@@ -1,3 +1,7 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
+ */
 package moduloBusquedaProductos;
 
 import control.CoordinadorAplicacion;
@@ -7,35 +11,20 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
 /**
- * Método que representa el panel de búsqueda de producto. Permite realizar
- * búsquedas dinámicas filtrando por nombre y categoría e indica a la vista que
- * datos debe mostrar.
  *
- * @author Alicia Denise García Acosta 00000252402
+ * @author Alici
  */
 public class PanelBusquedaProducto extends javax.swing.JPanel {
 
-    /**
-     * CoordinadorAplicacion para la comunicación con capa de negocio y flujo de
-     * pantallas.
-     */
     private CoordinadorAplicacion control = new CoordinadorAplicacion();
-    /**
-     * Clase que implementa VistaProductos, la cual implementa la manera en que
-     * se van a mostrar los productos.
-     */
     private VistaProductos vista;
 
-    /**
-     * Constructor que inicializa los componentes del panel, carga las
-     * categorias en el comboBox y carga los listeners para los eventos de
-     * búsqueda.
-     */
     public PanelBusquedaProducto() {
         initComponents();
         cargarCategorias();
@@ -85,21 +74,10 @@ public class PanelBusquedaProducto extends javax.swing.JPanel {
         add(SearchPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 40, 30, 30));
     }// </editor-fold>//GEN-END:initComponents
 
-    /**
-     * Establece la vista asociada a este panel para mostrar los productos
-     * resultantes de las búsquedas.
-     *
-     * @param vista Instancia de VistaProducto que mostrará los productos.
-     */
     public void setVista(VistaProductos vista) {
         this.vista = vista;
     }
 
-    /**
-     * Carga las categoría disponibles desde el enumerador TipoProducto en el
-     * JComboBox. Se incluye una opción inicial que indica que seleccione
-     * cualquier categoría.
-     */
     private void cargarCategorias() {
         cBoxTipo.addItem("Seleccione una categoria");
         for (TipoProducto categoria : TipoProducto.values()) {
@@ -107,11 +85,6 @@ public class PanelBusquedaProducto extends javax.swing.JPanel {
         }
     }
 
-    /**
-     * Configura los listeners para el campo de texto y el combo box. Realiza
-     * una búsqueda automática cada vez que se modifica el texto o se cambia la
-     * categoría seleccionada.
-     */
     private void cargarListeners() {
         txtBusqueda.getDocument().addDocumentListener(new DocumentListener() {
             @Override
@@ -134,10 +107,6 @@ public class PanelBusquedaProducto extends javax.swing.JPanel {
         });
     }
 
-    /**
-     * Ejecuta la búsqueda de productos según los criterios actuales. Actualiza
-     * la vista con los resultados obtenidos del coordinados.
-     */
     private void buscar() {
         try {
             if (txtBusqueda.getText().isBlank() && cBoxTipo.getSelectedIndex() == 0) {
@@ -159,41 +128,22 @@ public class PanelBusquedaProducto extends javax.swing.JPanel {
         }
     }
 
-    /**
-     * Obtiene el combo box de categorías.
-     *
-     * @return JComboBox con las categorías disponibles.
-     */
     public JComboBox<Object> getcBoxTipo() {
         return cBoxTipo;
     }
 
-    /**
-     * Obtiene el campo de texto para búsqueda.
-     *
-     * @return JTextField donde se ingresa el texto de búsqueda.
-     */
     public JTextField getTxtBusqueda() {
         return txtBusqueda;
     }
 
-    /**
-     * Establece el combo box de categorías.
-     *
-     * @param cBoxTipo Nuevo JComboBox con categorías.
-     */
     public void setcBoxTipo(JComboBox<Object> cBoxTipo) {
         this.cBoxTipo = cBoxTipo;
     }
 
-    /**
-     * Establece el campo de texto para búsqueda.
-     *
-     * @param txtBusqueda Nuevo JTextField para búsqueda.
-     */
     public void setTxtBusqueda(JTextField txtBusqueda) {
         this.txtBusqueda = txtBusqueda;
     }
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel SearchPanel;

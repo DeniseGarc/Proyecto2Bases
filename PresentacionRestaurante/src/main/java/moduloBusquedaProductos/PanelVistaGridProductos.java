@@ -14,7 +14,7 @@ import plantillas.PanelProducto;
 public class PanelVistaGridProductos extends javax.swing.JPanel implements VistaProductos {
 
     /**
-     * Crea el panel y se inicializan sus elementos
+     * Se crea el panel y se inicializan sus elementos
      */
     public PanelVistaGridProductos() {
         initComponents();

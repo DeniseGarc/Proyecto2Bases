@@ -14,7 +14,7 @@ import javax.swing.table.DefaultTableModel;
 public class PanelVistaListaProductos extends javax.swing.JPanel implements VistaProductos {
 
     /**
-     * Crea el panel y se inicializan sus elementos
+     * Se crea el panel y se inicializan sus elementos
      */
     public PanelVistaListaProductos() {
         initComponents();
@@ -82,7 +82,7 @@ public class PanelVistaListaProductos extends javax.swing.JPanel implements Vist
     // End of variables declaration//GEN-END:variables
 
     /**
-     * Método que carga una lista de productos en una tabla.
+     * Método que muestra una lista de productos en la tabla.
      *
      * @param productos Lista de productos a mostrar.
      */
@@ -101,11 +101,6 @@ public class PanelVistaListaProductos extends javax.swing.JPanel implements Vist
         }
     }
 
-    /**
-     * Método para obtener la tabla que muestra los productos
-     *
-     * @return JTable en la cual se muestran los productos.
-     */
     public JTable getTblProductos() {
         return tblProductos;
     }

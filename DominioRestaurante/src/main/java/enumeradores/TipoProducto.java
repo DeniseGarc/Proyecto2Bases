@@ -1,10 +1,12 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Enum.java to edit this template
+ */
 package enumeradores;
 
 /**
- * Enumerador que representa los diferentes tipos de productos disponibles en el
- * sistema.
  *
- * @author Alicia Denise García Acosta 00000252402
+ * @author Alici
  */
 public enum TipoProducto {
     PLATILLO,

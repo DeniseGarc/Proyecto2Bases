@@ -11,11 +11,10 @@ import javax.persistence.NoResultException;
 
 /**
  * Clase que implementa las operaciones de acceso a datos para la entidad
- * Producto, utilizando JPA para persistencia. La clase aplica el patrón
- * Singleton para que se maneje una sola instancia de la clase.
+ * Producto. La clase aplica el patrón Sinbleton para que se maneje una sola
+ * instancia de la clase
  *
  * @author Alicia Denise Garcia Acosta 00000252402
- * @see IProductoDAO
  */
 public class ProductoDAO implements IProductoDAO {
 
@@ -42,6 +41,13 @@ public class ProductoDAO implements IProductoDAO {
         return instanciaProductoDAO;
     }
 
+    /**
+     * Método que obtiene todos los productos registrados en la base de datos
+     *
+     * @return lista de productos
+     * @throws PersistenciaException Si ocurre un error al consultar los
+     * productos
+     */
     @Override
     public List<Producto> obtenerProductos() throws PersistenciaException {
         EntityManager em = Conexion.crearConexion();
@@ -56,11 +62,13 @@ public class ProductoDAO implements IProductoDAO {
     }
 
     /**
-     * {@inheritDoc}
+     * Obtiene un producto por su nombre exacto.
      *
-     * <p>
-     * Esta implementación específica maneja el caso donde no se encuentra el
-     * producto devolviendo null en lugar de lanzar una excepción.</p>
+     * @param nombre el nombre del producto a buscar.
+     * @return el producto encontrado, si no se ha encontrado un producto con el
+     * nombre ingresado regresa null.
+     * @throws PersistenciaException si no se encuentra o ocurre un error
+     * durante la consulta.
      */
     @Override
     public Producto obtenerProductoPorNombre(String nombre) throws PersistenciaException {
@@ -79,6 +87,14 @@ public class ProductoDAO implements IProductoDAO {
         }
     }
 
+    /**
+     * Registra un nuevo producto en la base de datos.
+     *
+     * @param producto el producto a registrar.
+     * @return true si es que fue posible registrar el producto, false en caso
+     * contrario.
+     * @throws PersistenciaException si ocurre un error durante el registro.
+     */
     @Override
     public boolean registrarProducto(Producto producto) throws PersistenciaException {
         EntityManager em = Conexion.crearConexion();
@@ -94,6 +110,14 @@ public class ProductoDAO implements IProductoDAO {
         }
     }
 
+    /**
+     * Actualiza los datos de un producto existente.
+     *
+     * @param producto el producto a actualizar.
+     * @return {@code true} si la actualización fue exitosa.
+     * @throws PersistenciaException si ocurre un error durante la
+     * actualización.
+     */
     @Override
     public boolean actualizarProducto(Producto producto) throws PersistenciaException {
         EntityManager em = Conexion.crearConexion();
@@ -109,13 +133,6 @@ public class ProductoDAO implements IProductoDAO {
         }
     }
 
-    /**
-     * {@inheritDoc}
-     *
-     * <p>
-     * Implementación específica que usa una consulta de actualización masiva
-     * para cambiar el estado de habilitación.</p>
-     */
     @Override
     public boolean deshabilitarHabilitarProducto(String nombre, boolean habilitado) throws PersistenciaException {
         EntityManager em = Conexion.crearConexion();
@@ -135,6 +152,14 @@ public class ProductoDAO implements IProductoDAO {
         }
     }
 
+    /**
+     * Obtiene una lista de productos cuyo nombre contenga el texto
+     * especificado.
+     *
+     * @param nombre parte del nombre del producto a buscar.
+     * @return lista de productos que coinciden con el filtro.
+     * @throws PersistenciaException si ocurre un error al consultar.
+     */
     @Override
     public List<Producto> obtenerProductosFiltrados(String nombre) throws PersistenciaException {
         EntityManager em = Conexion.crearConexion();
@@ -149,6 +174,15 @@ public class ProductoDAO implements IProductoDAO {
         }
     }
 
+    /**
+     * Obtiene una lista de productos cuyo nombre contenga el texto especificado
+     * y pertenezcan a una categoría específica.
+     *
+     * @param nombre parte del nombre del producto a buscar.
+     * @param categoria categoría del producto.
+     * @return lista de productos filtrados por nombre y categoría.
+     * @throws PersistenciaException si ocurre un error durante la consulta.
+     */
     @Override
     public List<Producto> obtenerProductosFiltrados(String nombre, TipoProducto categoria) throws PersistenciaException {
         EntityManager em = Conexion.crearConexion();
@@ -164,6 +198,14 @@ public class ProductoDAO implements IProductoDAO {
         }
     }
 
+    /**
+     * Obtiene una lista de productos los cuales pertenezcan a una categoría
+     * específica.
+     *
+     * @param categoria categoría del producto.
+     * @return lista de productos filtrados por categoria.
+     * @throws PersistenciaException si ocurre un error durante la consulta.
+     */
     @Override
     public List<Producto> obtenerProductosFiltrados(TipoProducto categoria) throws PersistenciaException {
         EntityManager em = Conexion.crearConexion();
