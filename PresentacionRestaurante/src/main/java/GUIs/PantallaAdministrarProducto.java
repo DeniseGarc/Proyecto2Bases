@@ -47,10 +47,8 @@ public class PantallaAdministrarProducto extends javax.swing.JFrame {
             cargarIngredientesProducto();
             cargarResumen();
         }
-        
+
     }
-    
-    
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -289,7 +287,7 @@ public class PantallaAdministrarProducto extends javax.swing.JFrame {
     private boolean validarNombre() {
         boolean validez = false;
         try {
-            validez = control.validarNombre(txtNombre.getText());
+            validez = control.validarNombreProducto(txtNombre.getText());
         } catch (CoordinadorException ex) {
             Logger.getLogger(PantallaAdministrarProducto.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(null, ex.getMessage(), "Ha ocurrido un error inesperado", JOptionPane.ERROR_MESSAGE);
@@ -336,10 +334,19 @@ public class PantallaAdministrarProducto extends javax.swing.JFrame {
             ProductoDetalleDTO producto = generarProducto();
             try {
                 if (modo == Modo.AGREGAR) {
-                    control.agregarProducto(producto);
+                    if (control.agregarProducto(producto)) {
+                        JOptionPane.showMessageDialog(null, "Producto agregado con éxito", "", JOptionPane.INFORMATION_MESSAGE);
+                    } else {
+                        JOptionPane.showMessageDialog(null, "No ha sido posible agregar el producto", "", JOptionPane.INFORMATION_MESSAGE);
+                    }
                 } else {
-                    control.actualizarProducto(producto);
+                    if (control.actualizarProducto(producto)) {
+                        JOptionPane.showMessageDialog(null, "Producto actualizado con éxito", "", JOptionPane.INFORMATION_MESSAGE);
+                    } else {
+                        JOptionPane.showMessageDialog(null, "No ha sido posible actualizar el producto", "", JOptionPane.INFORMATION_MESSAGE);
+                    }
                 }
+                control.pantallaProductos(this);
             } catch (CoordinadorException ex) {
                 Logger.getLogger(PantallaAdministrarProducto.class.getName()).log(Level.SEVERE, null, ex);
                 JOptionPane.showMessageDialog(null, ex.getMessage(), "Ha ocurrido un error inesperado", JOptionPane.ERROR_MESSAGE);

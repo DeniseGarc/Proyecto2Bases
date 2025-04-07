@@ -1,11 +1,7 @@
 package plantillas;
 
 import DTOs.IngredienteProductoDTO;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import javax.swing.JLabel;
 import javax.swing.JSpinner;
-import javax.swing.Timer;
 
 /**
  * Panel que muestra los datos de un ingrediente que forma parte de un producto.
@@ -22,9 +18,11 @@ public class PanelIngredienteProducto extends javax.swing.JPanel {
     private final IngredienteProductoDTO ingrediente;
 
     /**
-     * Creates new form PanelIngredienteProducto
+     * Constructor que inicializa los componentes del panel y carga los datos
+     * del ingrediente ingresado.
      *
-     * @param ingrediente
+     * @param ingrediente ingrediente del cual se van a cargar sus datos en el
+     * panel.
      */
     public PanelIngredienteProducto(IngredienteProductoDTO ingrediente) {
         this.ingrediente = ingrediente;
@@ -69,8 +67,7 @@ public class PanelIngredienteProducto extends javax.swing.JPanel {
         txtCantidad.setBorder(null);
         add(txtCantidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 50, 90, 30));
     }// </editor-fold>//GEN-END:initComponents
-
-    /**
+/**
      * Método que carga los datos del ingrediente en el panel
      */
     private void cargarIngrediente() {
@@ -90,10 +87,16 @@ public class PanelIngredienteProducto extends javax.swing.JPanel {
         return ingrediente;
     }
 
+    /**
+     * Método que devuelve el JSpinner el cual contiene la cantidad del
+     * ingrediente necesaria para el producto.
+     *
+     * @return JSpinner el cual sirve para ingresar la cantidad de ingrediente
+     * necesaria.
+     */
     public JSpinner getTxtCantidad() {
         return txtCantidad;
     }
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JSeparator jSeparator1;

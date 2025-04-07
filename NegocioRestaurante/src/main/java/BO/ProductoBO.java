@@ -4,6 +4,7 @@ import DTOs.IngredienteProductoDTO;
 import DTOs.ProductoDTO;
 import DTOs.ProductoDetalleDTO;
 import entidades.DetalleProductoIngrediente;
+import entidades.Ingrediente;
 import entidades.Producto;
 import enumeradores.TipoProducto;
 import exception.NegocioException;
@@ -18,16 +19,28 @@ import java.util.logging.Logger;
 import mappers.ProductoMapper;
 
 /**
+ * Clase que implementa la lógica de negocio para operaciones relacionadas con
+ * productos.
  *
- * @author Alici
+ * @author Alicia Denise Garcia Acosta 00000252402
+ * @see IProductoBO
  */
 public class ProductoBO implements IProductoBO {
 
     private IProductoDAO productoDAO;
     private IIngredienteDAO ingredienteDAO;
 
-    public ProductoBO(IProductoDAO productoDAO) {
+    /**
+     * Constructor que inicializa las dependencias DAO necesarias.
+     *
+     * @param productoDAO Implementación de IProductoDAO para acceso a datos de
+     * productos
+     * @param ingredienteDAO Implementación de IIngredienteDAO para acceso a
+     * datos de ingredientes
+     */
+    public ProductoBO(IProductoDAO productoDAO, IIngredienteDAO ingredienteDAO) {
         this.productoDAO = productoDAO;
+        this.ingredienteDAO = ingredienteDAO;
     }
 
     @Override
@@ -109,23 +122,56 @@ public class ProductoBO implements IProductoBO {
         producto.setHabilitada(true);
         producto.setDisponible(true);
         try {
-
-            List<DetalleProductoIngrediente> detallesProducto = new ArrayList(); // detalles de producto nuevos
-//            for (IngredienteProductoDTO ingredienteProducto : productoNuevo.getIngredientes()) {
-//                //obtener el ingrediente por nombre y unidad de medida
-//                Ingrediente ingrediente = ingredienteDAO.
-//                detallesProductoActualizados.add(
-//                        new DetalleProductoIngrediente(
-//                                ingredienteProducto.getCantidad(),
-//                                producto,
-//                                ingrediente
-//                        ));
-//            }
+            List<DetalleProductoIngrediente> detallesProducto = new ArrayList<>(); // detalles de producto nuevos
+            // Se obtienen los ingredientes para crear el detalle producto
+            for (IngredienteProductoDTO ingredienteProducto : productoNuevo.getIngredientes()) {
+                Ingrediente ingrediente = ingredienteDAO.buscarPorNombreYUnidad1(ingredienteProducto.getNombre(), ingredienteProducto.getUnidadMedida().name());
+                detallesProducto.add(
+                        new DetalleProductoIngrediente(
+                                ingredienteProducto.getCantidad(),
+                                producto,
+                                ingrediente
+                        ));
+            }
+            // Se le asignan al producto para actualizarlo
             producto.setDetallesProducto(detallesProducto);
             return productoDAO.registrarProducto(producto);
         } catch (PersistenciaException ex) {
             Logger.getLogger(ProductoBO.class.getName()).log(Level.SEVERE, null, ex);
             throw new NegocioException("Ha ocurrido un error al cambiar el estado del producto", ex);
+        }
+    }
+
+    @Override
+    public boolean actualizarProducto(ProductoDetalleDTO productoActualizar) throws NegocioException {
+        if (productoActualizar == null) {
+            throw new NegocioException("El producto a actualizar es nulo");
+        }
+        try {
+            // Se obtiene el producto a actualizar
+            Producto producto = productoDAO.obtenerProductoPorNombre(productoActualizar.getNombre());
+            if (producto == null) {
+                throw new NegocioException("El producto a actualizar no existe");
+            }
+            // Se le asigna el precio actualizado
+            producto.setPrecio(productoActualizar.getPrecio());
+            // Se obtienen los nuevos detalle producto, para saber los ingredientes necesarios para el producto
+            List<DetalleProductoIngrediente> detallesProductoActualizados = new ArrayList<>();
+            for (IngredienteProductoDTO ingredienteProducto : productoActualizar.getIngredientes()) {
+                Ingrediente ingrediente = ingredienteDAO.buscarPorNombreYUnidad1(ingredienteProducto.getNombre(), ingredienteProducto.getUnidadMedida().name());
+                detallesProductoActualizados.add(
+                        new DetalleProductoIngrediente(
+                                ingredienteProducto.getCantidad(),
+                                producto,
+                                ingrediente
+                        ));
+            }
+            // Se le asignan los detalles producto al producto
+            producto.setDetallesProducto(detallesProductoActualizados);
+            return productoDAO.actualizarProducto(producto);
+        } catch (PersistenciaException ex) {
+            Logger.getLogger(ProductoBO.class.getName()).log(Level.SEVERE, null, ex);
+            throw new NegocioException("Ha ocurrido un error al actualizar el producto", ex);
         }
     }
 
@@ -143,35 +189,4 @@ public class ProductoBO implements IProductoBO {
             throw new NegocioException("Ha ocurrido un error al cambiar el estado del producto", ex);
         }
     }
-
-    @Override
-    public boolean actualizarProducto(ProductoDetalleDTO productoActualizar) throws NegocioException {
-        if (productoActualizar == null) {
-            throw new NegocioException("El producto a actualizar es nulo");
-        }
-        try {
-            Producto producto = productoDAO.obtenerProductoPorNombre(productoActualizar.getNombre());
-            if (producto == null) {
-                throw new NegocioException("El producto a actualizar no existe");
-            }
-            producto.setPrecio(productoActualizar.getPrecio());
-            List<DetalleProductoIngrediente> detallesProductoActualizados = new ArrayList(); // detalles de producto nuevos
-//            for (IngredienteProductoDTO ingredienteProducto : productoActualizar.getIngredientes()) {
-//                //obtener el ingrediente por nombre y unidad de medida
-//                Ingrediente ingrediente = ingredienteDAO.
-//                detallesProductoActualizados.add(
-//                        new DetalleProductoIngrediente(
-//                                ingredienteProducto.getCantidad(),
-//                                producto,
-//                                ingrediente
-//                        ));
-//            }
-            producto.setDetallesProducto(detallesProductoActualizados);
-            return productoDAO.actualizarProducto(producto);
-        } catch (PersistenciaException ex) {
-            Logger.getLogger(ProductoBO.class.getName()).log(Level.SEVERE, null, ex);
-            throw new NegocioException("Ha ocurrido un error al actualizar el producto", ex);
-        }
-    }
-
 }

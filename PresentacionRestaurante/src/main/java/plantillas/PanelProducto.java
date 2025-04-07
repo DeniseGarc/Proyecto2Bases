@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
- */
 package plantillas;
 
 import DTOs.ProductoDTO;
@@ -10,16 +6,21 @@ import javax.swing.JButton;
 import listeners.AgregarProductoComandaListener;
 
 /**
+ * Panel que representa visualmente un producto. Este panel muestra un botón el
+ * cual muestra el nombre del producto y, si es que no se encuentra disponible
+ * muestra un mensaje indicandolo y el botón ya no puede ser clickeado.
  *
- * @author Alici
+ * @author Alicia Denise Garcia Acosta 00000252402
  */
 public class PanelProducto extends javax.swing.JPanel {
-    
+
     private final ProductoDTO producto;
 
     /**
-     * Creates new form PanelProducto
-     * @param producto
+     * Constructor que inicializa los componentes del panel y carga los datos
+     * del producto dado.
+     *
+     * @param producto el producto que se a representar en el panel.
      */
     public PanelProducto(ProductoDTO producto, AgregarProductoComandaListener listener) {
         this.producto = producto;
@@ -29,11 +30,11 @@ public class PanelProducto extends javax.swing.JPanel {
             listener.agregarProducto(producto);
         });
     }
-    
+
     public JButton getBtnProducto() {
         return btnProducto;
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -71,7 +72,6 @@ public class PanelProducto extends javax.swing.JPanel {
         }
         btnProducto.setBackground(new Color(254, 255, 203));
     }
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnProducto;

@@ -17,7 +17,7 @@ public class PanelVistaGridProductos extends javax.swing.JPanel implements Vista
     private AgregarProductoComandaListener listener;
 
     /**
-     * Se crea el panel y se inicializan sus elementos
+     * Crea el panel y se inicializan sus elementos
      */
     public PanelVistaGridProductos() {
         initComponents();

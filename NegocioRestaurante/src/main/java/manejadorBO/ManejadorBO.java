@@ -23,18 +23,24 @@ import interfaces.IClienteFrecuenteBO;
  */
 public class ManejadorBO {
 
+    /**
+     * Método que crea y regresa la instancia de ProductoBO.
+     *
+     * @return clase ProductoBO que implementa la interfaz IProductoBO.
+     */
     public static IProductoBO crearProductoBO() {
         IProductoDAO productoDAO = ProductoDAO.getInstanciaDAO();
-        IProductoBO productoBO = new ProductoBO(productoDAO);
+        IIngredienteDAO ingredienteDAO = IngredienteDAO.getInstanceDAO();
+        IProductoBO productoBO = new ProductoBO(productoDAO, ingredienteDAO);
         return productoBO;
     }
-    
-    public static IIngredienteBO crearIngredienteBO(){
+
+    public static IIngredienteBO crearIngredienteBO() {
         IIngredienteDAO ingredienteDAO = IngredienteDAO.getInstanceDAO();
         IIngredienteBO ingredienteBO = new IngredienteBO(ingredienteDAO);
         return ingredienteBO;
     }
-    
+
     public static IClienteFrecuenteBO crearClienteFrecuenteBO() {
         IClienteFrecuenteDAO clienteFrecuenteDAO = ClienteFrecuenteDAO.getInstanciaDAO();
         IClienteFrecuenteBO clienteFrecuenteBO = new ClienteFrecuenteBO(clienteFrecuenteDAO);
