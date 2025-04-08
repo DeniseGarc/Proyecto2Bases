@@ -6,6 +6,7 @@ package BO;
 
 import DTOs.IngredienteDTO;
 import entidades.Ingrediente;
+import enumeradores.UnidadMedida;
 import exception.NegocioException;
 import exception.PersistenciaException;
 import interfaces.IIngredienteBO;
@@ -153,7 +154,8 @@ public class IngredienteBO implements IIngredienteBO{
         }
     }
     
-    public List<IngredienteDTO> buscarPorUnidad(String unidad) throws NegocioException{
+    @Override
+    public List<IngredienteDTO> buscarPorUnidad(UnidadMedida unidad) throws NegocioException{
         try{
            List<Ingrediente> ingredientes = ingredienteDAO.buscarIngredientesPorUnidadMedida(unidad);
            return IngredienteMapper.ToDTOList(ingredientes);
