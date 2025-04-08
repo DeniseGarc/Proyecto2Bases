@@ -72,20 +72,21 @@ public class PanelBuscarIngrediente extends javax.swing.JPanel {
     /**
      * Metodo para realizar la busqueda dinamica de los ingredientes
      */
-
     private void realizarBusqueda() {
     try {
         
         String texto = txtBusqueda.getText().trim();
-   
+        // si no hay nada escrito y la seleccion es todos muestra todos los ingredientes
         if(txtBusqueda.getText().isBlank() && cBoxUnidad.getSelectedIndex()==0){
             cargarIngredientes();
         }
-        
+        // si el texto esta vacio y la unidad es difrerente a todos busca por unidad
         if(texto.isEmpty() && cBoxUnidad.getSelectedIndex()!=0){
             mostrarIngredientesEnTabla(coordinador.buscarIngredientePorUniad(cBoxUnidad.getSelectedItem().toString()));
             System.out.println(cBoxUnidad.getSelectedItem().toString());
-        }else if(!texto.isEmpty() && cBoxUnidad.getSelectedIndex()!=0){
+        }
+        // si el texto no esta vacio y la 
+        else if(!texto.isEmpty() && cBoxUnidad.getSelectedIndex()!=0){
             mostrarIngredientesEnTabla(coordinador.buscarPorNombreYUnidad(texto, cBoxUnidad.getSelectedItem().toString()));
         }else if(!txtBusqueda.getText().isEmpty() && cBoxUnidad.getSelectedIndex() ==0){
             mostrarIngredientesEnTabla(coordinador.buscarPorNombre(texto));

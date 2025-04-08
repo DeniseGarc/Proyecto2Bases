@@ -325,7 +325,12 @@ public class CoordinadorAplicacion {
             throw new CoordinadorException("Ha ocurrido un problema al actualizar el estado del producto");
         }
     }
-
+    /**
+     * Agrega un ingrediente a la base de datos 
+     * @param ingrediente Ingrediente a agregar
+     * @return ingrediente
+     * @throws CoordinadorException Si ocurre algun error al momento de guardar
+     */
     public IngredienteDTO agregarIngrediente(IngredienteDTO ingrediente) throws CoordinadorException {
         if (ingrediente == null) {
             throw new CoordinadorException("El producto a agregar no puede ser nulo");
@@ -346,6 +351,12 @@ public class CoordinadorAplicacion {
         return ingrediente;
     }
 
+    /**
+     * Elimina el ingrediente de la base de datos
+     * @param ingrediente Ingrediente a eliminar 
+     * @return true si se elimino el ingrediente 
+     * @throws CoordinadorException Si ocurre algun error inesperado al eliminar
+     */
     public boolean eliminarIngrediente(IngredienteDTO ingrediente) throws CoordinadorException {
         try {
             ingredienteBO.eliminarIngrediente(ingrediente.getId());
@@ -407,6 +418,11 @@ public class CoordinadorAplicacion {
         }
     }
 
+    /**
+     * Recupera solo los ingredientes que no tienen un producto asignado
+     * @return Lista de ingredientes DTO
+     * @throws CoordinadorException Si ocurre algun error inesperado al recuperar los ingredientes
+     */
     public List<IngredienteDTO> mostrarIngredientesSinProducto() throws CoordinadorException {
         try {
             return ingredienteBO.obtenerIngredientesSinProducto();
@@ -416,6 +432,13 @@ public class CoordinadorAplicacion {
         }
     }
 
+    /**
+     * Modifica el stock del ingrediente indicado
+     * @param id Id del ingrediente a modificar
+     * @param stock Stock nuevo
+     * @return IngredienteDTO actualizado
+     * @throws CoordinadorException 
+     */
     public IngredienteDTO modificarStock(Long id, int stock) throws CoordinadorException {
         try {
             return ingredienteBO.actualizarStock(id, stock);
@@ -425,6 +448,13 @@ public class CoordinadorAplicacion {
         }
     }
 
+    /**
+     * Recupera la lista de ingredientes filtrandolos por nombre y unidad
+     * @param nombre Nombre del ingrediente a buscar
+     * @param unidad Unidad de medida a buscar
+     * @return Lista de ingredientes filtrados
+     * @throws CoordinadorException Si ocurre algun error inesperado al buscar 
+     */
     public List<IngredienteDTO> buscarPorNombreYUnidad(String nombre, String unidad) throws CoordinadorException {
         try {
             return ingredienteBO.buscarPorNombreYUnidad(nombre, unidad);
@@ -435,6 +465,12 @@ public class CoordinadorAplicacion {
         }
     }
 
+    /**
+     * Busca los ingredientes filtrandolos por nombre
+     * @param nombre nombre del ingrediente a buscar
+     * @return Lista de ingredientes filtrados
+     * @throws CoordinadorException Si ocurre algun error al buscar los ingredientes
+     */
     public List<IngredienteDTO> buscarPorNombre(String nombre) throws CoordinadorException {
         try {
             return ingredienteBO.obtenerIngredientesPorNombre(nombre);
@@ -444,6 +480,13 @@ public class CoordinadorAplicacion {
         }
     }
 
+    /**
+     * Regresa solo un ingrediente buscandolo por nombre y unidad
+     * @param nombre Nombre del ingrediente a buscar
+     * @param unidad Unidad de medida a buscar
+     * @return Ingrediente 
+     * @throws CoordinadorException 
+     */
     public IngredienteDTO buscarPorNombreYUnidad1(String nombre, String unidad) throws CoordinadorException {
         try {
             return ingredienteBO.buscarPorNombreYUnidad1(nombre, unidad);
