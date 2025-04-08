@@ -25,7 +25,7 @@ public interface IProductoDAO {
      * Obtiene un producto por su nombre exacto.
      *
      * @param nombre el nombre del producto a buscar.
-     * @return el producto encontrado.
+     * @return el producto encontrado, en caso de no encontrarlo regresa null.
      * @throws PersistenciaException si no se encuentra o ocurre un error
      * durante la consulta.
      */

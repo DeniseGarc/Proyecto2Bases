@@ -5,6 +5,7 @@ import DTOs.ProductoDTO;
 import DTOs.ProductoDetalleDTO;
 import entidades.DetalleProductoIngrediente;
 import entidades.Producto;
+import enumeradores.TipoProducto;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -43,7 +44,7 @@ public class ProductoMapper {
      * @param producto Entidad Producto a convertir.
      * @return ProductoDetalleDTo con toda la información del producto.
      */
-    public static ProductoDetalleDTO toDTO(Producto producto) {
+    public static ProductoDetalleDTO toProductoDetalleDTO(Producto producto) {
         ProductoDetalleDTO detallesProducto = new ProductoDetalleDTO();
         detallesProducto.setNombre(producto.getNombre());
         detallesProducto.setTipo(producto.getTipo());
@@ -76,4 +77,18 @@ public class ProductoMapper {
         return producto;
     }
 
+    /**
+     * Convierte una entidad Producto a un ProductoDTO.
+     *
+     * @param producto Entidad Producto a convertir
+     * @return ProductoDTO con la información de la entidad Producto
+     */
+    public static ProductoDTO toProductoDTO(Producto producto) {
+        return new ProductoDTO(
+                producto.getNombre(),
+                producto.getTipo(),
+                producto.getPrecio(),
+                producto.isDisponible(),
+                producto.isHabilitada());
+    }
 }

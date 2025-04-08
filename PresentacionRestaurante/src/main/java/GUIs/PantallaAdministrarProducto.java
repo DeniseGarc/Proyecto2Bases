@@ -49,18 +49,19 @@ public class PantallaAdministrarProducto extends javax.swing.JFrame {
     /**
      * Producto que se esta editando, puede ser null si el producto es nuevo.
      */
-    private final ProductoDetalleDTO producto;
+    private final ProductoDetalleDTO productoExistente;
 
     /**
      * Constructor que inicializa la pantalla con el modo deseado.
      *
      * @param modo Modo de operación de la pantalla (AGREGAR o MODIFICAR0.)
-     * @param producto Producto a modificar, null en caso de ser modo AGREGAR
+     * @param productoExistente Producto a modificar, null en caso de ser modo
+     * AGREGAR
      */
-    public PantallaAdministrarProducto(Modo modo, ProductoDetalleDTO producto) {
+    public PantallaAdministrarProducto(Modo modo, ProductoDetalleDTO productoExistente) {
         ingredientesPanelLateral = new ArrayList<>();
         this.modo = modo;
-        this.producto = producto;
+        this.productoExistente = productoExistente;
         initComponents();
         configurarBanner();
         cargarCategorias();
@@ -250,9 +251,9 @@ public class PantallaAdministrarProducto extends javax.swing.JFrame {
      * información. Se utiliza para el modo MODIFICAR.
      */
     private void cargarDatosProducto() {
-        txtNombre.setText(producto.getNombre());
-        cBoxCategoria.setSelectedItem(producto.getTipo());
-        txtPrecio.setValue(producto.getPrecio());
+        txtNombre.setText(productoExistente.getNombre());
+        cBoxCategoria.setSelectedItem(productoExistente.getTipo());
+        txtPrecio.setValue(productoExistente.getPrecio());
     }
 
     /**
@@ -260,7 +261,7 @@ public class PantallaAdministrarProducto extends javax.swing.JFrame {
      * cuando se esta en el modo MODIFICAR.
      */
     private void cargarIngredientesProducto() {
-        for (IngredienteProductoDTO ingrediente : producto.getIngredientes()) {
+        for (IngredienteProductoDTO ingrediente : productoExistente.getIngredientes()) {
             agregarIngrediente(ingrediente);
         }
     }
@@ -460,27 +461,27 @@ public class PantallaAdministrarProducto extends javax.swing.JFrame {
     private void mandarProducto() {
         if (ingredientesPanelLateral.isEmpty()) {
             JOptionPane.showMessageDialog(null, "Seleccione al menos un ingrediente para el producto", "", JOptionPane.INFORMATION_MESSAGE);
-        } else {
-            ProductoDetalleDTO producto = generarProducto();
-            try {
-                if (modo == Modo.AGREGAR) {
-                    if (control.agregarProducto(producto)) {
-                        JOptionPane.showMessageDialog(null, "Producto agregado con éxito", "", JOptionPane.INFORMATION_MESSAGE);
-                    } else {
-                        JOptionPane.showMessageDialog(null, "No ha sido posible agregar el producto", "", JOptionPane.INFORMATION_MESSAGE);
-                    }
+            return;
+        }
+        ProductoDetalleDTO producto = generarProducto();
+        try {
+            if (modo == Modo.AGREGAR) {
+                if (control.agregarProducto(producto)) {
+                    JOptionPane.showMessageDialog(null, "Producto agregado con éxito", "", JOptionPane.INFORMATION_MESSAGE);
                 } else {
-                    if (control.actualizarProducto(producto)) {
-                        JOptionPane.showMessageDialog(null, "Producto actualizado con éxito", "", JOptionPane.INFORMATION_MESSAGE);
-                    } else {
-                        JOptionPane.showMessageDialog(null, "No ha sido posible actualizar el producto", "", JOptionPane.INFORMATION_MESSAGE);
-                    }
+                    JOptionPane.showMessageDialog(null, "No ha sido posible agregar el producto", "", JOptionPane.INFORMATION_MESSAGE);
                 }
-                control.pantallaProductos(this);
-            } catch (CoordinadorException ex) {
-                Logger.getLogger(PantallaAdministrarProducto.class.getName()).log(Level.SEVERE, null, ex);
-                JOptionPane.showMessageDialog(null, ex.getMessage(), "Ha ocurrido un error inesperado", JOptionPane.ERROR_MESSAGE);
+            } else {
+                if (control.actualizarProducto(producto)) {
+                    JOptionPane.showMessageDialog(null, "Producto actualizado con éxito", "", JOptionPane.INFORMATION_MESSAGE);
+                } else {
+                    JOptionPane.showMessageDialog(null, "No ha sido posible actualizar el producto", "", JOptionPane.INFORMATION_MESSAGE);
+                }
             }
+            control.pantallaProductos(this);
+        } catch (CoordinadorException ex) {
+            Logger.getLogger(PantallaAdministrarProducto.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, ex.getMessage(), "Ha ocurrido un error inesperado", JOptionPane.ERROR_MESSAGE);
         }
     }
 

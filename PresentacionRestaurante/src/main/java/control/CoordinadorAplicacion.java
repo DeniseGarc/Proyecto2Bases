@@ -102,8 +102,14 @@ public class CoordinadorAplicacion {
         frame.dispose();
     }
 
-    public void PantallaTomaComanda(JFrame frame) {
-        PantallaTomaComanda pantallaComanda = new PantallaTomaComanda();
+    public void pantallaAgregarComanda(JFrame frame, ComandaDTO comandaAgregar) {
+        PantallaTomaComanda pantallaComanda = new PantallaTomaComanda(Modo.AGREGAR, comandaAgregar);
+        pantallaComanda.setVisible(true);
+        frame.dispose();
+    }
+
+    public void pantallaModificarComanda(JFrame frame, ComandaDTO comandaModificar) {
+        PantallaTomaComanda pantallaComanda = new PantallaTomaComanda(Modo.MODIFICAR, comandaModificar);
         pantallaComanda.setVisible(true);
         frame.dispose();
     }
@@ -298,6 +304,31 @@ public class CoordinadorAplicacion {
         return false;
     }
 
+    public boolean actualizarComanda(ComandaDTO comanda) throws CoordinadorException {
+        if (validarDatosComanda(comanda)) {
+//            try {
+//                // llamada a actualizar comanda BO
+//            } catch (NegocioException ex) {
+//                Logger.getLogger(CoordinadorAplicacion.class.getName()).log(Level.SEVERE, null, ex);
+//                throw new CoordinadorException("Ha ocurrido un error al intentar actualizar la comanda");
+//            }
+        }
+        return false;
+    }
+
+    public boolean agregarComanda(ComandaDTO comanda) throws CoordinadorException {
+
+        if (validarDatosComanda(comanda)) {
+//            try {
+//                // llamada a agregar comanda BO
+//            } catch (NegocioException ex) {
+//                Logger.getLogger(CoordinadorAplicacion.class.getName()).log(Level.SEVERE, null, ex);
+//                throw new CoordinadorException("Ha ocurrido un error al intentar agregar la comanda");
+//            }
+        }
+        return false;
+    }
+
     /**
      * Valida los datos básicos de un producto antes de su registro o
      * actualización.
@@ -322,6 +353,25 @@ public class CoordinadorAplicacion {
         }
         if (producto.getIngredientes().isEmpty() || producto.getIngredientes() == null) {
             throw new CoordinadorException("El producto no tiene ingredientes asociados");
+        }
+        return true;
+    }
+
+    private boolean validarDatosComanda(ComandaDTO comanda) throws CoordinadorException {
+        if (comanda == null) {
+            throw new CoordinadorException("La comanda a agregar no puede ser nula");
+        }
+        if (comanda.getFechaHora() == null) {
+            throw new CoordinadorException("La comanda no tiene una fecha y hora asignada");
+        }
+        if (comanda.getEstado() == null) {
+            throw new CoordinadorException("La comanda no tiene un estado asignado");
+        }
+        if (comanda.getTotalVenta() <= 0) {
+            throw new CoordinadorException("La comanda tiene un total de venta negativo");
+        }
+        if (comanda.getDetallesComanda() == null) {
+            throw new CoordinadorException("La comanda no tiene productos asociados");
         }
         return true;
     }
@@ -565,12 +615,24 @@ public class CoordinadorAplicacion {
             throw new CoordinadorException("Ha ocurrido un error al consultar los clientes por su correo.");
         }
     }
+
     
     public List<ComandaDTO> obtenerComandasActivas() throws CoordinadorException{
         try {
             return comandaBO.obtenerComandsActivas();
         } catch (NegocioException e) {
             throw new CoordinadorException("Ha ocurrido un error al consultar las comandas activas");
+
+
+    public ProductoDTO obtenerProductoPorNombre(String nombre) throws CoordinadorException {
+        if (nombre == null || nombre.trim().isEmpty()) {
+            throw new CoordinadorException("Nombre del producto no ha sido ingresado");
+        }
+        try {
+            return productoBO.obtenerProductoPorNombre(nombre);
+        } catch (NegocioException e) {
+            throw new CoordinadorException("Ha ocurrido un error al obtener el producto por su nombre");
+
         }
     }
 }

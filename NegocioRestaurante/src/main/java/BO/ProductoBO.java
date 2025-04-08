@@ -106,7 +106,7 @@ public class ProductoBO implements IProductoBO {
             if (producto == null) {
                 return null;
             }
-            return ProductoMapper.toDTO(producto);
+            return ProductoMapper.toProductoDetalleDTO(producto);
         } catch (PersistenciaException e) {
             Logger.getLogger(ProductoBO.class.getName()).log(Level.SEVERE, null, e);
             throw new NegocioException("Error al obtener producto de la base de datos: ", e);
@@ -188,5 +188,24 @@ public class ProductoBO implements IProductoBO {
             Logger.getLogger(ProductoBO.class.getName()).log(Level.SEVERE, null, ex);
             throw new NegocioException("Ha ocurrido un error al cambiar el estado del producto", ex);
         }
+    }
+
+    @Override
+    public ProductoDTO obtenerProductoPorNombre(String nombre) throws NegocioException {
+        if (nombre == null) {
+            throw new NegocioException("El nombre del producto a buscar es nulo");
+        }
+        try {
+            Producto producto = productoDAO.obtenerProductoPorNombre(nombre);
+            if (producto == null) {
+                throw new NegocioException("No se ha encontrado el producto con el nombre dado");
+            }
+            ProductoDTO productoObtenido = ProductoMapper.toProductoDTO(producto);
+            return productoObtenido;
+        } catch (PersistenciaException ex) {
+            Logger.getLogger(ProductoBO.class.getName()).log(Level.SEVERE, null, ex);
+            throw new NegocioException("Ha ocurrido un error al obtener el producto", ex);
+        }
+
     }
 }

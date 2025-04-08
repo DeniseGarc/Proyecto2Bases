@@ -6,6 +6,7 @@ package plantillas;
 
 import DTOs.ProductoDTO;
 import javax.swing.JButton;
+import javax.swing.JTextArea;
 
 /**
  *
@@ -41,7 +42,7 @@ public class PanelProductoComanda extends javax.swing.JPanel {
         btnEliminar = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        txtAreaComentario = new javax.swing.JTextArea();
 
         setBackground(new java.awt.Color(255, 228, 242));
         setMaximumSize(new java.awt.Dimension(280, 202));
@@ -72,9 +73,9 @@ public class PanelProductoComanda extends javax.swing.JPanel {
         jSeparator1.setForeground(new java.awt.Color(207, 106, 158));
         add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 190, 280, 20));
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane1.setViewportView(jTextArea1);
+        txtAreaComentario.setColumns(20);
+        txtAreaComentario.setRows(5);
+        jScrollPane1.setViewportView(txtAreaComentario);
 
         add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 70, 260, 80));
     }// </editor-fold>//GEN-END:initComponents
@@ -92,14 +93,17 @@ public class PanelProductoComanda extends javax.swing.JPanel {
         return producto;
     }
 
+    public JTextArea getTxtAreaComentario() {
+        return txtAreaComentario;
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnEliminar;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JTextArea jTextArea1;
     private javax.swing.JLabel lblComentario;
     private javax.swing.JLabel lblNombreProducto;
     private javax.swing.JLabel lblPrecio;
+    private javax.swing.JTextArea txtAreaComentario;
     // End of variables declaration//GEN-END:variables
 }

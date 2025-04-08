@@ -20,6 +20,7 @@ public class ComandaDTO {
     private double totalVenta;
     private Estado estado;
     private List<DetalleComandaDTO> detallesComanda = new ArrayList<>();
+
     private String nombrecliente;
     private Mesa mesa;
 
@@ -46,14 +47,17 @@ public class ComandaDTO {
         this.mesa = mesa;
     }
 
+
     public ComandaDTO() {
     }
 
-    public ComandaDTO(Calendar fechaHora, double totalVenta, Estado estado, String nombrecliente) {
+    public ComandaDTO(Calendar fechaHora, double totalVenta, Estado estado, String nombreCliente, String telefonoCliente, String numeroMesa) {
         this.fechaHora = fechaHora;
         this.totalVenta = totalVenta;
         this.estado = estado;
-        this.nombrecliente = nombrecliente;
+        this.nombreCliente = nombreCliente;
+        this.telefonoCliente = telefonoCliente;
+        this.numeroMesa = numeroMesa;
     }
 
     public ComandaDTO(Calendar fechaHora, double totalVenta, Estado estado) {
@@ -94,12 +98,28 @@ public class ComandaDTO {
         this.detallesComanda = detallesComanda;
     }
 
-    public String getNombrecliente() {
-        return nombrecliente;
+    public String getNombreCliente() {
+        return nombreCliente;
     }
 
-    public void setNombrecliente(String nombrecliente) {
-        this.nombrecliente = nombrecliente;
+    public void setNombreCliente(String nombreCliente) {
+        this.nombreCliente = nombreCliente;
+    }
+
+    public String getTelefonoCliente() {
+        return telefonoCliente;
+    }
+
+    public void setTelefonoCliente(String telefonoCliente) {
+        this.telefonoCliente = telefonoCliente;
+    }
+
+    public String getNumeroMesa() {
+        return numeroMesa;
+    }
+
+    public void setNumeroMesa(String numeroMesa) {
+        this.numeroMesa = numeroMesa;
     }
 
 }
