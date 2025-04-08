@@ -11,7 +11,6 @@ import exception.PersistenciaException;
 import interfaces.IIngredienteDAO;
 import java.util.List;
 import javax.persistence.EntityManager;
-import javax.persistence.EntityTransaction;
 import javax.persistence.NoResultException;
 
 /**
@@ -157,7 +156,7 @@ public class IngredienteDAO implements IIngredienteDAO {
      * @throws PersistenciaException 
      */
     @Override
-    public List<Ingrediente> buscarIngredientesPorUnidadMedida(String unidad) throws PersistenciaException {
+    public List<Ingrediente> buscarIngredientesPorUnidadMedida(UnidadMedida unidad) throws PersistenciaException {
         EntityManager em = Conexion.crearConexion();
         try {
             return em.createQuery("SELECT i FROM Ingrediente i WHERE i.unidadMedida = :unidad ", Ingrediente.class)

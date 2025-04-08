@@ -42,26 +42,8 @@ public class PanelBuscarIngrediente extends javax.swing.JPanel {
             @Override
             public void changedUpdate(DocumentEvent e) { realizarBusqueda(); }
         });
-        
-        //detectar cuando presiona enter 
-        txtBusqueda.addKeyListener(new KeyAdapter() {
-            @Override
-            public void keyPressed(KeyEvent e) {
-                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-                    if (tblIngredientes.getRowCount() == 0) { // Si la tabla está vacía
-                        JOptionPane.showMessageDialog(
-                                PanelBuscarIngrediente.this,
-                                "No hay ingredientes con el nombre'" + txtBusqueda.getText().trim() + "'.",
-                                "Información",
-                                JOptionPane.INFORMATION_MESSAGE
-                        );
-                    }
-                }
-            }
-        });
 
         cBoxUnidad.addActionListener(e -> realizarBusqueda());
-        cBoxUnidad.addItemListener(e-> realizarBusqueda());
         //agregar las unidades de medida al conmboBox y tambien la etiqueta "todos"
         cargarIngredientes();
         cBoxUnidad.addItem("Todos");
@@ -84,15 +66,15 @@ public class PanelBuscarIngrediente extends javax.swing.JPanel {
         }
         // si el texto esta vacio y la unidad es difrerente a todos busca por unidad
         if(texto.isEmpty() && cBoxUnidad.getSelectedIndex()!=0){
-            mostrarIngredientesEnTabla(coordinador.buscarIngredientePorUniad(cBoxUnidad.getSelectedItem().toString()));
-            System.out.println(cBoxUnidad.getSelectedItem().toString());
+            mostrarIngredientesEnTabla(coordinador.buscarIngredientePorUnidad((UnidadMedida) cBoxUnidad.getSelectedItem()));
 
         }
-        // si el texto no esta vacio y la 
+        // si el texto no esta vacio y la seleccion es diferente a todos
         else if(!texto.isEmpty() && cBoxUnidad.getSelectedIndex()!=0){
-
             mostrarIngredientesEnTabla(coordinador.buscarPorNombreYUnidad(texto, cBoxUnidad.getSelectedItem().toString()));
-        }else if(!txtBusqueda.getText().isEmpty() && cBoxUnidad.getSelectedIndex() ==0){
+        }
+        //si el texto no es vacio y la seleccion es todos
+        else if(!txtBusqueda.getText().isEmpty() && cBoxUnidad.getSelectedIndex() ==0){
             mostrarIngredientesEnTabla(coordinador.buscarPorNombre(texto));
         }else{
             cargarIngredientes();

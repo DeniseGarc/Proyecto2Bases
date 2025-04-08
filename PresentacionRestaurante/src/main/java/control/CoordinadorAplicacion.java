@@ -23,6 +23,7 @@ import GUIs.RegistrarClienteNuevo;
 import GUIs.frmAgregarIngrediente;
 import control.exception.CoordinadorException;
 import enumeradores.TipoProducto;
+import enumeradores.UnidadMedida;
 import exception.NegocioException;
 import interfaces.IClienteFrecuenteBO;
 import interfaces.IIngredienteBO;
@@ -401,32 +402,18 @@ public class CoordinadorAplicacion {
      * @return Lista de ingredientes
      * @throws CoordinadorException
      */
-    public List<IngredienteDTO> buscarIngredientePorUniad(String unidad) throws CoordinadorException {
+    public List<IngredienteDTO> buscarIngredientePorUnidad(UnidadMedida unidad) throws CoordinadorException {
         try {
-            // Validar que la unidad no sea nula o vacía
-            if (unidad == null || unidad.isBlank()) {
-                throw new CoordinadorException("La unidad seleccionada no puede estar vacía.");
-            }
 
             // Llamar al método del BO para buscar ingredientes
             List<IngredienteDTO> ingredientes = ingredienteBO.buscarPorUnidad(unidad);
 
-            // Verificar si la lista está vacía y manejar esto
-            if (ingredientes == null || ingredientes.isEmpty()) {
-                System.out.println("No se encontraron ingredientes para la unidad: " + unidad);
-                return Collections.emptyList(); // Retornar una lista vacía
-            }
-
-            // Retornar los ingredientes obtenidos
             return ingredientes;
 
         } catch (NegocioException ex) {
             Logger.getLogger(CoordinadorAplicacion.class.getName()).log(Level.SEVERE, "Error en buscarPorUnidad", ex);
             throw new CoordinadorException("Ha ocurrido un error al buscar los ingredientes: " + ex.getMessage());
-        } catch (CoordinadorException ex) {
-            Logger.getLogger(CoordinadorAplicacion.class.getName()).log(Level.SEVERE, "Excepción inesperada en buscarPorUnidad", ex);
-            throw new CoordinadorException("Error inesperado: " + ex.getMessage());
-        }
+        } 
     }
 
     /**
