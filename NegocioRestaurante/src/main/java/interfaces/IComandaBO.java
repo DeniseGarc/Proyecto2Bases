@@ -4,10 +4,16 @@
  */
 package interfaces;
 
+
+import DTOs.ComandaDTO;
+import exception.NegocioException;
+import java.util.List;
+
 /**
  *
  * @author Maryr
  */
 public interface IComandaBO {
-    
+    public List<ComandaDTO> obtenerComandas() throws NegocioException;
+    public List<ComandaDTO> obtenerComandsActivas() throws NegocioException;
 }

@@ -33,6 +33,7 @@ public class PanelBuscarIngrediente extends javax.swing.JPanel {
      */
     public PanelBuscarIngrediente() {
         initComponents();
+        
         txtBusqueda.getDocument().addDocumentListener(new DocumentListener() {
         @Override
             public void insertUpdate(DocumentEvent e) { realizarBusqueda(); }
@@ -71,38 +72,39 @@ public class PanelBuscarIngrediente extends javax.swing.JPanel {
     /**
      * Metodo para realizar la busqueda dinamica de los ingredientes
      */
-   
-    /**
-     * Realiza las consultas a la base de datos y muestra la informacion en la tabla dependiendo de lo seleccionado
-     */
     private void realizarBusqueda() {
     try {
         
         String texto = txtBusqueda.getText().trim();
-        String tipoSeleccionado = cBoxUnidad.getSelectedItem().toString();
 
-        boolean buscarPorNombre = !texto.isEmpty();
-        boolean buscarPorUnidad = !tipoSeleccionado.equalsIgnoreCase("Todos");
-        
+        // si no hay nada escrito y la seleccion es todos muestra todos los ingredientes
+
         if(txtBusqueda.getText().isBlank() && cBoxUnidad.getSelectedIndex()==0){
-            mostrarIngredientesEnTabla(coordinador.mostrarIngredientes());
+            cargarIngredientes();
         }
-        
+        // si el texto esta vacio y la unidad es difrerente a todos busca por unidad
         if(texto.isEmpty() && cBoxUnidad.getSelectedIndex()!=0){
             mostrarIngredientesEnTabla(coordinador.buscarIngredientePorUniad(cBoxUnidad.getSelectedItem().toString()));
-        }else if(!texto.isEmpty() && cBoxUnidad.getSelectedIndex()!=0){
+            System.out.println(cBoxUnidad.getSelectedItem().toString());
+
+        }
+        // si el texto no esta vacio y la 
+        else if(!texto.isEmpty() && cBoxUnidad.getSelectedIndex()!=0){
+
             mostrarIngredientesEnTabla(coordinador.buscarPorNombreYUnidad(texto, cBoxUnidad.getSelectedItem().toString()));
         }else if(!txtBusqueda.getText().isEmpty() && cBoxUnidad.getSelectedIndex() ==0){
             mostrarIngredientesEnTabla(coordinador.buscarPorNombre(texto));
+        }else{
+            cargarIngredientes();
         }
-
-
     } catch (CoordinadorException ex) {
         JOptionPane.showMessageDialog(this, "Error al realizar la búsqueda: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
     }
     }
 
-    
+    /**
+     * Muestra todos los ingredientes en la tabla
+     */
     private void cargarIngredientes(){
         try {
             List<IngredienteDTO> ingredientes = coordinador.mostrarIngredientes();
@@ -252,7 +254,7 @@ public class PanelBuscarIngrediente extends javax.swing.JPanel {
     }//GEN-LAST:event_cBoxUnidadActionPerformed
 
     private void txtBusquedaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBusquedaKeyReleased
-        realizarBusqueda();
+        
     }//GEN-LAST:event_txtBusquedaKeyReleased
     
 
