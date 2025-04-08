@@ -54,7 +54,6 @@ public class PantallaComandas extends javax.swing.JFrame {
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(1070, 700));
 
         jPanel1.setBackground(new java.awt.Color(255, 254, 245));
         jPanel1.setPreferredSize(new java.awt.Dimension(1070, 700));
@@ -65,6 +64,11 @@ public class PantallaComandas extends javax.swing.JFrame {
         btnAgregarComanda.setText("+");
         btnAgregarComanda.setMinimumSize(new java.awt.Dimension(100, 100));
         btnAgregarComanda.setPreferredSize(new java.awt.Dimension(100, 100));
+        btnAgregarComanda.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnAgregarComandaMouseClicked(evt);
+            }
+        });
         btnAgregarComanda.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAgregarComandaActionPerformed(evt);
@@ -118,7 +122,7 @@ public class PantallaComandas extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnAgregarComanda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 818, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 12, Short.MAX_VALUE))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -147,6 +151,10 @@ public class PantallaComandas extends javax.swing.JFrame {
     private void btnAgregarComandaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarComandaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnAgregarComandaActionPerformed
+
+    private void btnAgregarComandaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAgregarComandaMouseClicked
+        coordinador.pantallaComandaAgregarCliente(this);
+    }//GEN-LAST:event_btnAgregarComandaMouseClicked
 
     
 

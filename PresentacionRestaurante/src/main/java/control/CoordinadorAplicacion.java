@@ -9,6 +9,7 @@ import DTOs.IngredienteDTO;
 import DTOs.ProductoDTO;
 import DTOs.ProductoDetalleDTO;
 import GUIs.ClienteFrecuente;
+import GUIs.ComandaAgregarCliente;
 import GUIs.EliminarIngrediente;
 import GUIs.MenuPrincipal;
 import GUIs.PantallaAdministrarProducto;
@@ -155,6 +156,16 @@ public class CoordinadorAplicacion {
     public void pantallaModificarProducto(JFrame frame, ProductoDetalleDTO producto) {
         PantallaAdministrarProducto pantallaAdministrarProducto = new PantallaAdministrarProducto(Modo.MODIFICAR, producto);
         pantallaAdministrarProducto.setVisible(true);
+        frame.dispose();
+    }
+    
+    /**
+     * Método para redirigir a la pantalla que permite agregar mesa 
+     * @param frame 
+     */
+    public void pantallaComandaAgregarCliente(JFrame frame) {
+        ComandaAgregarCliente pantallaComandaAgregarCliente = new ComandaAgregarCliente();
+        pantallaComandaAgregarCliente.setVisible(true);
         frame.dispose();
     }
 
