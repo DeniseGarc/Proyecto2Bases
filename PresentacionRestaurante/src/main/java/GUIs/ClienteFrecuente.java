@@ -4,16 +4,9 @@
  */
 package GUIs;
 
-import DTOs.ClienteFrecuenteDTO;
 import control.CoordinadorAplicacion;
-import control.exception.CoordinadorException;
-import exception.NegocioException;
 import java.awt.Image;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.ImageIcon;
-import javax.swing.JOptionPane;
 
 /**
  *
@@ -28,8 +21,8 @@ public class ClienteFrecuente extends javax.swing.JFrame {
      */
     public ClienteFrecuente() {
         initComponents();
+        panelBusquedaClientes.cargarClientes();
         setLocationRelativeTo(null);
-        cargarClientes();
     }
 
     /**
@@ -46,12 +39,7 @@ public class ClienteFrecuente extends javax.swing.JFrame {
         lblTitulo = new javax.swing.JLabel();
         lblRegresar = new javax.swing.JLabel();
         btnRegistrarCliente = new javax.swing.JButton();
-        lblBuscarPor = new javax.swing.JLabel();
-        cbBoxTipoBusqueda = new javax.swing.JComboBox<>();
-        buscador = new javax.swing.JTextField();
-        jPanel3 = new javax.swing.JPanel();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        tablaClientes = new javax.swing.JTable();
+        panelBusquedaClientes = new moduloBusquedaClientes.PanelBusquedaClientes();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -89,89 +77,24 @@ public class ClienteFrecuente extends javax.swing.JFrame {
         });
         jPanel1.add(btnRegistrarCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(910, 20, 140, 30));
 
-        lblBuscarPor.setBackground(new java.awt.Color(255, 255, 255));
-        lblBuscarPor.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        lblBuscarPor.setForeground(new java.awt.Color(0, 0, 0));
-        lblBuscarPor.setText("Buscar por:");
-
-        cbBoxTipoBusqueda.setBackground(new java.awt.Color(255, 255, 255));
-        cbBoxTipoBusqueda.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        cbBoxTipoBusqueda.setForeground(new java.awt.Color(0, 0, 0));
-        cbBoxTipoBusqueda.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Nombre", "Correo electronico", "Telefono" }));
-
-        buscador.setBackground(new java.awt.Color(255, 255, 255));
-        buscador.setForeground(new java.awt.Color(0, 0, 0));
-        buscador.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
-        buscador.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                buscadorKeyReleased(evt);
-            }
-        });
-
-        jPanel3.setBackground(new java.awt.Color(255, 176, 217));
-
-        jScrollPane2.setBackground(new java.awt.Color(255, 255, 255));
-
-        tablaClientes.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        jScrollPane2.setViewportView(tablaClientes);
-
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(30, 30, 30)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 414, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(28, Short.MAX_VALUE))
-        );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addContainerGap(23, Short.MAX_VALUE)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 402, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(19, 19, 19))
-        );
+        panelBusquedaClientes.setBackground(new java.awt.Color(255, 255, 255));
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(lblBuscarPor)
-                .addGap(18, 18, 18)
-                .addComponent(cbBoxTipoBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(buscador, javax.swing.GroupLayout.PREFERRED_SIZE, 241, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(253, 253, 253))
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(310, 310, 310)
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(231, 231, 231)
+                .addComponent(panelBusquedaClientes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(72, 72, 72)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(buscador, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(lblBuscarPor)
-                        .addComponent(cbBoxTipoBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(57, 57, 57)
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 19, Short.MAX_VALUE))
+                .addGap(39, 39, 39)
+                .addComponent(panelBusquedaClientes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 58, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -198,68 +121,12 @@ public class ClienteFrecuente extends javax.swing.JFrame {
         coordinador.PantallaRegistrarCliente(this);
     }//GEN-LAST:event_btnRegistrarClienteMouseClicked
 
-    private void buscadorKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_buscadorKeyReleased
-        realizarBusqueda();
-    }//GEN-LAST:event_buscadorKeyReleased
-
-    private void cargarClientes() {
-        try {
-            List<ClienteFrecuenteDTO> clientes = coordinador.obtenerClientesFrecuentes();
-            cargarClientesEnTabla(clientes);
-        } catch (CoordinadorException ex) {
-            Logger.getLogger(ClienteFrecuente.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
-    private void cargarClientesEnTabla(List<ClienteFrecuenteDTO> clientes) {
-        if (clientes == null || clientes.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "No se encontraron clientes.", "Información", JOptionPane.INFORMATION_MESSAGE);
-            return;
-        }
-        String[] columnas = {"Nombre", "Teléfono", "Puntos de fidelidad"};
-        Object[][] datos = new Object[clientes.size()][4];
-        for (int i = 0; i < clientes.size(); i++) {
-            ClienteFrecuenteDTO cliente = clientes.get(i);
-            datos[i][0] = cliente.getNombre();
-            datos[i][1] = cliente.getTelefono();
-            datos[i][2] = cliente.getPuntosFidelidad();
-        }
-        tablaClientes.setModel(new javax.swing.table.DefaultTableModel(datos, columnas));
-    }
-
-    private void realizarBusqueda() {
-        try {
-            String texto = buscador.getText().trim();
-            String tipo = cbBoxTipoBusqueda.getSelectedItem().toString();
-            if (texto.isEmpty()) {
-                cargarClientes();
-                return;
-            }
-            List<ClienteFrecuenteDTO> clientesFiltrados = null;
-            switch (tipo) {
-                case "Nombre" -> clientesFiltrados = coordinador.obtenerClientesPorNombre(texto);
-                case "Telefono" -> clientesFiltrados = coordinador.obtenerClientesPorTelefono(texto);
-                case "Correo electronico" -> clientesFiltrados = coordinador.obtenerClientesPorCorreo(texto);
-            }
-            cargarClientesEnTabla(clientesFiltrados);
-        } catch (CoordinadorException e) {
-            JOptionPane.showMessageDialog(this, "Error al realizar la búsqueda: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-        }
-
-    }
-
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnRegistrarCliente;
-    private javax.swing.JTextField buscador;
-    private javax.swing.JComboBox<String> cbBoxTipoBusqueda;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
-    private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JLabel lblBuscarPor;
     private javax.swing.JLabel lblRegresar;
     private javax.swing.JLabel lblTitulo;
-    private javax.swing.JTable tablaClientes;
+    private moduloBusquedaClientes.PanelBusquedaClientes panelBusquedaClientes;
     // End of variables declaration//GEN-END:variables
 }

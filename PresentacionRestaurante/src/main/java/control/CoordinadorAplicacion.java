@@ -374,9 +374,10 @@ public class CoordinadorAplicacion {
 
     /**
      * llama al metodo para buscar ingredientes por unidad
+     *
      * @param unidad de medida
      * @return Lista de ingredientes
-     * @throws CoordinadorException 
+     * @throws CoordinadorException
      */
     public List<IngredienteDTO> buscarIngredientePorUniad(String unidad) throws CoordinadorException {
         try {
@@ -456,6 +457,13 @@ public class CoordinadorAplicacion {
     public ClienteFrecuenteDTO registrarNuevoClienteFrecuente(ClienteFrecuenteDTO clienteFrecuente) throws CoordinadorException {
         try {
             validarCliente(clienteFrecuente);
+            List<ClienteFrecuenteDTO> clientes = obtenerClientesFrecuentes();
+            boolean telefonoDuplicado = clientes.stream()
+                    .anyMatch(c -> c.getTelefono().equals(clienteFrecuente.getTelefono()));
+            if (telefonoDuplicado) {
+                throw new CoordinadorException("Este número de teléfono ya está registrado.");
+            }
+
             return clienteFrecuenteBO.registrarNuevoClienteFrecuente(clienteFrecuente);
         } catch (NegocioException e) {
             throw new CoordinadorException("No se pudo registrar el cliente.", e);
@@ -475,7 +483,7 @@ public class CoordinadorAplicacion {
         if (!clienteFrecuente.getTelefono().matches("\\d{10,15}")) {
             throw new CoordinadorException("El teléfono no es valido.");
         }
-        if (clienteFrecuente.getCorreoElectronico() != null) {
+        if (!clienteFrecuente.getCorreoElectronico().isEmpty()) {
             if (!clienteFrecuente.getCorreoElectronico().matches("^[\\w.%+-]+@[\\w.-]+\\.[a-zA-Z]{2,}$")) {
                 throw new CoordinadorException("El formato del correo no es valido.");
             }
