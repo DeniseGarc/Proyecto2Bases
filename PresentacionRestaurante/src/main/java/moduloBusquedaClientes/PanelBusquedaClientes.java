@@ -26,6 +26,14 @@ public class PanelBusquedaClientes extends javax.swing.JPanel {
      */
     public PanelBusquedaClientes() {
         initComponents();
+        buscador.getDocument().addDocumentListener(new javax.swing.event.DocumentListener() {
+            @Override
+            public void insertUpdate(javax.swing.event.DocumentEvent e) { realizarBusqueda(); }
+            @Override
+            public void removeUpdate(javax.swing.event.DocumentEvent e) { realizarBusqueda(); }
+            @Override
+            public void changedUpdate(javax.swing.event.DocumentEvent e) { realizarBusqueda();}
+        });
     }
 
     /**
@@ -57,11 +65,6 @@ public class PanelBusquedaClientes extends javax.swing.JPanel {
         buscador.setBackground(new java.awt.Color(255, 255, 255));
         buscador.setForeground(new java.awt.Color(0, 0, 0));
         buscador.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
-        buscador.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                buscadorKeyReleased(evt);
-            }
-        });
 
         jPanel3.setBackground(new java.awt.Color(255, 176, 217));
 
@@ -131,10 +134,6 @@ public class PanelBusquedaClientes extends javax.swing.JPanel {
                     .addContainerGap(16, Short.MAX_VALUE)))
         );
     }// </editor-fold>//GEN-END:initComponents
-
-    private void buscadorKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_buscadorKeyReleased
-        realizarBusqueda();
-    }//GEN-LAST:event_buscadorKeyReleased
 
     public void cargarClientes() {
         try {
