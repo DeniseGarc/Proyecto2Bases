@@ -41,57 +41,51 @@ public class PanelBuscarIngrediente extends javax.swing.JPanel {
         });
 
     cBoxUnidad.addActionListener(e -> realizarBusqueda());
-
+        //agregar las unidades de medida al conmboBox y tambien la etiqueta "todos"
         cargarIngredientes();
         String[] unidades = Arrays.stream(UnidadMedida.values())
                           .map(Enum::name)
                           .toArray(String[]::new);
 
         String[] unidadesConTodos = new String[unidades.length + 1];
-        unidadesConTodos[0] = "Todos";
+        unidadesConTodos[0] = "TODOS";
         System.arraycopy(unidades, 0, unidadesConTodos, 1, unidades.length);
 
         cBoxUnidad.setModel(new DefaultComboBoxModel<>(unidadesConTodos));
     }
+    /**
+     * Metodo para realizar la busqueda dinamica de los ingredientes
+     */
     private void realizarBusqueda() {
     try {
         String texto = txtBusqueda.getText().trim();
         String tipoSeleccionado = cBoxUnidad.getSelectedItem().toString();
 
-        List<IngredienteDTO> ingredientes;
-        
         boolean buscarPorNombre = !texto.isEmpty();
-        boolean buscarPorUnidad = !tipoSeleccionado.equalsIgnoreCase("Todos");
-        if(texto.isEmpty()){
-            UnidadMedida unidad = UnidadMedida.valueOf(tipoSeleccionado);
-            ingredientes = coordinador.buscarIngredientePorUniad(tipoSeleccionado);
-        }
-        if (!buscarPorNombre && !buscarPorUnidad) {
-            cargarIngredientes(); // Mostrar todo si no hay filtros
-            return;
-        }
+        boolean buscarPorUnidad = !tipoSeleccionado.equalsIgnoreCase("TODOS");
 
-        if (buscarPorNombre && buscarPorUnidad) {
-            UnidadMedida unidad = UnidadMedida.valueOf(tipoSeleccionado);
-            ingredientes = coordinador.buscarPorNombreYUnidad(texto, tipoSeleccionado);
+        List<IngredienteDTO> ingredientes;
+
+        // Si solo se selecciona una unidad y no hay texto, buscar por unidad
+        if (buscarPorUnidad && texto.isBlank()) {
+            ingredientes = coordinador.buscarIngredientePorUniad(tipoSeleccionado.toUpperCase());
+        } else if (buscarPorNombre && buscarPorUnidad) {
+            UnidadMedida unidadSeleccionada = UnidadMedida.valueOf(tipoSeleccionado.toUpperCase());
+            ingredientes = coordinador.buscarPorNombreYUnidad(texto, unidadSeleccionada.name());
         } else if (buscarPorNombre) {
             ingredientes = coordinador.buscarPorNombre(texto);
         } else {
-            UnidadMedida unidad = UnidadMedida.valueOf(tipoSeleccionado);
-            ingredientes = coordinador.buscarIngredientePorUniad(tipoSeleccionado);
+            cargarIngredientes(); // No hay filtros, carga todo
+            return;
         }
 
         mostrarIngredientesEnTabla(ingredientes);
-        
 
     } catch (CoordinadorException ex) {
         JOptionPane.showMessageDialog(this, "Error al realizar la búsqueda: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-    } catch (IllegalArgumentException ex) {
-        JOptionPane.showMessageDialog(this, "Unidad de medida no válida.", "Error", JOptionPane.ERROR_MESSAGE);
     }
+}
 
-
-    }
     
     private void cargarIngredientes(){
         try {
@@ -175,7 +169,7 @@ public class PanelBuscarIngrediente extends javax.swing.JPanel {
         jPanel1.add(cBoxUnidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 40, 180, 30));
 
         lblCategoria.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
-        lblCategoria.setText("Unidad de Medida");
+        lblCategoria.setText("Unidad de medida");
         jPanel1.add(lblCategoria, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 20, -1, -1));
 
         txtBusqueda.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
@@ -242,7 +236,7 @@ public class PanelBuscarIngrediente extends javax.swing.JPanel {
     }//GEN-LAST:event_cBoxUnidadActionPerformed
 
     private void txtBusquedaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBusquedaKeyReleased
-        realizarBusqueda();
+        
     }//GEN-LAST:event_txtBusquedaKeyReleased
     
 
