@@ -8,6 +8,8 @@ import DTOs.IngredienteDTO;
 import control.CoordinadorAplicacion;
 import control.exception.CoordinadorException;
 import enumeradores.UnidadMedida;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Level;
@@ -39,52 +41,66 @@ public class PanelBuscarIngrediente extends javax.swing.JPanel {
             @Override
             public void changedUpdate(DocumentEvent e) { realizarBusqueda(); }
         });
+        
+        //detectar cuando presiona enter 
+        txtBusqueda.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                    if (tblIngredientes.getRowCount() == 0) { // Si la tabla está vacía
+                        JOptionPane.showMessageDialog(
+                                PanelBuscarIngrediente.this,
+                                "No hay ingredientes con el nombre'" + txtBusqueda.getText().trim() + "'.",
+                                "Información",
+                                JOptionPane.INFORMATION_MESSAGE
+                        );
+                    }
+                }
+            }
+        });
 
-    cBoxUnidad.addActionListener(e -> realizarBusqueda());
+        cBoxUnidad.addActionListener(e -> realizarBusqueda());
+        cBoxUnidad.addItemListener(e-> realizarBusqueda());
         //agregar las unidades de medida al conmboBox y tambien la etiqueta "todos"
         cargarIngredientes();
-        String[] unidades = Arrays.stream(UnidadMedida.values())
-                          .map(Enum::name)
-                          .toArray(String[]::new);
-
-        String[] unidadesConTodos = new String[unidades.length + 1];
-        unidadesConTodos[0] = "TODOS";
-        System.arraycopy(unidades, 0, unidadesConTodos, 1, unidades.length);
-
-        cBoxUnidad.setModel(new DefaultComboBoxModel<>(unidadesConTodos));
+        cBoxUnidad.addItem("Todos");
+        for(UnidadMedida unidad : UnidadMedida.values()){
+            cBoxUnidad.addItem(unidad);
+        }
     }
     /**
      * Metodo para realizar la busqueda dinamica de los ingredientes
      */
+   
+    /**
+     * Realiza las consultas a la base de datos y muestra la informacion en la tabla dependiendo de lo seleccionado
+     */
     private void realizarBusqueda() {
     try {
+        
         String texto = txtBusqueda.getText().trim();
         String tipoSeleccionado = cBoxUnidad.getSelectedItem().toString();
 
         boolean buscarPorNombre = !texto.isEmpty();
-        boolean buscarPorUnidad = !tipoSeleccionado.equalsIgnoreCase("TODOS");
-
-        List<IngredienteDTO> ingredientes;
-
-        // Si solo se selecciona una unidad y no hay texto, buscar por unidad
-        if (buscarPorUnidad && texto.isBlank()) {
-            ingredientes = coordinador.buscarIngredientePorUniad(tipoSeleccionado.toUpperCase());
-        } else if (buscarPorNombre && buscarPorUnidad) {
-            UnidadMedida unidadSeleccionada = UnidadMedida.valueOf(tipoSeleccionado.toUpperCase());
-            ingredientes = coordinador.buscarPorNombreYUnidad(texto, unidadSeleccionada.name());
-        } else if (buscarPorNombre) {
-            ingredientes = coordinador.buscarPorNombre(texto);
-        } else {
-            cargarIngredientes(); // No hay filtros, carga todo
-            return;
+        boolean buscarPorUnidad = !tipoSeleccionado.equalsIgnoreCase("Todos");
+        
+        if(txtBusqueda.getText().isBlank() && cBoxUnidad.getSelectedIndex()==0){
+            mostrarIngredientesEnTabla(coordinador.mostrarIngredientes());
+        }
+        
+        if(texto.isEmpty() && cBoxUnidad.getSelectedIndex()!=0){
+            mostrarIngredientesEnTabla(coordinador.buscarIngredientePorUniad(cBoxUnidad.getSelectedItem().toString()));
+        }else if(!texto.isEmpty() && cBoxUnidad.getSelectedIndex()!=0){
+            mostrarIngredientesEnTabla(coordinador.buscarPorNombreYUnidad(texto, cBoxUnidad.getSelectedItem().toString()));
+        }else if(!txtBusqueda.getText().isEmpty() && cBoxUnidad.getSelectedIndex() ==0){
+            mostrarIngredientesEnTabla(coordinador.buscarPorNombre(texto));
         }
 
-        mostrarIngredientesEnTabla(ingredientes);
 
     } catch (CoordinadorException ex) {
         JOptionPane.showMessageDialog(this, "Error al realizar la búsqueda: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
     }
-}
+    }
 
     
     private void cargarIngredientes(){
@@ -105,7 +121,7 @@ public class PanelBuscarIngrediente extends javax.swing.JPanel {
             DefaultTableModel modelo = new DefaultTableModel(columnas, 0) {
             @Override
             public boolean isCellEditable(int row, int column) {
-                return false; // Las celdas no serán editables
+                return false; 
             }
         };
 
@@ -236,7 +252,7 @@ public class PanelBuscarIngrediente extends javax.swing.JPanel {
     }//GEN-LAST:event_cBoxUnidadActionPerformed
 
     private void txtBusquedaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBusquedaKeyReleased
-        
+        realizarBusqueda();
     }//GEN-LAST:event_txtBusquedaKeyReleased
     
 
