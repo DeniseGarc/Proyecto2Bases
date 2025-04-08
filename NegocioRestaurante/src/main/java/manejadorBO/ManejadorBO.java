@@ -5,9 +5,11 @@
 package manejadorBO;
 
 import BO.ClienteFrecuenteBO;
+import BO.ComandaBO;
 import BO.IngredienteBO;
 import BO.ProductoBO;
 import DAO.ClienteFrecuenteDAO;
+import DAO.ComandaDAO;
 import DAO.IngredienteDAO;
 import DAO.ProductoDAO;
 import interfaces.IClienteFrecuenteDAO;
@@ -16,6 +18,8 @@ import interfaces.IIngredienteDAO;
 import interfaces.IProductoBO;
 import interfaces.IProductoDAO;
 import interfaces.IClienteFrecuenteBO;
+import interfaces.IComandaBO;
+import interfaces.IComandaDAO;
 
 /**
  *
@@ -45,5 +49,11 @@ public class ManejadorBO {
         IClienteFrecuenteDAO clienteFrecuenteDAO = ClienteFrecuenteDAO.getInstanciaDAO();
         IClienteFrecuenteBO clienteFrecuenteBO = new ClienteFrecuenteBO(clienteFrecuenteDAO);
         return clienteFrecuenteBO;
+    }
+    
+    public static IComandaBO crearComandaBo(){
+        IComandaDAO comandaDAO = ComandaDAO.getInstanciaDAO();
+        IComandaBO comandaBO = new ComandaBO(comandaDAO);
+        return comandaBO;
     }
 }
