@@ -20,6 +20,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.BoxLayout;
 import javax.swing.JOptionPane;
+import modos.Modo;
 import plantillas.PanelProductoComanda;
 
 /**
@@ -29,9 +30,16 @@ import plantillas.PanelProductoComanda;
 public class PantallaTomaComanda extends javax.swing.JFrame {
 
     CoordinadorAplicacion control = new CoordinadorAplicacion();
-    private List<PanelProductoComanda> productosComanda = new ArrayList<>();
 
-    public PantallaTomaComanda() {
+    private List<PanelProductoComanda> panelesProductoComanda = new ArrayList<>();
+    private List<DetalleComandaDTO> productosComandaSeleccionados = new ArrayList<>();
+    private List<DetalleComandaDTO> productosAgrupados = new ArrayList<>();
+    private final Modo modo;
+    private final ComandaDTO comanda;
+
+    public PantallaTomaComanda(Modo modo, ComandaDTO comandaExistente) {
+        this.modo = modo;
+        this.comanda = comandaExistente;
         initComponents();
         cargarBanner();
         configurarBarraBusqueda();
@@ -40,6 +48,10 @@ public class PantallaTomaComanda extends javax.swing.JFrame {
             agregarProducto(producto);
         });
         cargarProductosMenu();
+        if (modo == Modo.MODIFICAR) {
+            configurarModoActualizar();
+        }
+
     }
 
     @SuppressWarnings("unchecked")
@@ -50,7 +62,7 @@ public class PantallaTomaComanda extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        btnAccion = new javax.swing.JButton();
         lblTotalTitulo = new javax.swing.JLabel();
         lblTotal = new javax.swing.JLabel();
         scrollPaneProductosComanda = new javax.swing.JScrollPane();
@@ -79,16 +91,16 @@ public class PantallaTomaComanda extends javax.swing.JFrame {
         jLabel1.setText("Productos Agregados");
         jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 240, -1));
 
-        jButton1.setBackground(new java.awt.Color(164, 199, 255));
-        jButton1.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 24)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(255, 255, 255));
-        jButton1.setText("Mandar pedido");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnAccion.setBackground(new java.awt.Color(164, 199, 255));
+        btnAccion.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 24)); // NOI18N
+        btnAccion.setForeground(new java.awt.Color(255, 255, 255));
+        btnAccion.setText("Mandar pedido");
+        btnAccion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnAccionActionPerformed(evt);
             }
         });
-        jPanel2.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 620, 310, 80));
+        jPanel2.add(btnAccion, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 620, 310, 80));
 
         lblTotalTitulo.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         lblTotalTitulo.setText("Total");
@@ -96,7 +108,6 @@ public class PantallaTomaComanda extends javax.swing.JFrame {
 
         lblTotal.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         lblTotal.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        lblTotal.setText("$ total...");
         jPanel2.add(lblTotal, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 590, 230, -1));
 
         scrollPaneProductosComanda.setBackground(new java.awt.Color(255, 227, 242));
@@ -126,17 +137,17 @@ public class PantallaTomaComanda extends javax.swing.JFrame {
         lblClienteNombre.setForeground(new java.awt.Color(255, 255, 255));
         lblClienteNombre.setText("Nombre...");
         lblClienteNombre.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jPanel1.add(lblClienteNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 30, 250, 30));
+        jPanel1.add(lblClienteNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 30, 340, 30));
 
         lblNumeroMesa.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
         lblNumeroMesa.setForeground(new java.awt.Color(255, 255, 255));
         lblNumeroMesa.setText("num mesa");
-        jPanel1.add(lblNumeroMesa, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 30, -1, -1));
+        jPanel1.add(lblNumeroMesa, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 30, 50, -1));
 
         lblClienteTitulo.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 24)); // NOI18N
         lblClienteTitulo.setForeground(new java.awt.Color(255, 255, 255));
         lblClienteTitulo.setText("Cliente:");
-        jPanel1.add(lblClienteTitulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 30, -1, -1));
+        jPanel1.add(lblClienteTitulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 30, -1, -1));
         jPanel1.add(banner, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
         jPanel1.add(panelProductos, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 150, -1, -1));
 
@@ -149,44 +160,9 @@ public class PantallaTomaComanda extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-    }// GEN-LAST:event_jButton1ActionPerformed
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(PantallaTomaComanda.class.getName()).log(java.util.logging.Level.SEVERE,
-                    null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(PantallaTomaComanda.class.getName()).log(java.util.logging.Level.SEVERE,
-                    null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(PantallaTomaComanda.class.getName()).log(java.util.logging.Level.SEVERE,
-                    null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(PantallaTomaComanda.class.getName()).log(java.util.logging.Level.SEVERE,
-                    null, ex);
-        }
-        // </editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new PantallaTomaComanda().setVisible(true);
-            }
-        });
-    }
+    private void btnAccionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAccionActionPerformed
+        generarDetallesComanda();
+    }//GEN-LAST:event_btnAccionActionPerformed
 
     private void cargarProductosMenu() {
         try {
@@ -200,12 +176,11 @@ public class PantallaTomaComanda extends javax.swing.JFrame {
     private void agregarProducto(ProductoDTO producto) {
         PanelProductoComanda panelProductoComanda = new PanelProductoComanda(producto);
         panelContenedorProductosComanda.add(panelProductoComanda);
-        productosComanda.add(panelProductoComanda);
+        panelesProductoComanda.add(panelProductoComanda);
         agregarListener(panelProductoComanda);
-
         panelContenedorProductosComanda.revalidate();
         panelContenedorProductosComanda.repaint();
-
+        actualizarTotal();
     }
 
     private void agregarListener(PanelProductoComanda panelProductoComanda) {
@@ -217,12 +192,52 @@ public class PantallaTomaComanda extends javax.swing.JFrame {
         });
     }
 
+    private double calcularTotalVenta() {
+        return productosAgrupados.stream()
+                .mapToDouble(DetalleComandaDTO::getImporteTotal)
+                .sum();
+    }
+
+    private void configurarModoActualizar() {
+        btnAccion.setText("Actualizar pedido");
+        cargarProductosComanda();
+        actualizarTotal();
+    }
+
+    private void cargarProductosComanda() {
+        if (comanda.getDetallesComanda() != null) {
+            for (DetalleComandaDTO detalle : comanda.getDetallesComanda()) {
+                for (int i = 0; i < detalle.getCantidad(); i++) {
+                    ProductoDTO producto = obtenerProductoPorNombre(detalle.getNombreProducto());
+                    if (producto != null) {
+                        PanelProductoComanda panel = new PanelProductoComanda(producto);
+                        panel.getTxtAreaComentario().setText(detalle.getNotas());
+                        panelesProductoComanda.add(panel);
+                        panelContenedorProductosComanda.add(panel);
+                        agregarListener(panel);
+                    }
+                }
+            }
+            panelContenedorProductosComanda.revalidate();
+            panelContenedorProductosComanda.repaint();
+        }
+    }
+
+    private ProductoDTO obtenerProductoPorNombre(String nombre) {
+        try {
+            return control.obtenerProductoPorNombre(nombre);
+        } catch (CoordinadorException ex) {
+            JOptionPane.showMessageDialog(this, "Error al cargar producto", "Error inesperado", JOptionPane.ERROR_MESSAGE);
+            return null;
+        }
+    }
+
     private void eliminarProducto(PanelProductoComanda panelProductoComanda) {
         panelContenedorProductosComanda.remove(panelProductoComanda);
-        productosComanda.remove(panelProductoComanda);
-
+        panelesProductoComanda.remove(panelProductoComanda);
         panelContenedorProductosComanda.revalidate();
         panelContenedorProductosComanda.repaint();
+        actualizarTotal();
     }
 
     private void configurarBarraBusqueda() {
@@ -234,35 +249,98 @@ public class PantallaTomaComanda extends javax.swing.JFrame {
         banner.getLblTitulo().setText("Mesa:");
         banner.setFrmPadre(this);
         banner.setFrmTarget(new MenuPrincipal());
+        lblClienteNombre.setText(comanda.getNombreCliente() != null ? comanda.getNombreCliente() : "");
+        lblNumeroMesa.setText(comanda.getNumeroMesa());
     }
 
     private void mandarComanda() {
+        for (PanelProductoComanda panelProductoComanda : panelesProductoComanda) {
+            DetalleComandaDTO detalleComanda = new DetalleComandaDTO();
+            ProductoDTO producto = panelProductoComanda.getProducto();
+            detalleComanda.setNombreProducto(producto.getNombre());
+            detalleComanda.setNotas(panelProductoComanda.getTxtAreaComentario().getText());
+            productosComandaSeleccionados.add(detalleComanda);
+        }
+    }
 
+    private void actualizarTotal() {
+        double total = 0.0;
+        for (PanelProductoComanda panel : panelesProductoComanda) {
+            total += panel.getProducto().getPrecio();
+        }
+        lblTotal.setText(String.format("$ %.2f", total));
+    }
+
+    private void generarDetallesComanda() {
+        if (panelesProductoComanda.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Seleccione al menos un producto para la comanda", "", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+        for (PanelProductoComanda panelProductoComanda : panelesProductoComanda) {
+            DetalleComandaDTO detalle = new DetalleComandaDTO();
+            ProductoDTO producto = panelProductoComanda.getProducto();
+            detalle.setNombreProducto(producto.getNombre());
+            detalle.setPrecioUnitario(producto.getPrecio());
+            detalle.setNotas(panelProductoComanda.getTxtAreaComentario().getText());
+            detalle.setCantidad(1); // Ya que cada producto agregado representa 1 unidad
+            detalle.setImporteTotal(producto.getPrecio()); // precio * cantidad
+
+            productosComandaSeleccionados.add(detalle);
+        }
+
+        agruparDetalles(); // agrupamos productos repetidos
+        generarComanda();
+    }
+
+    private void agruparDetalles() {
+        for (DetalleComandaDTO detalle : productosComandaSeleccionados) {
+            DetalleComandaDTO existente = productosAgrupados.stream()
+                    .filter(d -> d.getNombreProducto().equals(detalle.getNombreProducto())
+                    && d.getNotas().equals(detalle.getNotas())) // solo agrupamos si nombre y nota coinciden
+                    .findFirst()
+                    .orElse(null);
+
+            if (existente != null) {
+                existente.setCantidad(existente.getCantidad() + 1);
+                existente.setImporteTotal(existente.getImporteTotal() + detalle.getPrecioUnitario());
+            } else {
+                productosAgrupados.add(detalle);
+            }
+        }
     }
 
     private void generarComanda() {
-//        ComandaDTO comanda = new ComandaDTO();
-//        comanda.setFechaHora(Calendar.getInstance());
-//        comanda.setNombrecliente(lblClienteNombre.getText().isBlank() ? null : lblClienteNombre.getText());
-//        comanda.setEstado(Estado.ACTIVA);
-//        
-//        List<DetalleComandaDTO> detallesComanda = new ArrayList<>();
-//        for (PanelProductoComanda panelProductoComanda : productosComanda) {
-//            int cantidad = 
-//            ProductoDTO producto = panelProductoComanda.getProducto();
-//            detallesComanda.add(new DetalleComandaDTO(
-//                    producto.getPrecio(),
-//            cantidad
-//                    (producto.getPrecio*cantidad))
-//                            notas,
-//                            producto.getNombre()
-//            ));
-//        }
+        double totalVenta = calcularTotalVenta();
+
+        ComandaDTO comandaMandar;
+
+        if (modo == Modo.AGREGAR) {
+            comandaMandar = comanda;
+            comandaMandar.setFechaHora(Calendar.getInstance());
+            comandaMandar.setEstado(Estado.ACTIVA);
+        } else {
+            comandaMandar = comanda;
+        }
+        comandaMandar.setDetallesComanda(productosAgrupados);
+        comandaMandar.setTotalVenta(totalVenta);
+
+        try {
+            if (modo == Modo.AGREGAR) {
+                control.agregarComanda(comandaMandar);
+                JOptionPane.showMessageDialog(this, "Comanda creada exitosamente");
+            } else {
+                control.actualizarComanda(comandaMandar);
+                JOptionPane.showMessageDialog(this, "Comanda modificada exitosamente");
+            }
+            control.PantallaComandas(this);
+        } catch (CoordinadorException ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage(), "Ha ocurrido un error inesperado", JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private plantillas.Titulo banner;
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton btnAccion;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;

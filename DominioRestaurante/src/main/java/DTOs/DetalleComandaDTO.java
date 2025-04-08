@@ -67,4 +67,9 @@ public class DetalleComandaDTO {
         this.nombreProducto = nombreProducto;
     }
 
+    @Override
+    public String toString() {
+        return "DetalleComandaDTO{" + "precioUnitario=" + precioUnitario + ", cantidad=" + cantidad + ", importeTotal=" + importeTotal + ", notas=" + notas + ", nombreProducto=" + nombreProducto + '}';
+    }
+
 }

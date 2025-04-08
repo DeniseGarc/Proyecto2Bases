@@ -92,4 +92,13 @@ public interface IProductoBO {
      * validación
      */
     public boolean actualizarProducto(ProductoDetalleDTO productoActualizar) throws NegocioException;
+
+    /**
+     * Obtiene el productoDTO del producto con el nombre dado
+     *
+     * @param nombre Nombre del producto a obtener
+     * @return ProductoDTO del producto con el nombre ingresado como parametro
+     * @throws NegocioException Si el producto no existe o si ocurre un error
+     */
+    public ProductoDTO obtenerProductoPorNombre(String nombre) throws NegocioException;
 }
