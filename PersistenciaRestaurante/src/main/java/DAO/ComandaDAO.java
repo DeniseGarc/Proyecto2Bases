@@ -7,6 +7,7 @@ package DAO;
 import conexion.Conexion;
 import entidades.ClienteFrecuente;
 import entidades.Comanda;
+import enumeradores.Estado;
 import exception.PersistenciaException;
 import interfaces.IComandaDAO;
 import java.util.List;
@@ -44,6 +45,37 @@ public class ComandaDAO implements IComandaDAO{
                     .setParameter("cliente", clienteFrecuente)
                     .getResultList();
         } catch (Exception e) {
+            throw new PersistenciaException("Error al consultar comandas por cliente: ", e);
+        } finally {
+            em.close();
+        }
+    }
+    /**
+     * Método para obtener una lista de todas las comandas registradas
+     * @return Lista de comandas registradas
+     * @throws PersistenciaException 
+     */
+    @Override
+    public List<Comanda> obtenerComandas() throws PersistenciaException {
+        EntityManager em = Conexion.crearConexion();
+        try{
+            return em.createQuery("SELECT c FROM Comanda c ",Comanda.class)
+                .getResultList();
+        }catch (Exception e) {
+            throw new PersistenciaException("Error al consultar comandas por cliente: ", e);
+        } finally {
+            em.close();
+        }
+    }
+
+    @Override
+    public List<Comanda> obtenerComandsActivas() throws PersistenciaException {
+       EntityManager em = Conexion.crearConexion();
+       try{
+          return em.createQuery("SELECT c FROM Comanda c WHERE c.estado = :estado", Comanda.class)
+                 .setParameter("estado", Estado.ACTIVA)
+                 .getResultList();
+       }catch (Exception e) {
             throw new PersistenciaException("Error al consultar comandas por cliente: ", e);
         } finally {
             em.close();

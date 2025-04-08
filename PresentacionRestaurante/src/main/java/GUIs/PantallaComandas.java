@@ -33,7 +33,7 @@ public class PantallaComandas extends javax.swing.JFrame {
 
         jInternalFrame1 = new javax.swing.JInternalFrame();
         jPanel1 = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
+        btnAgregarComanda = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         jPanel3 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
@@ -54,15 +54,26 @@ public class PantallaComandas extends javax.swing.JFrame {
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(1070, 700));
 
         jPanel1.setBackground(new java.awt.Color(255, 254, 245));
         jPanel1.setPreferredSize(new java.awt.Dimension(1070, 700));
 
-        jButton1.setBackground(new java.awt.Color(255, 119, 170));
-        jButton1.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 70)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(255, 255, 255));
-        jButton1.setText("+");
+        btnAgregarComanda.setBackground(new java.awt.Color(255, 119, 170));
+        btnAgregarComanda.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 70)); // NOI18N
+        btnAgregarComanda.setForeground(new java.awt.Color(255, 255, 255));
+        btnAgregarComanda.setText("+");
+        btnAgregarComanda.setMinimumSize(new java.awt.Dimension(100, 100));
+        btnAgregarComanda.setPreferredSize(new java.awt.Dimension(100, 100));
+        btnAgregarComanda.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnAgregarComandaMouseClicked(evt);
+            }
+        });
+        btnAgregarComanda.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAgregarComandaActionPerformed(evt);
+            }
+        });
 
         jPanel3.setBackground(new java.awt.Color(255, 228, 242));
         jPanel3.setLayout(new java.awt.GridBagLayout());
@@ -95,9 +106,10 @@ public class PantallaComandas extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(41, 41, 41)
-                .addComponent(jButton1)
+                .addComponent(btnAgregarComanda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 903, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 903, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 1088, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 6, Short.MAX_VALUE))
@@ -106,14 +118,11 @@ public class PantallaComandas extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 818, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jButton1)
-                        .addGap(0, 0, Short.MAX_VALUE))))
+                    .addComponent(btnAgregarComanda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 818, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -139,10 +148,18 @@ public class PantallaComandas extends javax.swing.JFrame {
         coordinador.PantallaPrinicipal(this);
     }//GEN-LAST:event_lblRegresarMouseClicked
 
+    private void btnAgregarComandaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarComandaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnAgregarComandaActionPerformed
+
+    private void btnAgregarComandaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAgregarComandaMouseClicked
+        coordinador.pantallaComandaAgregarCliente(this);
+    }//GEN-LAST:event_btnAgregarComandaMouseClicked
+
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton btnAgregarComanda;
     private javax.swing.JInternalFrame jInternalFrame1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;

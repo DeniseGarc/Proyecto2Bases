@@ -35,6 +35,12 @@ public class ComandaDTO {
         this.numeroMesa = numeroMesa;
     }
 
+    public ComandaDTO(Calendar fechaHora, double totalVenta, Estado estado) {
+        this.fechaHora = fechaHora;
+        this.totalVenta = totalVenta;
+        this.estado = estado;
+    }
+
     public Calendar getFechaHora() {
         return fechaHora;
     }

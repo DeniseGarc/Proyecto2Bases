@@ -10,6 +10,7 @@ import DTOs.IngredienteDTO;
 import DTOs.ProductoDTO;
 import DTOs.ProductoDetalleDTO;
 import GUIs.ClienteFrecuente;
+import GUIs.ComandaAgregarCliente;
 import GUIs.EliminarIngrediente;
 import GUIs.MenuPrincipal;
 import GUIs.PantallaAdministrarProducto;
@@ -23,10 +24,12 @@ import GUIs.RegistrarClienteNuevo;
 import GUIs.frmAgregarIngrediente;
 import control.exception.CoordinadorException;
 import enumeradores.TipoProducto;
+import enumeradores.UnidadMedida;
 import exception.NegocioException;
 import interfaces.IClienteFrecuenteBO;
 import interfaces.IIngredienteBO;
 import interfaces.IProductoBO;
+import java.util.Collections;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -161,6 +164,16 @@ public class CoordinadorAplicacion {
     public void pantallaModificarProducto(JFrame frame, ProductoDetalleDTO producto) {
         PantallaAdministrarProducto pantallaAdministrarProducto = new PantallaAdministrarProducto(Modo.MODIFICAR, producto);
         pantallaAdministrarProducto.setVisible(true);
+        frame.dispose();
+    }
+    
+    /**
+     * Método para redirigir a la pantalla que permite agregar mesa 
+     * @param frame 
+     */
+    public void pantallaComandaAgregarCliente(JFrame frame) {
+        ComandaAgregarCliente pantallaComandaAgregarCliente = new ComandaAgregarCliente();
+        pantallaComandaAgregarCliente.setVisible(true);
         frame.dispose();
     }
 
@@ -375,7 +388,12 @@ public class CoordinadorAplicacion {
             throw new CoordinadorException("Ha ocurrido un problema al actualizar el estado del producto");
         }
     }
-
+    /**
+     * Agrega un ingrediente a la base de datos 
+     * @param ingrediente Ingrediente a agregar
+     * @return ingrediente
+     * @throws CoordinadorException Si ocurre algun error al momento de guardar
+     */
     public IngredienteDTO agregarIngrediente(IngredienteDTO ingrediente) throws CoordinadorException {
         if (ingrediente == null) {
             throw new CoordinadorException("El producto a agregar no puede ser nulo");
@@ -390,12 +408,18 @@ public class CoordinadorAplicacion {
                 ingredienteBO.agregarIngrediente(ingrediente);
             } catch (NegocioException ex) {
                 Logger.getLogger(CoordinadorAplicacion.class.getName()).log(Level.SEVERE, null, ex);
-                throw new CoordinadorException("No se pudo guardar el ingrediente");
+                throw new CoordinadorException(ex.getMessage());
             }
         }
         return ingrediente;
     }
 
+    /**
+     * Elimina el ingrediente de la base de datos
+     * @param ingrediente Ingrediente a eliminar 
+     * @return true si se elimino el ingrediente 
+     * @throws CoordinadorException Si ocurre algun error inesperado al eliminar
+     */
     public boolean eliminarIngrediente(IngredienteDTO ingrediente) throws CoordinadorException {
         try {
             ingredienteBO.eliminarIngrediente(ingrediente.getId());
@@ -422,16 +446,32 @@ public class CoordinadorAplicacion {
         }
     }
 
-    public List<IngredienteDTO> buscarIngredientePorUniad(String unidad) throws CoordinadorException {
+    /**
+     * llama al metodo para buscar ingredientes por unidad
+     *
+     * @param unidad de medida
+     * @return Lista de ingredientes
+     * @throws CoordinadorException
+     */
+    public List<IngredienteDTO> buscarIngredientePorUnidad(UnidadMedida unidad) throws CoordinadorException {
         try {
-            return ingredienteBO.buscarPorUnidad(unidad);
-        } catch (NegocioException ex) {
-            Logger.getLogger(CoordinadorAplicacion.class.getName()).log(Level.SEVERE, null, ex);
-            throw new CoordinadorException("Ha ocurrido un error al obtener los ingredientes");
-        }
 
+            // Llamar al método del BO para buscar ingredientes
+            List<IngredienteDTO> ingredientes = ingredienteBO.buscarPorUnidad(unidad);
+
+            return ingredientes;
+
+        } catch (NegocioException ex) {
+            Logger.getLogger(CoordinadorAplicacion.class.getName()).log(Level.SEVERE, "Error en buscarPorUnidad", ex);
+            throw new CoordinadorException("Ha ocurrido un error al buscar los ingredientes: " + ex.getMessage());
+        } 
     }
 
+    /**
+     * Recupera solo los ingredientes que no tienen un producto asignado
+     * @return Lista de ingredientes DTO
+     * @throws CoordinadorException Si ocurre algun error inesperado al recuperar los ingredientes
+     */
     public List<IngredienteDTO> mostrarIngredientesSinProducto() throws CoordinadorException {
         try {
             return ingredienteBO.obtenerIngredientesSinProducto();
@@ -441,6 +481,13 @@ public class CoordinadorAplicacion {
         }
     }
 
+    /**
+     * Modifica el stock del ingrediente indicado
+     * @param id Id del ingrediente a modificar
+     * @param stock Stock nuevo
+     * @return IngredienteDTO actualizado
+     * @throws CoordinadorException 
+     */
     public IngredienteDTO modificarStock(Long id, int stock) throws CoordinadorException {
         try {
             return ingredienteBO.actualizarStock(id, stock);
@@ -450,6 +497,13 @@ public class CoordinadorAplicacion {
         }
     }
 
+    /**
+     * Recupera la lista de ingredientes filtrandolos por nombre y unidad
+     * @param nombre Nombre del ingrediente a buscar
+     * @param unidad Unidad de medida a buscar
+     * @return Lista de ingredientes filtrados
+     * @throws CoordinadorException Si ocurre algun error inesperado al buscar 
+     */
     public List<IngredienteDTO> buscarPorNombreYUnidad(String nombre, String unidad) throws CoordinadorException {
         try {
             return ingredienteBO.buscarPorNombreYUnidad(nombre, unidad);
@@ -460,6 +514,12 @@ public class CoordinadorAplicacion {
         }
     }
 
+    /**
+     * Busca los ingredientes filtrandolos por nombre
+     * @param nombre nombre del ingrediente a buscar
+     * @return Lista de ingredientes filtrados
+     * @throws CoordinadorException Si ocurre algun error al buscar los ingredientes
+     */
     public List<IngredienteDTO> buscarPorNombre(String nombre) throws CoordinadorException {
         try {
             return ingredienteBO.obtenerIngredientesPorNombre(nombre);
@@ -469,6 +529,13 @@ public class CoordinadorAplicacion {
         }
     }
 
+    /**
+     * Regresa solo un ingrediente buscandolo por nombre y unidad
+     * @param nombre Nombre del ingrediente a buscar
+     * @param unidad Unidad de medida a buscar
+     * @return Ingrediente 
+     * @throws CoordinadorException 
+     */
     public IngredienteDTO buscarPorNombreYUnidad1(String nombre, String unidad) throws CoordinadorException {
         try {
             return ingredienteBO.buscarPorNombreYUnidad1(nombre, unidad);
@@ -482,6 +549,13 @@ public class CoordinadorAplicacion {
     public ClienteFrecuenteDTO registrarNuevoClienteFrecuente(ClienteFrecuenteDTO clienteFrecuente) throws CoordinadorException {
         try {
             validarCliente(clienteFrecuente);
+            List<ClienteFrecuenteDTO> clientes = obtenerClientesFrecuentes();
+            boolean telefonoDuplicado = clientes.stream()
+                    .anyMatch(c -> c.getTelefono().equals(clienteFrecuente.getTelefono()));
+            if (telefonoDuplicado) {
+                throw new CoordinadorException("Este número de teléfono ya está registrado.");
+            }
+
             return clienteFrecuenteBO.registrarNuevoClienteFrecuente(clienteFrecuente);
         } catch (NegocioException e) {
             throw new CoordinadorException("No se pudo registrar el cliente.", e);
@@ -501,7 +575,7 @@ public class CoordinadorAplicacion {
         if (!clienteFrecuente.getTelefono().matches("\\d{10,15}")) {
             throw new CoordinadorException("El teléfono no es valido.");
         }
-        if (clienteFrecuente.getCorreoElectronico() != null) {
+        if (!clienteFrecuente.getCorreoElectronico().isEmpty()) {
             if (!clienteFrecuente.getCorreoElectronico().matches("^[\\w.%+-]+@[\\w.-]+\\.[a-zA-Z]{2,}$")) {
                 throw new CoordinadorException("El formato del correo no es valido.");
             }

@@ -93,6 +93,11 @@ public class frmAgregarIngrediente extends javax.swing.JFrame {
         btnCancelar.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 18)); // NOI18N
         btnCancelar.setForeground(new java.awt.Color(255, 255, 255));
         btnCancelar.setText("Cancelar");
+        btnCancelar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnCancelarMouseClicked(evt);
+            }
+        });
         btnCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCancelarActionPerformed(evt);
@@ -152,7 +157,7 @@ public class frmAgregarIngrediente extends javax.swing.JFrame {
 
         lblTitulo.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 36)); // NOI18N
         lblTitulo.setForeground(new java.awt.Color(255, 255, 255));
-        lblTitulo.setText("Titulo");
+        lblTitulo.setText("Agregar Ingrediente");
         jPanel4.add(lblTitulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 20, 500, 40));
 
         ImageIcon iconoOriginal = new ImageIcon(getClass().getResource("/imgs/flecha-regresar.png"));
@@ -231,6 +236,10 @@ public class frmAgregarIngrediente extends javax.swing.JFrame {
         }
                 
     }//GEN-LAST:event_btnAceptarMouseClicked
+
+    private void btnCancelarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCancelarMouseClicked
+        coordinador.PantallaIngredientes(this);
+    }//GEN-LAST:event_btnCancelarMouseClicked
 
     
 
