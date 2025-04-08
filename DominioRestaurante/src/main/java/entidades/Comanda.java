@@ -20,6 +20,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -50,6 +51,10 @@ public class Comanda implements Serializable {
 
     @OneToMany(mappedBy = "comanda", cascade = {CascadeType.REMOVE, CascadeType.MERGE, CascadeType.PERSIST}, orphanRemoval = true)
     private List<DetalleComanda> detallesComanda = new ArrayList<>();
+    
+   
+    @OneToOne
+    private Mesa mesa; 
 
     @ManyToOne
     @JoinColumn(name = "cliente", nullable = true)
@@ -61,9 +66,22 @@ public class Comanda implements Serializable {
         this.estado = estado;
     }
 
-    public Comanda() {
+    public Comanda(Calendar fechaHora, Double totalVenta, Estado estado, Mesa mesa) {
+        this.fechaHora = fechaHora;
+        this.totalVenta = totalVenta;
+        this.estado = estado;
+        this.mesa = mesa;
     }
 
+    public Comanda() {
+    }
+    public Mesa getMesa() {
+        return mesa;
+    }
+
+    public void setMesa(Mesa mesa) {
+        this.mesa = mesa;
+    }
     public Calendar getFechaHora() {
         return fechaHora;
     }
