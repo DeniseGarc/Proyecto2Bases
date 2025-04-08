@@ -21,7 +21,7 @@ public class ClienteFrecuente extends javax.swing.JFrame {
      */
     public ClienteFrecuente() {
         initComponents();
-        panelBusquedaClientes.cargarClientes();
+        panelBuscadorClientes.cargarClientes();
         setLocationRelativeTo(null);
     }
 
@@ -39,7 +39,7 @@ public class ClienteFrecuente extends javax.swing.JFrame {
         lblTitulo = new javax.swing.JLabel();
         lblRegresar = new javax.swing.JLabel();
         btnRegistrarCliente = new javax.swing.JButton();
-        panelBusquedaClientes = new moduloBusquedaClientes.PanelBusquedaClientes();
+        panelBuscadorClientes = new moduloBusquedaClientes.PanelBusquedaClientes();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -77,7 +77,7 @@ public class ClienteFrecuente extends javax.swing.JFrame {
         });
         jPanel1.add(btnRegistrarCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(910, 20, 140, 30));
 
-        panelBusquedaClientes.setBackground(new java.awt.Color(255, 255, 255));
+        panelBuscadorClientes.setBackground(new java.awt.Color(255, 255, 255));
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -86,14 +86,14 @@ public class ClienteFrecuente extends javax.swing.JFrame {
             .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(231, 231, 231)
-                .addComponent(panelBusquedaClientes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(panelBuscadorClientes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(39, 39, 39)
-                .addComponent(panelBusquedaClientes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(panelBuscadorClientes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 58, Short.MAX_VALUE))
         );
 
@@ -127,6 +127,6 @@ public class ClienteFrecuente extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JLabel lblRegresar;
     private javax.swing.JLabel lblTitulo;
-    private moduloBusquedaClientes.PanelBusquedaClientes panelBusquedaClientes;
+    private moduloBusquedaClientes.PanelBusquedaClientes panelBuscadorClientes;
     // End of variables declaration//GEN-END:variables
 }
