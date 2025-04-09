@@ -182,6 +182,10 @@ public class PanelBusquedaClientes extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(this, "Error al realizar la búsqueda: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
+    
+    public int getCliente() {
+        return tablaClientes.getSelectedRow();
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField buscador;

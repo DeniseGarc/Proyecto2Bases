@@ -4,7 +4,6 @@
  */
 package DTOs;
 
-import entidades.Mesa;
 import enumeradores.Estado;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -20,33 +19,9 @@ public class ComandaDTO {
     private double totalVenta;
     private Estado estado;
     private List<DetalleComandaDTO> detallesComanda = new ArrayList<>();
-
-    private String nombrecliente;
-    private Mesa mesa;
-
-    public ComandaDTO(Calendar fechaHora, double totalVenta, Estado estado, String nombrecliente, Mesa mesa) {
-        this.fechaHora = fechaHora;
-        this.totalVenta = totalVenta;
-        this.estado = estado;
-        this.nombrecliente = nombrecliente;
-        this.mesa = mesa;
-    }
-
-    public ComandaDTO(Calendar fechaHora, double totalVenta, Estado estado, Mesa mesa) {
-        this.fechaHora = fechaHora;
-        this.totalVenta = totalVenta;
-        this.estado = estado;
-        this.mesa = mesa;
-    }
-
-    public Mesa getMesa() {
-        return mesa;
-    }
-
-    public void setMesa(Mesa mesa) {
-        this.mesa = mesa;
-    }
-
+    private String telefonoCliente;
+    private String nombreCliente;
+    private String numeroMesa;
 
     public ComandaDTO() {
     }

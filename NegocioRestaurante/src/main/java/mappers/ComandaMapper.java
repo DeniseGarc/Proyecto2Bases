@@ -18,7 +18,7 @@ public class ComandaMapper {
     public static List<ComandaDTO> toDtoList(List<Comanda> comandasEntidad){
         List<ComandaDTO> comandasDTO = new ArrayList<>();
         for(Comanda comanda : comandasEntidad){
-            comandasDTO.add(new ComandaDTO(comanda.getFechaHora(), comanda.getTotalVenta(),comanda.getEstado(),comanda.getMesa()));
+            comandasDTO.add(new ComandaDTO(comanda.getFechaHora(), comanda.getTotalVenta(),comanda.getEstado(),comanda.getCliente().getNombre(),comanda.getCliente().getTelefono(),comanda.getMesa().getNumero().toString()));
         }return comandasDTO;
     }
     

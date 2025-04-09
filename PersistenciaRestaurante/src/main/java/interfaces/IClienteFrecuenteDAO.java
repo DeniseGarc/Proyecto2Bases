@@ -4,7 +4,6 @@
  */
 package interfaces;
 
-import entidades.Cliente;
 import entidades.ClienteFrecuente;
 import exception.PersistenciaException;
 import java.util.List;

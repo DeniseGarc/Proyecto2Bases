@@ -78,7 +78,7 @@ public class ClienteFrecuenteDAO implements IClienteFrecuenteDAO {
             em.close();
         }
     }
-
+    
     /**
      * Método para obtener clientes frecuentes por nombre.
      *
