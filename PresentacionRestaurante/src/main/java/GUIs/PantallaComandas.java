@@ -4,9 +4,19 @@
  */
 package GUIs;
 
+import DTOs.ComandaDTO;
+import DTOs.IngredienteDTO;
+import PlantillaComandas.PanelComandasActivas;
 import control.CoordinadorAplicacion;
+import control.exception.CoordinadorException;
+import java.awt.GridBagConstraints;
 import java.awt.Image;
+import java.awt.Insets;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
+import javax.swing.JPanel;
 
 /**
  *
@@ -20,6 +30,41 @@ public class PantallaComandas extends javax.swing.JFrame {
     private final CoordinadorAplicacion coordinador = new CoordinadorAplicacion();
     public PantallaComandas() {
         initComponents();
+    }
+    private void cargarComandas(){
+        try {
+            List<ComandaDTO> comandas = coordinador.obtenerComandasActivas();
+            mostrarComandas(comandas);
+        } catch (CoordinadorException ex) {
+            Logger.getLogger(PantallaComandas.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    private void mostrarComandas(List<ComandaDTO> comandas){
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(10, 10, 10, 10); // Espacio entre tarjetas
+        gbc.anchor = GridBagConstraints.NORTHWEST;
+
+        int columnas = 3;
+        int fila = 0;
+        int columna = 0;
+
+        for (ComandaDTO comanda : comandas) {
+            PanelComandasActivas panelComandas = new PanelComandasActivas();
+            panelComandas.getNumero().setText(comanda.getNumeroMesa());
+            gbc.gridx = columna;
+            gbc.gridy = fila;
+
+            jPanel3.add(panelComandas, gbc);
+
+            columna++;
+            if (columna >= columnas) {
+                columna = 0;
+                fila++;
+            }
+        }
+
+        jPanel3.revalidate();
+        jPanel3.repaint();
     }
 
     /**
