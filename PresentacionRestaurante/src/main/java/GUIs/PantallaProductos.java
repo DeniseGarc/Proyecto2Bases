@@ -256,8 +256,12 @@ public class PantallaProductos extends javax.swing.JFrame {
     private void pasarAActualizarProducto(String nombre) {
         if (nombre != null) {
             try {
-                ProductoDetalleDTO producto = control.obtenerDetallesDelProducto(nombre);
-                control.pantallaModificarProducto(this, producto);
+                if (control.validarProductoEditable(nombre)) {
+                    ProductoDetalleDTO producto = control.obtenerDetallesDelProducto(nombre);
+                    control.pantallaModificarProducto(this, producto);
+                } else {
+                    JOptionPane.showMessageDialog(null, "No es posible editar el producto: " + nombre + ", ya que se encuentra en una comanda activa", "", JOptionPane.INFORMATION_MESSAGE);
+                }
             } catch (CoordinadorException ex) {
                 Logger.getLogger(PantallaProductos.class.getName()).log(Level.SEVERE, null, ex);
                 JOptionPane.showMessageDialog(null, ex.getMessage(), "Ha ocurrido un error inesperado", JOptionPane.ERROR_MESSAGE);

@@ -66,6 +66,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
 
         btnComandas.setBackground(new java.awt.Color(254, 255, 203));
         btnComandas.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 18)); // NOI18N
+        btnComandas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgs/comanda-icono.png"))); // NOI18N
         btnComandas.setMaximumSize(new java.awt.Dimension(240, 220));
         btnComandas.setMinimumSize(new java.awt.Dimension(240, 220));
         btnComandas.setPreferredSize(new java.awt.Dimension(240, 220));
@@ -79,6 +80,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
         btnReportes.setBackground(new java.awt.Color(255, 140, 200));
         btnReportes.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 18)); // NOI18N
         btnReportes.setForeground(new java.awt.Color(255, 255, 255));
+        btnReportes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgs/reporte-icono.png"))); // NOI18N
         btnReportes.setPreferredSize(new java.awt.Dimension(150, 150));
         jPanel1.add(btnReportes, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 160, 240, 220));
 
@@ -94,6 +96,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
         btnIngredientes.setBackground(new java.awt.Color(255, 178, 217));
         btnIngredientes.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 18)); // NOI18N
         btnIngredientes.setForeground(new java.awt.Color(255, 255, 255));
+        btnIngredientes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgs/ingredientes-icono.png"))); // NOI18N
         btnIngredientes.setPreferredSize(new java.awt.Dimension(150, 150));
         btnIngredientes.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -105,6 +108,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
         btnProductos.setBackground(new java.awt.Color(255, 178, 217));
         btnProductos.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 18)); // NOI18N
         btnProductos.setForeground(new java.awt.Color(255, 255, 255));
+        btnProductos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgs/productos-icono.png"))); // NOI18N
         btnProductos.setPreferredSize(new java.awt.Dimension(150, 150));
         btnProductos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -116,6 +120,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
         btnClientesFrecuentes.setBackground(new java.awt.Color(255, 178, 217));
         btnClientesFrecuentes.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 18)); // NOI18N
         btnClientesFrecuentes.setForeground(new java.awt.Color(255, 255, 255));
+        btnClientesFrecuentes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgs/clientes-icono.png"))); // NOI18N
         btnClientesFrecuentes.setPreferredSize(new java.awt.Dimension(150, 150));
         btnClientesFrecuentes.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {

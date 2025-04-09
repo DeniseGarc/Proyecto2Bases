@@ -26,8 +26,6 @@ public class PanelComandasActivas extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
-        jPanel3 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
         txtMesa = new javax.swing.JLabel();
@@ -36,42 +34,27 @@ public class PanelComandasActivas extends javax.swing.JPanel {
         btnEntregada = new javax.swing.JButton();
         btnCancelada = new javax.swing.JButton();
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 100, Short.MAX_VALUE)
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 100, Short.MAX_VALUE)
-        );
-
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 100, Short.MAX_VALUE)
-        );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 100, Short.MAX_VALUE)
-        );
-
-        setPreferredSize(new java.awt.Dimension(200, 400));
+        setMaximumSize(new java.awt.Dimension(200, 280));
+        setMinimumSize(new java.awt.Dimension(200, 280));
+        setPreferredSize(new java.awt.Dimension(200, 280));
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel2.setBackground(new java.awt.Color(254, 255, 203));
-        jPanel2.setPreferredSize(new java.awt.Dimension(200, 300));
+        jPanel2.setMaximumSize(new java.awt.Dimension(200, 280));
+        jPanel2.setMinimumSize(new java.awt.Dimension(200, 280));
+        jPanel2.setPreferredSize(new java.awt.Dimension(200, 280));
+        jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel4.setBackground(new java.awt.Color(255, 178, 217));
 
         txtMesa.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 24)); // NOI18N
         txtMesa.setForeground(new java.awt.Color(255, 255, 255));
+        txtMesa.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         txtMesa.setText("Mesa");
 
         txtNumero.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 24)); // NOI18N
         txtNumero.setForeground(new java.awt.Color(255, 255, 255));
+        txtNumero.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         txtNumero.setText("#");
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
@@ -79,36 +62,41 @@ public class PanelComandasActivas extends javax.swing.JPanel {
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addGap(87, 87, 87)
-                        .addComponent(txtNumero))
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addGap(67, 67, 67)
-                        .addComponent(txtMesa)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(txtMesa, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(txtNumero, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
+                .addContainerGap()
                 .addComponent(txtMesa)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtNumero))
+                .addComponent(txtNumero)
+                .addContainerGap(14, Short.MAX_VALUE))
         );
+
+        jPanel2.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 200, -1));
 
         btnModificar.setBackground(new java.awt.Color(201, 220, 249));
         btnModificar.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 18)); // NOI18N
         btnModificar.setForeground(new java.awt.Color(255, 255, 255));
         btnModificar.setText("Modificar");
         btnModificar.setBorder(null);
+        btnModificar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jPanel2.add(btnModificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(24, 105, 155, 40));
 
         btnEntregada.setBackground(new java.awt.Color(255, 178, 217));
         btnEntregada.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
         btnEntregada.setForeground(new java.awt.Color(255, 255, 255));
         btnEntregada.setText("Marcar como entregada");
         btnEntregada.setBorder(null);
+        btnEntregada.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnEntregada.setMinimumSize(new java.awt.Dimension(120, 15));
         btnEntregada.setPreferredSize(new java.awt.Dimension(120, 15));
+        jPanel2.add(btnEntregada, new org.netbeans.lib.awtextra.AbsoluteConstraints(24, 163, 155, 40));
 
         btnCancelada.setBackground(new java.awt.Color(255, 119, 170));
         btnCancelada.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
@@ -116,39 +104,15 @@ public class PanelComandasActivas extends javax.swing.JPanel {
         btnCancelada.setText("Marcar como cancelada");
         btnCancelada.setToolTipText("");
         btnCancelada.setBorder(null);
+        btnCancelada.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnCancelada.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCanceladaActionPerformed(evt);
             }
         });
+        jPanel2.add(btnCancelada, new org.netbeans.lib.awtextra.AbsoluteConstraints(24, 221, 155, 40));
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(24, Short.MAX_VALUE)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnEntregada, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnCancelada, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(21, 21, 21))
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 41, Short.MAX_VALUE)
-                .addComponent(btnModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(btnEntregada, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(btnCancelada, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(39, 39, 39))
-        );
-
-        add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 200, 300));
+        add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 200, 280));
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCanceladaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCanceladaActionPerformed
@@ -160,9 +124,7 @@ public class PanelComandasActivas extends javax.swing.JPanel {
     private javax.swing.JButton btnCancelada;
     private javax.swing.JButton btnEntregada;
     private javax.swing.JButton btnModificar;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JLabel txtMesa;
     private javax.swing.JLabel txtNumero;

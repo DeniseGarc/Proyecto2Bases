@@ -2,6 +2,7 @@ package DAO;
 
 import conexion.Conexion;
 import entidades.Producto;
+import enumeradores.Estado;
 import enumeradores.TipoProducto;
 import exception.PersistenciaException;
 import interfaces.IProductoDAO;
@@ -147,6 +148,28 @@ public class ProductoDAO implements IProductoDAO {
                     .getResultList();
         } catch (Exception e) {
             throw new PersistenciaException("Error al intentar filtrar los productos: ", e);
+        } finally {
+            em.close();
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * <p>
+     * Implementación que cuenta la cantidad de comandas activas que tienen
+     * asociado el producto con el nombre dado.</p>
+     */
+    @Override
+    public boolean productoEnComandaActiva(String nombre) throws PersistenciaException {
+        EntityManager em = Conexion.crearConexion();
+        try {
+            return em.createQuery("SELECT COUNT(c) FROM Comanda c JOIN c.detallesComanda dc WHERE dc.producto.nombre = :nombre AND c.estado = :estado", Long.class)
+                    .setParameter("nombre", nombre)
+                    .setParameter("estado", Estado.ACTIVA)
+                    .getSingleResult() > 0;
+        } catch (Exception e) {
+            throw new PersistenciaException("Error al consultar si el producto se encuentra en una comanda activa: ", e);
         } finally {
             em.close();
         }

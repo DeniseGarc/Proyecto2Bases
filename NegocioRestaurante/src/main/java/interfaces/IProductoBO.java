@@ -87,4 +87,16 @@ public interface IProductoBO {
      */
     public List<ProductoDTO> obtenerProductosFiltrados(String nombre, TipoProducto categoria) throws NegocioException;
 
+    /**
+     * Consulta si el producto con el nombre dado se encuentra dentro de alguna
+     * comanda activa.
+     *
+     * @param nombre Nombre del producto a consultar si se encuentra dentro de
+     * alguna comanda activa.
+     * @return True si el producto se encuentra en alguna comanda activa, false
+     * en caso contrario.
+     * @throws NegocioException Si sucede un error de validación o en el acceso
+     * a datos.
+     */
+    public boolean consultarProductoEnComandaActiva(String nombre) throws NegocioException;
 }

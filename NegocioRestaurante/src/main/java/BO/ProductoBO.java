@@ -177,4 +177,17 @@ public class ProductoBO implements IProductoBO {
         }
 
     }
+
+    @Override
+    public boolean consultarProductoEnComandaActiva(String nombre) throws NegocioException {
+        if (nombre == null) {
+            throw new NegocioException("El nombre del producto a consultar si esta dentro de alguna comanda activa es nulo");
+        }
+        try {
+            return productoDAO.productoEnComandaActiva(nombre);
+        } catch (PersistenciaException ex) {
+            Logger.getLogger(ProductoBO.class.getName()).log(Level.SEVERE, null, ex);
+            throw new NegocioException("Ha ocurrido un error al realizar la consulta", ex);
+        }
+    }
 }

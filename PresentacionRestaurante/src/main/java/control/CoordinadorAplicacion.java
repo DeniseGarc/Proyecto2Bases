@@ -635,7 +635,27 @@ public class CoordinadorAplicacion {
             return productoBO.obtenerProductoPorNombre(nombre);
         } catch (NegocioException e) {
             throw new CoordinadorException("Ha ocurrido un error al obtener el producto por su nombre");
+        }
+    }
 
+    /**
+     * Método que valida si el producto puede ser editado. Un producto puede ser
+     * actualizado siempre y cuando no se encuentre dentro de una comanda
+     * activa.
+     *
+     * @param nombre Nombre del producto a validar.
+     * @return true si el producto puede ser editado, false en caso contrario.
+     * @throws CoordinadorException Si ocurre un error al realizar la consulta.
+     */
+    public boolean validarProductoEditable(String nombre) throws CoordinadorException {
+        if (nombre == null) {
+            throw new CoordinadorException("El nombre del producto no ha sido obtenido");
+        }
+        try {
+            return !productoBO.consultarProductoEnComandaActiva(nombre);
+        } catch (NegocioException ex) {
+            Logger.getLogger(CoordinadorAplicacion.class.getName()).log(Level.SEVERE, null, ex);
+            throw new CoordinadorException("Ha ocurrido un error al validar si el producto puede ser editado");
         }
     }
 }
