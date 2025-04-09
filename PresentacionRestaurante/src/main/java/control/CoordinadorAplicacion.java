@@ -552,10 +552,16 @@ public class CoordinadorAplicacion {
         }
     }
 
+    /**
+     * Recibe un cliente para registrarlo en la base de datos
+     * @param clienteFrecuente al cual se desea registrar
+     * @return el cliente registrado
+     * @throws CoordinadorException 
+     */
     public ClienteFrecuenteDTO registrarNuevoClienteFrecuente(ClienteFrecuenteDTO clienteFrecuente) throws CoordinadorException {
         try {
             validarCliente(clienteFrecuente);
-            List<ClienteFrecuenteDTO> clientes = obtenerClientesFrecuentes();
+            List<ClienteFrecuenteDTO> clientes = obtenerClientesFrecuentes(null, null);
             boolean telefonoDuplicado = clientes.stream()
                     .anyMatch(c -> c.getTelefono().equals(clienteFrecuente.getTelefono()));
             if (telefonoDuplicado) {
@@ -568,6 +574,11 @@ public class CoordinadorAplicacion {
         }
     }
 
+    /**
+     * Validaciones para asegurarse de que el cliente tenga datos correctos
+     * @param clienteFrecuente el cual necesita ser validado
+     * @throws CoordinadorException 
+     */
     private void validarCliente(ClienteFrecuenteDTO clienteFrecuente) throws CoordinadorException {
         if (clienteFrecuente == null) {
             throw new CoordinadorException("El cliente no puede ser nulo.");
@@ -588,35 +599,18 @@ public class CoordinadorAplicacion {
         }
     }
 
-    public List<ClienteFrecuenteDTO> obtenerClientesFrecuentes() throws CoordinadorException {
+    /**
+     * Obtiene una lista de clientes filtrada dependiendo de los parametros
+     * @param filtro por el cual se filtrará la busqueda
+     * @param dato el cual se necesita buscar
+     * @return la lista de clientes filtrada
+     * @throws CoordinadorException 
+     */
+    public List<ClienteFrecuenteDTO> obtenerClientesFrecuentes(String filtro, String dato) throws CoordinadorException {
         try {
-            return clienteFrecuenteBO.obtenerClientesFrecuentes();
+            return clienteFrecuenteBO.obtenerClientesFrecuentes(filtro, dato);
         } catch (NegocioException e) {
             throw new CoordinadorException("Ha ocurrido un error al consultar los clientes.");
-        }
-    }
-
-    public List<ClienteFrecuenteDTO> obtenerClientesPorNombre(String nombre) throws CoordinadorException {
-        try {
-            return clienteFrecuenteBO.obtenerClientesPorNombre(nombre);
-        } catch (NegocioException e) {
-            throw new CoordinadorException("Ha ocurrido un error al consultar los clientes por su nombre.");
-        }
-    }
-
-    public List<ClienteFrecuenteDTO> obtenerClientesPorTelefono(String telefono) throws CoordinadorException {
-        try {
-            return clienteFrecuenteBO.obtenerClientesPorTelefono(telefono);
-        } catch (NegocioException e) {
-            throw new CoordinadorException("Ha ocurrido un error al consultar los clientes por su teléfono.");
-        }
-    }
-
-    public List<ClienteFrecuenteDTO> obtenerClientesPorCorreo(String correo) throws CoordinadorException {
-        try {
-            return clienteFrecuenteBO.obtenerClientesPorCorreo(correo);
-        } catch (NegocioException e) {
-            throw new CoordinadorException("Ha ocurrido un error al consultar los clientes por su correo.");
         }
     }
 
