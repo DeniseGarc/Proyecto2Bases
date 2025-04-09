@@ -24,34 +24,6 @@ public interface IProductoBO {
     public List<ProductoDTO> obtenerProductos() throws NegocioException;
 
     /**
-     * Busca productos cuyo nombre contenga el texto especificado.
-     *
-     * @param texto Fragmento del nombre a buscar
-     * @return Lista de ProductoDTO que coinciden con el criterio
-     * @throws NegocioException Si ocurre un error en la capa de negocio
-     */
-    public List<ProductoDTO> obtenerProductosFiltradosNombre(String texto) throws NegocioException;
-
-    /**
-     * Busca productos por nombre parcial y categoría específica.
-     *
-     * @param texto Fragmento del nombre a buscar
-     * @param categoria Tipo de producto para filtrar
-     * @return Lista de ProductoDTO que coinciden con ambos criterios
-     * @throws NegocioException Si ocurre un error en la capa de negocio
-     */
-    public List<ProductoDTO> obtenerProductosFiltradosNombreyCategoria(String texto, TipoProducto categoria) throws NegocioException;
-
-    /**
-     * Obtiene todos los productos de una categoría específica.
-     *
-     * @param categoria Tipo de producto para filtrar
-     * @return Lista de ProductoDTO que pertenecen a la categoría especificada
-     * @throws NegocioException Si ocurre un error en la capa de negocio
-     */
-    public List<ProductoDTO> obtenerProductosFiltradosCategoria(TipoProducto categoria) throws NegocioException;
-
-    /**
      * Obtiene los detalles completos de un producto por su nombre exacto.
      *
      * @param nombre Nombre exacto del producto
@@ -101,4 +73,18 @@ public interface IProductoBO {
      * @throws NegocioException Si el producto no existe o si ocurre un error
      */
     public ProductoDTO obtenerProductoPorNombre(String nombre) throws NegocioException;
+
+    /**
+     * Obtiene los productos filtrados según el valor ingresado. En caso que de
+     * no se quiera filtrar por ese campo se debe recibir un nulo como el valor
+     * del parámetro.
+     *
+     * @param nombre Nombre parcial o completo del producto
+     * @param categoria Categoria del producto
+     * @return Lista de ProductoDTO de los productos filtrados según los
+     * parámetros
+     * @throws NegocioException Si sucede un error en el acceso a datos.
+     */
+    public List<ProductoDTO> obtenerProductosFiltrados(String nombre, TipoProducto categoria) throws NegocioException;
+
 }

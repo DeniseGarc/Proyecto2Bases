@@ -136,46 +136,19 @@ public class ProductoDAO implements IProductoDAO {
     }
 
     @Override
-    public List<Producto> obtenerProductosFiltrados(String nombre) throws PersistenciaException {
+    public List<Producto> buscarPorFiltros(String nombre, TipoProducto categoria) throws PersistenciaException {
         EntityManager em = Conexion.crearConexion();
         try {
-            return em.createQuery("SELECT p FROM Producto p WHERE p.nombre LIKE CONCAT('%',:nombre,'%') ", Producto.class)
-                    .setParameter("nombre", nombre)
-                    .getResultList();
-        } catch (Exception e) {
-            throw new PersistenciaException("Error al consultar productos filtrados por nombre: ", e);
-        } finally {
-            em.close();
-        }
-    }
-
-    @Override
-    public List<Producto> obtenerProductosFiltrados(String nombre, TipoProducto categoria) throws PersistenciaException {
-        EntityManager em = Conexion.crearConexion();
-        try {
-            return em.createQuery("SELECT p FROM Producto p WHERE p.nombre LIKE CONCAT('%',:nombre,'%') AND p.tipo = :categoria", Producto.class)
+            return em.createQuery(
+                    "SELECT p FROM Producto p WHERE (:nombre IS NULL OR p.nombre LIKE CONCAT('%',:nombre,'%')) "
+                    + "AND (:categoria IS NULL OR p.tipo = :categoria)")
                     .setParameter("nombre", nombre)
                     .setParameter("categoria", categoria)
                     .getResultList();
         } catch (Exception e) {
-            throw new PersistenciaException("Error al consultar productos filtrados por nombre: ", e);
+            throw new PersistenciaException("Error al intentar filtrar los productos: ", e);
         } finally {
             em.close();
         }
     }
-
-    @Override
-    public List<Producto> obtenerProductosFiltrados(TipoProducto categoria) throws PersistenciaException {
-        EntityManager em = Conexion.crearConexion();
-        try {
-            return em.createQuery("SELECT p FROM Producto p WHERE  p.tipo = :categoria", Producto.class)
-                    .setParameter("categoria", categoria)
-                    .getResultList();
-        } catch (Exception e) {
-            throw new PersistenciaException("Error al consultar productos filtrados por categoria: ", e);
-        } finally {
-            em.close();
-        }
-    }
-
 }

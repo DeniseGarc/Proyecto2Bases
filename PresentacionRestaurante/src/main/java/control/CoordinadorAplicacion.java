@@ -30,7 +30,6 @@ import interfaces.IClienteFrecuenteBO;
 import interfaces.IComandaBO;
 import interfaces.IIngredienteBO;
 import interfaces.IProductoBO;
-import java.util.Collections;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -206,13 +205,7 @@ public class CoordinadorAplicacion {
      */
     public List<ProductoDTO> obtenerProductosFiltrados(String texto, TipoProducto categoria) throws CoordinadorException {
         try {
-            if (texto != null && categoria != null) {
-                return productoBO.obtenerProductosFiltradosNombreyCategoria(texto, categoria);
-            } else if (texto == null) {
-                return productoBO.obtenerProductosFiltradosCategoria(categoria);
-            } else {
-                return productoBO.obtenerProductosFiltradosNombre(texto);
-            }
+            return productoBO.obtenerProductosFiltrados(texto, categoria);
         } catch (NegocioException ex) {
             Logger.getLogger(CoordinadorAplicacion.class.getName()).log(Level.SEVERE, null, ex);
             throw new CoordinadorException("Ha ocurrido un error al filtrar los productos");
