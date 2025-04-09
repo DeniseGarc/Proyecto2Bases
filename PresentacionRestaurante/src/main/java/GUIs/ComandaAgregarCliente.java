@@ -4,6 +4,7 @@
  */
 package GUIs;
 
+import DTOs.ComandaDTO;
 import control.CoordinadorAplicacion;
 import java.awt.Image;
 import javax.swing.ImageIcon;
@@ -146,8 +147,10 @@ public class ComandaAgregarCliente extends javax.swing.JFrame {
     }//GEN-LAST:event_lblRegresarMouseClicked
 
     private void btnTomarComandaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTomarComandaActionPerformed
-        coordinador.PantallaTomaComanda(this);
+        ComandaDTO comandaAgregar = new ComandaDTO();
+        coordinador.pantallaAgregarComanda(this, comandaAgregar);
     }//GEN-LAST:event_btnTomarComandaActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnTomarComanda;
     private javax.swing.JComboBox<String> cbBoxMesas;

@@ -13,7 +13,7 @@ import java.util.List;
  * @author Maryr
  */
 public interface IClienteFrecuenteBO {
- public ClienteFrecuenteDTO registrarNuevoClienteFrecuente (ClienteFrecuenteDTO clienteFrecuente) throws NegocioException;
+    public ClienteFrecuenteDTO registrarNuevoClienteFrecuente(ClienteFrecuenteDTO clienteFrecuente) throws NegocioException;
     public List<ClienteFrecuenteDTO> obtenerClientesFrecuentes() throws NegocioException;
     public List<ClienteFrecuenteDTO> obtenerClientesPorNombre(String nombre) throws NegocioException;
     public List<ClienteFrecuenteDTO> obtenerClientesPorTelefono(String telefono) throws NegocioException;
