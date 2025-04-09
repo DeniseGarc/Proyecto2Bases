@@ -97,10 +97,7 @@ public class ComandaDTO {
         this.numeroMesa = numeroMesa;
     }
 
-    @Override
-    public String toString() {
-        return "ComandaDTO{" + "fechaHora=" + fechaHora + ", totalVenta=" + totalVenta + ", estado=" + estado + ", detallesComanda=" + detallesComanda + ", nombrecliente=" + nombrecliente + ", mesa=" + mesa + '}';
-    }
+ 
     
 
 }
