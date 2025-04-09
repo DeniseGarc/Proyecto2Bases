@@ -15,5 +15,5 @@ import java.util.List;
 public interface IClienteFrecuenteDAO {
 
     public ClienteFrecuente registrarNuevoClienteFrecuente (ClienteFrecuente clienteFrecuente) throws PersistenciaException;
-    public List<ClienteFrecuente> obtenerClientesFrecuentes() throws PersistenciaException;
+    public List<ClienteFrecuente> obtenerClientesFrecuentes(String filtro, String dato) throws PersistenciaException;
 }
