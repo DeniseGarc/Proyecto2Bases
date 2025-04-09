@@ -21,6 +21,7 @@ public class PanelProducto extends javax.swing.JPanel {
      * del producto dado.
      *
      * @param producto el producto que se a representar en el panel.
+     * @param listener 
      */
     public PanelProducto(ProductoDTO producto, AgregarProductoComandaListener listener) {
         this.producto = producto;

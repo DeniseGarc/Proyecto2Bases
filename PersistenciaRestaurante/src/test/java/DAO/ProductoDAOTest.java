@@ -240,37 +240,37 @@ public class ProductoDAOTest {
     }
 
     /**
-     * Prueba del método obtenerProductosFiltrados(nombre).
+     * Prueba del método buscarPorFiltros(nombre).
      */
     @Test
-    public void testObtenerProductosFiltradosPorNombre() throws Exception {
-        System.out.println("Prueba de método obtenerProductosFiltrados(nombre)");
-        List<Producto> resultado = instanciaProductoDAO.obtenerProductosFiltrados("producto1");
+    public void testBuscarPorFiltrosPorNombre() throws Exception {
+        System.out.println("Prueba de método buscarPorFiltros(nombre)");
+        List<Producto> resultado = instanciaProductoDAO.buscarPorFiltros("producto1", null);
         assertNotNull(resultado);
         assertEquals(1, resultado.size());
-        List<Producto> resultado2 = instanciaProductoDAO.obtenerProductosFiltrados("prod");
+        List<Producto> resultado2 = instanciaProductoDAO.buscarPorFiltros("prod", null);
         assertNotNull(resultado2);
         assertTrue(resultado2.size() >= 3);
     }
 
     /**
-     * Prueba del método obtenerProductosFiltrados(nombre, categoria).
+     * Prueba del método buscarPorFiltros(nombre, categoria).
      */
     @Test
-    public void testObtenerProductosFiltradosPorNombreYCategoria() throws Exception {
-        System.out.println("Prueba de método obtenerProductosFiltrados(nombre, tipo)");
-        List<Producto> resultado = instanciaProductoDAO.obtenerProductosFiltrados("producto", TipoProducto.BEBIDA);
+    public void testBuscarPorFiltrosPorNombreYCategoria() throws Exception {
+        System.out.println("Prueba de método buscarPorFiltros(nombre, tipo)");
+        List<Producto> resultado = instanciaProductoDAO.buscarPorFiltros("producto", TipoProducto.BEBIDA);
         assertNotNull(resultado);
         assertTrue(resultado.size() >= 2);
     }
 
     /**
-     * Prueba del método obtenerProductosFiltrados(categoria).
+     * Prueba del método buscarPorFiltros(categoria).
      */
     @Test
-    public void testObtenerProductosFiltradosPorCategoria() throws Exception {
-        System.out.println("Prueba de método obtenerProductosFiltrados(tipo)");
-        List<Producto> resultado = instanciaProductoDAO.obtenerProductosFiltrados(TipoProducto.PLATILLO);
+    public void testBuscarPorFiltrosPorCategoria() throws Exception {
+        System.out.println("Prueba de método buscarPorFiltros(tipo)");
+        List<Producto> resultado = instanciaProductoDAO.buscarPorFiltros(null, TipoProducto.PLATILLO);
         assertNotNull(resultado);
         assertTrue(resultado.size() >= 1);
     }

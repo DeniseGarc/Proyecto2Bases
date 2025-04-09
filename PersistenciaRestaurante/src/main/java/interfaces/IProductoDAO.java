@@ -63,31 +63,13 @@ public interface IProductoDAO {
     public boolean deshabilitarHabilitarProducto(String nombre, boolean habilitado) throws PersistenciaException;
 
     /**
-     * Busca productos cuyo nombre contenga el texto especificado
+     * Obtiene los productos filtrados según lo ingresado en los parámetros.
      *
-     * @param nombre parte del nombre del producto a buscar.
-     * @return lista de productos que coinciden con el filtro.
-     * @throws PersistenciaException si ocurre un error al consultar.
+     * @param nombre Nombre parcial del producto
+     * @param categoria Categoria del producto
+     * @return Lista de entidades Producto con los productos de la base de
+     * datos.
+     * @throws PersistenciaException Si ocurre un error de acceso de datos.
      */
-    public List<Producto> obtenerProductosFiltrados(String nombre) throws PersistenciaException;
-
-    /**
-     * Busca productos por nombre parcial y categoría específica.
-     *
-     * @param nombre parte del nombre del producto a buscar.
-     * @param categoria categoría del producto.
-     * @return lista de productos filtrados por nombre y categoría.
-     * @throws PersistenciaException si ocurre un error durante la consulta.
-     */
-    public List<Producto> obtenerProductosFiltrados(String nombre, TipoProducto categoria) throws PersistenciaException;
-
-    /**
-     * Obtiene todos los productos de una categoría específica.
-     *
-     * @param categoria categoría del producto.
-     * @return lista de productos filtrados por categoria.
-     * @throws PersistenciaException si ocurre un error durante la consulta.
-     */
-    public List<Producto> obtenerProductosFiltrados(TipoProducto categoria) throws PersistenciaException;
-
+    public List<Producto> buscarPorFiltros(String nombre, TipoProducto categoria) throws PersistenciaException;
 }

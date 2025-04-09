@@ -39,6 +39,9 @@ public class MenuPrincipal extends javax.swing.JFrame {
         btnClientesFrecuentes = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setMaximumSize(new java.awt.Dimension(1070, 700));
+        setMinimumSize(new java.awt.Dimension(1070, 700));
+        setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setBackground(new java.awt.Color(255, 254, 245));
@@ -91,7 +94,6 @@ public class MenuPrincipal extends javax.swing.JFrame {
         btnProductos.setForeground(new java.awt.Color(255, 255, 255));
         btnProductos.setText("Productos");
         btnProductos.setPreferredSize(new java.awt.Dimension(150, 150));
-
         btnProductos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnProductosActionPerformed(evt);
@@ -166,6 +168,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnClientesFrecuentesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClientesFrecuentesActionPerformed

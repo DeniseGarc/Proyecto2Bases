@@ -487,7 +487,7 @@ public class PantallaAdministrarProducto extends javax.swing.JFrame {
 
     /**
      * Método que toma los valores de los campos para crear un
-     * IngredieneProductoDTO, para obtener los ingredientes se recorre la lista
+     * IngredienteProductoDTO, para obtener los ingredientes se recorre la lista
      * de paneles laterales, los cuales devuelven el IngredienteProductoDTO que
      * contienen.
      *

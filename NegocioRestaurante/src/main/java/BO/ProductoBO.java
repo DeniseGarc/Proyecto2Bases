@@ -55,44 +55,13 @@ public class ProductoBO implements IProductoBO {
     }
 
     @Override
-    public List<ProductoDTO> obtenerProductosFiltradosNombre(String texto) throws NegocioException {
-        if (texto == null) {
-            throw new NegocioException("El texto para filtrar los productos no puede ser nulo");
-        }
+    public List<ProductoDTO> obtenerProductosFiltrados(String texto, TipoProducto categoria) throws NegocioException {
         try {
-            List<Producto> productos = productoDAO.obtenerProductosFiltrados(texto);
+            List<Producto> productos = productoDAO.buscarPorFiltros(texto, categoria);
             return ProductoMapper.toDTOList(productos);
         } catch (PersistenciaException e) {
             Logger.getLogger(ProductoBO.class.getName()).log(Level.SEVERE, null, e);
             throw new NegocioException("Ocurrió un error al obtener los productos filtrados por nombre", e);
-        }
-    }
-
-    @Override
-    public List<ProductoDTO> obtenerProductosFiltradosNombreyCategoria(String texto, TipoProducto categoria) throws NegocioException {
-        if (texto == null || categoria == null) {
-            throw new NegocioException("El texto para filtrar ni la categoria del producto pueden ser nulos");
-        }
-        try {
-            List<Producto> productos = productoDAO.obtenerProductosFiltrados(texto, categoria);
-            return ProductoMapper.toDTOList(productos);
-        } catch (PersistenciaException e) {
-            Logger.getLogger(ProductoBO.class.getName()).log(Level.SEVERE, null, e);
-            throw new NegocioException("Ocurrió un error al obtener los productos filtrados por nombre y categoria", e);
-        }
-    }
-
-    @Override
-    public List<ProductoDTO> obtenerProductosFiltradosCategoria(TipoProducto categoria) throws NegocioException {
-        if (categoria == null) {
-            throw new NegocioException("La categoria para filtrar los productos no puede ser nula");
-        }
-        try {
-            List<Producto> productos = productoDAO.obtenerProductosFiltrados(categoria);
-            return ProductoMapper.toDTOList(productos);
-        } catch (PersistenciaException e) {
-            Logger.getLogger(ProductoBO.class.getName()).log(Level.SEVERE, null, e);
-            throw new NegocioException("Ocurrió un error al obtener los productos filtrados por categoria", e);
         }
     }
 

@@ -29,7 +29,6 @@ import exception.NegocioException;
 import interfaces.IClienteFrecuenteBO;
 import interfaces.IIngredienteBO;
 import interfaces.IProductoBO;
-import java.util.Collections;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -166,10 +165,11 @@ public class CoordinadorAplicacion {
         pantallaAdministrarProducto.setVisible(true);
         frame.dispose();
     }
-    
+
     /**
-     * Método para redirigir a la pantalla que permite agregar mesa 
-     * @param frame 
+     * Método para redirigir a la pantalla que permite agregar mesa
+     *
+     * @param frame
      */
     public void pantallaComandaAgregarCliente(JFrame frame) {
         ComandaAgregarCliente pantallaComandaAgregarCliente = new ComandaAgregarCliente();
@@ -203,13 +203,7 @@ public class CoordinadorAplicacion {
      */
     public List<ProductoDTO> obtenerProductosFiltrados(String texto, TipoProducto categoria) throws CoordinadorException {
         try {
-            if (texto != null && categoria != null) {
-                return productoBO.obtenerProductosFiltradosNombreyCategoria(texto, categoria);
-            } else if (texto == null) {
-                return productoBO.obtenerProductosFiltradosCategoria(categoria);
-            } else {
-                return productoBO.obtenerProductosFiltradosNombre(texto);
-            }
+            return productoBO.obtenerProductosFiltrados(texto, categoria);
         } catch (NegocioException ex) {
             Logger.getLogger(CoordinadorAplicacion.class.getName()).log(Level.SEVERE, null, ex);
             throw new CoordinadorException("Ha ocurrido un error al filtrar los productos");
@@ -388,8 +382,10 @@ public class CoordinadorAplicacion {
             throw new CoordinadorException("Ha ocurrido un problema al actualizar el estado del producto");
         }
     }
+
     /**
-     * Agrega un ingrediente a la base de datos 
+     * Agrega un ingrediente a la base de datos
+     *
      * @param ingrediente Ingrediente a agregar
      * @return ingrediente
      * @throws CoordinadorException Si ocurre algun error al momento de guardar
@@ -416,8 +412,9 @@ public class CoordinadorAplicacion {
 
     /**
      * Elimina el ingrediente de la base de datos
-     * @param ingrediente Ingrediente a eliminar 
-     * @return true si se elimino el ingrediente 
+     *
+     * @param ingrediente Ingrediente a eliminar
+     * @return true si se elimino el ingrediente
      * @throws CoordinadorException Si ocurre algun error inesperado al eliminar
      */
     public boolean eliminarIngrediente(IngredienteDTO ingrediente) throws CoordinadorException {
@@ -464,13 +461,15 @@ public class CoordinadorAplicacion {
         } catch (NegocioException ex) {
             Logger.getLogger(CoordinadorAplicacion.class.getName()).log(Level.SEVERE, "Error en buscarPorUnidad", ex);
             throw new CoordinadorException("Ha ocurrido un error al buscar los ingredientes: " + ex.getMessage());
-        } 
+        }
     }
 
     /**
      * Recupera solo los ingredientes que no tienen un producto asignado
+     *
      * @return Lista de ingredientes DTO
-     * @throws CoordinadorException Si ocurre algun error inesperado al recuperar los ingredientes
+     * @throws CoordinadorException Si ocurre algun error inesperado al
+     * recuperar los ingredientes
      */
     public List<IngredienteDTO> mostrarIngredientesSinProducto() throws CoordinadorException {
         try {
@@ -483,10 +482,11 @@ public class CoordinadorAplicacion {
 
     /**
      * Modifica el stock del ingrediente indicado
+     *
      * @param id Id del ingrediente a modificar
      * @param stock Stock nuevo
      * @return IngredienteDTO actualizado
-     * @throws CoordinadorException 
+     * @throws CoordinadorException
      */
     public IngredienteDTO modificarStock(Long id, int stock) throws CoordinadorException {
         try {
@@ -499,10 +499,11 @@ public class CoordinadorAplicacion {
 
     /**
      * Recupera la lista de ingredientes filtrandolos por nombre y unidad
+     *
      * @param nombre Nombre del ingrediente a buscar
      * @param unidad Unidad de medida a buscar
      * @return Lista de ingredientes filtrados
-     * @throws CoordinadorException Si ocurre algun error inesperado al buscar 
+     * @throws CoordinadorException Si ocurre algun error inesperado al buscar
      */
     public List<IngredienteDTO> buscarPorNombreYUnidad(String nombre, String unidad) throws CoordinadorException {
         try {
@@ -516,9 +517,11 @@ public class CoordinadorAplicacion {
 
     /**
      * Busca los ingredientes filtrandolos por nombre
+     *
      * @param nombre nombre del ingrediente a buscar
      * @return Lista de ingredientes filtrados
-     * @throws CoordinadorException Si ocurre algun error al buscar los ingredientes
+     * @throws CoordinadorException Si ocurre algun error al buscar los
+     * ingredientes
      */
     public List<IngredienteDTO> buscarPorNombre(String nombre) throws CoordinadorException {
         try {
@@ -531,10 +534,11 @@ public class CoordinadorAplicacion {
 
     /**
      * Regresa solo un ingrediente buscandolo por nombre y unidad
+     *
      * @param nombre Nombre del ingrediente a buscar
      * @param unidad Unidad de medida a buscar
-     * @return Ingrediente 
-     * @throws CoordinadorException 
+     * @return Ingrediente
+     * @throws CoordinadorException
      */
     public IngredienteDTO buscarPorNombreYUnidad1(String nombre, String unidad) throws CoordinadorException {
         try {

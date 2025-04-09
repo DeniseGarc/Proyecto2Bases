@@ -71,12 +71,9 @@ public class ComandaAgregarCliente extends javax.swing.JFrame {
         panelBusquedaClientes.setBackground(new java.awt.Color(255, 255, 255));
 
         lblMesa.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        lblMesa.setForeground(new java.awt.Color(0, 0, 0));
         lblMesa.setText("Mesa: ");
 
-        cbBoxMesas.setBackground(new java.awt.Color(255, 255, 255));
         cbBoxMesas.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        cbBoxMesas.setForeground(new java.awt.Color(0, 0, 0));
         cbBoxMesas.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         btnTomarComanda.setBackground(new java.awt.Color(255, 119, 170));
@@ -146,7 +143,7 @@ public class ComandaAgregarCliente extends javax.swing.JFrame {
     }//GEN-LAST:event_lblRegresarMouseClicked
 
     private void btnTomarComandaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTomarComandaActionPerformed
-        coordinador.PantallaTomaComanda(this);
+//        coordinador.PantallaTomaComanda(this);
     }//GEN-LAST:event_btnTomarComandaActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnTomarComanda;

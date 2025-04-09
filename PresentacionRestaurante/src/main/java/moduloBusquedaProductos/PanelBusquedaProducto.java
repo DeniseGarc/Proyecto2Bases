@@ -135,27 +135,18 @@ public class PanelBusquedaProducto extends javax.swing.JPanel {
     }
 
     /**
-     * Ejecuta la búsqueda de productos según los criterios actuales. Actualiza
-     * la vista con los resultados obtenidos del coordinados.
+     * Manda los valores de para los filtros de producto según los criterios
+     * actuales. Actualiza los productos de la vista con los resultados
+     * obtenidos del coordinador.
      */
     private void buscar() {
+        String nombre = txtBusqueda.getText().isBlank() ? null : txtBusqueda.getText();
+        TipoProducto categoria = cBoxTipo.getSelectedIndex() != 0 ? (TipoProducto) cBoxTipo.getSelectedItem() : null;
         try {
-            if (txtBusqueda.getText().isBlank() && cBoxTipo.getSelectedIndex() == 0) {
-                // obtener todos los productos
-                vista.mostrarProductos(control.obtenerProductos());
-            } else if (txtBusqueda.getText().isBlank() && cBoxTipo.getSelectedIndex() != 0) {
-                // obtener todos los productos del tipo
-                vista.mostrarProductos(control.obtenerProductosFiltrados(null, (TipoProducto) cBoxTipo.getSelectedItem()));
-            } else if (!txtBusqueda.getText().isBlank() && cBoxTipo.getSelectedIndex() != 0) {
-                //obtener productos que tengan tipo y nombre
-                vista.mostrarProductos(control.obtenerProductosFiltrados(txtBusqueda.getText(), (TipoProducto) cBoxTipo.getSelectedItem()));
-            } else if (!txtBusqueda.getText().isBlank() && cBoxTipo.getSelectedIndex() == 0) {
-                // obtener los productos por nombre
-                vista.mostrarProductos(control.obtenerProductosFiltrados(txtBusqueda.getText(), null));
-            }
+            vista.mostrarProductos(control.obtenerProductosFiltrados(nombre, categoria));
         } catch (CoordinadorException ex) {
             Logger.getLogger(PanelBusquedaProducto.class.getName()).log(Level.SEVERE, null, ex);
-            JOptionPane.showMessageDialog(null, ex, "Ha ocurrido un error inesperado", JOptionPane.ERROR);
+            JOptionPane.showMessageDialog(null, ex.getMessage(), "Ha ocurrido un error inesperado", JOptionPane.ERROR);
         }
     }
 
