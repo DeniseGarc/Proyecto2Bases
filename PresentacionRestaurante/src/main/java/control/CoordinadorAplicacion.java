@@ -300,25 +300,24 @@ public class CoordinadorAplicacion {
 
     public boolean actualizarComanda(ComandaDTO comanda) throws CoordinadorException {
         if (validarDatosComanda(comanda)) {
-//            try {
-//                // llamada a actualizar comanda BO
-//            } catch (NegocioException ex) {
-//                Logger.getLogger(CoordinadorAplicacion.class.getName()).log(Level.SEVERE, null, ex);
-//                throw new CoordinadorException("Ha ocurrido un error al intentar actualizar la comanda");
-//            }
+            try {
+                return comandaBO.actualizarComanda(comanda);
+            } catch (NegocioException ex) {
+                Logger.getLogger(CoordinadorAplicacion.class.getName()).log(Level.SEVERE, null, ex);
+                throw new CoordinadorException("Ha ocurrido un error al intentar actualizar la comanda");
+            }
         }
         return false;
     }
 
     public boolean agregarComanda(ComandaDTO comanda) throws CoordinadorException {
-
         if (validarDatosComanda(comanda)) {
-//            try {
-//                // llamada a agregar comanda BO
-//            } catch (NegocioException ex) {
-//                Logger.getLogger(CoordinadorAplicacion.class.getName()).log(Level.SEVERE, null, ex);
-//                throw new CoordinadorException("Ha ocurrido un error al intentar agregar la comanda");
-//            }
+            try {
+                return comandaBO.agregarComanda(comanda);
+            } catch (NegocioException ex) {
+                Logger.getLogger(CoordinadorAplicacion.class.getName()).log(Level.SEVERE, null, ex);
+                throw new CoordinadorException("Ha ocurrido un error al intentar agregar la comanda");
+            }
         }
         return false;
     }
@@ -622,7 +621,7 @@ public class CoordinadorAplicacion {
 
     public List<ComandaDTO> obtenerComandasActivas() throws CoordinadorException {
         try {
-            return comandaBO.obtenerComandsActivas();
+            return comandaBO.obtenerComandasActivas();
         } catch (NegocioException e) {
             throw new CoordinadorException("Ha ocurrido un error al consultar las comandas activas");
         }

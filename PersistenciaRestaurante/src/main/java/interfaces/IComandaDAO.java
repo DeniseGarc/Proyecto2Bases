@@ -16,6 +16,12 @@ import java.util.List;
 public interface IComandaDAO {
 
     public List<Comanda> obtenerComandasPorCliente(ClienteFrecuente clienteFrecuente) throws PersistenciaException;
+
     public List<Comanda> obtenerComandas() throws PersistenciaException;
-    public List<Comanda> obtenerComandsActivas() throws PersistenciaException;
+
+    public List<Comanda> obtenerComandasActivas() throws PersistenciaException;
+
+    public boolean registrarComanda(Comanda comandaNueva) throws PersistenciaException;
+
+    public boolean actualizarComanda(Comanda comanda) throws PersistenciaException;
 }

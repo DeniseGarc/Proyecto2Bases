@@ -23,6 +23,7 @@ public class ComandaAgregarCliente extends javax.swing.JFrame {
     public ComandaAgregarCliente() {
         initComponents();
         panelBusquedaClientes.cargarClientes();
+        // Se deben obtener todas las mesas que estan disponibles y agregar al combo box
     }
 
     /**
@@ -44,7 +45,10 @@ public class ComandaAgregarCliente extends javax.swing.JFrame {
         btnTomarComanda = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(1070, 70));
+        setMaximumSize(new java.awt.Dimension(1070, 700));
+        setMinimumSize(new java.awt.Dimension(1070, 700));
+        setPreferredSize(new java.awt.Dimension(1070, 700));
+        setResizable(false);
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -75,7 +79,7 @@ public class ComandaAgregarCliente extends javax.swing.JFrame {
         lblMesa.setText("Mesa: ");
 
         cbBoxMesas.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        cbBoxMesas.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbBoxMesas.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "seleccione la mesa", "1", "2", "3", "4" }));
 
         btnTomarComanda.setBackground(new java.awt.Color(255, 119, 170));
         btnTomarComanda.setForeground(new java.awt.Color(255, 255, 255));
@@ -103,26 +107,24 @@ public class ComandaAgregarCliente extends javax.swing.JFrame {
                         .addGap(291, 291, 291)
                         .addComponent(lblMesa)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(cbBoxMesas, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(cbBoxMesas, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(153, 153, 153)
+                        .addComponent(btnTomarComanda, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(btnTomarComanda, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(356, 356, 356))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblMesa)
-                    .addComponent(cbBoxMesas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(lblMesa)
+                        .addComponent(cbBoxMesas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnTomarComanda, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(panelBusquedaClientes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnTomarComanda, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(17, Short.MAX_VALUE))
+                .addContainerGap(53, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -137,6 +139,7 @@ public class ComandaAgregarCliente extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void lblRegresarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblRegresarMouseClicked
@@ -145,6 +148,7 @@ public class ComandaAgregarCliente extends javax.swing.JFrame {
 
     private void btnTomarComandaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTomarComandaActionPerformed
         ComandaDTO comandaAgregar = new ComandaDTO();
+        // Falta settear los detalles de nombre cliente, telefono cliente y numero de mesa seleccionada a la comanda
         coordinador.pantallaAgregarComanda(this, comandaAgregar);
     }//GEN-LAST:event_btnTomarComandaActionPerformed
 

@@ -54,6 +54,10 @@ public class PantallaComandas extends javax.swing.JFrame {
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setMaximumSize(new java.awt.Dimension(1070, 700));
+        setMinimumSize(new java.awt.Dimension(1070, 700));
+        setPreferredSize(new java.awt.Dimension(1070, 700));
+        setResizable(false);
 
         jPanel1.setBackground(new java.awt.Color(255, 254, 245));
         jPanel1.setPreferredSize(new java.awt.Dimension(1070, 700));
@@ -67,11 +71,6 @@ public class PantallaComandas extends javax.swing.JFrame {
         btnAgregarComanda.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnAgregarComandaMouseClicked(evt);
-            }
-        });
-        btnAgregarComanda.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAgregarComandaActionPerformed(evt);
             }
         });
 
@@ -142,15 +141,12 @@ public class PantallaComandas extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void lblRegresarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblRegresarMouseClicked
         coordinador.PantallaPrinicipal(this);
     }//GEN-LAST:event_lblRegresarMouseClicked
-
-    private void btnAgregarComandaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarComandaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnAgregarComandaActionPerformed
 
     private void btnAgregarComandaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAgregarComandaMouseClicked
         coordinador.pantallaComandaAgregarCliente(this);

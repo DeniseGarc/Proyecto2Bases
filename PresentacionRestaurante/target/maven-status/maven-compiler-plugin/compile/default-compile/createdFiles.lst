@@ -50,7 +50,6 @@ GUIs\RegistrarClienteNuevo.class
 GUIs\PantallaIngredientes$2.class
 control\CoordinadorAplicacion.class
 GUIs\MenuPrincipal$2.class
-GUIs\PantallaComandas$3.class
 GUIs\PantallaProductos$3.class
 moduloBusquedaProductos\PanelBusquedaProducto$1.class
 GUIs\frmAgregarIngrediente.class

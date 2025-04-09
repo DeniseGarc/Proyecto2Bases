@@ -39,7 +39,6 @@ public class MenuPrincipal extends javax.swing.JFrame {
         btnClientesFrecuentes = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setMaximumSize(new java.awt.Dimension(1070, 700));
         setMinimumSize(new java.awt.Dimension(1070, 700));
         setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
