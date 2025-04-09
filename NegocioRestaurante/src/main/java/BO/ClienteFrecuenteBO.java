@@ -62,7 +62,7 @@ public class ClienteFrecuenteBO implements IClienteFrecuenteBO {
             List<ClienteFrecuente> clientes;
             List<ClienteFrecuenteDTO> filtrados = new ArrayList<>();
             if (filtro.equalsIgnoreCase("telefono")) {
-                clientes = clienteFrecuenteDAO.obtenerClientesFrecuentes(null, null);
+                clientes = clienteFrecuenteDAO.obtenerClientesFrecuentes("", "");
                 desencriptarTelefonos(clientes);
                 for (ClienteFrecuente cliente : clientes) {
                     if (cliente.getTelefono().contains(dato)) {
