@@ -56,16 +56,31 @@ public class ClienteFrecuenteDAO implements IClienteFrecuenteDAO {
     /**
      * Método para obtener una lista de todos los clientes frecuentes.
      *
+     * @param filtro
+     * @param dato
      * @return Lista de clientes frecuentes.
      * @throws PersistenciaException Si ocurre un error al ejecutar la consulta.
      */
     @Override
-    public List<ClienteFrecuente> obtenerClientesFrecuentes() throws PersistenciaException {
+    public List<ClienteFrecuente> obtenerClientesFrecuentes(String filtro, String dato) throws PersistenciaException {
         EntityManager em = Conexion.crearConexion();
         ComandaDAO comandaDAO = ComandaDAO.getInstanciaDAO();
+
         try {
-            List<ClienteFrecuente> clientes = em.createQuery("SELECT c FROM Cliente c WHERE TYPE(c) = ClienteFrecuente", ClienteFrecuente.class)
-                    .getResultList();
+            String queryBase = "SELECT c FROM Cliente c WHERE TYPE(c) = ClienteFrecuente";
+            boolean filtrar = false;
+            if (filtro.equalsIgnoreCase("Nombre")) {
+                queryBase += " AND c.nombre LIKE CONCAT('%', :valor, '%')";
+                filtrar = true;
+            } else if (filtro.equalsIgnoreCase("Correo electronico")) {
+                queryBase += " AND c.correoElectronico LIKE CONCAT('%', :valor, '%')";
+                filtrar = true;
+            }
+            TypedQuery<ClienteFrecuente> query = em.createQuery(queryBase, ClienteFrecuente.class);
+            if (filtrar) {
+                query.setParameter("valor", dato);
+            }
+            List<ClienteFrecuente> clientes = query.getResultList();
             for (ClienteFrecuente cliente : clientes) {
                 List<Comanda> comandas = comandaDAO.obtenerComandasPorCliente(cliente);
                 cliente.setPuntosFidelidad(cliente.calcularPuntosFidelidad(comandas));
@@ -74,7 +89,7 @@ public class ClienteFrecuenteDAO implements IClienteFrecuenteDAO {
             }
             return clientes;
         } catch (Exception e) {
-            throw new PersistenciaException("Error al obtener clientes frecuentes: ", e);
+            throw new PersistenciaException("Error al buscar clientes frecuentes: ", e);
         } finally {
             em.close();
         }

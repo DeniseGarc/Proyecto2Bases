@@ -48,7 +48,9 @@ public class ClienteFrecuenteBO implements IClienteFrecuenteBO {
     }
 
     /**
-     * Método donde se filtra la lista de clientes dependiendo del tipo de busqueda y el dato a buscar
+     * Método donde se filtra la lista de clientes dependiendo del tipo de
+     * busqueda y el dato a buscar
+     *
      * @param filtro el tipo de busqueda que se quiere realizar
      * @param dato el dato el cual se buscará
      * @return la lista de cliente filtrada
@@ -57,27 +59,24 @@ public class ClienteFrecuenteBO implements IClienteFrecuenteBO {
     @Override
     public List<ClienteFrecuenteDTO> obtenerClientesFrecuentes(String filtro, String dato) throws NegocioException {
         try {
-            List<ClienteFrecuente> clientes = clienteFrecuenteDAO.obtenerClientesFrecuentes();
-            desencriptarTelefonos(clientes);
-            if (filtro != null && dato != null && !dato.isEmpty()) {
-                clientes = clientes.stream()
-                        .filter(cliente -> {
-                            switch (filtro) {
-                                case "Nombre":
-                                    return cliente.getNombre().toLowerCase().contains(dato.toLowerCase());
-                                case "Telefono":
-                                    return cliente.getTelefono().contains(dato);
-                                case "Correo":
-                                    return cliente.getCorreoElectronico().toLowerCase().contains(dato.toLowerCase());
-                                default:
-                                    return false;
-                            }
-                        })
-                        .toList();
+            List<ClienteFrecuente> clientes;
+            List<ClienteFrecuenteDTO> filtrados = new ArrayList<>();
+            if (filtro.equalsIgnoreCase("telefono")) {
+                clientes = clienteFrecuenteDAO.obtenerClientesFrecuentes(null, null);
+                desencriptarTelefonos(clientes);
+                for (ClienteFrecuente cliente : clientes) {
+                    if (cliente.getTelefono().contains(dato)) {
+                        filtrados.add(ClienteMapper.toDTO(cliente));
+                    }
+                }
+            } else {
+                clientes = clienteFrecuenteDAO.obtenerClientesFrecuentes(filtro, dato);
+                desencriptarTelefonos(clientes); 
+                filtrados = ClienteMapper.toDTOList(clientes);
             }
-            return ClienteMapper.toDTOList(clientes);
+            return filtrados;
         } catch (PersistenciaException e) {
-            throw new NegocioException("Error al obtener clientes frecuentes por filtro: " + filtro, e);
+            throw new NegocioException("Error al buscar clientes frecuentes: ", e);
         }
     }
 
