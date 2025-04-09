@@ -5,18 +5,24 @@
 package GUIs;
 
 import control.CoordinadorAplicacion;
+import control.exception.CoordinadorException;
+import java.awt.HeadlessException;
+import javax.swing.JOptionPane;
 
 /**
  *
  * @author Alici
  */
 public class MenuPrincipal extends javax.swing.JFrame {
+
     private CoordinadorAplicacion coordinador = new CoordinadorAplicacion();
+
     /**
      * Creates new form MenuPrincipal
      */
     public MenuPrincipal() {
         initComponents();
+        verificarMesas();
     }
 
     /**
@@ -77,6 +83,11 @@ public class MenuPrincipal extends javax.swing.JFrame {
         btnMesas.setForeground(new java.awt.Color(255, 255, 255));
         btnMesas.setText("Mesas");
         btnMesas.setPreferredSize(new java.awt.Dimension(150, 150));
+        btnMesas.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnMesasMouseClicked(evt);
+            }
+        });
 
         btnIngredientes.setBackground(new java.awt.Color(255, 178, 217));
         btnIngredientes.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 18)); // NOI18N
@@ -186,12 +197,36 @@ public class MenuPrincipal extends javax.swing.JFrame {
     private void btnComandasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnComandasMouseClicked
         coordinador.PantallaComandas(this);
     }//GEN-LAST:event_btnComandasMouseClicked
-    
+
     private void btnProductosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProductosActionPerformed
         coordinador.pantallaProductos(this);
     }//GEN-LAST:event_btnProductosActionPerformed
 
-    
+    private void btnMesasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnMesasMouseClicked
+        insertarMesas();
+    }//GEN-LAST:event_btnMesasMouseClicked
+
+    private void verificarMesas() {
+        try {
+            if (coordinador.consultarMesas()) {
+                btnMesas.setEnabled(false);
+            }
+        } catch (CoordinadorException e) {
+            JOptionPane.showMessageDialog(this, "Error al verificar las mesas: " + e.getMessage());
+        }
+    }
+
+    private void insertarMesas() {
+        try {
+            if (!coordinador.consultarMesas()) {
+                coordinador.insertarMesas();
+                btnMesas.setEnabled(false);
+                JOptionPane.showMessageDialog(this, "Las mesas se registraron exitosamente.");
+            }
+        } catch (CoordinadorException e) {
+            JOptionPane.showMessageDialog(this, "Error al insertar mesas: " + e.getMessage());
+        }
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnClientesFrecuentes;

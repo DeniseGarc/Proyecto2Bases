@@ -17,15 +17,32 @@ import javax.persistence.EntityManager;
  */
 public class MesaDAO implements IMesaDAO {
 
+    private static MesaDAO instanciaMesaDAO;
+
+    public MesaDAO() {
+    }
+
+    public static MesaDAO getInstanciaDAO() {
+        if (instanciaMesaDAO == null) {
+            instanciaMesaDAO = new MesaDAO();
+        }
+        return instanciaMesaDAO;
+    }
+
+    /**
+     * Método para insertar las mesa del restaurante
+     *
+     * @throws PersistenciaException
+     */
     @Override
-    public void insertarMesas(List<Mesa> mesas) throws PersistenciaException {
+    public void insertarMesas() throws PersistenciaException {
         EntityManager em = Conexion.crearConexion();
         try {
-            em.getTransaction().begin();
             for (int i = 0; i < 20; i++) {
+                em.getTransaction().begin();
                 em.persist(new Mesa(true));
+                em.getTransaction().commit();
             }
-            em.getTransaction().commit();
         } catch (Exception e) {
             throw new PersistenciaException("No se pudieron insertar las mesas: ", e);
         } finally {
@@ -33,14 +50,20 @@ public class MesaDAO implements IMesaDAO {
         }
     }
 
+    /**
+     * Método para verificar si las mesas ya fueron insertadas
+     *
+     * @return true si ya estan en la base de datos, false en caso contrario
+     * @throws PersistenciaException
+     */
     @Override
     public boolean consultarMesas() throws PersistenciaException {
         EntityManager em = Conexion.crearConexion();
         try {
-            int count = em.createQuery("SELECT COUNT(m) FROM Mesa m", int.class).getSingleResult();
+            Long count = em.createQuery("SELECT COUNT(m) FROM Mesa m", Long.class).getSingleResult();
             return count >= 20;
         } catch (Exception e) {
-            throw new PersistenciaException("Hubo un error al consultar las mesas: ", e);
+            throw new PersistenciaException("Hubo un error al consultar las mesas: " + e.getMessage(), e);
         } finally {
             em.close();
         }

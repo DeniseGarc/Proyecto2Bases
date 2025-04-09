@@ -29,6 +29,7 @@ import exception.NegocioException;
 import interfaces.IClienteFrecuenteBO;
 import interfaces.IComandaBO;
 import interfaces.IIngredienteBO;
+import interfaces.IMesaBO;
 import interfaces.IProductoBO;
 import java.util.List;
 import java.util.logging.Level;
@@ -47,6 +48,7 @@ public class CoordinadorAplicacion {
     private IIngredienteBO ingredienteBO = ManejadorBO.crearIngredienteBO();
     private IClienteFrecuenteBO clienteFrecuenteBO = ManejadorBO.crearClienteFrecuenteBO();
     private IComandaBO comandaBO = ManejadorBO.crearComandaBo();
+    private IMesaBO mesaBO = ManejadorBO.crearMesaBO();
 
     /**
      * Método que define a que pantalla se va redirigir cuando se le da a la
@@ -554,9 +556,10 @@ public class CoordinadorAplicacion {
 
     /**
      * Recibe un cliente para registrarlo en la base de datos
+     *
      * @param clienteFrecuente al cual se desea registrar
      * @return el cliente registrado
-     * @throws CoordinadorException 
+     * @throws CoordinadorException
      */
     public ClienteFrecuenteDTO registrarNuevoClienteFrecuente(ClienteFrecuenteDTO clienteFrecuente) throws CoordinadorException {
         try {
@@ -576,8 +579,9 @@ public class CoordinadorAplicacion {
 
     /**
      * Validaciones para asegurarse de que el cliente tenga datos correctos
+     *
      * @param clienteFrecuente el cual necesita ser validado
-     * @throws CoordinadorException 
+     * @throws CoordinadorException
      */
     private void validarCliente(ClienteFrecuenteDTO clienteFrecuente) throws CoordinadorException {
         if (clienteFrecuente == null) {
@@ -601,10 +605,11 @@ public class CoordinadorAplicacion {
 
     /**
      * Obtiene una lista de clientes filtrada dependiendo de los parametros
+     *
      * @param filtro por el cual se filtrará la busqueda
      * @param dato el cual se necesita buscar
      * @return la lista de clientes filtrada
-     * @throws CoordinadorException 
+     * @throws CoordinadorException
      */
     public List<ClienteFrecuenteDTO> obtenerClientesFrecuentes(String filtro, String dato) throws CoordinadorException {
         try {
@@ -631,6 +636,35 @@ public class CoordinadorAplicacion {
         } catch (NegocioException e) {
             throw new CoordinadorException("Ha ocurrido un error al obtener el producto por su nombre");
 
+        }
+    }
+
+    /**
+     * Método para insertar las mesas en la base de datos.
+     *
+     * @throws CoordinadorException Si ocurre un error al intentar insertar las
+     * mesas.
+     */
+    public void insertarMesas() throws CoordinadorException {
+        try {
+            mesaBO.insertarMesas();
+        } catch (NegocioException e) {
+            throw new CoordinadorException("Error al insertar las mesas: ", e);
+        }
+    }
+
+    /**
+     * Método para verificar si las mesas ya han sido insertadas. 
+     *
+     * @return true si las mesas ya están insertadas, false si no.
+     * @throws CoordinadorException Si ocurre un error al intentar consultar las
+     * mesas.
+     */
+    public boolean consultarMesas() throws CoordinadorException {
+        try {
+            return mesaBO.consultarMesas(); 
+        } catch (NegocioException e) {
+            throw new CoordinadorException("Error al consultar las mesas: ", e);
         }
     }
 }

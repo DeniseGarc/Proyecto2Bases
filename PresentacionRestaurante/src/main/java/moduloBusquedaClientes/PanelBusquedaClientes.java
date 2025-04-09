@@ -137,7 +137,7 @@ public class PanelBusquedaClientes extends javax.swing.JPanel {
 
     public void cargarClientes() {
         try {
-            List<ClienteFrecuenteDTO> clientes = coordinador.obtenerClientesFrecuentes(null, null);
+            List<ClienteFrecuenteDTO> clientes = coordinador.obtenerClientesFrecuentes("", "");
             cargarClientesEnTabla(clientes);
         } catch (CoordinadorException ex) {
             Logger.getLogger(ClienteFrecuente.class.getName()).log(Level.SEVERE, null, ex);

@@ -4,15 +4,13 @@
  */
 package interfaces;
 
-import entidades.Mesa;
-import exception.PersistenciaException;
-import java.util.List;
+import exception.NegocioException;
 
 /**
  *
  * @author Maryr
  */
-public interface IMesaDAO {
-    public void insertarMesas() throws PersistenciaException;
-    public boolean consultarMesas() throws PersistenciaException;
+public interface IMesaBO {
+    public void insertarMesas() throws NegocioException;
+    public boolean consultarMesas() throws NegocioException;
 }

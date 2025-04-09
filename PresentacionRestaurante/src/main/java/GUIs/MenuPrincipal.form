@@ -196,6 +196,9 @@
               <Dimension value="[150, 150]"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnMesasMouseClicked"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="btnIngredientes">
           <Properties>

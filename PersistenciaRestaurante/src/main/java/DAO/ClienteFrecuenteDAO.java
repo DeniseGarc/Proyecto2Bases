@@ -72,7 +72,7 @@ public class ClienteFrecuenteDAO implements IClienteFrecuenteDAO {
             if (filtro.equalsIgnoreCase("Nombre")) {
                 queryBase += " AND c.nombre LIKE CONCAT('%', :valor, '%')";
                 filtrar = true;
-            } else if (filtro.equalsIgnoreCase("Correo electronico")) {
+            } else if (filtro.equalsIgnoreCase("Correo")) {
                 queryBase += " AND c.correoElectronico LIKE CONCAT('%', :valor, '%')";
                 filtrar = true;
             }
