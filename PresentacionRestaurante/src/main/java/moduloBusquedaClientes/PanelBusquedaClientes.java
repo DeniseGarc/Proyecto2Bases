@@ -60,7 +60,7 @@ public class PanelBusquedaClientes extends javax.swing.JPanel {
         cbBoxTipoBusqueda.setBackground(new java.awt.Color(255, 255, 255));
         cbBoxTipoBusqueda.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         cbBoxTipoBusqueda.setForeground(new java.awt.Color(0, 0, 0));
-        cbBoxTipoBusqueda.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Nombre", "Correo electronico", "Telefono" }));
+        cbBoxTipoBusqueda.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Nombre", "Correo", "Telefono" }));
 
         buscador.setBackground(new java.awt.Color(255, 255, 255));
         buscador.setForeground(new java.awt.Color(0, 0, 0));
@@ -137,7 +137,7 @@ public class PanelBusquedaClientes extends javax.swing.JPanel {
 
     public void cargarClientes() {
         try {
-            List<ClienteFrecuenteDTO> clientes = coordinador.obtenerClientesFrecuentes();
+            List<ClienteFrecuenteDTO> clientes = coordinador.obtenerClientesFrecuentes(null, null);
             cargarClientesEnTabla(clientes);
         } catch (CoordinadorException ex) {
             Logger.getLogger(ClienteFrecuente.class.getName()).log(Level.SEVERE, null, ex);
@@ -168,15 +168,7 @@ public class PanelBusquedaClientes extends javax.swing.JPanel {
                 cargarClientes();
                 return;
             }
-            List<ClienteFrecuenteDTO> clientesFiltrados = null;
-            switch (tipo) {
-                case "Nombre" ->
-                    clientesFiltrados = coordinador.obtenerClientesPorNombre(texto);
-                case "Telefono" ->
-                    clientesFiltrados = coordinador.obtenerClientesPorTelefono(texto);
-                case "Correo electronico" ->
-                    clientesFiltrados = coordinador.obtenerClientesPorCorreo(texto);
-            }
+            List<ClienteFrecuenteDTO> clientesFiltrados = coordinador.obtenerClientesFrecuentes(tipo, texto);
             cargarClientesEnTabla(clientesFiltrados);
         } catch (CoordinadorException e) {
             JOptionPane.showMessageDialog(this, "Error al realizar la búsqueda: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);

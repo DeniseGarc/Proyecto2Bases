@@ -14,8 +14,5 @@ import java.util.List;
  */
 public interface IClienteFrecuenteBO {
     public ClienteFrecuenteDTO registrarNuevoClienteFrecuente(ClienteFrecuenteDTO clienteFrecuente) throws NegocioException;
-    public List<ClienteFrecuenteDTO> obtenerClientesFrecuentes() throws NegocioException;
-    public List<ClienteFrecuenteDTO> obtenerClientesPorNombre(String nombre) throws NegocioException;
-    public List<ClienteFrecuenteDTO> obtenerClientesPorTelefono(String telefono) throws NegocioException;
-    public List<ClienteFrecuenteDTO> obtenerClientesPorCorreo(String correo) throws NegocioException;   
+    public List<ClienteFrecuenteDTO> obtenerClientesFrecuentes(String filtro, String dato) throws NegocioException;
 }
