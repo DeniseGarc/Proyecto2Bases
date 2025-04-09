@@ -27,6 +27,7 @@ import enumeradores.TipoProducto;
 import enumeradores.UnidadMedida;
 import exception.NegocioException;
 import interfaces.IClienteFrecuenteBO;
+import interfaces.IComandaBO;
 import interfaces.IIngredienteBO;
 import interfaces.IProductoBO;
 import java.util.Collections;
@@ -46,6 +47,7 @@ public class CoordinadorAplicacion {
     private IProductoBO productoBO = ManejadorBO.crearProductoBO();
     private IIngredienteBO ingredienteBO = ManejadorBO.crearIngredienteBO();
     private IClienteFrecuenteBO clienteFrecuenteBO = ManejadorBO.crearClienteFrecuenteBO();
+    private IComandaBO comandaBO = ManejadorBO.crearComandaBo();
 
     /**
      * Método que define a que pantalla se va redirigir cuando se le da a la
@@ -614,6 +616,14 @@ public class CoordinadorAplicacion {
         }
     }
 
+    
+    public List<ComandaDTO> obtenerComandasActivas() throws CoordinadorException{
+        try {
+            return comandaBO.obtenerComandsActivas();
+        } catch (NegocioException e) {
+            throw new CoordinadorException("Ha ocurrido un error al consultar las comandas activas");
+
+
     public ProductoDTO obtenerProductoPorNombre(String nombre) throws CoordinadorException {
         if (nombre == null || nombre.trim().isEmpty()) {
             throw new CoordinadorException("Nombre del producto no ha sido ingresado");
@@ -622,6 +632,7 @@ public class CoordinadorAplicacion {
             return productoBO.obtenerProductoPorNombre(nombre);
         } catch (NegocioException e) {
             throw new CoordinadorException("Ha ocurrido un error al obtener el producto por su nombre");
+
         }
     }
 }

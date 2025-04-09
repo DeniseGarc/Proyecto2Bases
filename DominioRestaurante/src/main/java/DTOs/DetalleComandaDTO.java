@@ -4,6 +4,8 @@
  */
 package DTOs;
 
+import entidades.Mesa;
+
 /**
  *
  * @author Alici
@@ -15,18 +17,14 @@ public class DetalleComandaDTO {
     private double importeTotal;
     private String notas;
     private String nombreProducto;
+  
 
     public DetalleComandaDTO() {
     }
 
-    public DetalleComandaDTO(double precioUnitario, int cantidad, double importeTotal, String notas, String nombreProducto) {
-        this.precioUnitario = precioUnitario;
-        this.cantidad = cantidad;
-        this.importeTotal = importeTotal;
-        this.notas = notas;
-        this.nombreProducto = nombreProducto;
-    }
+ 
 
+    
     public double getPrecioUnitario() {
         return precioUnitario;
     }
