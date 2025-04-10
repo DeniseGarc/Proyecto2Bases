@@ -10,6 +10,7 @@ import PlantillaComandas.PanelComandasActivas;
 import control.CoordinadorAplicacion;
 import control.exception.CoordinadorException;
 import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.Image;
 import java.awt.Insets;
 import java.util.List;
@@ -30,6 +31,8 @@ public class PantallaComandas extends javax.swing.JFrame {
     private final CoordinadorAplicacion coordinador = new CoordinadorAplicacion();
     public PantallaComandas() {
         initComponents();
+        jPanel3.setLayout(new GridBagLayout());
+        cargarComandas();
     }
     private void cargarComandas(){
         try {
@@ -101,7 +104,6 @@ public class PantallaComandas extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMaximumSize(new java.awt.Dimension(1070, 700));
         setMinimumSize(new java.awt.Dimension(1070, 700));
-        setPreferredSize(new java.awt.Dimension(1070, 700));
         setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
