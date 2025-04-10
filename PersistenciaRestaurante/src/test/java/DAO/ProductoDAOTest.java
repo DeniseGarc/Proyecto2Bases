@@ -275,4 +275,13 @@ public class ProductoDAOTest {
         assertTrue(resultado.size() >= 1);
     }
 
+    /**
+     * Prueba del método productoEnComandaActiva()
+     */
+    @Test
+    public void testProductoEnComandaActiva() throws Exception {
+        System.out.println("Prueba de método productoEnComandaActiva()");
+        boolean resultado = instanciaProductoDAO.productoEnComandaActiva("producto1");
+        assertTrue(resultado == false);
+    }
 }

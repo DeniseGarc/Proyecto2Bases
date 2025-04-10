@@ -50,12 +50,12 @@ public class PantallaProductos extends javax.swing.JFrame {
 
         btnConsultarIngredientes = new javax.swing.JButton();
         btnHabilitarDeshabilitar = new javax.swing.JButton();
-        btnActualizarProducto = new javax.swing.JButton();
         btnAgregarProducto = new javax.swing.JButton();
         panelTablaProductos = new moduloBusquedaProductos.PanelVistaListaProductos();
         jPanel2 = new javax.swing.JPanel();
         banner = new plantillas.Titulo();
         panelBusquedaProducto = new moduloBusquedaProductos.PanelBusquedaProducto();
+        btnActualizarProducto = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 254, 245));
@@ -84,18 +84,7 @@ public class PantallaProductos extends javax.swing.JFrame {
                 btnHabilitarDeshabilitarActionPerformed(evt);
             }
         });
-        getContentPane().add(btnHabilitarDeshabilitar, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 630, 250, 40));
-
-        btnActualizarProducto.setBackground(new java.awt.Color(255, 119, 170));
-        btnActualizarProducto.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 14)); // NOI18N
-        btnActualizarProducto.setForeground(new java.awt.Color(255, 255, 255));
-        btnActualizarProducto.setText("Actualizar producto");
-        btnActualizarProducto.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnActualizarProductoActionPerformed(evt);
-            }
-        });
-        getContentPane().add(btnActualizarProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 630, 210, 40));
+        getContentPane().add(btnHabilitarDeshabilitar, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 630, 280, 40));
 
         btnAgregarProducto.setBackground(new java.awt.Color(255, 119, 170));
         btnAgregarProducto.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 14)); // NOI18N
@@ -113,6 +102,17 @@ public class PantallaProductos extends javax.swing.JFrame {
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
         jPanel2.add(banner, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
         jPanel2.add(panelBusquedaProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 80, 750, -1));
+
+        btnActualizarProducto.setBackground(new java.awt.Color(255, 119, 170));
+        btnActualizarProducto.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 14)); // NOI18N
+        btnActualizarProducto.setForeground(new java.awt.Color(255, 255, 255));
+        btnActualizarProducto.setText("Actualizar producto");
+        btnActualizarProducto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnActualizarProductoActionPerformed(evt);
+            }
+        });
+        jPanel2.add(btnActualizarProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 630, 210, 40));
 
         getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1070, 700));
 
@@ -256,8 +256,12 @@ public class PantallaProductos extends javax.swing.JFrame {
     private void pasarAActualizarProducto(String nombre) {
         if (nombre != null) {
             try {
-                ProductoDetalleDTO producto = control.obtenerDetallesDelProducto(nombre);
-                control.pantallaModificarProducto(this, producto);
+                if (control.validarProductoEditable(nombre)) {
+                    ProductoDetalleDTO producto = control.obtenerDetallesDelProducto(nombre);
+                    control.pantallaModificarProducto(this, producto);
+                } else {
+                    JOptionPane.showMessageDialog(null, "No es posible editar el producto: " + nombre + ", ya que se encuentra en una comanda activa", "", JOptionPane.INFORMATION_MESSAGE);
+                }
             } catch (CoordinadorException ex) {
                 Logger.getLogger(PantallaProductos.class.getName()).log(Level.SEVERE, null, ex);
                 JOptionPane.showMessageDialog(null, ex.getMessage(), "Ha ocurrido un error inesperado", JOptionPane.ERROR_MESSAGE);

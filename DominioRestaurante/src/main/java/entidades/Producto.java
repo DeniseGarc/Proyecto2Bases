@@ -7,6 +7,7 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
@@ -15,6 +16,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import listener.ValidadorDisponibilidadProductoListener;
 
 /**
  * Clase que representa un producto en el sistema.
@@ -22,6 +24,7 @@ import javax.persistence.Table;
  * @author Alicia Denise García Acosta 00000252402
  */
 @Entity
+@EntityListeners(ValidadorDisponibilidadProductoListener.class)
 @Table(name = "productos")
 public class Producto implements Serializable {
 
