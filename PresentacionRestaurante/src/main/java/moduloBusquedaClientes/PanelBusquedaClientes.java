@@ -155,10 +155,6 @@ public class PanelBusquedaClientes extends javax.swing.JPanel {
 
     private void cargarClientesEnTabla(List<ClienteFrecuenteDTO> clientes) {
         this.listaClientes = clientes;
-        if (clientes == null || clientes.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "No se encontraron clientes.", "Información", JOptionPane.INFORMATION_MESSAGE);
-            return;
-        }
         String[] columnas = {"Nombre", "Número de visitas", "Puntos de fidelidad"};
         Object[][] datos = new Object[clientes.size()][4];
         for (int i = 0; i < clientes.size(); i++) {

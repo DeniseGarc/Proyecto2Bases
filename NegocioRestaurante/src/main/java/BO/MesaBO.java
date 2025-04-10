@@ -4,10 +4,13 @@
  */
 package BO;
 
+import DTOs.MesaDTO;
 import exception.NegocioException;
 import exception.PersistenciaException;
 import interfaces.IMesaBO;
 import interfaces.IMesaDAO;
+import java.util.List;
+import mappers.MesaMapper;
 
 /**
  *
@@ -51,6 +54,15 @@ public class MesaBO implements IMesaBO {
             return mesaDAO.consultarMesas();
         } catch (PersistenciaException e) {
             throw new NegocioException("Hubo un error al consultar las mesas: ", e);
+        }
+    }
+
+    @Override
+    public List<MesaDTO> obtenerMesas() throws NegocioException {
+        try {
+            return MesaMapper.ToDTOList(mesaDAO.obtenerMesas());
+        } catch (PersistenciaException e) {
+            throw new NegocioException("Ha ocurrido un error al obtener las mesas: ", e);
         }
     }
 }
