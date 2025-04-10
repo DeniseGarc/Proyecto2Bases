@@ -5,8 +5,14 @@
 package GUIs;
 
 import DTOs.ComandaDTO;
+import DTOs.MesaDTO;
 import control.CoordinadorAplicacion;
+import control.exception.CoordinadorException;
 import java.awt.Image;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 
 /**
@@ -23,7 +29,7 @@ public class ComandaAgregarCliente extends javax.swing.JFrame {
     public ComandaAgregarCliente() {
         initComponents();
         panelBusquedaClientes.cargarClientes();
-        // Se deben obtener todas las mesas que estan disponibles y agregar al combo box
+        llenarMesas();
     }
 
     /**
@@ -154,11 +160,27 @@ public class ComandaAgregarCliente extends javax.swing.JFrame {
 
     private void btnTomarComandaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTomarComandaActionPerformed
         ComandaDTO comandaAgregar = new ComandaDTO();
-        comandaAgregar.setNombreCliente(panelBusquedaClientes.getCliente().getNombre());
-        comandaAgregar.setTelefonoCliente(panelBusquedaClientes.getCliente().getTelefono());
+        if (panelBusquedaClientes.getCliente() != null) {
+            comandaAgregar.setNombreCliente(panelBusquedaClientes.getCliente().getNombre());
+            comandaAgregar.setTelefonoCliente(panelBusquedaClientes.getCliente().getTelefono());
+        }
+        comandaAgregar.setNumeroMesa(cbBoxMesas.getSelectedItem().toString());
         coordinador.pantallaAgregarComanda(this, comandaAgregar);
     }//GEN-LAST:event_btnTomarComandaActionPerformed
 
+    private void llenarMesas() {
+        try {
+            List<MesaDTO> mesas = coordinador.obtenerMesas();
+            DefaultComboBoxModel<String> modelo = new DefaultComboBoxModel<>();
+            modelo.addElement("Seleccionar mesa"); 
+            for (MesaDTO mesa : mesas) {
+                modelo.addElement(mesa.getNumero());
+            }
+            cbBoxMesas.setModel(modelo);
+        } catch (CoordinadorException ex) {
+            Logger.getLogger(ComandaAgregarCliente.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnTomarComanda;

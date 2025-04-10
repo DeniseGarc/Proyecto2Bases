@@ -7,6 +7,7 @@ package control;
 import DTOs.ClienteFrecuenteDTO;
 import DTOs.ComandaDTO;
 import DTOs.IngredienteDTO;
+import DTOs.MesaDTO;
 import DTOs.ProductoDTO;
 import DTOs.ProductoDetalleDTO;
 import GUIs.ClienteFrecuente;
@@ -447,7 +448,6 @@ public class CoordinadorAplicacion {
         }
     }
 
-
     /**
      * Recupera solo los ingredientes que no tienen un producto asignado
      *
@@ -480,7 +480,6 @@ public class CoordinadorAplicacion {
             throw new CoordinadorException("Ha ocurrido un error al actualizar el stock");
         }
     }
-
 
     /**
      * Regresa solo un ingrediente buscandolo por nombre y unidad
@@ -620,7 +619,7 @@ public class CoordinadorAplicacion {
     }
 
     /**
-     * Método para verificar si las mesas ya han sido insertadas. 
+     * Método para verificar si las mesas ya han sido insertadas.
      *
      * @return true si las mesas ya están insertadas, false si no.
      * @throws CoordinadorException Si ocurre un error al intentar consultar las
@@ -628,13 +627,21 @@ public class CoordinadorAplicacion {
      */
     public boolean consultarMesas() throws CoordinadorException {
         try {
-            return mesaBO.consultarMesas(); 
+            return mesaBO.consultarMesas();
         } catch (NegocioException e) {
             throw new CoordinadorException("Error al consultar las mesas: ", e);
         }
     }
-    
-    public List<IngredienteDTO> buscarIngredientes(String nombre, UnidadMedida unidad) throws CoordinadorException{
+
+    public List<MesaDTO> obtenerMesas() throws CoordinadorException {
+        try {
+            return mesaBO.obtenerMesas();
+        } catch (NegocioException e) {
+            throw new CoordinadorException("Error al obtener las mesas: ", e);
+        }
+    }
+
+    public List<IngredienteDTO> buscarIngredientes(String nombre, UnidadMedida unidad) throws CoordinadorException {
         try {
             return ingredienteBO.buscarIngredientes(nombre, unidad);
         } catch (NegocioException e) {

@@ -4,7 +4,9 @@
  */
 package interfaces;
 
+import DTOs.MesaDTO;
 import exception.NegocioException;
+import java.util.List;
 
 /**
  *
@@ -13,4 +15,5 @@ import exception.NegocioException;
 public interface IMesaBO {
     public void insertarMesas() throws NegocioException;
     public boolean consultarMesas() throws NegocioException;
+    public List<MesaDTO> obtenerMesas() throws NegocioException;
 }
