@@ -12,6 +12,9 @@ import exception.PersistenciaException;
 import interfaces.IIngredienteBO;
 import interfaces.IIngredienteDAO;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.stream.Collectors;
 import mappers.IngredienteMapper;
 
 /**
@@ -172,6 +175,21 @@ public class IngredienteBO implements IIngredienteBO{
         }catch(PersistenciaException e) {
             throw new NegocioException("Ocurrió un error al obtener el ingrediente");
         }
+    }
+
+    @Override
+    public List<IngredienteDTO> buscarIngredientes(String nombre, UnidadMedida unidad) throws NegocioException {
+        try {
+            String nombreFiltrado = (nombre != null && !nombre.isBlank()) ? "%" + nombre.trim() + "%" : null;
+            UnidadMedida unidadFiltrada = unidad;
+            
+            List<Ingrediente> encontrados = ingredienteDAO.buscarConFiltros(nombreFiltrado, unidadFiltrada );
+            return IngredienteMapper.ToDTOList(encontrados);
+        } catch (PersistenciaException ex) {
+            Logger.getLogger(IngredienteBO.class.getName()).log(Level.SEVERE, null, ex);
+            throw new NegocioException("Ocurrió un error al obtener los ingredientes");
+        }
+        
     }
     
 }

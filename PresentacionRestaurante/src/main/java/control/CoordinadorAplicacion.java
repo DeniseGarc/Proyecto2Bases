@@ -667,4 +667,12 @@ public class CoordinadorAplicacion {
             throw new CoordinadorException("Error al consultar las mesas: ", e);
         }
     }
+    
+    public List<IngredienteDTO> buscarIngredientes(String nombre, UnidadMedida unidad) throws CoordinadorException{
+        try {
+            return ingredienteBO.buscarIngredientes(nombre, unidad);
+        } catch (NegocioException e) {
+            throw new CoordinadorException("Error al consultar los ingredientes: ", e);
+        }
+    }
 }

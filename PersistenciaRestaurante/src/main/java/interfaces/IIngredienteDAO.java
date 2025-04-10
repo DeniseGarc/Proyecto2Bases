@@ -24,4 +24,5 @@ public interface IIngredienteDAO {
     public List<Ingrediente> obtenerIngredientesSinProducto() throws PersistenciaException;  
     public List<Ingrediente> buscarPorNombreYUnidad(String nombre,String unidad)throws PersistenciaException; 
     public Ingrediente buscarPorNombreYUnidad1(String nombre,String unidad)throws PersistenciaException;
+    public List<Ingrediente> buscarConFiltros (String nombre, UnidadMedida unidadMedida) throws PersistenciaException;
 }

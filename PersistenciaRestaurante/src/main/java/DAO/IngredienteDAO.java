@@ -12,6 +12,7 @@ import interfaces.IIngredienteDAO;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
+import javax.persistence.TypedQuery;
 
 /**
  *
@@ -264,6 +265,26 @@ public class IngredienteDAO implements IIngredienteDAO {
             em.close(); 
         }
         
+    }
+
+    @Override
+    public List<Ingrediente> buscarConFiltros(String nombre, UnidadMedida unidadMedida) throws PersistenciaException {
+        EntityManager em = Conexion.crearConexion();
+        try {
+            String jpql = "SELECT i FROM Ingredienre i "
+                    + "WHERE (:nombre IS NULL OR a.nombre LIKE :nombre) "
+                    + "AND (:unidadMedida NULL OR i.unidadMedida = :unidadMedida) ";
+
+            TypedQuery<Ingrediente> query = em.createQuery(jpql, Ingrediente.class);
+            query.setParameter("nombre", nombre != null ? nombre : null);
+            query.setParameter("grupo", unidadMedida != null ? unidadMedida : null);
+
+            return query.getResultList();
+        } catch (Exception e) {
+            throw new PersistenciaException("Error al buscar ingrediente por filtros", e);
+        } finally {
+            em.close();
+        }
     }
     
 }
