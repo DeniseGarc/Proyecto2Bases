@@ -509,7 +509,7 @@ public class CoordinadorAplicacion {
     public ClienteFrecuenteDTO registrarNuevoClienteFrecuente(ClienteFrecuenteDTO clienteFrecuente) throws CoordinadorException {
         try {
             validarCliente(clienteFrecuente);
-            List<ClienteFrecuenteDTO> clientes = obtenerClientesFrecuentes(null, null);
+            List<ClienteFrecuenteDTO> clientes = obtenerClientesFrecuentes("", "");
             boolean telefonoDuplicado = clientes.stream()
                     .anyMatch(c -> c.getTelefono().equals(clienteFrecuente.getTelefono()));
             if (telefonoDuplicado) {

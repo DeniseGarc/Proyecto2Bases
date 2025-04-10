@@ -37,7 +37,7 @@ public class Mesa implements Serializable {
         this.numero = numero;
     }
 
-    public boolean isEstado() {
+    public boolean getEstado() {
         return estado;
     }
 

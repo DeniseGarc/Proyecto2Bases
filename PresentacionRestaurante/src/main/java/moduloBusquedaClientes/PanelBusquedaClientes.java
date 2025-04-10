@@ -20,6 +20,7 @@ import javax.swing.JOptionPane;
 public class PanelBusquedaClientes extends javax.swing.JPanel {
 
     private final CoordinadorAplicacion coordinador = new CoordinadorAplicacion();
+    private List<ClienteFrecuenteDTO> listaClientes;
 
     /**
      * Creates new form PanelBusquedaClientes
@@ -28,11 +29,19 @@ public class PanelBusquedaClientes extends javax.swing.JPanel {
         initComponents();
         buscador.getDocument().addDocumentListener(new javax.swing.event.DocumentListener() {
             @Override
-            public void insertUpdate(javax.swing.event.DocumentEvent e) { realizarBusqueda(); }
+            public void insertUpdate(javax.swing.event.DocumentEvent e) {
+                realizarBusqueda();
+            }
+
             @Override
-            public void removeUpdate(javax.swing.event.DocumentEvent e) { realizarBusqueda(); }
+            public void removeUpdate(javax.swing.event.DocumentEvent e) {
+                realizarBusqueda();
+            }
+
             @Override
-            public void changedUpdate(javax.swing.event.DocumentEvent e) { realizarBusqueda();}
+            public void changedUpdate(javax.swing.event.DocumentEvent e) {
+                realizarBusqueda();
+            }
         });
     }
 
@@ -145,6 +154,7 @@ public class PanelBusquedaClientes extends javax.swing.JPanel {
     }
 
     private void cargarClientesEnTabla(List<ClienteFrecuenteDTO> clientes) {
+        this.listaClientes = clientes;
         if (clientes == null || clientes.isEmpty()) {
             JOptionPane.showMessageDialog(this, "No se encontraron clientes.", "Información", JOptionPane.INFORMATION_MESSAGE);
             return;
@@ -174,9 +184,13 @@ public class PanelBusquedaClientes extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(this, "Error al realizar la búsqueda: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
-    
-    public int getCliente() {
-        return tablaClientes.getSelectedRow();
+
+    public ClienteFrecuenteDTO getCliente() {
+        int fila = tablaClientes.getSelectedRow();
+        if (fila != -1) {
+            return listaClientes.get(fila);
+        }
+        return null;
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

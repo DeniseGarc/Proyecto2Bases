@@ -1,3 +1,4 @@
+
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
@@ -64,6 +65,23 @@ public class MesaDAO implements IMesaDAO {
             return count >= 20;
         } catch (Exception e) {
             throw new PersistenciaException("Hubo un error al consultar las mesas: " + e.getMessage(), e);
+        } finally {
+            em.close();
+        }
+    }
+
+    /**
+     * Métod para recuperar una lista con las mesas disponibles
+     * @return 
+     * @throws PersistenciaException 
+     */
+    @Override
+    public List<Mesa> obtenerMesas() throws PersistenciaException {
+        EntityManager em = Conexion.crearConexion();
+        try {
+            return em.createQuery("SELECT m FROM Mesa m WHERE m.estado = 1", Mesa.class).getResultList();
+        } catch (Exception e) {
+            throw new PersistenciaException("Hubo un error al consultar las mesas: ", e);
         } finally {
             em.close();
         }

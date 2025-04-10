@@ -1,3 +1,4 @@
+
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Interface.java to edit this template
@@ -15,4 +16,5 @@ import java.util.List;
 public interface IMesaDAO {
     public void insertarMesas() throws PersistenciaException;
     public boolean consultarMesas() throws PersistenciaException;
+    public List<Mesa> obtenerMesas() throws PersistenciaException;
 }
