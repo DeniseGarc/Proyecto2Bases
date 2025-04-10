@@ -271,13 +271,13 @@ public class IngredienteDAO implements IIngredienteDAO {
     public List<Ingrediente> buscarConFiltros(String nombre, UnidadMedida unidadMedida) throws PersistenciaException {
         EntityManager em = Conexion.crearConexion();
         try {
-            String jpql = "SELECT i FROM Ingredienre i "
-                    + "WHERE (:nombre IS NULL OR a.nombre LIKE :nombre) "
-                    + "AND (:unidadMedida NULL OR i.unidadMedida = :unidadMedida) ";
+            String jpql = "SELECT i FROM Ingrediente i "
+                        + "WHERE (:nombre IS NULL OR LOWER(i.nombre) LIKE LOWER(:nombre)) "
+                        + "AND (:unidadMedida IS NULL OR i.unidadMedida = :unidadMedida)";
 
             TypedQuery<Ingrediente> query = em.createQuery(jpql, Ingrediente.class);
-            query.setParameter("nombre", nombre != null ? nombre : null);
-            query.setParameter("grupo", unidadMedida != null ? unidadMedida : null);
+            query.setParameter("nombre", nombre);  // puede ser null y está bien
+            query.setParameter("unidadMedida", unidadMedida);  // también puede ser null
 
             return query.getResultList();
         } catch (Exception e) {
@@ -286,5 +286,6 @@ public class IngredienteDAO implements IIngredienteDAO {
             em.close();
         }
     }
+
     
 }

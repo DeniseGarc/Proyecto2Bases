@@ -34,6 +34,16 @@ public class PanelBuscarIngrediente extends javax.swing.JPanel {
     public PanelBuscarIngrediente() {
         initComponents();
         
+       
+        //agregar las unidades de medida al conmboBox y tambien la etiqueta "todos"
+        
+        cBoxUnidad.addItem("Todos");
+        for(UnidadMedida unidad : UnidadMedida.values()){
+            cBoxUnidad.addItem(unidad);
+        }
+        cargarIngredientes();
+        
+        
         txtBusqueda.getDocument().addDocumentListener(new DocumentListener() {
         @Override
             public void insertUpdate(DocumentEvent e) { realizarBusqueda(); }
@@ -44,45 +54,47 @@ public class PanelBuscarIngrediente extends javax.swing.JPanel {
         });
 
         cBoxUnidad.addActionListener(e -> realizarBusqueda());
-        //agregar las unidades de medida al conmboBox y tambien la etiqueta "todos"
-        cargarIngredientes();
-        cBoxUnidad.addItem("Todos");
-        for(UnidadMedida unidad : UnidadMedida.values()){
-            cBoxUnidad.addItem(unidad);
-        }
+        
     }
     /**
      * Metodo para realizar la busqueda dinamica de los ingredientes
      */
     private void realizarBusqueda() {
-    try {
-        
         String texto = txtBusqueda.getText().trim();
+        UnidadMedida unidad = null;
 
-        // si no hay nada escrito y la seleccion es todos muestra todos los ingredientes
+        String seleccion = cBoxUnidad.getSelectedItem().toString();
+        if (!seleccion.equalsIgnoreCase("Todos")) {
+            try {
+                unidad = UnidadMedida.valueOf(seleccion);
+            } catch (IllegalArgumentException ex) {
+                System.err.println("Unidad inválida seleccionada: " + seleccion);
+                JOptionPane.showMessageDialog(this, "Unidad de medida inválida seleccionada.", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+        }
 
-        if(txtBusqueda.getText().isBlank() && cBoxUnidad.getSelectedIndex()==0){
+        // Si no hay texto ni unidad, mostrar todo
+        if (texto.isBlank() && unidad == null) {
             cargarIngredientes();
+            return;
         }
-        // si el texto esta vacio y la unidad es difrerente a todos busca por unidad
-        if(texto.isEmpty() && cBoxUnidad.getSelectedIndex()!=0){
-            mostrarIngredientesEnTabla(coordinador.buscarIngredientePorUnidad((UnidadMedida) cBoxUnidad.getSelectedItem()));
 
+        // Si se intenta buscar por nombre (sin unidad) con menos de 2 letras, no hacer nada
+        if (unidad == null && texto.length() > 0 && texto.length() < 2) {
+            // podrías mostrar un tooltip o simplemente esperar a que el usuario siga escribiendo
+            return;
         }
-        // si el texto no esta vacio y la seleccion es diferente a todos
-        else if(!texto.isEmpty() && cBoxUnidad.getSelectedIndex()!=0){
-            mostrarIngredientesEnTabla(coordinador.buscarPorNombreYUnidad(texto, cBoxUnidad.getSelectedItem().toString()));
+
+        try {
+            List<IngredienteDTO> resultados = coordinador.buscarIngredientes(texto, unidad);
+            mostrarIngredientesEnTabla(resultados);
+        } catch (CoordinadorException ex) {
+            JOptionPane.showMessageDialog(this, "Error al realizar la búsqueda: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
-        //si el texto no es vacio y la seleccion es todos
-        else if(!txtBusqueda.getText().isEmpty() && cBoxUnidad.getSelectedIndex() ==0){
-            mostrarIngredientesEnTabla(coordinador.buscarPorNombre(texto));
-        }else{
-            cargarIngredientes();
-        }
-    } catch (CoordinadorException ex) {
-        JOptionPane.showMessageDialog(this, "Error al realizar la búsqueda: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
     }
-    }
+
+
 
     /**
      * Muestra todos los ingredientes en la tabla
