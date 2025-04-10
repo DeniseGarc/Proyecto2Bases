@@ -37,7 +37,7 @@ public class ModificarStockIngredientesListener {
                 int cantidadIngrediente = dpi.getCantidad() * cantidadComanda;
 
                 Integer nuevoStock = ingrediente.getStock() - cantidadIngrediente;
-
+                
                 // Validar si hay suficiente stock
                 if (nuevoStock < 0) {
                     throw new IllegalStateException("No hay suficiente stock para el ingrediente: " + ingrediente.getNombre());
