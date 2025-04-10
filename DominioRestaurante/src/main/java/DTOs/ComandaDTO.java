@@ -36,6 +36,24 @@ public class ComandaDTO {
     public ComandaDTO() {
     }
 
+    public ComandaDTO(Long id, Calendar fechaHora, double totalVenta, Estado estado, String numeroMesa) {
+        this.id = id;
+        this.fechaHora = fechaHora;
+        this.totalVenta = totalVenta;
+        this.estado = estado;
+        this.numeroMesa = numeroMesa;
+    }
+
+    public ComandaDTO(Long id, Calendar fechaHora, double totalVenta, Estado estado, String telefonoCliente, String nombreCliente, String numeroMesa) {
+        this.id = id;
+        this.fechaHora = fechaHora;
+        this.totalVenta = totalVenta;
+        this.estado = estado;
+        this.telefonoCliente = telefonoCliente;
+        this.nombreCliente = nombreCliente;
+        this.numeroMesa = numeroMesa;
+    }
+
     public ComandaDTO(Calendar fechaHora, double totalVenta, Estado estado, String nombreCliente, String telefonoCliente, String numeroMesa) {
         this.fechaHora = fechaHora;
         this.totalVenta = totalVenta;

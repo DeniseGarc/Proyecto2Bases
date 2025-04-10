@@ -33,7 +33,7 @@ public class PantallaComandas extends javax.swing.JFrame {
         jPanel3.setLayout(new GridBagLayout());
         cargarComandas();
     }
-    private void cargarComandas(){
+    public void cargarComandas(){
         try {
             List<ComandaDTO> comandas = coordinador.obtenerComandasActivas();
             mostrarComandas(comandas);
@@ -64,7 +64,7 @@ public class PantallaComandas extends javax.swing.JFrame {
                 fila++;
             }
         }
-
+        
         jPanel3.revalidate();
         jPanel3.repaint();
     }

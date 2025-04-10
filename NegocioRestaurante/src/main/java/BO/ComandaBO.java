@@ -103,6 +103,10 @@ public class ComandaBO implements IComandaBO {
             if (nuevoEstado == null) {
                 throw new NegocioException("El nuevo estado no puede ser nulo");
             }
+            if (comanda.getId() == null) {
+                throw new NegocioException("El ID de la comandaDTO no está establecido");
+            }
+
 
             // Convertir el DTO a entidad Comanda utilizando el Mapper
             Comanda comandaEntidad = ComandaMapper.toEntity(comanda);

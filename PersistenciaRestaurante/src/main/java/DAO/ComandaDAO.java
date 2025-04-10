@@ -133,6 +133,12 @@ public class ComandaDAO implements IComandaDAO {
             if (comanda == null) {
                 throw new PersistenciaException("Comanda no puede ser nula");
             }
+            Comanda comandaGestionada = em.find(Comanda.class, comanda.getId());
+            if (comandaGestionada == null) {
+                throw new PersistenciaException("La comanda no existe en la base de datos");
+            }
+            comandaGestionada.setEstado(nuevoEstado);
+
             comanda.setEstado(nuevoEstado);
             em.merge(comanda);
             em.getTransaction().commit();
