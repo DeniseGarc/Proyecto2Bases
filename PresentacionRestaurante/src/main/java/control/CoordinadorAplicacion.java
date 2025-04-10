@@ -24,6 +24,7 @@ import GUIs.PantallaTomaComanda;
 import GUIs.RegistrarClienteNuevo;
 import GUIs.frmAgregarIngrediente;
 import control.exception.CoordinadorException;
+import enumeradores.Estado;
 import enumeradores.TipoProducto;
 import enumeradores.UnidadMedida;
 import exception.NegocioException;
@@ -645,6 +646,14 @@ public class CoordinadorAplicacion {
             return ingredienteBO.buscarIngredientes(nombre, unidad);
         } catch (NegocioException e) {
             throw new CoordinadorException("Error al consultar los ingredientes: ", e);
+        }
+    }
+    
+    public boolean actualizarEstadoComanda (ComandaDTO comanda, Estado nuevoEstado)throws CoordinadorException{
+         try {
+            return comandaBO.actualizarEstadoComanda(comanda, nuevoEstado);
+        } catch (NegocioException e) {
+            throw new CoordinadorException("Error al actualizar el estado: ", e);
         }
     }
 }

@@ -5,6 +5,7 @@
 package interfaces;
 
 import DTOs.ComandaDTO;
+import enumeradores.Estado;
 import exception.NegocioException;
 import java.util.List;
 
@@ -21,4 +22,6 @@ public interface IComandaBO {
     public boolean actualizarComanda(ComandaDTO comandaActualizar) throws NegocioException;
 
     public boolean agregarComanda(ComandaDTO comandaNueva) throws NegocioException;
+    
+    public boolean actualizarEstadoComanda(ComandaDTO comanda, Estado nuevoEstado) throws NegocioException;
 }
