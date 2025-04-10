@@ -5,6 +5,7 @@
 package PlantillaComandas;
 
 import DTOs.ComandaDTO;
+import GUIs.PantallaComandas;
 import control.CoordinadorAplicacion;
 import enumeradores.Estado;
 import javax.swing.JFrame;
@@ -154,6 +155,9 @@ public class PanelComandasActivas extends javax.swing.JPanel {
         try {
             coordinador.actualizarEstadoComanda(comanda, nuevoEstado);
             JOptionPane.showMessageDialog(this, "Comanda marcada como entregada");
+             // Recargar las comandas activas en la pantalla principal
+            ((PantallaComandas) frame).cargarComandas();
+
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Error al actualizar el estado: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
@@ -164,6 +168,7 @@ public class PanelComandasActivas extends javax.swing.JPanel {
         try {
             coordinador.actualizarEstadoComanda(comanda, nuevoEstado);
             JOptionPane.showMessageDialog(this, "Comanda marcada como cancelada");
+            ((PantallaComandas) frame).cargarComandas();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Error al actualizar el estado: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
