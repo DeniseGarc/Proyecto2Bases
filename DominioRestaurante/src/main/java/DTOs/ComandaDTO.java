@@ -15,6 +15,7 @@ import java.util.List;
  */
 public class ComandaDTO {
 
+    private Long id;
     private Calendar fechaHora;
     private double totalVenta;
     private Estado estado;
@@ -22,6 +23,15 @@ public class ComandaDTO {
     private String telefonoCliente;
     private String nombreCliente;
     private String numeroMesa;
+
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public ComandaDTO() {
     }

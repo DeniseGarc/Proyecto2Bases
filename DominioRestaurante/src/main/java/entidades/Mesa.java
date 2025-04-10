@@ -29,6 +29,11 @@ public class Mesa implements Serializable {
         this.estado = estado;
     }
 
+    public Mesa(Long numero, boolean estado) {
+        this.numero = numero;
+        this.estado = estado;
+    }
+
     public Long getNumero() {
         return numero;
     }

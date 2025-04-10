@@ -86,5 +86,33 @@ public class MesaDAO implements IMesaDAO {
             em.close();
         }
     }
+    /**
+     * Metodo para obtener una mesa buscandola por su numero
+     * @param numero Numero de la mesa a buscar
+     * @return Mesa con el numero indicado 
+     * @throws PersistenciaException 
+     */
+    @Override
+    public Mesa obtenerMesaPorNumero(Long numero) throws PersistenciaException {
+        EntityManager em = Conexion.crearConexion();
+        try {
+            if (numero == null) {
+                throw new PersistenciaException("El número de mesa no puede ser nulo");
+            }
+
+            Mesa mesa = em.find(Mesa.class, numero);
+            if (mesa == null) {
+                throw new PersistenciaException("No se encontró la mesa con el número: " + numero);
+            }
+            return mesa;
+        } catch (Exception e) {
+            
+            throw new PersistenciaException("Error al obtener la mesa: " + e.getMessage(), e);
+        } finally {
+            em.close(); 
+        }
+    }
+
+    
 
 }

@@ -28,7 +28,7 @@ public class MesaMapper {
     }
     
     public static Mesa toEntity(MesaDTO mesaDTO) {
-        Mesa mesa = new Mesa(mesaDTO.getEstado());
-        return mesa;
+       Long numero = Long.valueOf(mesaDTO.getNumero());
+        return new Mesa(numero, mesaDTO.getEstado());
     }
 }

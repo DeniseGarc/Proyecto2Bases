@@ -4,7 +4,12 @@
  */
 package PlantillaComandas;
 
+import DTOs.ComandaDTO;
+import control.CoordinadorAplicacion;
+import enumeradores.Estado;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -15,7 +20,12 @@ public class PanelComandasActivas extends javax.swing.JPanel {
     /**
      * Creates new form PanelComandasActivas
      */
-    public PanelComandasActivas() {
+    private ComandaDTO comanda;
+    private final CoordinadorAplicacion coordinador = new CoordinadorAplicacion();
+     private JFrame frame;
+    public PanelComandasActivas(JFrame frame, ComandaDTO comanda) {
+        this.comanda = comanda;
+        this.frame = frame;
         initComponents();
     }
     public JLabel getNumero (){
@@ -91,6 +101,11 @@ public class PanelComandasActivas extends javax.swing.JPanel {
         btnModificar.setText("Modificar");
         btnModificar.setBorder(null);
         btnModificar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnModificar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnModificarMouseClicked(evt);
+            }
+        });
         jPanel2.add(btnModificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(24, 105, 155, 40));
 
         btnEntregada.setBackground(new java.awt.Color(255, 178, 217));
@@ -101,6 +116,11 @@ public class PanelComandasActivas extends javax.swing.JPanel {
         btnEntregada.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnEntregada.setMinimumSize(new java.awt.Dimension(120, 15));
         btnEntregada.setPreferredSize(new java.awt.Dimension(120, 15));
+        btnEntregada.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnEntregadaMouseClicked(evt);
+            }
+        });
         jPanel2.add(btnEntregada, new org.netbeans.lib.awtextra.AbsoluteConstraints(24, 163, 155, 40));
 
         btnCancelada.setBackground(new java.awt.Color(255, 119, 170));
@@ -110,6 +130,11 @@ public class PanelComandasActivas extends javax.swing.JPanel {
         btnCancelada.setToolTipText("");
         btnCancelada.setBorder(null);
         btnCancelada.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnCancelada.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnCanceladaMouseClicked(evt);
+            }
+        });
         btnCancelada.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCanceladaActionPerformed(evt);
@@ -123,6 +148,30 @@ public class PanelComandasActivas extends javax.swing.JPanel {
     private void btnCanceladaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCanceladaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnCanceladaActionPerformed
+
+    private void btnEntregadaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEntregadaMouseClicked
+        Estado nuevoEstado = Estado.ENTREGADA;  // Definir el nuevo estado
+        try {
+            coordinador.actualizarEstadoComanda(comanda, nuevoEstado);
+            JOptionPane.showMessageDialog(this, "Comanda marcada como entregada");
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error al actualizar el estado: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_btnEntregadaMouseClicked
+
+    private void btnCanceladaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCanceladaMouseClicked
+        Estado nuevoEstado = Estado.CANCELADA;
+        try {
+            coordinador.actualizarEstadoComanda(comanda, nuevoEstado);
+            JOptionPane.showMessageDialog(this, "Comanda marcada como cancelada");
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error al actualizar el estado: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_btnCanceladaMouseClicked
+
+    private void btnModificarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnModificarMouseClicked
+        coordinador.pantallaModificarComanda(frame, comanda);
+    }//GEN-LAST:event_btnModificarMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
