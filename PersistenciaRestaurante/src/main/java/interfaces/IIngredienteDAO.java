@@ -18,10 +18,10 @@ public interface IIngredienteDAO {
     public List<Ingrediente> buscarIngredientePorNombre(String nombre) throws PersistenciaException;
     public Ingrediente buscarIngredientePorId(Long id) throws PersistenciaException;
     public Ingrediente modificarStock(Ingrediente ingrediente ) throws PersistenciaException;
-    public List<Ingrediente> buscarIngredientesPorUnidadMedida(UnidadMedida unidad) throws PersistenciaException;
+
     public boolean eliminarIngrediente (Long id) throws PersistenciaException;
     public Ingrediente guardarIngredinete (Ingrediente ingredienteGuardar) throws PersistenciaException; 
     public List<Ingrediente> obtenerIngredientesSinProducto() throws PersistenciaException;  
-    public List<Ingrediente> buscarPorNombreYUnidad(String nombre,String unidad)throws PersistenciaException; 
     public Ingrediente buscarPorNombreYUnidad1(String nombre,String unidad)throws PersistenciaException;
+    public List<Ingrediente> buscarConFiltros (String nombre, UnidadMedida unidadMedida) throws PersistenciaException;
 }

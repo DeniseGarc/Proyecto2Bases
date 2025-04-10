@@ -72,4 +72,15 @@ public interface IProductoDAO {
      * @throws PersistenciaException Si ocurre un error de acceso de datos.
      */
     public List<Producto> buscarPorFiltros(String nombre, TipoProducto categoria) throws PersistenciaException;
+
+    /**
+     * Consulta si el producto con el nombre dado esta dentro de alguna comanda
+     * activa.
+     *
+     * @param nombre Nombre del producto
+     * @return true si el producto se encuentra asociado a alguna comanda
+     * activa, false en caso contrario.
+     * @throws PersistenciaException Si ocurre un error de acceso de datos.
+     */
+    public boolean productoEnComandaActiva(String nombre) throws PersistenciaException;
 }

@@ -302,25 +302,24 @@ public class CoordinadorAplicacion {
 
     public boolean actualizarComanda(ComandaDTO comanda) throws CoordinadorException {
         if (validarDatosComanda(comanda)) {
-//            try {
-//                // llamada a actualizar comanda BO
-//            } catch (NegocioException ex) {
-//                Logger.getLogger(CoordinadorAplicacion.class.getName()).log(Level.SEVERE, null, ex);
-//                throw new CoordinadorException("Ha ocurrido un error al intentar actualizar la comanda");
-//            }
+            try {
+                return comandaBO.actualizarComanda(comanda);
+            } catch (NegocioException ex) {
+                Logger.getLogger(CoordinadorAplicacion.class.getName()).log(Level.SEVERE, null, ex);
+                throw new CoordinadorException("Ha ocurrido un error al intentar actualizar la comanda");
+            }
         }
         return false;
     }
 
     public boolean agregarComanda(ComandaDTO comanda) throws CoordinadorException {
-
         if (validarDatosComanda(comanda)) {
-//            try {
-//                // llamada a agregar comanda BO
-//            } catch (NegocioException ex) {
-//                Logger.getLogger(CoordinadorAplicacion.class.getName()).log(Level.SEVERE, null, ex);
-//                throw new CoordinadorException("Ha ocurrido un error al intentar agregar la comanda");
-//            }
+            try {
+                return comandaBO.agregarComanda(comanda);
+            } catch (NegocioException ex) {
+                Logger.getLogger(CoordinadorAplicacion.class.getName()).log(Level.SEVERE, null, ex);
+                throw new CoordinadorException("Ha ocurrido un error al intentar agregar la comanda");
+            }
         }
         return false;
     }
@@ -447,26 +446,6 @@ public class CoordinadorAplicacion {
         }
     }
 
-    /**
-     * llama al metodo para buscar ingredientes por unidad
-     *
-     * @param unidad de medida
-     * @return Lista de ingredientes
-     * @throws CoordinadorException
-     */
-    public List<IngredienteDTO> buscarIngredientePorUnidad(UnidadMedida unidad) throws CoordinadorException {
-        try {
-
-            // Llamar al método del BO para buscar ingredientes
-            List<IngredienteDTO> ingredientes = ingredienteBO.buscarPorUnidad(unidad);
-
-            return ingredientes;
-
-        } catch (NegocioException ex) {
-            Logger.getLogger(CoordinadorAplicacion.class.getName()).log(Level.SEVERE, "Error en buscarPorUnidad", ex);
-            throw new CoordinadorException("Ha ocurrido un error al buscar los ingredientes: " + ex.getMessage());
-        }
-    }
 
     /**
      * Recupera solo los ingredientes que no tienen un producto asignado
@@ -501,40 +480,6 @@ public class CoordinadorAplicacion {
         }
     }
 
-    /**
-     * Recupera la lista de ingredientes filtrandolos por nombre y unidad
-     *
-     * @param nombre Nombre del ingrediente a buscar
-     * @param unidad Unidad de medida a buscar
-     * @return Lista de ingredientes filtrados
-     * @throws CoordinadorException Si ocurre algun error inesperado al buscar
-     */
-    public List<IngredienteDTO> buscarPorNombreYUnidad(String nombre, String unidad) throws CoordinadorException {
-        try {
-            return ingredienteBO.buscarPorNombreYUnidad(nombre, unidad);
-
-        } catch (NegocioException ex) {
-            Logger.getLogger(CoordinadorAplicacion.class.getName()).log(Level.SEVERE, null, ex);
-            throw new CoordinadorException("Ha ocurrido un error al buscar el ingrediente");
-        }
-    }
-
-    /**
-     * Busca los ingredientes filtrandolos por nombre
-     *
-     * @param nombre nombre del ingrediente a buscar
-     * @return Lista de ingredientes filtrados
-     * @throws CoordinadorException Si ocurre algun error al buscar los
-     * ingredientes
-     */
-    public List<IngredienteDTO> buscarPorNombre(String nombre) throws CoordinadorException {
-        try {
-            return ingredienteBO.obtenerIngredientesPorNombre(nombre);
-        } catch (NegocioException ex) {
-            Logger.getLogger(CoordinadorAplicacion.class.getName()).log(Level.SEVERE, null, ex);
-            throw new CoordinadorException("Ha ocurrido un error al buscar el ingrediente");
-        }
-    }
 
     /**
      * Regresa solo un ingrediente buscandolo por nombre y unidad
@@ -621,7 +566,7 @@ public class CoordinadorAplicacion {
 
     public List<ComandaDTO> obtenerComandasActivas() throws CoordinadorException {
         try {
-            return comandaBO.obtenerComandsActivas();
+            return comandaBO.obtenerComandasActivas();
         } catch (NegocioException e) {
             throw new CoordinadorException("Ha ocurrido un error al consultar las comandas activas");
         }
@@ -635,7 +580,27 @@ public class CoordinadorAplicacion {
             return productoBO.obtenerProductoPorNombre(nombre);
         } catch (NegocioException e) {
             throw new CoordinadorException("Ha ocurrido un error al obtener el producto por su nombre");
+        }
+    }
 
+    /**
+     * Método que valida si el producto puede ser editado. Un producto puede ser
+     * actualizado siempre y cuando no se encuentre dentro de una comanda
+     * activa.
+     *
+     * @param nombre Nombre del producto a validar.
+     * @return true si el producto puede ser editado, false en caso contrario.
+     * @throws CoordinadorException Si ocurre un error al realizar la consulta.
+     */
+    public boolean validarProductoEditable(String nombre) throws CoordinadorException {
+        if (nombre == null) {
+            throw new CoordinadorException("El nombre del producto no ha sido obtenido");
+        }
+        try {
+            return !productoBO.consultarProductoEnComandaActiva(nombre);
+        } catch (NegocioException ex) {
+            Logger.getLogger(CoordinadorAplicacion.class.getName()).log(Level.SEVERE, null, ex);
+            throw new CoordinadorException("Ha ocurrido un error al validar si el producto puede ser editado");
         }
     }
 
@@ -665,6 +630,14 @@ public class CoordinadorAplicacion {
             return mesaBO.consultarMesas(); 
         } catch (NegocioException e) {
             throw new CoordinadorException("Error al consultar las mesas: ", e);
+        }
+    }
+    
+    public List<IngredienteDTO> buscarIngredientes(String nombre, UnidadMedida unidad) throws CoordinadorException{
+        try {
+            return ingredienteBO.buscarIngredientes(nombre, unidad);
+        } catch (NegocioException e) {
+            throw new CoordinadorException("Error al consultar los ingredientes: ", e);
         }
     }
 }

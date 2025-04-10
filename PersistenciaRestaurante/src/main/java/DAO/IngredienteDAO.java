@@ -12,6 +12,7 @@ import interfaces.IIngredienteDAO;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
+import javax.persistence.TypedQuery;
 
 /**
  *
@@ -67,8 +68,7 @@ public class IngredienteDAO implements IIngredienteDAO {
 
     /**
      * Actualiza el stock 
-     * @param id del ingrediente a modificar
-     * @param stock
+     * @param ingrediente
      * @return ingrediente con stock modificado
      * @throws PersistenciaException 
      */
@@ -149,24 +149,7 @@ public class IngredienteDAO implements IIngredienteDAO {
             em.close();
         }
     }
-    /**
-     * Busca los ingrecdientes con la unidad de medida dada
-     * @param unidad de medida
-     * @return lista de ingredientes 
-     * @throws PersistenciaException 
-     */
-    @Override
-    public List<Ingrediente> buscarIngredientesPorUnidadMedida(UnidadMedida unidad) throws PersistenciaException {
-        EntityManager em = Conexion.crearConexion();
-        try {
-            return em.createQuery("SELECT i FROM Ingrediente i WHERE i.unidadMedida = :unidad ", Ingrediente.class)
-                    .setParameter("unidad", unidad).getResultList();
-        } catch (Exception e) {
-            throw new PersistenciaException("Error al consultar ingredientes por unidad de medida: ", e);
-        } finally {
-            em.close();
-        }
-    } 
+ 
 /**
  * Busca el ingrediente con el id dado
  * @param id del ingrediente a buscar
@@ -211,37 +194,14 @@ public class IngredienteDAO implements IIngredienteDAO {
         em.close();
     }
     }
+    
 /**
- * Busca un ingrediente por nombre y unidad de medida
- * @param nombre
- * @param unidad
- * @return ingrediente
- * @throws PersistenciaException 
+ * Metodo que regresa un ingrediente al consular su nombre y unidad de medida
+ * @param nombre Nombre del ingrediente a buscar
+ * @param unidad Unidad de medida del ingrediente a buscar
+ * @return Ingrediente filtrado
+ * @throws PersistenciaException si ocurre algun error inesperado 
  */
-    @Override
-    public List<Ingrediente> buscarPorNombreYUnidad(String nombre, String unidad) throws PersistenciaException {
-        EntityManager em = Conexion.crearConexion(); 
-        try {
-            UnidadMedida unidadEnum = UnidadMedida.valueOf(unidad);  // Validamos aquí
-
-            return em.createQuery(
-                "SELECT i FROM Ingrediente i WHERE LOWER(i.nombre) LIKE :nombre AND i.unidadMedida = :unidadMedida",
-                Ingrediente.class
-            )
-            .setParameter("nombre", "%" + nombre.toLowerCase() + "%")
-            .setParameter("unidadMedida", unidadEnum)
-            .getResultList();
-
-        } catch (IllegalArgumentException e) {
-            throw new PersistenciaException("Unidad de medida inválida: " + unidad, e);
-        } catch (Exception e) {
-            throw new PersistenciaException("Error al consultar el ingrediente por nombre y unidad.", e);
-        } finally {
-            em.close(); 
-        }
-    }
-
-
     @Override
     public Ingrediente buscarPorNombreYUnidad1(String nombre, String unidad) throws PersistenciaException {
          EntityManager em = Conexion.crearConexion(); 
@@ -265,5 +225,32 @@ public class IngredienteDAO implements IIngredienteDAO {
         }
         
     }
+/**
+ * Metodo para buscar ingredientes con distintos filtros
+ * @param nombre Nombre del ingrediente a buscar
+ * @param unidadMedida Uniad de medida del ingrediente a buscar
+ * @return Lista de ingredientes filtrados
+ * @throws PersistenciaException 
+ */
+    @Override
+    public List<Ingrediente> buscarConFiltros(String nombre, UnidadMedida unidadMedida) throws PersistenciaException {
+        EntityManager em = Conexion.crearConexion();
+        try {
+            String jpql = "SELECT i FROM Ingrediente i "
+                        + "WHERE (:nombre IS NULL OR LOWER(i.nombre) LIKE LOWER(:nombre)) "
+                        + "AND (:unidadMedida IS NULL OR i.unidadMedida = :unidadMedida)";
+
+            TypedQuery<Ingrediente> query = em.createQuery(jpql, Ingrediente.class);
+            query.setParameter("nombre", nombre);  // puede ser null y está bien
+            query.setParameter("unidadMedida", unidadMedida);  // también puede ser null
+
+            return query.getResultList();
+        } catch (Exception e) {
+            throw new PersistenciaException("Error al buscar ingrediente por filtros", e);
+        } finally {
+            em.close();
+        }
+    }
+
     
 }

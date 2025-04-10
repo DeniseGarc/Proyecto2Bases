@@ -17,15 +17,15 @@ import javax.persistence.EntityManager;
  *
  * @author Maryr
  */
-public class ComandaDAO implements IComandaDAO{
-    
+public class ComandaDAO implements IComandaDAO {
+
     public static ComandaDAO instanciaComandaDAO;
 
     public ComandaDAO() {
     }
-    
+
     public static ComandaDAO getInstanciaDAO() {
-        if(instanciaComandaDAO == null) {
+        if (instanciaComandaDAO == null) {
             instanciaComandaDAO = new ComandaDAO();
         }
         return instanciaComandaDAO;
@@ -33,9 +33,10 @@ public class ComandaDAO implements IComandaDAO{
 
     /**
      * Método para obtener una lista de comandas de un cliente especifico
+     *
      * @param clienteFrecuente del cual se requieren las comandas
      * @return la lista de comandas asociadas al cliente
-     * @throws PersistenciaException 
+     * @throws PersistenciaException
      */
     @Override
     public List<Comanda> obtenerComandasPorCliente(ClienteFrecuente clienteFrecuente) throws PersistenciaException {
@@ -50,18 +51,20 @@ public class ComandaDAO implements IComandaDAO{
             em.close();
         }
     }
+
     /**
      * Método para obtener una lista de todas las comandas registradas
+     *
      * @return Lista de comandas registradas
-     * @throws PersistenciaException 
+     * @throws PersistenciaException
      */
     @Override
     public List<Comanda> obtenerComandas() throws PersistenciaException {
         EntityManager em = Conexion.crearConexion();
-        try{
-            return em.createQuery("SELECT c FROM Comanda c ",Comanda.class)
-                .getResultList();
-        }catch (Exception e) {
+        try {
+            return em.createQuery("SELECT c FROM Comanda c ", Comanda.class)
+                    .getResultList();
+        } catch (Exception e) {
             throw new PersistenciaException("Error al consultar comandas por cliente: ", e);
         } finally {
             em.close();
@@ -69,14 +72,47 @@ public class ComandaDAO implements IComandaDAO{
     }
 
     @Override
-    public List<Comanda> obtenerComandsActivas() throws PersistenciaException {
-       EntityManager em = Conexion.crearConexion();
-       try{
-          return em.createQuery("SELECT c FROM Comanda c WHERE c.estado = :estado", Comanda.class)
-                 .setParameter("estado", Estado.ACTIVA)
-                 .getResultList();
-       }catch (Exception e) {
+    public List<Comanda> obtenerComandasActivas() throws PersistenciaException {
+        EntityManager em = Conexion.crearConexion();
+        try {
+            return em.createQuery("SELECT c FROM Comanda c WHERE c.estado = :estado", Comanda.class)
+                    .setParameter("estado", Estado.ACTIVA)
+                    .getResultList();
+        } catch (Exception e) {
             throw new PersistenciaException("Error al consultar comandas por cliente: ", e);
+        } finally {
+            em.close();
+        }
+    }
+
+    @Override
+    public boolean registrarComanda(Comanda comandaNueva) throws PersistenciaException {
+        EntityManager em = Conexion.crearConexion();
+        try {
+            em.getTransaction().begin();
+            em.persist(comandaNueva);
+            em.getTransaction().commit();
+            return comandaNueva.getId() != null;
+        } catch (Exception e) {
+            em.getTransaction().rollback();
+            throw new PersistenciaException("Error al registrar la comanda", e);
+        } finally {
+            em.close();
+        }
+
+    }
+
+    @Override
+    public boolean actualizarComanda(Comanda comanda) throws PersistenciaException {
+        EntityManager em = Conexion.crearConexion();
+        try {
+            em.getTransaction().begin();
+            em.merge(comanda);
+            em.getTransaction().commit();
+            return true;
+        } catch (Exception e) {
+            em.getTransaction().rollback();
+            throw new PersistenciaException("Error al registrar la comanda", e);
         } finally {
             em.close();
         }

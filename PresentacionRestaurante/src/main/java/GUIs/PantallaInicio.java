@@ -32,17 +32,21 @@ public class PantallaInicio extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         btnMesero = new javax.swing.JButton();
         btnAdministrador = new javax.swing.JButton();
+        lblLogo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMaximumSize(new java.awt.Dimension(1070, 700));
         setMinimumSize(new java.awt.Dimension(1070, 700));
-        setPreferredSize(new java.awt.Dimension(1070, 700));
         setResizable(false);
 
         jPanel1.setBackground(new java.awt.Color(255, 254, 245));
+        jPanel1.setMaximumSize(new java.awt.Dimension(1070, 700));
+        jPanel1.setMinimumSize(new java.awt.Dimension(1070, 700));
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel2.setBackground(new java.awt.Color(255, 178, 217));
         jPanel2.setPreferredSize(new java.awt.Dimension(800, 600));
+        jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         btnMesero.setBackground(new java.awt.Color(255, 119, 170));
         btnMesero.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 18)); // NOI18N
@@ -53,6 +57,7 @@ public class PantallaInicio extends javax.swing.JFrame {
                 btnMeseroMouseClicked(evt);
             }
         });
+        jPanel2.add(btnMesero, new org.netbeans.lib.awtextra.AbsoluteConstraints(63, 469, 320, 38));
 
         btnAdministrador.setBackground(new java.awt.Color(255, 119, 170));
         btnAdministrador.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 18)); // NOI18N
@@ -63,44 +68,12 @@ public class PantallaInicio extends javax.swing.JFrame {
                 btnAdministradorMouseClicked(evt);
             }
         });
+        jPanel2.add(btnAdministrador, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 470, 320, 38));
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(134, 134, 134)
-                .addComponent(btnMesero, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(108, 108, 108)
-                .addComponent(btnAdministrador, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(146, Short.MAX_VALUE))
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(504, Short.MAX_VALUE)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnAdministrador, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnMesero, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(58, 58, 58))
-        );
+        lblLogo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgs/logo-inicio.png"))); // NOI18N
+        jPanel2.add(lblLogo, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 100, 490, -1));
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(163, Short.MAX_VALUE)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(107, 107, 107))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(21, 21, 21)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(79, Short.MAX_VALUE))
-        );
+        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(163, 56, -1, 565));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -132,5 +105,6 @@ public class PantallaInicio extends javax.swing.JFrame {
     private javax.swing.JButton btnMesero;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JLabel lblLogo;
     // End of variables declaration//GEN-END:variables
 }

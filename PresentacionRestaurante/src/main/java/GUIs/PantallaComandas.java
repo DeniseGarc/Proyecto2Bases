@@ -99,9 +99,17 @@ public class PantallaComandas extends javax.swing.JFrame {
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setMaximumSize(new java.awt.Dimension(1070, 700));
+        setMinimumSize(new java.awt.Dimension(1070, 700));
+        setPreferredSize(new java.awt.Dimension(1070, 700));
+        setResizable(false);
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setBackground(new java.awt.Color(255, 254, 245));
+        jPanel1.setMaximumSize(new java.awt.Dimension(1070, 700));
+        jPanel1.setMinimumSize(new java.awt.Dimension(1070, 700));
         jPanel1.setPreferredSize(new java.awt.Dimension(1070, 700));
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         btnAgregarComanda.setBackground(new java.awt.Color(255, 119, 170));
         btnAgregarComanda.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 70)); // NOI18N
@@ -114,15 +122,13 @@ public class PantallaComandas extends javax.swing.JFrame {
                 btnAgregarComandaMouseClicked(evt);
             }
         });
-        btnAgregarComanda.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAgregarComandaActionPerformed(evt);
-            }
-        });
+        jPanel1.add(btnAgregarComanda, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 100, -1, -1));
 
         jPanel3.setBackground(new java.awt.Color(255, 228, 242));
-        jPanel3.setLayout(new java.awt.GridBagLayout());
+        jPanel3.setLayout(new java.awt.GridLayout(4, 4, 10, 10));
         jScrollPane2.setViewportView(jPanel3);
+
+        jPanel1.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 80, 920, 620));
 
         jPanel2.setBackground(new java.awt.Color(255, 176, 217));
         jPanel2.setPreferredSize(new java.awt.Dimension(1070, 78));
@@ -145,57 +151,17 @@ public class PantallaComandas extends javax.swing.JFrame {
         });
         jPanel2.add(lblRegresar, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -10, 100, 100));
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(41, 41, 41)
-                .addComponent(btnAgregarComanda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 903, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 1088, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 6, Short.MAX_VALUE))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnAgregarComanda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 818, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 0, Short.MAX_VALUE))
-        );
+        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1088, -1));
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 1094, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 891, Short.MAX_VALUE)
-                .addContainerGap())
-        );
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void lblRegresarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblRegresarMouseClicked
         coordinador.PantallaPrinicipal(this);
     }//GEN-LAST:event_lblRegresarMouseClicked
-
-    private void btnAgregarComandaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarComandaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnAgregarComandaActionPerformed
 
     private void btnAgregarComandaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAgregarComandaMouseClicked
         coordinador.pantallaComandaAgregarCliente(this);
