@@ -47,6 +47,7 @@ public class ComandaAgregarCliente extends javax.swing.JFrame {
         setPreferredSize(new java.awt.Dimension(1070, 70));
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel1.setMinimumSize(new java.awt.Dimension(1070, 700));
 
         jPanel2.setBackground(new java.awt.Color(255, 176, 217));
         jPanel2.setPreferredSize(new java.awt.Dimension(1070, 70));
@@ -72,9 +73,12 @@ public class ComandaAgregarCliente extends javax.swing.JFrame {
         panelBusquedaClientes.setBackground(new java.awt.Color(255, 255, 255));
 
         lblMesa.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        lblMesa.setForeground(new java.awt.Color(0, 0, 0));
         lblMesa.setText("Mesa: ");
 
+        cbBoxMesas.setBackground(new java.awt.Color(255, 255, 255));
         cbBoxMesas.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        cbBoxMesas.setForeground(new java.awt.Color(0, 0, 0));
         cbBoxMesas.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         btnTomarComanda.setBackground(new java.awt.Color(255, 119, 170));
@@ -122,7 +126,7 @@ public class ComandaAgregarCliente extends javax.swing.JFrame {
                 .addComponent(panelBusquedaClientes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnTomarComanda, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(17, Short.MAX_VALUE))
+                .addContainerGap(18, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -145,8 +149,11 @@ public class ComandaAgregarCliente extends javax.swing.JFrame {
 
     private void btnTomarComandaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTomarComandaActionPerformed
         ComandaDTO comandaAgregar = new ComandaDTO();
+        comandaAgregar.setNombreCliente(panelBusquedaClientes.getCliente().getNombre());
+        comandaAgregar.setTelefonoCliente(panelBusquedaClientes.getCliente().getTelefono());
         coordinador.pantallaAgregarComanda(this, comandaAgregar);
     }//GEN-LAST:event_btnTomarComandaActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnTomarComanda;

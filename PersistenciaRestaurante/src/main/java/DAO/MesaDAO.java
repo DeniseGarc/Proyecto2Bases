@@ -69,4 +69,21 @@ public class MesaDAO implements IMesaDAO {
         }
     }
 
+    /**
+     * Métod para recuperar una lista con las mesas disponibles
+     * @return 
+     * @throws PersistenciaException 
+     */
+    @Override
+    public List<Mesa> obtenerMesas() throws PersistenciaException {
+        EntityManager em = Conexion.crearConexion();
+        try {
+            return em.createQuery("SELECT m FROM Mesa m WHERE m.estado = 1", Mesa.class).getResultList();
+        } catch (Exception e) {
+            throw new PersistenciaException("Hubo un error al consultar las mesas: ", e);
+        } finally {
+            em.close();
+        }
+    }
+
 }
