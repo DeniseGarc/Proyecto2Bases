@@ -23,5 +23,6 @@ public interface IIngredienteBO {
     public List<IngredienteDTO> buscarPorNombreYUnidad(String nombre, String unidad) throws NegocioException;
     public List<IngredienteDTO> buscarPorUnidad(UnidadMedida unidad) throws NegocioException;
     public IngredienteDTO buscarPorNombreYUnidad1 (String nombre, String unidad) throws NegocioException;
+    public List<IngredienteDTO> buscarIngredientes(String nombre, UnidadMedida unidad) throws NegocioException;
     
 }
