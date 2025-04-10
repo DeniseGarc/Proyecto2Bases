@@ -5,6 +5,7 @@
 package GUIs;
 
 import DTOs.IngredienteDTO;
+import PlantillaIngredientes.PanelIngredientes;
 import control.CoordinadorAplicacion;
 import control.exception.CoordinadorException;
 import exception.NegocioException;
@@ -65,7 +66,7 @@ public class PantallaIngredientes extends javax.swing.JFrame {
         int columna = 0;
 
         for (IngredienteDTO ingrediente : listaIngredientes) {
-            JPanel tarjeta = crearTarjetaIngrediente(ingrediente);
+            PanelIngredientes tarjeta = new PanelIngredientes(ingrediente);
 
             gbc.gridx = columna;
             gbc.gridy = fila;
@@ -83,73 +84,7 @@ public class PantallaIngredientes extends javax.swing.JFrame {
         jPanel3.repaint();
     }
 
-    private JPanel crearTarjetaIngrediente(IngredienteDTO ingrediente) {
-        JPanel panel = new JPanel();
-        panel.setPreferredSize(new Dimension(200, 120));
-        panel.setBackground(new Color(255, 227, 242));
-        panel.setLayout(new BorderLayout());
-
-        // Nombre del ingrediente
-        JPanel panelNombre = new JPanel();
-        panelNombre.setBackground(new Color(255, 192, 203));
-        JLabel lblNombre = new JLabel(ingrediente.getNombre(), SwingConstants.CENTER);
-        lblNombre.setFont(new Font("Arial", Font.BOLD, 16));
-        panelNombre.add(lblNombre);
-
-        // Stock y unidad
-        JLabel lblStock = new JLabel("Stock: " + ingrediente.getStock(), SwingConstants.LEFT);
-        lblStock.setFont(new Font("Arial", Font.PLAIN, 14));
-        JLabel lblUnidad = new JLabel("Unidad: " + ingrediente.getUnidadMedida(), SwingConstants.LEFT);
-        lblUnidad.setFont(new Font("Arial", Font.PLAIN, 14));
-
-        // Botón -
-        JButton btnMenos = new JButton("-");
-        btnMenos.setFont(new Font("Arial", Font.BOLD, 14));
-        btnMenos.setBackground(new Color(240, 128, 128));
-        btnMenos.setForeground(Color.WHITE);
-        btnMenos.setBorder(BorderFactory.createLineBorder(new Color(139, 0, 0), 2));
-
-        // Botón +
-        JButton btnMas = new JButton("+");
-        btnMas.setFont(new Font("Arial", Font.BOLD, 14));
-        btnMas.setBackground(new Color(60, 179, 113));
-        btnMas.setForeground(Color.WHITE);
-        btnMas.setBorder(BorderFactory.createLineBorder(new Color(0, 100, 0), 2));
-
-        
-        ActionListener actualizarStockListener = e -> {
-            int nuevoStock = ingrediente.getStock() + (e.getSource() == btnMas ? 1 : -1);
-            if (nuevoStock >= 0) {
-                try {
-                    IngredienteDTO actualizado = coordinador.modificarStock(ingrediente.getId(), nuevoStock);
-                    ingrediente.setStock(actualizado.getStock());
-                    lblStock.setText("Stock: " + actualizado.getStock());
-                } catch (CoordinadorException ex) {
-                    JOptionPane.showMessageDialog(panel, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-                }
-            }
-        };
-
-        btnMas.addActionListener(actualizarStockListener);
-        btnMenos.addActionListener(actualizarStockListener);
-
-        // Botones en panel
-        JPanel panelBotones = new JPanel(new GridLayout(1, 2, 10, 0));
-        panelBotones.add(btnMenos);
-        panelBotones.add(btnMas);
-
-        // Panel inferior
-        JPanel panelInferior = new JPanel(new BorderLayout());
-        panelInferior.add(lblUnidad, BorderLayout.NORTH);
-        panelInferior.add(lblStock, BorderLayout.CENTER);
-        panelInferior.add(panelBotones, BorderLayout.SOUTH);
-
-        
-        panel.add(panelNombre, BorderLayout.NORTH);
-        panel.add(panelInferior, BorderLayout.CENTER);
-
-        return panel;
-    }
+    
 
     
     /**
@@ -228,12 +163,12 @@ public class PantallaIngredientes extends javax.swing.JFrame {
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 12, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(72, 72, 72)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(btnAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(73, 73, 73)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 659, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(57, 57, 57)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btnAgregar, javax.swing.GroupLayout.DEFAULT_SIZE, 121, Short.MAX_VALUE)
+                    .addComponent(btnEliminar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(82, 82, 82)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 726, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -242,13 +177,13 @@ public class PantallaIngredientes extends javax.swing.JFrame {
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(74, 74, 74)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 414, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(135, 135, 135)
-                        .addComponent(btnAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(50, 50, 50)
-                        .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(btnAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(31, 31, 31)
+                        .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(44, 44, 44)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 444, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(0, 51, Short.MAX_VALUE))
         );
 
