@@ -446,26 +446,6 @@ public class CoordinadorAplicacion {
         }
     }
 
-    /**
-     * llama al metodo para buscar ingredientes por unidad
-     *
-     * @param unidad de medida
-     * @return Lista de ingredientes
-     * @throws CoordinadorException
-     */
-    public List<IngredienteDTO> buscarIngredientePorUnidad(UnidadMedida unidad) throws CoordinadorException {
-        try {
-
-            // Llamar al método del BO para buscar ingredientes
-            List<IngredienteDTO> ingredientes = ingredienteBO.buscarPorUnidad(unidad);
-
-            return ingredientes;
-
-        } catch (NegocioException ex) {
-            Logger.getLogger(CoordinadorAplicacion.class.getName()).log(Level.SEVERE, "Error en buscarPorUnidad", ex);
-            throw new CoordinadorException("Ha ocurrido un error al buscar los ingredientes: " + ex.getMessage());
-        }
-    }
 
     /**
      * Recupera solo los ingredientes que no tienen un producto asignado
@@ -500,40 +480,6 @@ public class CoordinadorAplicacion {
         }
     }
 
-    /**
-     * Recupera la lista de ingredientes filtrandolos por nombre y unidad
-     *
-     * @param nombre Nombre del ingrediente a buscar
-     * @param unidad Unidad de medida a buscar
-     * @return Lista de ingredientes filtrados
-     * @throws CoordinadorException Si ocurre algun error inesperado al buscar
-     */
-    public List<IngredienteDTO> buscarPorNombreYUnidad(String nombre, String unidad) throws CoordinadorException {
-        try {
-            return ingredienteBO.buscarPorNombreYUnidad(nombre, unidad);
-
-        } catch (NegocioException ex) {
-            Logger.getLogger(CoordinadorAplicacion.class.getName()).log(Level.SEVERE, null, ex);
-            throw new CoordinadorException("Ha ocurrido un error al buscar el ingrediente");
-        }
-    }
-
-    /**
-     * Busca los ingredientes filtrandolos por nombre
-     *
-     * @param nombre nombre del ingrediente a buscar
-     * @return Lista de ingredientes filtrados
-     * @throws CoordinadorException Si ocurre algun error al buscar los
-     * ingredientes
-     */
-    public List<IngredienteDTO> buscarPorNombre(String nombre) throws CoordinadorException {
-        try {
-            return ingredienteBO.obtenerIngredientesPorNombre(nombre);
-        } catch (NegocioException ex) {
-            Logger.getLogger(CoordinadorAplicacion.class.getName()).log(Level.SEVERE, null, ex);
-            throw new CoordinadorException("Ha ocurrido un error al buscar el ingrediente");
-        }
-    }
 
     /**
      * Regresa solo un ingrediente buscandolo por nombre y unidad

@@ -15,13 +15,10 @@ import java.util.List;
  */
 public interface IIngredienteBO {
     public List<IngredienteDTO> obtenerIngredientes() throws NegocioException;
-    public List<IngredienteDTO> obtenerIngredientesPorNombre(String nombre) throws NegocioException; 
     public boolean eliminarIngrediente(Long id )throws NegocioException; 
     public IngredienteDTO actualizarStock(Long id, int stock) throws NegocioException; 
     public IngredienteDTO agregarIngrediente(IngredienteDTO ingrediente) throws NegocioException; 
     public List<IngredienteDTO> obtenerIngredientesSinProducto() throws NegocioException;
-    public List<IngredienteDTO> buscarPorNombreYUnidad(String nombre, String unidad) throws NegocioException;
-    public List<IngredienteDTO> buscarPorUnidad(UnidadMedida unidad) throws NegocioException;
     public IngredienteDTO buscarPorNombreYUnidad1 (String nombre, String unidad) throws NegocioException;
     public List<IngredienteDTO> buscarIngredientes(String nombre, UnidadMedida unidad) throws NegocioException;
     
