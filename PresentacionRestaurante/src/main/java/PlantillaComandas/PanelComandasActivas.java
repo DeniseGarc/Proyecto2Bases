@@ -19,7 +19,7 @@ public class PanelComandasActivas extends javax.swing.JPanel {
         initComponents();
     }
     public JLabel getNumero (){
-        return txtMesa;
+        return txtNumero;
                 
     }
     /**
