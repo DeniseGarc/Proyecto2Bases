@@ -4,17 +4,23 @@
  */
 package mappers;
 
+import DAO.MesaDAO;
 import DTOs.ComandaDTO;
 import entidades.Comanda;
+import entidades.Mesa;
 import enumeradores.Estado;
+import exception.PersistenciaException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
  * @author erika
  */
 public class ComandaMapper {
+   
     public static List<ComandaDTO> toDtoList(List<Comanda> comandasEntidad){
         List<ComandaDTO> comandasDTO = new ArrayList<>();
         for(Comanda comanda : comandasEntidad){
@@ -28,7 +34,22 @@ public class ComandaMapper {
     }
     
     public static Comanda toEntity (ComandaDTO comandaDTO){
-        Comanda comandaEntidad = new Comanda(comandaDTO.getFechaHora(), comandaDTO.getTotalVenta(), comandaDTO.getEstado());
-        return comandaEntidad;
+
+        try {
+            Comanda comandaEntidad = new Comanda();
+            comandaEntidad.setId(comandaDTO.getId());
+            comandaEntidad.setFechaHora(comandaDTO.getFechaHora());
+            comandaEntidad.setTotalVenta(comandaDTO.getTotalVenta());
+            comandaEntidad.setEstado(comandaDTO.getEstado());
+            MesaDAO mesaDAO = new MesaDAO();
+            // Obtener la mesa utilizando el método del DAO
+            Long numero = Long.valueOf(comandaDTO.getNumeroMesa());
+            Mesa mesa = mesaDAO.obtenerMesaPorNumero(numero); // Llamada al método DAO
+            comandaEntidad.setMesa(mesa);
+            return comandaEntidad;
+        } catch (PersistenciaException ex) {
+            Logger.getLogger(ComandaMapper.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
     }
 }

@@ -73,6 +73,15 @@ public class Comanda implements Serializable {
         this.mesa = mesa;
     }
 
+    public Comanda(Long id, Calendar fechaHora, Double totalVenta, Estado estado, Mesa mesa, ClienteFrecuente cliente) {
+        this.id = id;
+        this.fechaHora = fechaHora;
+        this.totalVenta = totalVenta;
+        this.estado = estado;
+        this.mesa = mesa;
+        this.cliente = cliente;
+    }
+
     public Comanda() {
     }
     public Mesa getMesa() {

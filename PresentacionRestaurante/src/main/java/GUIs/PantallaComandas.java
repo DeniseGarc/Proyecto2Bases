@@ -5,7 +5,6 @@
 package GUIs;
 
 import DTOs.ComandaDTO;
-import DTOs.IngredienteDTO;
 import PlantillaComandas.PanelComandasActivas;
 import control.CoordinadorAplicacion;
 import control.exception.CoordinadorException;
@@ -17,7 +16,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
-import javax.swing.JPanel;
+
 
 /**
  *
@@ -52,7 +51,7 @@ public class PantallaComandas extends javax.swing.JFrame {
         int columna = 0;
 
         for (ComandaDTO comanda : comandas) {
-            PanelComandasActivas panelComandas = new PanelComandasActivas();
+            PanelComandasActivas panelComandas = new PanelComandasActivas(this, comanda);
             panelComandas.getNumero().setText(comanda.getNumeroMesa());
             gbc.gridx = columna;
             gbc.gridy = fila;

@@ -17,4 +17,5 @@ public interface IMesaDAO {
     public void insertarMesas() throws PersistenciaException;
     public boolean consultarMesas() throws PersistenciaException;
     public List<Mesa> obtenerMesas() throws PersistenciaException;
+    public Mesa obtenerMesaPorNumero(Long numero) throws PersistenciaException;
 }
