@@ -45,21 +45,7 @@ public class IngredienteBO implements IIngredienteBO{
         }
         
     }
-    /**
-     * Busca los ingredientes con el nombre indicaso
-     * @param nombre a buscar
-     * @return lista de ingredientes DTO
-     * @throws NegocioException 
-     */
-    @Override
-    public List<IngredienteDTO> obtenerIngredientesPorNombre(String nombre) throws NegocioException {
-        try{
-            List<Ingrediente> ingredientes = ingredienteDAO.buscarIngredientePorNombre(nombre);
-            return IngredienteMapper.ToDTOList(ingredientes);
-        }catch(PersistenciaException e) {
-            throw new NegocioException("Ocurrió un error al obtener los ingredientes");
-        }
-    }
+
     /**
      * Elimina el ingrediente indicado, llama al metodo en la DAO para eliminar
      * @param id del ingrediente a eliminar
@@ -136,7 +122,11 @@ public class IngredienteBO implements IIngredienteBO{
         throw new NegocioException("Error al agregar el ingrediente.", e);
     }
     }
-    
+    /**
+     * Metodo que obtiene los ingredientes que no forman parte de un producto
+     * @return Lista de ingredientes dto
+     * @throws NegocioException si hay algun error inesperado
+     */
     @Override
     public List<IngredienteDTO> obtenerIngredientesSinProducto() throws NegocioException{
         try{
@@ -147,26 +137,14 @@ public class IngredienteBO implements IIngredienteBO{
         }
     }
 
-    @Override
-    public List<IngredienteDTO> buscarPorNombreYUnidad(String nombre, String unidad) throws NegocioException {
-        try{
-           List<Ingrediente> ingredientes = ingredienteDAO.buscarPorNombreYUnidad(nombre, unidad);
-           return IngredienteMapper.ToDTOList(ingredientes);
-        }catch(PersistenciaException e) {
-            throw new NegocioException("Ocurrió un error al obtener el ingrediente");
-        }
-    }
-    
-    @Override
-    public List<IngredienteDTO> buscarPorUnidad(UnidadMedida unidad) throws NegocioException{
-        try{
-           List<Ingrediente> ingredientes = ingredienteDAO.buscarIngredientesPorUnidadMedida(unidad);
-           return IngredienteMapper.ToDTOList(ingredientes);
-        }catch(PersistenciaException e) {
-            throw new NegocioException("Ocurrió un error al obtener el ingrediente");
-        }
-    }
 
+    /**
+     * Metodo para buscar un ingrediente por su nombre y unidad de medida
+     * @param nombre Nombre del ingrediente a buscar
+     * @param unidad Unidad de medida del ingrediente a buscar
+     * @return IngredienteDTO filtrado
+     * @throws NegocioException 
+     */
     @Override
     public IngredienteDTO buscarPorNombreYUnidad1(String nombre, String unidad) throws NegocioException {
         try{
@@ -176,7 +154,13 @@ public class IngredienteBO implements IIngredienteBO{
             throw new NegocioException("Ocurrió un error al obtener el ingrediente");
         }
     }
-
+    /**
+     * Metodo para buscar ingredientes con filtros de nombre y unidad de medida
+     * @param nombre Nombre del ingrediente a buscar
+     * @param unidad Unidad de medida del ingrediente a buscar
+     * @return Lista de ingredientesDTO filtrados
+     * @throws NegocioException 
+     */
     @Override
     public List<IngredienteDTO> buscarIngredientes(String nombre, UnidadMedida unidad) throws NegocioException {
         try {
