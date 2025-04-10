@@ -6,6 +6,7 @@ package BO;
 
 import DTOs.ComandaDTO;
 import entidades.Comanda;
+import enumeradores.Estado;
 import exception.NegocioException;
 import exception.PersistenciaException;
 import interfaces.IComandaBO;
@@ -86,5 +87,33 @@ public class ComandaBO implements IComandaBO {
             throw new NegocioException("Ocurrió un error al registrar la comanda");
         }
     }
+    /**
+     * Metodo para actualizar el estado de las comandas
+     * @param comanda Comanda a actualizar
+     * @param nuevoEstado Esrado al que se va a actualizar la comanda
+     * @return True si la comanda se actualizo correctamente
+     * @throws NegocioException 
+     */
+    @Override
+    public boolean actualizarEstadoComanda(ComandaDTO comanda, Estado nuevoEstado) throws NegocioException {
+        try {
+            if (comanda == null) {
+                throw new NegocioException("La comandaDTO no puede ser nula");
+            }
+            if (nuevoEstado == null) {
+                throw new NegocioException("El nuevo estado no puede ser nulo");
+            }
+
+            // Convertir el DTO a entidad Comanda utilizando el Mapper
+            Comanda comandaEntidad = ComandaMapper.toEntity(comanda);
+            
+            // Llamar al DAO para actualizar el estado
+            return comandaDAO.actualizarEstadoComanda(comandaEntidad, nuevoEstado);
+        } catch (PersistenciaException e) {
+            throw new NegocioException("Error al actualizar el estado de la comanda: " + e.getMessage(), e);
+        }
+    }
+
+
 
 }

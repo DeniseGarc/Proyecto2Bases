@@ -117,5 +117,38 @@ public class ComandaDAO implements IComandaDAO {
             em.close();
         }
     }
+    /**
+     * Metodo para modificar el estado de la comanda 
+     * @param comanda Comanda a modificar
+     * @param nuevoEstado Estado al que se va a cambiar
+     * @return True si se pudo actualizar correctamente
+     * @throws PersistenciaException 
+     */
+   @Override
+    public boolean actualizarEstadoComanda(Comanda comanda, Estado nuevoEstado) throws PersistenciaException {
+        EntityManager em = Conexion.crearConexion();
+        try {
+
+            em.getTransaction().begin();
+            if (comanda == null) {
+                throw new PersistenciaException("Comanda no puede ser nula");
+            }
+            comanda.setEstado(nuevoEstado);
+            em.merge(comanda);
+            em.getTransaction().commit();
+
+            return true;
+        } catch (Exception e) {
+            // Si ocurre algún error, hacer rollback
+            if (em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
+            }
+            throw new PersistenciaException("Error al actualizar el estado de la comanda", e);
+        } finally {
+            em.close();
+        }
+    }
+
+    
 
 }
