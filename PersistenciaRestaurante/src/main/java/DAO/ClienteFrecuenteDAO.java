@@ -102,7 +102,7 @@ public class ClienteFrecuenteDAO implements IClienteFrecuenteDAO {
      * @throws PersistenciaException 
      */
     @Override
-    public ClienteFrecuente obtenerClientePorId(int id) throws PersistenciaException {
+    public ClienteFrecuente obtenerClientePorId(Long id) throws PersistenciaException {
         EntityManager em = Conexion.crearConexion();
         try {
             em.getTransaction().begin();

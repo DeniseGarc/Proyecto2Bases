@@ -16,5 +16,5 @@ public interface IClienteFrecuenteBO {
     public ClienteFrecuenteDTO registrarNuevoClienteFrecuente(ClienteFrecuenteDTO clienteFrecuente) throws NegocioException;
     public List<ClienteFrecuenteDTO> obtenerClientesFrecuentes(String filtro, String dato) throws NegocioException;
     public String desencriptarTelefono(String telefono) throws NegocioException;
-    public ClienteFrecuenteDTO obtenerClientePorId(int id) throws NegocioException;
+    public ClienteFrecuenteDTO obtenerClientePorId(Long id) throws NegocioException;
 }

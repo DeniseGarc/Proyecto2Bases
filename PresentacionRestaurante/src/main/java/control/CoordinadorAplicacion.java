@@ -725,7 +725,7 @@ public class CoordinadorAplicacion {
         }
     }
     
-    public ClienteFrecuenteDTO obtenerClientePorId(int id) throws CoordinadorException {
+    public ClienteFrecuenteDTO obtenerClientePorId(Long id) throws CoordinadorException {
         try {
             return clienteFrecuenteBO.obtenerClientePorId(id);
         } catch (NegocioException e) {
