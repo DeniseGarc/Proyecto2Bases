@@ -17,12 +17,22 @@ import javax.persistence.EntityManager;
  * @author Maryr
  */
 public class MesaDAO implements IMesaDAO {
-
+    /**
+     * lase que implementa las operaciones de acceso a datos para la entidad
+     * Mesa, utilizando JPA para persistencia.
+     * Instancia unica de la clase MesaDAO
+     */
     private static MesaDAO instanciaMesaDAO;
-
+    /**
+     * Constructor vacio
+     */
     public MesaDAO() {
     }
-
+    
+    /**
+     * Metodo que devuelve la instancia única de MesaDAO
+     * @return instancia unida de MesaDAO
+     */
     public static MesaDAO getInstanciaDAO() {
         if (instanciaMesaDAO == null) {
             instanciaMesaDAO = new MesaDAO();

@@ -18,7 +18,7 @@ import javax.persistence.TypedQuery;
 
 /**
  *Clase que implementa las operaciones de acceso a datos para la entidad
- * Producto, utilizando JPA para persistencia.
+ * Ingrediente, utilizando JPA para persistencia.
  * @author erika
  */
 public class IngredienteDAO implements IIngredienteDAO {
@@ -141,7 +141,7 @@ public class IngredienteDAO implements IIngredienteDAO {
 
             // Solo actualizamos si hay un cambio
             if (producto.isDisponible() != disponible) {
-                producto.setDisponible(true);
+                producto.setDisponible(disponible);
                 em.merge(producto);
             }
         }

@@ -11,7 +11,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- *
+ *Clase que se utiliza para mapear entre entidades Ingrediente y sus respectivos
+ * DTOs.
  * @author erika
  */
 public class IngredienteMapper {
@@ -38,7 +39,11 @@ public class IngredienteMapper {
         IngredienteDTO ingredienteDTO = new IngredienteDTO(ingrediente.getId(), ingrediente.getNombre(), ingrediente.getUnidadMedida(), ingrediente.getStock());
         return ingredienteDTO;
     }
-    
+    /**
+     * Concierte un ingredienteDTO a entidad ingrediente c
+     * @param ingredienteDTO IngredienteDTO a convertir
+     * @return Entidad ingrediente con los datos correspondientes
+     */
     public static Ingrediente ToEntity(IngredienteDTO ingredienteDTO){
         Ingrediente ingrediente = new Ingrediente(ingredienteDTO.getNombre(), ingredienteDTO.getUnidadMedida(), ingredienteDTO.getStock());
         return ingrediente; 

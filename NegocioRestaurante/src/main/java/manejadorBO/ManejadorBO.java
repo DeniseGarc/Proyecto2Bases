@@ -42,19 +42,28 @@ public class ManejadorBO {
         IProductoBO productoBO = new ProductoBO(productoDAO, ingredienteDAO);
         return productoBO;
     }
-
+    /**
+     * Metodo que crea y regresa la instancia de IngredienteBO
+     * @return IngredienteBO que implementa la interfaz IIngredienteBO
+     */ 
     public static IIngredienteBO crearIngredienteBO() {
         IIngredienteDAO ingredienteDAO = IngredienteDAO.getInstanceDAO();
         IIngredienteBO ingredienteBO = new IngredienteBO(ingredienteDAO);
         return ingredienteBO;
     }
-
+    /**
+     * Metodo que crea y regresa la instancia de IClienteFrecuenteBO
+     * @return ClienteFrecuenteBO que implementa la interfaz IClienteFrecuenteBO
+     */ 
     public static IClienteFrecuenteBO crearClienteFrecuenteBO() {
         IClienteFrecuenteDAO clienteFrecuenteDAO = ClienteFrecuenteDAO.getInstanciaDAO();
         IClienteFrecuenteBO clienteFrecuenteBO = new ClienteFrecuenteBO(clienteFrecuenteDAO);
         return clienteFrecuenteBO;
     }
-
+    /**
+     * Metodo que crea y regresa la instancia de IComandaBO
+     * @return ComandaBO que implementa la interfaz IComandaBO
+     */
     public static IComandaBO crearComandaBo() {
         IComandaDAO comandaDAO = ComandaDAO.getInstanciaDAO();
         IProductoDAO productoDAO = ProductoDAO.getInstanciaDAO();
@@ -63,7 +72,10 @@ public class ManejadorBO {
         IComandaBO comandaBO = new ComandaBO(comandaDAO, productoDAO, mesaDAO, clienteFrecuenteDAO);
         return comandaBO;
     }
-
+    /**
+     * Metodo que crea y regresa la instancia de IMesaBO
+     * @return MesaBO que implementa la interfaz IMesaBO
+     */
     public static IMesaBO crearMesaBO() {
         IMesaDAO mesaDAO = MesaDAO.getInstanciaDAO();
         IMesaBO mesaBO = new MesaBO(mesaDAO);

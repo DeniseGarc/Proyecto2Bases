@@ -35,7 +35,13 @@ public class ComandaBO implements IComandaBO {
     private IProductoDAO productoDAO;
     private IMesaDAO mesaDAO;
     private IClienteFrecuenteDAO clienteFrecuenteDAO;
-
+    /**
+     * Constructor que inicializa las dependencias DAO necesarias
+     * @param comandaDAO Implementación de IComandaDAO para acceso a datos de Comanda
+     * @param productoDAO Implementación de IProductoDAO para acceso a datos de Producto
+     * @param mesaDAO Implementación de IMesaDAO para acceso a datos de Mesa
+     * @param clienteFrecuenteDAO Implementación de IClienteFrecuenteDAO para acceso a datos de Cliente Frecuente
+     */
     public ComandaBO(IComandaDAO comandaDAO, IProductoDAO productoDAO, IMesaDAO mesaDAO, IClienteFrecuenteDAO clienteFrecuenteDAO) {
         this.comandaDAO = comandaDAO;
         this.productoDAO = productoDAO;
