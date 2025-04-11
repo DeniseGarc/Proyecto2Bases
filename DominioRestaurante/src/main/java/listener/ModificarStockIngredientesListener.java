@@ -17,7 +17,6 @@ import javax.persistence.PreUpdate;
  * @author erika
  */
 public class ModificarStockIngredientesListener {
-    public class DescontarStockListener {
 
     @PreUpdate
     public void verificarCambioEstado(Comanda comanda) {
@@ -37,7 +36,7 @@ public class ModificarStockIngredientesListener {
                 int cantidadIngrediente = dpi.getCantidad() * cantidadComanda;
 
                 Integer nuevoStock = ingrediente.getStock() - cantidadIngrediente;
-                
+
                 // Validar si hay suficiente stock
                 if (nuevoStock < 0) {
                     throw new IllegalStateException("No hay suficiente stock para el ingrediente: " + ingrediente.getNombre());
@@ -47,7 +46,4 @@ public class ModificarStockIngredientesListener {
             }
         }
     }
-}
-
-    
 }

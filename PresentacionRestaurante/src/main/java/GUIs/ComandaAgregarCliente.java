@@ -156,7 +156,7 @@ public class ComandaAgregarCliente extends javax.swing.JFrame {
         ComandaDTO comandaAgregar = new ComandaDTO();
         if (panelBusquedaClientes.getCliente() != null) {
             comandaAgregar.setNombreCliente(panelBusquedaClientes.getCliente().getNombre());
-            comandaAgregar.setTelefonoCliente(panelBusquedaClientes.getCliente().getTelefono());
+            comandaAgregar.setIdCliente(panelBusquedaClientes.getCliente().getId());
         }
         comandaAgregar.setNumeroMesa(cbBoxMesas.getSelectedItem().toString());
         coordinador.pantallaAgregarComanda(this, comandaAgregar);

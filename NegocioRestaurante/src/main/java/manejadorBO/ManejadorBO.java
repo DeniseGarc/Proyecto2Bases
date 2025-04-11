@@ -58,7 +58,9 @@ public class ManejadorBO {
     public static IComandaBO crearComandaBo() {
         IComandaDAO comandaDAO = ComandaDAO.getInstanciaDAO();
         IProductoDAO productoDAO = ProductoDAO.getInstanciaDAO();
-        IComandaBO comandaBO = new ComandaBO(comandaDAO, productoDAO);
+        IMesaDAO mesaDAO = MesaDAO.getInstanciaDAO();
+        IClienteFrecuenteDAO clienteFrecuenteDAO = ClienteFrecuenteDAO.getInstanciaDAO();
+        IComandaBO comandaBO = new ComandaBO(comandaDAO, productoDAO, mesaDAO, clienteFrecuenteDAO);
         return comandaBO;
     }
 

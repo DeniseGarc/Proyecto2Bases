@@ -53,6 +53,7 @@ public class ComandaDAOTest {
         // Limpia base de datos
         EntityManager em = conexion.Conexion.crearConexion();
         em.getTransaction().begin();
+        em.createQuery("DELETE FROM DetalleComanda").executeUpdate();
         em.createQuery("DELETE FROM Comanda").executeUpdate();
         em.createQuery("DELETE FROM Cliente").executeUpdate();
         em.getTransaction().commit();

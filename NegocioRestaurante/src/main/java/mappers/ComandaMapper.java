@@ -4,17 +4,14 @@
  */
 package mappers;
 
-import DAO.MesaDAO;
+import entidades.ClienteFrecuente;
 import DTOs.ComandaDTO;
 import DTOs.DetalleComandaDTO;
 import entidades.Comanda;
 import entidades.DetalleComanda;
 import entidades.Mesa;
-import exception.PersistenciaException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -36,7 +33,7 @@ public class ComandaMapper {
                 comandaEntidad.getFechaHora(),
                 comandaEntidad.getTotalVenta(),
                 comandaEntidad.getEstado(),
-                comandaEntidad.getCliente() != null ? comandaEntidad.getCliente().getTelefono() : null,
+                comandaEntidad.getCliente() != null ? comandaEntidad.getCliente().getId() : null,
                 comandaEntidad.getCliente() != null ? comandaEntidad.getCliente().getNombre() : null,
                 comandaEntidad.getMesa().getNumero().toString()
         );
@@ -55,22 +52,14 @@ public class ComandaMapper {
         return comandaDTO;
     }
 
-    public static Comanda toEntity(ComandaDTO comandaDTO) {
-
-        try {
-            Comanda comandaEntidad = new Comanda();
-            comandaEntidad.setId(comandaDTO.getId());
-            comandaEntidad.setFechaHora(comandaDTO.getFechaHora());
-            comandaEntidad.setTotalVenta(comandaDTO.getTotalVenta());
-            comandaEntidad.setEstado(comandaDTO.getEstado());
-            MesaDAO mesaDAO = new MesaDAO();
-            Long numero = Long.valueOf(comandaDTO.getNumeroMesa());
-            Mesa mesa = mesaDAO.obtenerMesaPorNumero(numero);
-            comandaEntidad.setMesa(mesa);
-            return comandaEntidad;
-        } catch (PersistenciaException ex) {
-            Logger.getLogger(ComandaMapper.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return null;
+    public static Comanda toEntity(ComandaDTO comandaDTO, ClienteFrecuente cliente, Mesa mesa) {
+        Comanda comandaEntidad = new Comanda(
+                comandaDTO.getId(),
+                comandaDTO.getFechaHora(),
+                comandaDTO.getTotalVenta(),
+                comandaDTO.getEstado(),
+                mesa,
+                cliente);
+        return comandaEntidad;
     }
 }
