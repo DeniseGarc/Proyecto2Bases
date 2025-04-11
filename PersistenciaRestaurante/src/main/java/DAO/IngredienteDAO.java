@@ -15,15 +15,25 @@ import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
 
 /**
- *
+ *Clase que implementa las operaciones de acceso a datos para la entidad
+ * Producto, utilizando JPA para persistencia.
  * @author erika
  */
 public class IngredienteDAO implements IIngredienteDAO {
+    /**
+     * Instancia única de la clase IngredienteDAO
+     */
     private static IngredienteDAO instanceIngredienteDAO;
-
+     /**
+     * Constructor privado para aplicar el patrón Singleton
+     */
     public IngredienteDAO() {
     }
-    
+    /**
+     * Metodo que devuelve la instancia única de IngredienteDAO
+     *
+     * @return instancia única de IngredienteDAO
+     */
     public static IngredienteDAO getInstanceDAO(){
         if(instanceIngredienteDAO==null){
             instanceIngredienteDAO = new IngredienteDAO();
