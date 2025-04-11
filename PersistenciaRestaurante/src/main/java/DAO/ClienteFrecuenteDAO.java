@@ -95,4 +95,25 @@ public class ClienteFrecuenteDAO implements IClienteFrecuenteDAO {
         }
     }
 
+    /**
+     * Recupera al cliente de la base de datos por medio de su id
+     * @param id del cliente a recuperar
+     * @return el cliente asociado al id
+     * @throws PersistenciaException 
+     */
+    @Override
+    public ClienteFrecuente obtenerClientePorId(int id) throws PersistenciaException {
+        EntityManager em = Conexion.crearConexion();
+        try {
+            em.getTransaction().begin();
+            ClienteFrecuente cliente = em.find(ClienteFrecuente.class, id);
+            em.getTransaction().commit();
+            return cliente;
+        } catch (Exception e) {
+            throw new PersistenciaException("Hubo un error al consultar el cliente: ", e);
+        } finally {
+            em.close();
+        }
+    }
+
 }
