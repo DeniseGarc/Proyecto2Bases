@@ -18,13 +18,16 @@ import java.util.stream.Collectors;
 import mappers.IngredienteMapper;
 
 /**
- *
+ *Clase que implementa la lógica de negocio para operaciones relacionadas con Ingredientes
  * @author erika
  */
 public class IngredienteBO implements IIngredienteBO{
     
     private IIngredienteDAO ingredienteDAO;
-
+    /**
+     * Constructor que inicializa la dependencia dao necesaria
+     * @param ingredienteDAO implementacion de IIngredienteDAO para acceso de datos de ingredientes
+     */
     public IngredienteBO(IIngredienteDAO ingredienteDAO) {
         this.ingredienteDAO = ingredienteDAO;
     }

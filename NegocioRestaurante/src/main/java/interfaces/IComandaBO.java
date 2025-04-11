@@ -10,18 +10,42 @@ import exception.NegocioException;
 import java.util.List;
 
 /**
- *
+ *Interfaz que define las operaciones de lógica de negocio para la gestión de comandas
  * @author Maryr
  */
 public interface IComandaBO {
-
+    /**
+     * Metodo para obtener todas las comandas registradas en la base de datos
+     * @return Lista de comandasDTO registradas
+     * @throws NegocioException Si ocurre algun error al obtener las comandas
+     */
     public List<ComandaDTO> obtenerComandas() throws NegocioException;
-
+    /**
+     * Metodo para obtener las comandas cuyo estado sea ACTIVA
+     * @return Lista de comandas DTO activas
+     * @throws NegocioException Si ocutrre algun error al obtener las comandas
+     */
     public List<ComandaDTO> obtenerComandasActivas() throws NegocioException;
-
+    /**
+     * Metodo para actualizar una comanda previamente registrada 
+     * @param comandaActualizar comanda a actualizar
+     * @return True si la comanda se actualizo exitosamente
+     * @throws NegocioException Si ocurre algun error al actualizar la comanda
+     */
     public boolean actualizarComanda(ComandaDTO comandaActualizar) throws NegocioException;
-
+    /**
+     * Metodo para agregar una comanda nueva a la base de datos
+     * @param comandaNueva Comanda a registrar
+     * @return True si la comanda se guardo exitosamente
+     * @throws NegocioException Si ocurre algun error al guardar la comanda
+     */
     public boolean agregarComanda(ComandaDTO comandaNueva) throws NegocioException;
-    
+    /**
+     * Metodo para actualizar el estado de la comanda
+     * @param comanda Comanda a actualizar
+     * @param nuevoEstado Estado al que se va a actualizar
+     * @return True si se actualizo el estado correctamente
+     * @throws NegocioException  Si ocurre algun error al actualizar el estado de la comanda
+     */
     public boolean actualizarEstadoComanda(ComandaDTO comanda, Estado nuevoEstado) throws NegocioException;
 }

@@ -13,16 +13,19 @@ import java.util.List;
 import mappers.MesaMapper;
 
 /**
- *
+ *Clase que implementa la lógica de negocio para operaciones relacionadas con Mesa
  * @author Maryr
  */
 public class MesaBO implements IMesaBO {
 
     private IMesaDAO mesaDAO;
-
+    
     public MesaBO() {
     }
-
+    /**
+     * Constructor que inicializa la dependencia dao necesaria
+     * @param mesaDAO implementacion de IMesaDAO para acceso de datos de mesas
+     */
     public MesaBO(IMesaDAO mesaDAO) {
         this.mesaDAO = mesaDAO;
     }
@@ -56,7 +59,11 @@ public class MesaBO implements IMesaBO {
             throw new NegocioException("Hubo un error al consultar las mesas: ", e);
         }
     }
-
+    /**
+     * Metodo para obtener las mesas disponibles
+     * @return Lista de mesasDTO disponibles
+     * @throws NegocioException Si ocurre un error en la lógica de negocio.
+     */
     @Override
     public List<MesaDTO> obtenerMesas() throws NegocioException {
         try {

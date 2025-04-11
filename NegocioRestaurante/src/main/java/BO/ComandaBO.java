@@ -26,17 +26,19 @@ import java.util.logging.Logger;
 import mappers.ComandaMapper;
 
 /**
- *
+ *Clase que implementa la lógica de negocio para operaciones relacionadas con comandas
  * @author erika
  */
 public class ComandaBO implements IComandaBO {
 
     private IComandaDAO comandaDAO;
     private IProductoDAO productoDAO;
+
     private IMesaDAO mesaDAO;
     private IClienteFrecuenteDAO clienteFrecuenteDAO;
 
     public ComandaBO(IComandaDAO comandaDAO, IProductoDAO productoDAO, IMesaDAO mesaDAO, IClienteFrecuenteDAO clienteFrecuenteDAO) {
+
         this.comandaDAO = comandaDAO;
         this.productoDAO = productoDAO;
         this.clienteFrecuenteDAO = clienteFrecuenteDAO;
@@ -75,7 +77,12 @@ public class ComandaBO implements IComandaBO {
             throw new NegocioException("Ocurrió un error al obtener las comandas Activas");
         }
     }
-
+    /**
+     * Metodo para actualizar una comanda
+     * @param comandaActualizar Comanda a actualizar
+     * @return True si se actualizo la comanda
+     * @throws NegocioException Si ocurre algun error al actualizar
+     */
     @Override
     public boolean actualizarComanda(ComandaDTO comandaActualizar) throws NegocioException {
         if (comandaActualizar == null) {
@@ -111,7 +118,12 @@ public class ComandaBO implements IComandaBO {
             throw new NegocioException("Ocurrió un error al actualizar la comanda");
         }
     }
-
+    /**
+     * Metodo para agregar una comanda nueva 
+     * @param comandaNueva Comanda a agregar
+     * @return True si se agrego la comanda
+     * @throws NegocioException Si ocurre algun error al agregar la comanda
+     */
     @Override
     public boolean agregarComanda(ComandaDTO comandaNueva) throws NegocioException {
         if (comandaNueva == null) {

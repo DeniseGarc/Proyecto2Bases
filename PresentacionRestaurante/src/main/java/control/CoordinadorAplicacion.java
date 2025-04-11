@@ -63,60 +63,91 @@ public class CoordinadorAplicacion {
         target.setVisible(true);
         padre.dispose();
     }
-
+    /**
+     * Metodo para redirigir a la pantalla de inicio
+     */
     public void PantallaInicio() {
         PantallaInicio inicio = new PantallaInicio();
         inicio.setVisible(true);
     }
-
+    /**
+     * Metodo para redirigir a la pantalla Principal
+     * @param frame Frame padre desde el cual se invoca la siguiente pantalla.
+     */
     public void PantallaPrinicipal(JFrame frame) {
         MenuPrincipal menu = new MenuPrincipal();
         menu.setVisible(true);
         frame.dispose();
     }
-
+    /**
+     * Metodo para redirigir a la pantalla de comandas
+     * @param frame Frame padre desde el cual se invoca la siguiente pantalla.
+     */
     public void PantallaComandas(JFrame frame) {
         PantallaComandas comandas = new PantallaComandas();
         comandas.setVisible(true);
         frame.dispose();
     }
-
+    /**
+     * Metodo para redirigir a la pantalla de ingredientes
+     * @param frame Frame padre desde el cual se invoca la siguiente pantalla.
+     */
     public void PantallaIngredientes(JFrame frame) {
         PantallaIngredientes pantallaIngredientes = new PantallaIngredientes();
         pantallaIngredientes.setVisible(true);
         frame.dispose();
     }
-
+    /**
+     * Metodo para redirigir a la pantalla de agregar Ingredientes
+     * @param frame Frame padre desde el cual se invoca la siguiente pantalla.
+     */
     public void PantallaAgregarIngrediente(JFrame frame) {
         frmAgregarIngrediente pantallaAgregar = new frmAgregarIngrediente();
         pantallaAgregar.setVisible(true);
         frame.dispose();
     }
-
+    /**
+     * Metodo para redirigir a la pantalla de eliminar ingredientes
+     * @param frame Frame padre desde el cual se invoca la siguiente pantalla.
+     */
     public void PantallaEliminarIngrediente(JFrame frame) {
         EliminarIngrediente pantallaEliminar = new EliminarIngrediente();
         pantallaEliminar.setVisible(true);
         frame.dispose();
     }
-
+    /**
+     * Metodo para redirigir a la pantalla de clientes frecuentes
+     * @param frame Frame padre desde el cual se invoca la siguiente pantalla.
+     */
     public void PantallaClienteFrecuente(JFrame frame) {
         ClienteFrecuente pantallaCliente = new ClienteFrecuente();
         pantallaCliente.setVisible(true);
         frame.dispose();
     }
-
+    /**
+     * Metodo para redirigir a la pantalla de agregar comandas
+     * @param frame Frame padre desde el cual se invoca la siguiente pantalla.
+     * @param comandaAgregar comanda a agregar
+     */
     public void pantallaAgregarComanda(JFrame frame, ComandaDTO comandaAgregar) {
         PantallaTomaComanda pantallaComanda = new PantallaTomaComanda(Modo.AGREGAR, comandaAgregar);
         pantallaComanda.setVisible(true);
         frame.dispose();
     }
-
+    /**
+     * Metodo para redirigir a la pantalla de modificar comandas
+     * @param frame Frame padre desde el cual se invoca la siguiente pantalla.
+     * @param comandaModificar comanda a modificar
+     */
     public void pantallaModificarComanda(JFrame frame, ComandaDTO comandaModificar) {
         PantallaTomaComanda pantallaComanda = new PantallaTomaComanda(Modo.MODIFICAR, comandaModificar);
         pantallaComanda.setVisible(true);
         frame.dispose();
     }
-
+    /**
+     * Metodo para redirigir a la pantalla de registrar cliente
+     * @param frame Frame padre desde el cual se invoca la siguiente pantalla.
+     */
     public void PantallaRegistrarCliente(JFrame frame) {
         RegistrarClienteNuevo PantallaRegistrarCliente = new RegistrarClienteNuevo();
         PantallaRegistrarCliente.setVisible(true);
@@ -303,7 +334,12 @@ public class CoordinadorAplicacion {
         }
         return false;
     }
-
+    /**
+     * Actualiza los datos de la comanda
+     * @param comanda DTO con los datos actualizados de la comanda
+     * @return true si la actualizacion fue exitosa
+     * @throws CoordinadorException Si los datos son invalidos o ocurre un error
+     */
     public boolean actualizarComanda(ComandaDTO comanda) throws CoordinadorException {
         if (validarDatosComanda(comanda)) {
             try {
@@ -315,7 +351,12 @@ public class CoordinadorAplicacion {
         }
         return false;
     }
-
+    /**
+     * Metodo para agregar una nueva comanda
+     * @param comanda ComandaDTO a agregar
+     * @return true si se agrego de manera exitosa
+     * @throws CoordinadorException Si los datos son invalidos o ocurre un error
+     */
     public boolean agregarComanda(ComandaDTO comanda) throws CoordinadorException {
         if (validarDatosComanda(comanda)) {
             try {
@@ -355,7 +396,12 @@ public class CoordinadorAplicacion {
         }
         return true;
     }
-
+    /**
+     * Valida los datos de la comanda
+     * @param comanda DTO a validar
+     * @return true si los datos son correctos
+     * @throws CoordinadorException Si los datos son invalidos o ocurre un error
+     */
     private boolean validarDatosComanda(ComandaDTO comanda) throws CoordinadorException {
         if (comanda == null) {
             throw new CoordinadorException("La comanda a agregar no puede ser nula");
@@ -565,7 +611,11 @@ public class CoordinadorAplicacion {
             throw new CoordinadorException("Ha ocurrido un error al consultar los clientes.");
         }
     }
-
+    /**
+     * Obtiene una lista de las comandas cuyo estado es ACTIVA
+     * @return lIsta de comanda DTO con estado activa
+     * @throws CoordinadorException si ocurre algun error al recuperar las comandas
+     */
     public List<ComandaDTO> obtenerComandasActivas() throws CoordinadorException {
         try {
             return comandaBO.obtenerComandasActivas();
@@ -573,7 +623,7 @@ public class CoordinadorAplicacion {
             throw new CoordinadorException("Ha ocurrido un error al consultar las comandas activas");
         }
     }
-
+    
     public ProductoDTO obtenerProductoPorNombre(String nombre) throws CoordinadorException {
         if (nombre == null || nombre.trim().isEmpty()) {
             throw new CoordinadorException("Nombre del producto no ha sido ingresado");
@@ -584,7 +634,7 @@ public class CoordinadorAplicacion {
             throw new CoordinadorException("Ha ocurrido un error al obtener el producto por su nombre");
         }
     }
-
+    
     /**
      * Método que valida si el producto puede ser editado. Un producto puede ser
      * actualizado siempre y cuando no se encuentre dentro de una comanda
@@ -634,7 +684,11 @@ public class CoordinadorAplicacion {
             throw new CoordinadorException("Error al consultar las mesas: ", e);
         }
     }
-
+    /**
+     * Obtiene las mesas disponibles
+     * @return Lista de mesasDTO disponibles
+     * @throws CoordinadorException Si ocurre algun error al obtener las mesas
+     */
     public List<MesaDTO> obtenerMesas() throws CoordinadorException {
         try {
             return mesaBO.obtenerMesas();
@@ -642,7 +696,13 @@ public class CoordinadorAplicacion {
             throw new CoordinadorException("Error al obtener las mesas: ", e);
         }
     }
-
+    /**
+     * Metodo para buscar ingredientes con diferentes filtros de nombre y uniad de medida
+     * @param nombre Nombre del ingrediente a buscar
+     * @param unidad Unidad de medida del ingrediente 
+     * @return Lista de ingredientes DTO filtrados
+     * @throws CoordinadorException 
+     */
     public List<IngredienteDTO> buscarIngredientes(String nombre, UnidadMedida unidad) throws CoordinadorException {
         try {
             return ingredienteBO.buscarIngredientes(nombre, unidad);
@@ -650,7 +710,13 @@ public class CoordinadorAplicacion {
             throw new CoordinadorException("Error al consultar los ingredientes: ", e);
         }
     }
-    
+    /**
+     * Actualiza el estado de la comanda
+     * @param comanda Comanda a actualizar
+     * @param nuevoEstado estado al que se va a modificar
+     * @return true si se modifico correctamente el estado
+     * @throws CoordinadorException si no se puede modificar o ocurre algun error
+     */
     public boolean actualizarEstadoComanda (ComandaDTO comanda, Estado nuevoEstado)throws CoordinadorException{
          try {
             return comandaBO.actualizarEstadoComanda(comanda, nuevoEstado);
