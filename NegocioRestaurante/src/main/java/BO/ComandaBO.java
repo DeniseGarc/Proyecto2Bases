@@ -6,6 +6,7 @@ package BO;
 
 import DTOs.ComandaDTO;
 import DTOs.DetalleComandaDTO;
+import DTOs.DetalleReporteComandaDTO;
 import entidades.ClienteFrecuente;
 import entidades.Comanda;
 import entidades.DetalleComanda;
@@ -14,12 +15,15 @@ import entidades.Producto;
 import enumeradores.Estado;
 import exception.NegocioException;
 import exception.PersistenciaException;
+import extras.Periodo;
 import interfaces.IComandaBO;
 import interfaces.IComandaDAO;
 import interfaces.IMesaDAO;
 import interfaces.IProductoDAO;
 import interfaces.IClienteFrecuenteDAO;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -193,6 +197,31 @@ public class ComandaBO implements IComandaBO {
         } catch (PersistenciaException e) {
             throw new NegocioException("Error al actualizar el estado de la comanda: " + e.getMessage(), e);
         }
+    }
+
+    @Override
+    public List<DetalleReporteComandaDTO> obtenerDetallesReporteComanda(Periodo periodo) throws NegocioException {
+        try {
+            if (periodo == null) {
+                Calendar fechaInicio = comandaDAO.obtenerFechaPrimerComanda();
+                Calendar fechaFin = comandaDAO.obtenerFechaUltimaComanda();
+                periodo = new Periodo(fechaInicio, fechaFin);
+            }
+            List<DetalleReporteComandaDTO> detallesReporteComandaConFolio = comandaDAO.generarReporteComandas(periodo);
+            for (DetalleReporteComandaDTO detalleReporteComandaDTO : detallesReporteComandaConFolio) {
+                String folio = generarFolio(detalleReporteComandaDTO);
+                detalleReporteComandaDTO.setFolio(folio);
+            }
+            return detallesReporteComandaConFolio;
+        } catch (PersistenciaException ex) {
+            Logger.getLogger(ComandaBO.class.getName()).log(Level.SEVERE, null, ex);
+            throw new NegocioException("Ha ocurrido un error al intentar consultar los detalles del reporte de comandas: " + ex.getMessage(), ex);
+        }
+    }
+
+    private String generarFolio(DetalleReporteComandaDTO detalleReporte) {
+        String fecha = new SimpleDateFormat("yyyyMMdd").format(detalleReporte.getFechaHora().getTime());
+        return "OB-" + fecha + "-" + String.format("%03d", Long.valueOf(detalleReporte.getFolio()));
     }
 
 }

@@ -5,8 +5,10 @@
 package interfaces;
 
 import DTOs.ComandaDTO;
+import DTOs.DetalleReporteComandaDTO;
 import enumeradores.Estado;
 import exception.NegocioException;
+import extras.Periodo;
 import java.util.List;
 
 /**
@@ -48,4 +50,11 @@ public interface IComandaBO {
      * @throws NegocioException  Si ocurre algun error al actualizar el estado de la comanda
      */
     public boolean actualizarEstadoComanda(ComandaDTO comanda, Estado nuevoEstado) throws NegocioException;
+    /**
+     * Método para obtener el DTO de las comandas para generar el reporte de comandas
+     * @param periodo Periodo del cual se van a obtener las comandas para el reporte
+     * @return Lista de comandas y sus detalles necesarios para generar el reporte
+     * @throws NegocioException si ocurre algun error al intentar obtener los datos
+     */
+    public List<DetalleReporteComandaDTO> obtenerDetallesReporteComanda(Periodo periodo) throws NegocioException;
 }

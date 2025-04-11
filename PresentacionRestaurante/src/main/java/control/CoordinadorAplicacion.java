@@ -6,6 +6,7 @@ package control;
 
 import DTOs.ClienteFrecuenteDTO;
 import DTOs.ComandaDTO;
+import DTOs.DetalleReporteComandaDTO;
 import DTOs.IngredienteDTO;
 import DTOs.MesaDTO;
 import DTOs.ProductoDTO;
@@ -20,14 +21,20 @@ import GUIs.PantallaDetallesProducto;
 import GUIs.PantallaIngredientes;
 import GUIs.PantallaInicio;
 import GUIs.PantallaProductos;
+import GUIs.PantallaReportes;
 import GUIs.PantallaTomaComanda;
 import GUIs.RegistrarClienteNuevo;
+import GUIs.ReporteCliente;
+import GUIs.ReporteClienteVisitas;
+import GUIs.ReporteComandas;
+import GUIs.ReporteSeleccionCliente;
 import GUIs.frmAgregarIngrediente;
 import control.exception.CoordinadorException;
 import enumeradores.Estado;
 import enumeradores.TipoProducto;
 import enumeradores.UnidadMedida;
 import exception.NegocioException;
+import extras.Periodo;
 import interfaces.IClienteFrecuenteBO;
 import interfaces.IComandaBO;
 import interfaces.IIngredienteBO;
@@ -225,11 +232,61 @@ public class CoordinadorAplicacion {
     /**
      * Método para redirigir a la pantalla que permite agregar mesa
      *
-     * @param frame
+     * @param frame Frame padre desde el cual se invoca a la siguiente pantalla.
      */
     public void pantallaComandaAgregarCliente(JFrame frame) {
         ComandaAgregarCliente pantallaComandaAgregarCliente = new ComandaAgregarCliente();
         pantallaComandaAgregarCliente.setVisible(true);
+        frame.dispose();
+    }
+
+    /**
+     * Método para redirigir a la pantalla donde se selecciona el tipo de reporte a generar
+     * @param frame Frame padre desde el cual se invoca a la siguiente pantalla.
+     */
+    public void pantallaReportes(JFrame frame) {
+        PantallaReportes pantallaReportes = new PantallaReportes();
+        pantallaReportes.setVisible(true);
+        frame.dispose();
+    }
+
+    /**
+     * Método para redirigir a la pantalla donde se generan los reportes de clientes por su nombre.
+    * @param frame Frame padre desde el cual se invoca a la siguiente pantalla.
+    */
+    public void pantallaReportesClientes(JFrame frame) {
+        ReporteCliente reporteCliente = new ReporteCliente();
+        reporteCliente.setVisible(true);
+        frame.dispose();
+    }
+
+    /**
+     * Método para redirigir a la pantalla donde se generan los reportes de comandas.
+     * @param frame Frame padre desde el cual se invoca a la siguiente pantalla.
+     */
+    public void pantallaReporteComandas(JFrame frame) {
+        ReporteComandas reporteComandas = new ReporteComandas();
+        reporteComandas.setVisible(true);
+        frame.dispose();
+    }
+
+    /**
+     * Método para redirigir a la pantalla donde se selecciona el tipo de reporte de cliente que se quiere generar.
+     * @param frame Frame padre desde el cual se invoca a la siguiente pantalla.
+     */
+    public void pantallaReporteSeleccionCliente(JFrame frame) {
+        ReporteSeleccionCliente reporteSeleccionCliente = new ReporteSeleccionCliente();
+        reporteSeleccionCliente.setVisible(true);
+        frame.dispose();
+    }
+
+    /**
+     * Método para redirigir a la pantalla donde se generan los reportes de cliente dependiendo del número de visitas.
+     * @param frame Frame padre desde el cual se invoca a la siguiente pantalla.
+     */
+    public void pantallaClienteVisitas(JFrame frame) {
+        ReporteClienteVisitas reporteClienteVisitas = new ReporteClienteVisitas();
+        reporteClienteVisitas.setVisible(true);
         frame.dispose();
     }
 
@@ -650,6 +707,12 @@ public class CoordinadorAplicacion {
         }
     }
 
+    /**
+     * Método para obtener un producto por su nombre.
+     * @param nombre Nombre del producto que se desea recuperar.
+     * @return Regresa un ProductoDTO con los datos del producto con el nombre ingresado.
+     * @throws CoordinadorException Si el nombre del producto no es ingresado o su ocurre un error al intentar recuperar el producto.
+     */
     public ProductoDTO obtenerProductoPorNombre(String nombre) throws CoordinadorException {
         if (nombre == null || nombre.trim().isEmpty()) {
             throw new CoordinadorException("Nombre del producto no ha sido ingresado");
@@ -787,5 +850,51 @@ public class CoordinadorAplicacion {
         } catch (NegocioException e) {
             throw new CoordinadorException("No se pudo actualizar el estado de la mesa:", e);
         }
+    }
+
+    /**
+     * Método que obtiene las comandas y sus datos necesarios para generar un reporte de comandas del periodo correspondiente.
+     * @param periodo Periodo a filtrar la comandas, si no se seleccionó un filtro se genera el periodo desde la fecha de la primera comanda registrada hasta la fecha de la última comanda registrada.
+     * @return Lista de comandas y sus detalles necesarios para generar el reporte.
+     * @throws CoordinadorException Si sucede un error al obtener las fechas para el periodo, o al consultar las comandas.
+     */
+    public List<DetalleReporteComandaDTO> obtenerDetallesReporteComandas(Periodo periodo) throws CoordinadorException {
+        if (periodo != null) {
+            if (periodo.getFechaInicio() == null || periodo.getFechaFin() == null) {
+                throw new CoordinadorException("Las fechas del periodo no deben ser nulas");
+            }
+            if (periodo.getFechaFin().before(periodo.getFechaInicio())) {
+                throw new CoordinadorException("La fecha de fin del periodo no debe estar despues de la fecha de inicio");
+            }
+        }
+        try {
+            return comandaBO.obtenerDetallesReporteComanda(periodo);
+        } catch (NegocioException ex) {
+            Logger.getLogger(CoordinadorAplicacion.class.getName()).log(Level.SEVERE, null, ex);
+            throw new CoordinadorException("Error al obtener los detalles del reporte", ex);
+        }
+    }
+
+    /**
+     * Método el cual calcula el total de ventas acumulado de las comandas de un
+     * periodo determinado.
+     *
+     * @param comandasPeriodo Lista de comandas de un periodo determinado
+     * @return Suma total de las ventas de las comandas cuyo estado es
+     * "ENTREGADA"
+     */
+    public double calcularTotalVentasPeriodo(List<DetalleReporteComandaDTO> comandasPeriodo) {
+        // Si la lista de comandas esta vacia devuelve 0 como total
+        if (comandasPeriodo == null || comandasPeriodo.isEmpty()) {
+            return 0;
+        }
+        return comandasPeriodo.stream()
+                // filtra las comandas que tienen estado "ENTREGADA"
+                .filter(registro -> registro.getEstadoComanda().equals("ENTREGADA"))
+                // Obtiene el importeTotal de cada comanda
+                .mapToDouble(DetalleReporteComandaDTO::getTotalVenta)
+                // Lo va sumando
+                .sum();
+
     }
 }

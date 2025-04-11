@@ -1,20 +1,42 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package GUIs;
 
+import DTOs.DetalleReporteComandaDTO;
+import control.CoordinadorAplicacion;
+import control.exception.CoordinadorException;
+import extras.Periodo;
 import java.awt.Image;
+import java.io.InputStream;
+import java.time.ZoneId;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+import net.sf.jasperreports.view.JasperViewer;
 
 /**
+ * Clase que representa la pantalla donde se generan los reportes de comandas.
  *
- * @author Maryr
+ * @author Alicia Denise Garcia Acosta
  */
 public class ReporteComandas extends javax.swing.JFrame {
 
     /**
-     * Creates new form ReporteComandas
+     * Coordinador de aplicacion para gestionar la comunicacion de pantallas
+     */
+    private CoordinadorAplicacion control = new CoordinadorAplicacion();
+
+    /**
+     * Constructor que inicializa los componentes del frame
      */
     public ReporteComandas() {
         initComponents();
@@ -38,14 +60,16 @@ public class ReporteComandas extends javax.swing.JFrame {
         dpHasta = new com.github.lgooddatepicker.components.DatePicker();
         lblHasta = new javax.swing.JLabel();
         btnLimpiar = new javax.swing.JButton();
-        btnGenReporte = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        tablaComandas = new javax.swing.JTable();
-        jButton2 = new javax.swing.JButton();
+        btnGenerarPDF = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setMaximumSize(new java.awt.Dimension(1070, 700));
+        setMinimumSize(new java.awt.Dimension(1070, 700));
+        setResizable(false);
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel2.setPreferredSize(new java.awt.Dimension(1070, 700));
+        jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setBackground(new java.awt.Color(255, 176, 217));
         jPanel1.setPreferredSize(new java.awt.Dimension(1070, 70));
@@ -61,107 +85,48 @@ public class ReporteComandas extends javax.swing.JFrame {
         ImageIcon iconoEscalado = new ImageIcon(imagenEscalada);
         lblRegresar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgs/flecha-regresar.png"))); // NOI18N
         lblRegresar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        lblRegresar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblRegresarMouseClicked(evt);
+            }
+        });
         jPanel1.add(lblRegresar, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -10, 100, 100));
 
-        lblDesde.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        lblDesde.setForeground(new java.awt.Color(0, 0, 0));
+        jPanel2.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 82));
+        jPanel2.add(dpDesde, new org.netbeans.lib.awtextra.AbsoluteConstraints(118, 136, -1, -1));
+
         lblDesde.setText("Desde:");
+        lblDesde.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        jPanel2.add(lblDesde, new org.netbeans.lib.awtextra.AbsoluteConstraints(118, 107, -1, -1));
+        jPanel2.add(dpHasta, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 136, -1, -1));
 
-        lblHasta.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        lblHasta.setForeground(new java.awt.Color(0, 0, 0));
         lblHasta.setText("Hasta:");
+        lblHasta.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        jPanel2.add(lblHasta, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 107, -1, -1));
 
+        btnLimpiar.setText("Limpiar filtros");
         btnLimpiar.setBackground(new java.awt.Color(255, 119, 170));
+        btnLimpiar.setBorder(null);
         btnLimpiar.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         btnLimpiar.setForeground(new java.awt.Color(255, 255, 255));
-        btnLimpiar.setText("Limpiar filtros");
-        btnLimpiar.setBorder(null);
-
-        btnGenReporte.setBackground(new java.awt.Color(255, 119, 170));
-        btnGenReporte.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        btnGenReporte.setForeground(new java.awt.Color(255, 255, 255));
-        btnGenReporte.setText("Generar reporte");
-        btnGenReporte.setBorder(null);
-
-        tablaComandas.setBackground(new java.awt.Color(254, 255, 203));
-        tablaComandas.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        tablaComandas.setForeground(new java.awt.Color(0, 0, 0));
-        tablaComandas.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+        btnLimpiar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLimpiarActionPerformed(evt);
             }
-        ));
-        jScrollPane1.setViewportView(tablaComandas);
+        });
+        jPanel2.add(btnLimpiar, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 130, 103, 30));
 
-        jButton2.setBackground(new java.awt.Color(255, 119, 170));
-        jButton2.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        jButton2.setForeground(new java.awt.Color(255, 255, 255));
-        jButton2.setText("Imprimir PDF");
-        jButton2.setBorder(null);
-
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(54, 54, 54)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblDesde)
-                    .addComponent(dpDesde, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(50, 50, 50)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(lblHasta)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
-                                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(dpHasta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(btnLimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(btnGenReporte, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(63, 63, 63))))
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(118, 118, 118)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 822, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(19, 19, 19)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(lblDesde)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(dpDesde, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(lblHasta)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(dpHasta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnLimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnGenReporte, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(32, 32, 32)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(29, 29, 29)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(32, Short.MAX_VALUE))
-        );
+        btnGenerarPDF.setText("Generar reporte");
+        btnGenerarPDF.setBackground(new java.awt.Color(255, 119, 170));
+        btnGenerarPDF.setBorder(null);
+        btnGenerarPDF.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        btnGenerarPDF.setForeground(new java.awt.Color(255, 255, 255));
+        btnGenerarPDF.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGenerarPDFActionPerformed(evt);
+            }
+        });
+        jPanel2.add(btnGenerarPDF, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 130, 143, 30));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -175,56 +140,165 @@ public class ReporteComandas extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(ReporteComandas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(ReporteComandas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(ReporteComandas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(ReporteComandas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
+    private void lblRegresarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblRegresarMouseClicked
+        control.pantallaReportes(this);
+    }//GEN-LAST:event_lblRegresarMouseClicked
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new ReporteComandas().setVisible(true);
+    private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
+        limpiarFiltros();
+    }//GEN-LAST:event_btnLimpiarActionPerformed
+
+    private void btnGenerarPDFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenerarPDFActionPerformed
+        generarReportePDF();
+    }//GEN-LAST:event_btnGenerarPDFActionPerformed
+
+    /**
+     * Limpia los campos de los filtros
+     */
+    private void limpiarFiltros() {
+        dpDesde.clear();
+        dpHasta.clear();
+    }
+
+    /**
+     * Método que obtiene las fechas del periodo seleccionado
+     *
+     * @return Periodo de fechas seleccionado, null si no hay periodo
+     * seleccionado
+     */
+    private Periodo obtenerPeriodo() {
+        if (dpDesde.getDate() == null && dpHasta.getDate() == null) {
+            return null;
+        }
+        Calendar fechaInicio = Calendar.getInstance();
+        Calendar fechaFin = Calendar.getInstance();
+        // Se convierte la LocalDate obtenida del datePicker y se convierte a Date para poder settear al Calendar
+        fechaInicio.setTime(Date.from(dpDesde.getDate().atStartOfDay(ZoneId.systemDefault()).toInstant()));
+        fechaFin.setTime(Date.from(dpHasta.getDate().atStartOfDay(ZoneId.systemDefault()).toInstant()));
+
+        return new Periodo(fechaInicio, fechaFin);
+    }
+
+    /**
+     * Método que valida que las fechas sean validas para generar el reporte. Se
+     * valida que la fecha de fin no sea mayor a la fecha de inicio del periodo
+     * y que se seleccionen ambas fechas para el filtrado.
+     *
+     * @return true si los campos de fecha son validos, false en caso contrario.
+     */
+    private boolean validarCamposFecha() {
+        if ((dpDesde.getDate() != null && dpHasta.getDate() == null) || (dpDesde.getDate() == null && dpHasta.getDate() != null)) {
+            JOptionPane.showMessageDialog(null, "Debe seleccionar ambas fechas si es que desea filtrar por periodo", "Seleccione ambas fechas", JOptionPane.INFORMATION_MESSAGE);
+            return false;
+        }
+        if (dpDesde.getDate() != null && dpHasta != null) {
+            if (dpHasta.getDate().isBefore(dpDesde.getDate())) {
+                JOptionPane.showMessageDialog(null, "La fecha de fin del periodo no puede estas antes de la fecha de inicio", "Periodo incorrect", JOptionPane.INFORMATION_MESSAGE);
+                return false;
             }
-        });
+        }
+        return true;
+    }
+
+    /**
+     * Devuelve la lista de comandas del periodo seleccionado en la pantalla
+     *
+     * @return Lista de comandas filtradas por el periodo seleccionado
+     */
+    private List<DetalleReporteComandaDTO> obtenerComandas() {
+        List<DetalleReporteComandaDTO> detallesReporteComandaLista = new ArrayList<>();
+        try {
+            return control.obtenerDetallesReporteComandas(obtenerPeriodo());
+        } catch (CoordinadorException ex) {
+            JOptionPane.showMessageDialog(null, "Ha ocurrido un error al intentar recuperar los datos necesarios para el reporte", "Ha ocurrido un error inesperado", JOptionPane.ERROR_MESSAGE);
+        }
+        return detallesReporteComandaLista;
+    }
+
+    /**
+     * Método que devuelve el total de ventas acumuladas de la lista de comandas
+     * del periodo seleccionado
+     *
+     * @param detallesReporteComandaLista Lista de comandas ya filtradas por el
+     * periodo
+     * @return total acumulado de ventas de las comandas con estado "ENTREGADA"
+     */
+    private double obtenerTotalVentas(List<DetalleReporteComandaDTO> detallesReporteComandaLista) {
+        return control.calcularTotalVentasPeriodo(detallesReporteComandaLista);
+    }
+
+    /**
+     * Método que genera un reporte de las comandas indicadas
+     */
+    /**
+     * Método que genera un reporte de las comandas indicadas
+     */
+    private void generarReportePDF() {
+        if (!validarCamposFecha()) {
+            return;
+        }
+        // obtiene la lista de comandas del reporte
+        List<DetalleReporteComandaDTO> detallesReporteComandaLista = obtenerComandas();
+
+        // se obtiene el periodo seleccionado del reporte de comandas
+        Periodo periodoFechas = obtenerPeriodo();
+        // Si no seleccionó un periodo se cambia el mensaje
+        String periodo = periodoFechas == null ? "Todas las comandas" : periodoFechas.toString();
+        // Se obtiene el total acumulado de ventas de las comandas del periodo
+        double totalAcumuladoVentas = obtenerTotalVentas(detallesReporteComandaLista);
+
+        // Se le agrega un elemento al inicio de la lista de comandas que llena la tabla debido que la tabla se "come" el primer registro
+        detallesReporteComandaLista.add(0, new DetalleReporteComandaDTO());
+
+        try {
+            // Se carga el archivo .jrxml del reporte desde los recursos del proyecto
+            InputStream jrxmlStream = getClass().getClassLoader().getResourceAsStream("reportes/ReporteDeComandas.jrxml");
+
+            // Si no se encuentra se muestra mensaje
+            if (jrxmlStream == null) {
+                JOptionPane.showMessageDialog(null, "No se encontró el archivo .jrxml del reporte", "Ha ocurrido un error inesperado", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            // Se crea la fuente de datos para el reporte a partir de la lista de comandas
+            JRBeanCollectionDataSource detallesReporteComanda = new JRBeanCollectionDataSource(detallesReporteComandaLista);
+
+            // Se crea el mapa de parámetros que se enviarán al reporte
+            Map<String, Object> parametros = new HashMap<>();
+            parametros.put("periodo", periodo);
+            parametros.put("totalAcumuladoVentas", totalAcumuladoVentas);
+
+            // Se compila el archivo .jrxml
+            JasperReport reporte = JasperCompileManager.compileReport(jrxmlStream);
+            // Se llena el reporte con los datos y parametros
+            JasperPrint print = JasperFillManager.fillReport(reporte, parametros, detallesReporteComanda);
+
+            // Mostramos el visor de JasperReports como ventana modal
+            JasperViewer viewer = new JasperViewer(print, false); // false para no cerrar la app al cerrar el visor
+            viewer.setTitle("Vista previa del Reporte de Comandas");
+            viewer.setVisible(true);
+            // Se le da un tamaño 
+            viewer.setSize(800, 600);
+            // posicion para que salga al centro de la pantalla
+            viewer.setLocationRelativeTo(this);
+        } catch (JRException e) {
+            JOptionPane.showMessageDialog(null, "Ha ocurrido un error al intentar generar el pdf del reporte", "Ha ocurrido un error inesperado", JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnGenReporte;
+    private javax.swing.JButton btnGenerarPDF;
     private javax.swing.JButton btnLimpiar;
     private com.github.lgooddatepicker.components.DatePicker dpDesde;
     private com.github.lgooddatepicker.components.DatePicker dpHasta;
-    private javax.swing.JButton jButton2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblDesde;
     private javax.swing.JLabel lblHasta;
     private javax.swing.JLabel lblRegresar;
     private javax.swing.JLabel lblTitulo;
-    private javax.swing.JTable tablaComandas;
     // End of variables declaration//GEN-END:variables
 }
