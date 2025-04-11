@@ -134,7 +134,7 @@ public class ComandaBO implements IComandaBO {
             Mesa mesa = mesaDAO.obtenerMesaPorNumero(Long.valueOf(comandaNueva.getNumeroMesa()));
             ClienteFrecuente cliente = null;
             if (comandaNueva.getIdCliente() != null) {
-//                cliente = clienteFrecuenteDAO.obtenerClientePorId(comandaNueva.getIdCliente());
+                cliente = clienteFrecuenteDAO.obtenerClientePorId(comandaNueva.getIdCliente());
             }
             Comanda comanda = ComandaMapper.toEntity(comandaNueva, cliente, mesa);
             List<DetalleComanda> detallesComanda = new ArrayList<>();
