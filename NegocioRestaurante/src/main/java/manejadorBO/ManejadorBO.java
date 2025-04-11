@@ -54,13 +54,14 @@ public class ManejadorBO {
         IClienteFrecuenteBO clienteFrecuenteBO = new ClienteFrecuenteBO(clienteFrecuenteDAO);
         return clienteFrecuenteBO;
     }
-    
-    public static IComandaBO crearComandaBo(){
+
+    public static IComandaBO crearComandaBo() {
         IComandaDAO comandaDAO = ComandaDAO.getInstanciaDAO();
-        IComandaBO comandaBO = new ComandaBO(comandaDAO);
+        IProductoDAO productoDAO = ProductoDAO.getInstanciaDAO();
+        IComandaBO comandaBO = new ComandaBO(comandaDAO, productoDAO);
         return comandaBO;
     }
-    
+
     public static IMesaBO crearMesaBO() {
         IMesaDAO mesaDAO = MesaDAO.getInstanciaDAO();
         IMesaBO mesaBO = new MesaBO(mesaDAO);

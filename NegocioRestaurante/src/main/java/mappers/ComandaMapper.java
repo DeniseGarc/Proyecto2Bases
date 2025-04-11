@@ -6,9 +6,10 @@ package mappers;
 
 import DAO.MesaDAO;
 import DTOs.ComandaDTO;
+import DTOs.DetalleComandaDTO;
 import entidades.Comanda;
+import entidades.DetalleComanda;
 import entidades.Mesa;
-import enumeradores.Estado;
 import exception.PersistenciaException;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,20 +21,41 @@ import java.util.logging.Logger;
  * @author erika
  */
 public class ComandaMapper {
-   
-    public static List<ComandaDTO> toDtoList(List<Comanda> comandasEntidad){
+
+    public static List<ComandaDTO> toDtoList(List<Comanda> comandasEntidad) {
         List<ComandaDTO> comandasDTO = new ArrayList<>();
-        for(Comanda comanda : comandasEntidad){
-            comandasDTO.add(new ComandaDTO(comanda.getId(),comanda.getFechaHora(), comanda.getTotalVenta(),comanda.getEstado(),comanda.getCliente().getNombre(),comanda.getCliente().getTelefono(),comanda.getMesa().getNumero().toString()));
-        }return comandasDTO;
+        for (Comanda comanda : comandasEntidad) {
+            comandasDTO.add(toDTO(comanda));
+        }
+        return comandasDTO;
     }
-    
-    public static ComandaDTO toDTO(Comanda comandaEntidad){
-        ComandaDTO comandaDTO = new ComandaDTO(comandaEntidad.getId(),comandaEntidad.getFechaHora(), comandaEntidad.getTotalVenta(), comandaEntidad.getEstado(),comandaEntidad.getMesa().getNumero().toString());
+
+    public static ComandaDTO toDTO(Comanda comandaEntidad) {
+        ComandaDTO comandaDTO = new ComandaDTO(
+                comandaEntidad.getId(),
+                comandaEntidad.getFechaHora(),
+                comandaEntidad.getTotalVenta(),
+                comandaEntidad.getEstado(),
+                comandaEntidad.getCliente() != null ? comandaEntidad.getCliente().getTelefono() : null,
+                comandaEntidad.getCliente() != null ? comandaEntidad.getCliente().getNombre() : null,
+                comandaEntidad.getMesa().getNumero().toString()
+        );
+        List<DetalleComandaDTO> detallesComandaDTO = new ArrayList<>();
+        for (DetalleComanda detalleComanda : comandaEntidad.getDetallesComanda()) {
+            detallesComandaDTO.add(
+                    new DetalleComandaDTO(detalleComanda.getPrecioUnitario(),
+                            detalleComanda.getCantidad(),
+                            detalleComanda.getImporteTotal(),
+                            detalleComanda.getNotas(),
+                            detalleComanda.getProducto().getNombre()
+                    )
+            );
+        }
+        comandaDTO.setDetallesComanda(detallesComandaDTO);
         return comandaDTO;
     }
-    
-    public static Comanda toEntity (ComandaDTO comandaDTO){
+
+    public static Comanda toEntity(ComandaDTO comandaDTO) {
 
         try {
             Comanda comandaEntidad = new Comanda();

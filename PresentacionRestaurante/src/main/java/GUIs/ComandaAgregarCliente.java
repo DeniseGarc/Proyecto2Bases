@@ -53,7 +53,6 @@ public class ComandaAgregarCliente extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMaximumSize(new java.awt.Dimension(1070, 700));
         setMinimumSize(new java.awt.Dimension(1070, 700));
-        setPreferredSize(new java.awt.Dimension(1070, 700));
         setResizable(false);
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
@@ -83,13 +82,10 @@ public class ComandaAgregarCliente extends javax.swing.JFrame {
         panelBusquedaClientes.setBackground(new java.awt.Color(255, 255, 255));
 
         lblMesa.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        lblMesa.setForeground(new java.awt.Color(0, 0, 0));
         lblMesa.setText("Mesa: ");
 
-        cbBoxMesas.setBackground(new java.awt.Color(255, 255, 255));
         cbBoxMesas.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        cbBoxMesas.setForeground(new java.awt.Color(0, 0, 0));
-        cbBoxMesas.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbBoxMesas.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "seleccione la mesa", "1", "2", "3", "4" }));
 
         btnTomarComanda.setBackground(new java.awt.Color(255, 119, 170));
         btnTomarComanda.setForeground(new java.awt.Color(255, 255, 255));
@@ -134,9 +130,7 @@ public class ComandaAgregarCliente extends javax.swing.JFrame {
                     .addComponent(btnTomarComanda, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(panelBusquedaClientes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnTomarComanda, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(18, Short.MAX_VALUE))
+                .addContainerGap(53, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -155,7 +149,7 @@ public class ComandaAgregarCliente extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void lblRegresarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblRegresarMouseClicked
-        coordinador.PantallaPrinicipal(this);
+        coordinador.PantallaComandas(this);
     }//GEN-LAST:event_lblRegresarMouseClicked
 
     private void btnTomarComandaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTomarComandaActionPerformed
@@ -172,7 +166,7 @@ public class ComandaAgregarCliente extends javax.swing.JFrame {
         try {
             List<MesaDTO> mesas = coordinador.obtenerMesas();
             DefaultComboBoxModel<String> modelo = new DefaultComboBoxModel<>();
-            modelo.addElement("Seleccionar mesa"); 
+            modelo.addElement("Seleccionar mesa");
             for (MesaDTO mesa : mesas) {
                 modelo.addElement(mesa.getNumero());
             }

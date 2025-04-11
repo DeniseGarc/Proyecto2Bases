@@ -8,7 +8,6 @@ import DTOs.ComandaDTO;
 import GUIs.PantallaComandas;
 import control.CoordinadorAplicacion;
 import enumeradores.Estado;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
@@ -23,16 +22,19 @@ public class PanelComandasActivas extends javax.swing.JPanel {
      */
     private ComandaDTO comanda;
     private final CoordinadorAplicacion coordinador = new CoordinadorAplicacion();
-     private JFrame frame;
-    public PanelComandasActivas(JFrame frame, ComandaDTO comanda) {
+    private PantallaComandas frame;
+
+    public PanelComandasActivas(PantallaComandas frame, ComandaDTO comanda) {
         this.comanda = comanda;
         this.frame = frame;
         initComponents();
     }
-    public JLabel getNumero (){
+
+    public JLabel getNumero() {
         return txtNumero;
-                
+
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -155,9 +157,7 @@ public class PanelComandasActivas extends javax.swing.JPanel {
         try {
             coordinador.actualizarEstadoComanda(comanda, nuevoEstado);
             JOptionPane.showMessageDialog(this, "Comanda marcada como entregada");
-             // Recargar las comandas activas en la pantalla principal
-            ((PantallaComandas) frame).cargarComandas();
-
+            frame.cargarComandas();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Error al actualizar el estado: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
@@ -168,7 +168,7 @@ public class PanelComandasActivas extends javax.swing.JPanel {
         try {
             coordinador.actualizarEstadoComanda(comanda, nuevoEstado);
             JOptionPane.showMessageDialog(this, "Comanda marcada como cancelada");
-            ((PantallaComandas) frame).cargarComandas();
+            frame.cargarComandas();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Error al actualizar el estado: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
