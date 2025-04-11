@@ -4,6 +4,9 @@
  */
 package GUIs;
 
+import java.awt.Image;
+import javax.swing.ImageIcon;
+
 /**
  *
  * @author Maryr
@@ -91,7 +94,7 @@ public class ReporteSeleccionCliente extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void lblRegresarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblRegresarMouseClicked
-        coordinador.PantallaPrinicipal(this);
+        
     }//GEN-LAST:event_lblRegresarMouseClicked
 
     /**
