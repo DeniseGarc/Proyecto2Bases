@@ -17,20 +17,23 @@ import javax.persistence.EntityManager;
  * @author Maryr
  */
 public class MesaDAO implements IMesaDAO {
+
     /**
      * lase que implementa las operaciones de acceso a datos para la entidad
-     * Mesa, utilizando JPA para persistencia.
-     * Instancia unica de la clase MesaDAO
+     * Mesa, utilizando JPA para persistencia. Instancia unica de la clase
+     * MesaDAO
      */
     private static MesaDAO instanciaMesaDAO;
+
     /**
      * Constructor vacio
      */
     public MesaDAO() {
     }
-    
+
     /**
      * Metodo que devuelve la instancia única de MesaDAO
+     *
      * @return instancia unida de MesaDAO
      */
     public static MesaDAO getInstanciaDAO() {
@@ -82,8 +85,9 @@ public class MesaDAO implements IMesaDAO {
 
     /**
      * Métod para recuperar una lista con las mesas disponibles
-     * @return 
-     * @throws PersistenciaException 
+     *
+     * @return
+     * @throws PersistenciaException
      */
     @Override
     public List<Mesa> obtenerMesas() throws PersistenciaException {
@@ -96,11 +100,13 @@ public class MesaDAO implements IMesaDAO {
             em.close();
         }
     }
+
     /**
      * Metodo para obtener una mesa buscandola por su numero
+     *
      * @param numero Numero de la mesa a buscar
-     * @return Mesa con el numero indicado 
-     * @throws PersistenciaException 
+     * @return Mesa con el numero indicado
+     * @throws PersistenciaException
      */
     @Override
     public Mesa obtenerMesaPorNumero(Long numero) throws PersistenciaException {
@@ -116,13 +122,37 @@ public class MesaDAO implements IMesaDAO {
             }
             return mesa;
         } catch (Exception e) {
-            
+
             throw new PersistenciaException("Error al obtener la mesa: " + e.getMessage(), e);
         } finally {
-            em.close(); 
+            em.close();
         }
     }
 
-    
+    /**
+     * Método para actualizar el estado de la mesa
+     *
+     * @param idMesa id de la mesa a ser actualizada
+     * @param estado estado al que se declarará
+     * @throws PersistenciaException Si ocurre un error
+     */
+    @Override
+    public void actualizarEstadoMesa(Long idMesa, boolean estado) throws PersistenciaException {
+        EntityManager em = Conexion.crearConexion();
+        try {
+            em.getTransaction().begin();
+            Mesa mesa = em.find(Mesa.class, idMesa);
+            if (idMesa == null) {
+                throw new PersistenciaException("No se encontró la mesa.");
+            }
+            mesa.setEstado(estado);
+            em.merge(mesa);
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            throw new PersistenciaException("No se pudo actualizar el estado de la mesa: ", e);
+        } finally {
+            em.close();
+        }
+    }
 
 }
