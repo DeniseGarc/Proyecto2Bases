@@ -7,6 +7,10 @@ package DAO;
 import conexion.Conexion;
 import entidades.ClienteFrecuente;
 import entidades.Comanda;
+import entidades.DetalleComanda;
+import entidades.DetalleProductoIngrediente;
+import entidades.Ingrediente;
+import entidades.Producto;
 import enumeradores.Estado;
 import exception.PersistenciaException;
 import interfaces.IComandaDAO;
@@ -153,20 +157,28 @@ public class ComandaDAO implements IComandaDAO {
         EntityManager em = Conexion.crearConexion();
         try {
             em.getTransaction().begin();
+
             if (comanda == null) {
                 throw new PersistenciaException("Comanda no puede ser nula");
             }
 
             Comanda comandaGestionada = em.find(Comanda.class, comanda.getId());
+
             if (comandaGestionada == null) {
                 throw new PersistenciaException("La comanda no existe en la base de datos");
             }
 
-            comandaGestionada.setEstado(nuevoEstado);
-            em.merge(comandaGestionada); // Evita usar `comanda`, que puede estar incompleta
-            em.getTransaction().commit();
+            // Solo si se cambia a ENTREGADA, descontar stock
+            if (nuevoEstado == Estado.ENTREGADA) {
+                descontarStock(comandaGestionada, em);
+            }
 
+            comandaGestionada.setEstado(nuevoEstado);
+            em.merge(comandaGestionada);
+
+            em.getTransaction().commit();
             return true;
+
         } catch (Exception e) {
             if (em.getTransaction().isActive()) {
                 em.getTransaction().rollback();
@@ -176,6 +188,28 @@ public class ComandaDAO implements IComandaDAO {
             em.close();
         }
     }
+        private void descontarStock(Comanda comanda, EntityManager em) {
+        for (DetalleComanda detalle : comanda.getDetallesComanda()) {
+            Producto producto = detalle.getProducto();
+            int cantidadComanda = detalle.getCantidad();
+
+            for (DetalleProductoIngrediente dpi : producto.getDetallesProducto()) {
+                Ingrediente ingrediente = dpi.getIngrediente();
+                int cantidadIngrediente = dpi.getCantidad() * cantidadComanda;
+
+                int nuevoStock = ingrediente.getStock() - cantidadIngrediente;
+
+                if (nuevoStock < 0) {
+                    throw new IllegalStateException("No hay suficiente stock para el ingrediente: " + ingrediente.getNombre());
+                }
+
+                ingrediente.setStock(nuevoStock);
+                em.merge(ingrediente);
+            }
+        }
+    }
+
+
 
 
     
