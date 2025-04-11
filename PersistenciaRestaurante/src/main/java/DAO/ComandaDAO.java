@@ -19,7 +19,7 @@ import javax.persistence.EntityManager;
 
 /**
  *Clase que implementa las operaciones de acceso a datos para la entidad
- * Producto, utilizando JPA para persistencia.
+ * Comanda, utilizando JPA para persistencia.
  * @author Maryr
  */
 public class ComandaDAO implements IComandaDAO {
@@ -188,6 +188,11 @@ public class ComandaDAO implements IComandaDAO {
             em.close();
         }
     }
+    /**
+     * Metodo privado para descontar el stock de los ingredientes cuando se marca la comanda como entregada
+     * @param comanda Comanda que se actualiza
+     * @param em 
+     */
         private void descontarStock(Comanda comanda, EntityManager em) {
         for (DetalleComanda detalle : comanda.getDetallesComanda()) {
             Producto producto = detalle.getProducto();

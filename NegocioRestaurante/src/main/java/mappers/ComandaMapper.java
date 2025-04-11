@@ -14,11 +14,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- *
+ * Clase que se utiliza para mapear entre entidades Comanda y sus respectivos
+ * DTOs.
  * @author erika
  */
 public class ComandaMapper {
-
+    /**
+     * Convierte una lista de Comandas a una lista de ComandasDTO
+     * @param comandasEntidad Lista de entidades comanda a convertir
+     * @return Lista de ComandaDTO equivalentes
+     */
     public static List<ComandaDTO> toDtoList(List<Comanda> comandasEntidad) {
         List<ComandaDTO> comandasDTO = new ArrayList<>();
         for (Comanda comanda : comandasEntidad) {
@@ -26,7 +31,11 @@ public class ComandaMapper {
         }
         return comandasDTO;
     }
-
+    /**
+     * Convierte una entidad comanda a comandaDTO
+     * @param comandaEntidad Entidad comanda a convertir
+     * @return ComandaDTO con la informacion del producto
+     */
     public static ComandaDTO toDTO(Comanda comandaEntidad) {
         ComandaDTO comandaDTO = new ComandaDTO(
                 comandaEntidad.getId(),
@@ -51,7 +60,13 @@ public class ComandaMapper {
         comandaDTO.setDetallesComanda(detallesComandaDTO);
         return comandaDTO;
     }
-
+    /**
+     * Convierte una ComandaDTO a entidad comanda 
+     * @param comandaDTO Comanda a convertir
+     * @param cliente cliente asociado a la comanda
+     * @param mesa mesa asociada a la comanda
+     * @return 
+     */
     public static Comanda toEntity(ComandaDTO comandaDTO, ClienteFrecuente cliente, Mesa mesa) {
         Comanda comandaEntidad = new Comanda(
                 comandaDTO.getId(),
