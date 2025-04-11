@@ -5,7 +5,9 @@
 package DAO;
 
 import conexion.Conexion;
+import entidades.DetalleProductoIngrediente;
 import entidades.Ingrediente;
+import entidades.Producto;
 import enumeradores.UnidadMedida;
 import exception.PersistenciaException;
 import interfaces.IIngredienteDAO;
@@ -84,26 +86,66 @@ public class IngredienteDAO implements IIngredienteDAO {
      */
     @Override
     public Ingrediente modificarStock(Ingrediente ingrediente) throws PersistenciaException {
-    EntityManager em = Conexion.crearConexion();
-    try {
-        Ingrediente existente = em.find(Ingrediente.class, ingrediente.getId());
-        if (existente == null) {
-            throw new PersistenciaException("Ingrediente no encontrado con ID: " + ingrediente.getId());
+        EntityManager em = Conexion.crearConexion();
+        try {
+            em.getTransaction().begin();
+
+            Ingrediente existente = em.find(Ingrediente.class, ingrediente.getId());
+            if (existente == null) {
+                throw new PersistenciaException("Ingrediente no encontrado con ID: " + ingrediente.getId());
+            }
+
+            existente.setStock(ingrediente.getStock());
+
+            // Forzar carga de los detalles y productos relacionados
+            existente.getDetallesProducto().size();
+            for (DetalleProductoIngrediente dpi : existente.getDetallesProducto()) {
+                dpi.getProducto().getDetallesProducto().size();
+            }
+
+            em.merge(existente);
+            actualizarDisponibilidadProductosAfectados(existente, em);
+
+            em.getTransaction().commit();
+            return existente;
+
+        } catch (Exception e) {
+            if (em.getTransaction().isActive()) em.getTransaction().rollback();
+            throw new PersistenciaException("Error al modificar el stock del ingrediente", e);
+        } finally {
+            em.close();
         }
-        existente.setStock(ingrediente.getStock());
-        
-        em.getTransaction().begin();
-        em.merge(existente);
-        em.getTransaction().commit();
-
-        return existente;
-
-    } catch (PersistenciaException e) {
-        throw new PersistenciaException("Error al modificar el stock del ingrediente", e);
-    } finally {
-        em.close();
     }
-}
+
+    /**
+     * Metodo privado para modificar la disponibilidad de los productos segun el stock de los ingredientes
+     * @param ingrediente Ingrediente al que se le esta modificando el stock
+     * @param em 
+     */
+    private void actualizarDisponibilidadProductosAfectados(Ingrediente ingrediente, EntityManager em) {
+        for (DetalleProductoIngrediente dpi : ingrediente.getDetallesProducto()) {
+            Producto producto = dpi.getProducto();
+            boolean disponible = true;
+
+            // Validamos si todos los ingredientes tienen suficiente stock
+            for (DetalleProductoIngrediente det : producto.getDetallesProducto()) {
+                Ingrediente ing = det.getIngrediente();
+                int stockDisponible = ing.getStock();
+                int cantidadNecesaria = det.getCantidad();
+
+                if (stockDisponible < cantidadNecesaria) {
+                    disponible = false;
+                    break;
+                }
+            }
+
+            // Solo actualizamos si hay un cambio
+            if (producto.isDisponible() != disponible) {
+                producto.setDisponible(true);
+                em.merge(producto);
+            }
+        }
+    }
 
 
     
