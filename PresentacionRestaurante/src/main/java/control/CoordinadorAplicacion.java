@@ -182,6 +182,8 @@ public class CoordinadorAplicacion {
         pantallaComandaAgregarCliente.setVisible(true);
         frame.dispose();
     }
+    
+    
 
     /**
      * Obtiene todos los productos registrados en el sistema.
