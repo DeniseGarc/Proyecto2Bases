@@ -114,7 +114,7 @@ public class ClienteFrecuenteBO implements IClienteFrecuenteBO {
     }
 
     @Override
-    public ClienteFrecuenteDTO obtenerClientePorId(int id) throws NegocioException {
+    public ClienteFrecuenteDTO obtenerClientePorId(Long id) throws NegocioException {
         try {
             return ClienteMapper.toDTO(clienteFrecuenteDAO.obtenerClientePorId(id));
         } catch (PersistenciaException e) {
