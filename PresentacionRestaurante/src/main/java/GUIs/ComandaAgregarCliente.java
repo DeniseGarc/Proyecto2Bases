@@ -9,6 +9,7 @@ import DTOs.MesaDTO;
 import control.CoordinadorAplicacion;
 import control.exception.CoordinadorException;
 import java.awt.Image;
+import java.awt.event.ItemEvent;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -28,8 +29,17 @@ public class ComandaAgregarCliente extends javax.swing.JFrame {
      */
     public ComandaAgregarCliente() {
         initComponents();
+        btnTomarComanda.setEnabled(false);
         panelBusquedaClientes.cargarClientes();
         llenarMesas();
+        cbBoxMesas.addItemListener((ItemEvent e) -> {
+            // Verifica si hay una mesa seleccionada válida
+            if (e.getStateChange() == ItemEvent.SELECTED) {
+                Object itemSeleccionado = cbBoxMesas.getSelectedItem();
+                btnTomarComanda.setEnabled(!"Selecciona una mesa".equals(cbBoxMesas.getSelectedItem()));
+            }
+        });
+
     }
 
     /**
@@ -175,6 +185,8 @@ public class ComandaAgregarCliente extends javax.swing.JFrame {
             Logger.getLogger(ComandaAgregarCliente.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    
+ 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnTomarComanda;
