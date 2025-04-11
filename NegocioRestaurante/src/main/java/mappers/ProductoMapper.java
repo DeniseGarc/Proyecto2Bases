@@ -5,7 +5,6 @@ import DTOs.ProductoDTO;
 import DTOs.ProductoDetalleDTO;
 import entidades.DetalleProductoIngrediente;
 import entidades.Producto;
-import enumeradores.TipoProducto;
 import java.util.ArrayList;
 import java.util.List;
 

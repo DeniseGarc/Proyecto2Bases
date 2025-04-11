@@ -38,6 +38,7 @@ GUIs\PantallaIngredientes$2.class
 GUIs\MenuPrincipal$2.class
 GUIs\ReporteComandas.class
 GUIs\EliminarIngrediente.class
+GUIs\PantallaInicio$3.class
 moduloBusquedaIngredientes\PanelBuscarIngrediente.class
 GUIs\ReporteComandas$3.class
 GUIs\frmAgregarIngrediente$1.class

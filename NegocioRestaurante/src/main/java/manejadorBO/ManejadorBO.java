@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package manejadorBO;
 
 import BO.ClienteFrecuenteBO;
@@ -26,6 +22,7 @@ import interfaces.IMesaBO;
 import interfaces.IMesaDAO;
 
 /**
+ * Clase que funciona como fábrica de objetos negocio.
  *
  * @author Alici
  */
@@ -42,26 +39,32 @@ public class ManejadorBO {
         IProductoBO productoBO = new ProductoBO(productoDAO, ingredienteDAO);
         return productoBO;
     }
+
     /**
      * Metodo que crea y regresa la instancia de IngredienteBO
+     *
      * @return IngredienteBO que implementa la interfaz IIngredienteBO
-     */ 
+     */
     public static IIngredienteBO crearIngredienteBO() {
         IIngredienteDAO ingredienteDAO = IngredienteDAO.getInstanceDAO();
         IIngredienteBO ingredienteBO = new IngredienteBO(ingredienteDAO);
         return ingredienteBO;
     }
+
     /**
      * Metodo que crea y regresa la instancia de IClienteFrecuenteBO
+     *
      * @return ClienteFrecuenteBO que implementa la interfaz IClienteFrecuenteBO
-     */ 
+     */
     public static IClienteFrecuenteBO crearClienteFrecuenteBO() {
         IClienteFrecuenteDAO clienteFrecuenteDAO = ClienteFrecuenteDAO.getInstanciaDAO();
         IClienteFrecuenteBO clienteFrecuenteBO = new ClienteFrecuenteBO(clienteFrecuenteDAO);
         return clienteFrecuenteBO;
     }
+
     /**
      * Metodo que crea y regresa la instancia de IComandaBO
+     *
      * @return ComandaBO que implementa la interfaz IComandaBO
      */
     public static IComandaBO crearComandaBo() {
@@ -72,8 +75,10 @@ public class ManejadorBO {
         IComandaBO comandaBO = new ComandaBO(comandaDAO, productoDAO, mesaDAO, clienteFrecuenteDAO);
         return comandaBO;
     }
+
     /**
      * Metodo que crea y regresa la instancia de IMesaBO
+     *
      * @return MesaBO que implementa la interfaz IMesaBO
      */
     public static IMesaBO crearMesaBO() {
