@@ -17,6 +17,7 @@ public class PantallaInicio extends javax.swing.JFrame {
      */
     public PantallaInicio() {
         initComponents();
+        setLocationRelativeTo(null);
     }
 
     /**
@@ -57,6 +58,11 @@ public class PantallaInicio extends javax.swing.JFrame {
                 btnMeseroMouseClicked(evt);
             }
         });
+        btnMesero.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnMeseroActionPerformed(evt);
+            }
+        });
         jPanel2.add(btnMesero, new org.netbeans.lib.awtextra.AbsoluteConstraints(63, 469, 320, 38));
 
         btnAdministrador.setBackground(new java.awt.Color(255, 119, 170));
@@ -91,12 +97,16 @@ public class PantallaInicio extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnMeseroMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnMeseroMouseClicked
-        
+        coordinador.PantallaComandas(this);
     }//GEN-LAST:event_btnMeseroMouseClicked
 
     private void btnAdministradorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAdministradorMouseClicked
         coordinador.PantallaPrinicipal(this);
     }//GEN-LAST:event_btnAdministradorMouseClicked
+
+    private void btnMeseroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMeseroActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnMeseroActionPerformed
 
     
 

@@ -28,6 +28,7 @@ public class EliminarIngrediente extends javax.swing.JFrame {
     private final CoordinadorAplicacion coordinador = new CoordinadorAplicacion();
     public EliminarIngrediente() {
         initComponents();
+        setLocationRelativeTo(null);
         cargarElementos();
     }
     private void cargarElementos() {
