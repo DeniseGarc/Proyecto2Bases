@@ -62,7 +62,7 @@ public class RegistrarClienteNuevo extends javax.swing.JFrame {
 
         lblTitulo2.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 36)); // NOI18N
         lblTitulo2.setForeground(new java.awt.Color(255, 255, 255));
-        lblTitulo2.setText("Titulo");
+        lblTitulo2.setText("Registrar cliente nuevo");
         jPanel7.add(lblTitulo2, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 20, 500, 40));
 
         ImageIcon iconoOriginal = new ImageIcon(getClass().getResource("/imgs/flecha-regresar.png"));

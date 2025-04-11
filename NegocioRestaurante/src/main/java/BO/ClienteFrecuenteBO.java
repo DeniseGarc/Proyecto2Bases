@@ -13,6 +13,8 @@ import interfaces.IClienteFrecuenteBO;
 import interfaces.IClienteFrecuenteDAO;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import mappers.ClienteMapper;
 import seguridad.Seguridad;
 
@@ -93,6 +95,30 @@ public class ClienteFrecuenteBO implements IClienteFrecuenteBO {
             }
         } catch (Exception e) {
             throw new NegocioException("Error al desencriptar los teléfonos: ", e);
+        }
+    }
+    
+    /**
+     * Desencripta un número de celular dado
+     * @param telefono el cual se quiere desencriptar
+     * @return el telefono desencriptado
+     * @throws NegocioException 
+     */
+    @Override
+    public String desencriptarTelefono(String telefono) throws NegocioException {
+        try {
+            return Seguridad.desencriptar(telefono);
+        } catch (Exception e) {
+            throw new NegocioException("Hubo un error al desencriptar el telefono: ", e);
+        }
+    }
+
+    @Override
+    public ClienteFrecuenteDTO obtenerClientePorId(int id) throws NegocioException {
+        try {
+            return ClienteMapper.toDTO(clienteFrecuenteDAO.obtenerClientePorId(id));
+        } catch (PersistenciaException e) {
+            throw new NegocioException("No se pudo recuperar el cliente: ", e);
         }
     }
 

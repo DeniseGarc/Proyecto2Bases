@@ -64,9 +64,8 @@ public class ComandaMapper {
             comandaEntidad.setTotalVenta(comandaDTO.getTotalVenta());
             comandaEntidad.setEstado(comandaDTO.getEstado());
             MesaDAO mesaDAO = new MesaDAO();
-            // Obtener la mesa utilizando el método del DAO
             Long numero = Long.valueOf(comandaDTO.getNumeroMesa());
-            Mesa mesa = mesaDAO.obtenerMesaPorNumero(numero); // Llamada al método DAO
+            Mesa mesa = mesaDAO.obtenerMesaPorNumero(numero);
             comandaEntidad.setMesa(mesa);
             return comandaEntidad;
         } catch (PersistenciaException ex) {

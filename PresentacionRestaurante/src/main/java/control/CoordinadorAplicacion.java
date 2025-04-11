@@ -656,4 +656,12 @@ public class CoordinadorAplicacion {
             throw new CoordinadorException("Error al actualizar el estado: ", e);
         }
     }
+    
+    public ClienteFrecuenteDTO obtenerClientePorId(int id) throws CoordinadorException {
+        try {
+            return clienteFrecuenteBO.obtenerClientePorId(id);
+        } catch (NegocioException e) {
+            throw new CoordinadorException("Error al obtener el cliente: ", e);
+        }
+    }
 }

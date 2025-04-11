@@ -16,4 +16,5 @@ public interface IClienteFrecuenteDAO {
 
     public ClienteFrecuente registrarNuevoClienteFrecuente (ClienteFrecuente clienteFrecuente) throws PersistenciaException;
     public List<ClienteFrecuente> obtenerClientesFrecuentes(String filtro, String dato) throws PersistenciaException;
+    public ClienteFrecuente obtenerClientePorId(int id) throws PersistenciaException;
 }
