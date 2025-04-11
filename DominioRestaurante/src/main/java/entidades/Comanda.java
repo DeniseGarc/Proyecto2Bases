@@ -25,14 +25,12 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.persistence.Transient;
-import listener.ModificarStockIngredientesListener;
 
 /**
  *
  * @author erika
  */
-@EntityListeners(ModificarStockIngredientesListener.class)
+
 
 @Entity
 @Table(name = "comanda")
