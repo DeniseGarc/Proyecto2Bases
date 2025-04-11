@@ -33,12 +33,10 @@ public class ComandaBO implements IComandaBO {
 
     private IComandaDAO comandaDAO;
     private IProductoDAO productoDAO;
-
     private IMesaDAO mesaDAO;
     private IClienteFrecuenteDAO clienteFrecuenteDAO;
 
     public ComandaBO(IComandaDAO comandaDAO, IProductoDAO productoDAO, IMesaDAO mesaDAO, IClienteFrecuenteDAO clienteFrecuenteDAO) {
-
         this.comandaDAO = comandaDAO;
         this.productoDAO = productoDAO;
         this.clienteFrecuenteDAO = clienteFrecuenteDAO;

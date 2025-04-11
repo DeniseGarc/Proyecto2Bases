@@ -152,24 +152,22 @@ public class ComandaDAO implements IComandaDAO {
     public boolean actualizarEstadoComanda(Comanda comanda, Estado nuevoEstado) throws PersistenciaException {
         EntityManager em = Conexion.crearConexion();
         try {
-
             em.getTransaction().begin();
             if (comanda == null) {
                 throw new PersistenciaException("Comanda no puede ser nula");
             }
+
             Comanda comandaGestionada = em.find(Comanda.class, comanda.getId());
             if (comandaGestionada == null) {
                 throw new PersistenciaException("La comanda no existe en la base de datos");
             }
-            comandaGestionada.setEstado(nuevoEstado);
 
-            comanda.setEstado(nuevoEstado);
-            em.merge(comanda);
+            comandaGestionada.setEstado(nuevoEstado);
+            em.merge(comandaGestionada); // Evita usar `comanda`, que puede estar incompleta
             em.getTransaction().commit();
 
             return true;
         } catch (Exception e) {
-            // Si ocurre algún error, hacer rollback
             if (em.getTransaction().isActive()) {
                 em.getTransaction().rollback();
             }
@@ -178,6 +176,7 @@ public class ComandaDAO implements IComandaDAO {
             em.close();
         }
     }
+
 
     
 
