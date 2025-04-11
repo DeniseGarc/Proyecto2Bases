@@ -89,6 +89,7 @@ public class PanelIngredientes extends javax.swing.JPanel {
 
         lblNombre.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 36)); // NOI18N
         lblNombre.setForeground(new java.awt.Color(255, 255, 255));
+        lblNombre.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblNombre.setText("Nombre");
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
@@ -96,8 +97,8 @@ public class PanelIngredientes extends javax.swing.JPanel {
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(lblNombre)
+                .addGap(31, 31, 31)
+                .addComponent(lblNombre, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(20, 20, 20))
         );
         jPanel3Layout.setVerticalGroup(
@@ -112,12 +113,14 @@ public class PanelIngredientes extends javax.swing.JPanel {
         jLabel1.setText("Unidad de Medida:");
 
         lblUnidad.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 18)); // NOI18N
+        lblUnidad.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblUnidad.setText(".");
 
         jLabel2.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 18)); // NOI18N
         jLabel2.setText("Stock:");
 
         lblStock.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 18)); // NOI18N
+        lblStock.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblStock.setText("Stock:");
 
         btnMas.setBackground(new java.awt.Color(255, 119, 170));
