@@ -251,6 +251,7 @@ public class PantallaTomaComanda extends javax.swing.JFrame {
         banner.setFrmTarget(new MenuPrincipal());
         lblClienteNombre.setText(comanda.getNombreCliente() != null ? comanda.getNombreCliente() : "");
         lblNumeroMesa.setText(comanda.getNumeroMesa());
+        System.out.println(comanda.getIdCliente());
     }
 
     private void mandarComanda() {

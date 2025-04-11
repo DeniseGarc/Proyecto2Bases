@@ -20,34 +20,36 @@ public class ClienteMapper {
     /**
      * Convierte una lista de entidades ClienteFrecuente a una lista de DTOs
      * ClienteFrecuenteDTO.
+     *
      * @param clientesFrecuentes Lista de entidades ClienteFrecuente.
      * @return Lista de DTOs ClienteFrecuenteDTO.
      */
     public static List<ClienteFrecuenteDTO> toDTOList(List<ClienteFrecuente> clientesFrecuentes) {
         List<ClienteFrecuenteDTO> clientesFrecuentesDTO = new ArrayList<>();
         for (ClienteFrecuente clienteFrecuente : clientesFrecuentes) {
-            clientesFrecuentesDTO.add(
-                    new ClienteFrecuenteDTO(
-                            clienteFrecuente.getNombre(),
-                            clienteFrecuente.getFechaRegistro(),
-                            clienteFrecuente.getTelefono(),
-                            clienteFrecuente.getCorreoElectronico(),
-                            clienteFrecuente.getPuntosFidelidad(),
-                            clienteFrecuente.getCantidadVisitas(),
-                            clienteFrecuente.getGastoTotal()
-                    )
+            ClienteFrecuenteDTO cliente = new ClienteFrecuenteDTO(
+                    clienteFrecuente.getNombre(),
+                    clienteFrecuente.getFechaRegistro(),
+                    clienteFrecuente.getTelefono(),
+                    clienteFrecuente.getCorreoElectronico(),
+                    clienteFrecuente.getPuntosFidelidad(),
+                    clienteFrecuente.getCantidadVisitas(),
+                    clienteFrecuente.getGastoTotal()
             );
+            cliente.setId(clienteFrecuente.getId());
+            clientesFrecuentesDTO.add(cliente);
         }
         return clientesFrecuentesDTO;
     }
 
     /**
      * Convierte una entidad ClienteFrecuente a su DTO ClienteFrecuenteDTO.
+     *
      * @param clienteFrecuente Entidad ClienteFrecuente.
      * @return DTO ClienteFrecuenteDTO.
      */
     public static ClienteFrecuenteDTO toDTO(ClienteFrecuente clienteFrecuente) {
-        return new ClienteFrecuenteDTO(
+        ClienteFrecuenteDTO cliente = new ClienteFrecuenteDTO(
                 clienteFrecuente.getNombre(),
                 clienteFrecuente.getFechaRegistro(),
                 clienteFrecuente.getTelefono(),
@@ -56,10 +58,13 @@ public class ClienteMapper {
                 clienteFrecuente.getCantidadVisitas(),
                 clienteFrecuente.getGastoTotal()
         );
+        cliente.setId(clienteFrecuente.getId());
+        return cliente;
     }
 
     /**
      * Convierte un DTO ClienteFrecuenteDTO a su entidad ClienteFrecuente.
+     *
      * @param clienteFrecuenteDTO DTO ClienteFrecuenteDTO.
      * @return Entidad ClienteFrecuente.
      */
