@@ -5,12 +5,17 @@
 package BO;
 
 import DTOs.ComandaDTO;
+import DTOs.DetalleComandaDTO;
 import entidades.Comanda;
+import entidades.DetalleComanda;
+import entidades.Producto;
 import enumeradores.Estado;
 import exception.NegocioException;
 import exception.PersistenciaException;
 import interfaces.IComandaBO;
 import interfaces.IComandaDAO;
+import interfaces.IProductoDAO;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -23,9 +28,12 @@ import mappers.ComandaMapper;
 public class ComandaBO implements IComandaBO {
 
     private IComandaDAO comandaDAO;
+    private IProductoDAO productoDAO;
 
-    public ComandaBO(IComandaDAO comandaDAO) {
+    public ComandaBO(IComandaDAO comandaDAO, IProductoDAO productoDAO) {
         this.comandaDAO = comandaDAO;
+        this.productoDAO = productoDAO;
+
     }
 
     /**
@@ -67,6 +75,20 @@ public class ComandaBO implements IComandaBO {
         }
         try {
             Comanda comanda = ComandaMapper.toEntity(comandaActualizar);
+            List<DetalleComanda> detallesComanda = new ArrayList<>();
+            for (DetalleComandaDTO detalleComandaDTO : comandaActualizar.getDetallesComanda()) {
+                Producto producto = productoDAO.obtenerProductoPorNombre(detalleComandaDTO.getNombreProducto());
+                detallesComanda.add(
+                        new DetalleComanda(
+                                detalleComandaDTO.getPrecioUnitario(),
+                                detalleComandaDTO.getCantidad(),
+                                detalleComandaDTO.getImporteTotal(),
+                                detalleComandaDTO.getNotas(),
+                                producto,
+                                comanda)
+                );
+            }
+            comanda.setDetallesComanda(detallesComanda);
             return comandaDAO.actualizarComanda(comanda);
         } catch (PersistenciaException ex) {
             Logger.getLogger(ComandaBO.class.getName()).log(Level.SEVERE, null, ex);
@@ -81,18 +103,34 @@ public class ComandaBO implements IComandaBO {
         }
         try {
             Comanda comanda = ComandaMapper.toEntity(comandaNueva);
+            List<DetalleComanda> detallesComanda = new ArrayList<>();
+            for (DetalleComandaDTO detalleComandaDTO : comandaNueva.getDetallesComanda()) {
+                Producto producto = productoDAO.obtenerProductoPorNombre(detalleComandaDTO.getNombreProducto());
+                detallesComanda.add(
+                        new DetalleComanda(
+                                detalleComandaDTO.getPrecioUnitario(),
+                                detalleComandaDTO.getCantidad(),
+                                detalleComandaDTO.getImporteTotal(),
+                                detalleComandaDTO.getNotas(),
+                                producto,
+                                comanda)
+                );
+            }
+            comanda.setDetallesComanda(detallesComanda);
             return comandaDAO.registrarComanda(comanda);
         } catch (PersistenciaException ex) {
             Logger.getLogger(ComandaBO.class.getName()).log(Level.SEVERE, null, ex);
             throw new NegocioException("Ocurrió un error al registrar la comanda");
         }
     }
+
     /**
      * Metodo para actualizar el estado de las comandas
+     *
      * @param comanda Comanda a actualizar
      * @param nuevoEstado Esrado al que se va a actualizar la comanda
      * @return True si la comanda se actualizo correctamente
-     * @throws NegocioException 
+     * @throws NegocioException
      */
     @Override
     public boolean actualizarEstadoComanda(ComandaDTO comanda, Estado nuevoEstado) throws NegocioException {
@@ -107,17 +145,14 @@ public class ComandaBO implements IComandaBO {
                 throw new NegocioException("El ID de la comandaDTO no está establecido");
             }
 
-
             // Convertir el DTO a entidad Comanda utilizando el Mapper
             Comanda comandaEntidad = ComandaMapper.toEntity(comanda);
-            
+
             // Llamar al DAO para actualizar el estado
             return comandaDAO.actualizarEstadoComanda(comandaEntidad, nuevoEstado);
         } catch (PersistenciaException e) {
             throw new NegocioException("Error al actualizar el estado de la comanda: " + e.getMessage(), e);
         }
     }
-
-
 
 }

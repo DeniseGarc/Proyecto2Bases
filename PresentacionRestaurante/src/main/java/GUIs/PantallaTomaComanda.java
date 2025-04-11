@@ -37,9 +37,9 @@ public class PantallaTomaComanda extends javax.swing.JFrame {
     private final Modo modo;
     private final ComandaDTO comanda;
 
-    public PantallaTomaComanda(Modo modo, ComandaDTO comandaExistente) {
+    public PantallaTomaComanda(Modo modo, ComandaDTO comanda) {
         this.modo = modo;
-        this.comanda = comandaExistente;
+        this.comanda = comanda;
         initComponents();
         cargarBanner();
         configurarBarraBusqueda();

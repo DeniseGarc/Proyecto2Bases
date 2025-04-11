@@ -2,10 +2,12 @@ GUIs\ComandaAgregarCliente.class
 GUIs\PantallaAdministrarProducto$3.class
 GUIs\PantallaComandas$2.class
 GUIs\RegistrarClienteNuevo$2.class
+PlantillaIngredientes\PanelIngredientes.class
 GUIs\MenuPrincipal$3.class
 GUIs\EliminarIngrediente$2.class
 plantillas\Titulo$1.class
 GUIs\PantallaTomaComanda$1.class
+PlantillaComandas\PanelComandasActivas$4.class
 GUIs\PantallaInicio$2.class
 GUIs\PantallaProductos$1.class
 GUIs\ClienteFrecuente.class
@@ -30,6 +32,7 @@ PlantillaComandas\PanelComandasActivas.class
 GUIs\PantallaComandas$1.class
 GUIs\PantallaIngredientes$1.class
 GUIs\PantallaComandas.class
+GUIs\MenuPrincipal$6.class
 GUIs\PantallaDetallesProducto$1.class
 GUIs\PantallaProductos$2.class
 plantillas\PanelProductoComanda.class
@@ -37,6 +40,7 @@ GUIs\PantallaAdministrarProducto.class
 GUIs\PantallaReportes$1.class
 plantillas\Titulo.class
 moduloBusquedaClientes\PanelBusquedaClientes$1.class
+PlantillaComandas\PanelComandasActivas$2.class
 GUIs\frmAgregarIngrediente$3.class
 moduloBusquedaIngredientes\PanelBuscarIngrediente$3.class
 GUIs\MenuPrincipal.class
@@ -69,6 +73,8 @@ moduloBusquedaProductos\PanelVistaListaProductos.class
 GUIs\MenuPrincipal$1.class
 GUIs\ClienteFrecuente$1.class
 GUIs\PantallaDetallesProducto.class
+PlantillaComandas\PanelComandasActivas$3.class
+PlantillaIngredientes\PanelIngredientes$1.class
 GUIs\EliminarIngrediente$3.class
 plantillas\PanelProducto.class
 GUIs\PantallaAdministrarProducto$1.class

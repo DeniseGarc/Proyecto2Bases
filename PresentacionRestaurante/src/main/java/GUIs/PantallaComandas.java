@@ -17,7 +17,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 
-
 /**
  *
  * @author erika
@@ -28,12 +27,14 @@ public class PantallaComandas extends javax.swing.JFrame {
      * Creates new form PantallaComandas
      */
     private final CoordinadorAplicacion coordinador = new CoordinadorAplicacion();
+
     public PantallaComandas() {
         initComponents();
         jPanel3.setLayout(new GridBagLayout());
         cargarComandas();
     }
-    public void cargarComandas(){
+
+    public void cargarComandas() {
         try {
             List<ComandaDTO> comandas = coordinador.obtenerComandasActivas();
             mostrarComandas(comandas);
@@ -41,7 +42,8 @@ public class PantallaComandas extends javax.swing.JFrame {
             Logger.getLogger(PantallaComandas.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    private void mostrarComandas(List<ComandaDTO> comandas){
+
+    private void mostrarComandas(List<ComandaDTO> comandas) {
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(10, 10, 10, 10); // Espacio entre tarjetas
         gbc.anchor = GridBagConstraints.NORTHWEST;
@@ -49,7 +51,7 @@ public class PantallaComandas extends javax.swing.JFrame {
         int columnas = 3;
         int fila = 0;
         int columna = 0;
-
+        jPanel3.removeAll();
         for (ComandaDTO comanda : comandas) {
             PanelComandasActivas panelComandas = new PanelComandasActivas(this, comanda);
             panelComandas.getNumero().setText(comanda.getNumeroMesa());
@@ -64,7 +66,6 @@ public class PantallaComandas extends javax.swing.JFrame {
                 fila++;
             }
         }
-        
         jPanel3.revalidate();
         jPanel3.repaint();
     }
@@ -168,7 +169,6 @@ public class PantallaComandas extends javax.swing.JFrame {
         coordinador.pantallaComandaAgregarCliente(this);
     }//GEN-LAST:event_btnAgregarComandaMouseClicked
 
-    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgregarComanda;

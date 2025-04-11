@@ -6,9 +6,10 @@ package mappers;
 
 import DAO.MesaDAO;
 import DTOs.ComandaDTO;
+import DTOs.DetalleComandaDTO;
 import entidades.Comanda;
+import entidades.DetalleComanda;
 import entidades.Mesa;
-import enumeradores.Estado;
 import exception.PersistenciaException;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,14 +25,33 @@ public class ComandaMapper {
     public static List<ComandaDTO> toDtoList(List<Comanda> comandasEntidad) {
         List<ComandaDTO> comandasDTO = new ArrayList<>();
         for (Comanda comanda : comandasEntidad) {
-            comandasDTO.add(new ComandaDTO(comanda.getId(), comanda.getFechaHora(), comanda.getTotalVenta(), comanda.getEstado(), comanda.getCliente().getNombre(), comanda.getCliente().getTelefono(), comanda.getMesa().getNumero().toString()));
+            comandasDTO.add(toDTO(comanda));
         }
         return comandasDTO;
     }
 
     public static ComandaDTO toDTO(Comanda comandaEntidad) {
-        ComandaDTO comandaDTO = new ComandaDTO(comandaEntidad.getId(), comandaEntidad.getFechaHora(), comandaEntidad.getTotalVenta(), comandaEntidad.getEstado(), comandaEntidad.getMesa().getNumero().toString());
-        
+        ComandaDTO comandaDTO = new ComandaDTO(
+                comandaEntidad.getId(),
+                comandaEntidad.getFechaHora(),
+                comandaEntidad.getTotalVenta(),
+                comandaEntidad.getEstado(),
+                comandaEntidad.getCliente() != null ? comandaEntidad.getCliente().getTelefono() : null,
+                comandaEntidad.getCliente() != null ? comandaEntidad.getCliente().getNombre() : null,
+                comandaEntidad.getMesa().getNumero().toString()
+        );
+        List<DetalleComandaDTO> detallesComandaDTO = new ArrayList<>();
+        for (DetalleComanda detalleComanda : comandaEntidad.getDetallesComanda()) {
+            detallesComandaDTO.add(
+                    new DetalleComandaDTO(detalleComanda.getPrecioUnitario(),
+                            detalleComanda.getCantidad(),
+                            detalleComanda.getImporteTotal(),
+                            detalleComanda.getNotas(),
+                            detalleComanda.getProducto().getNombre()
+                    )
+            );
+        }
+        comandaDTO.setDetallesComanda(detallesComandaDTO);
         return comandaDTO;
     }
 
