@@ -4,30 +4,42 @@
  */
 package DAO;
 
+import DTOs.DetalleReporteComandaDTO;
 import conexion.Conexion;
+import entidades.Cliente;
 import entidades.ClienteFrecuente;
 import entidades.Comanda;
+import entidades.Mesa;
 import enumeradores.Estado;
 import exception.PersistenciaException;
+import extras.Periodo;
 import interfaces.IComandaDAO;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 
 /**
- *Clase que implementa las operaciones de acceso a datos para la entidad
+ * Clase que implementa las operaciones de acceso a datos para la entidad
  * Producto, utilizando JPA para persistencia.
+ *
  * @author Maryr
  */
 public class ComandaDAO implements IComandaDAO {
+
     /**
      * Instancia única de la clase ComandaDAO
      */
     public static ComandaDAO instanciaComandaDAO;
+
     /**
      * Constructor privado para aplicar el patrón Singleton
      */
     public ComandaDAO() {
     }
+
     /**
      * Metodo que devuelve la instancia única de ComandaDAO
      *
@@ -82,6 +94,7 @@ public class ComandaDAO implements IComandaDAO {
 
     /**
      * Obtiene las comanda de la base de datos cuyo estado sea activa
+     *
      * @return Lista de comandas con estado activas
      * @throws PersistenciaException si ocurre algun error inesperado
      */
@@ -98,8 +111,10 @@ public class ComandaDAO implements IComandaDAO {
             em.close();
         }
     }
+
     /**
-     * Registra una nueva comanda en la base de datos 
+     * Registra una nueva comanda en la base de datos
+     *
      * @param comandaNueva Comanda nueva a registrar
      * @return True si se inserto correctamente la comanda en la base de datos
      * @throws PersistenciaException Si ocurre algun error inesperado
@@ -120,8 +135,10 @@ public class ComandaDAO implements IComandaDAO {
         }
 
     }
+
     /**
      * Metodo que actualiza una comanda
+     *
      * @param comanda Comanda a actualizar
      * @return True si se actualizo correctamente la comanda
      * @throws PersistenciaException si ocurre algun error inesperado
@@ -141,14 +158,16 @@ public class ComandaDAO implements IComandaDAO {
             em.close();
         }
     }
+
     /**
-     * Metodo para modificar el estado de la comanda 
+     * Metodo para modificar el estado de la comanda
+     *
      * @param comanda Comanda a modificar
      * @param nuevoEstado Estado al que se va a cambiar
      * @return True si se pudo actualizar correctamente
-     * @throws PersistenciaException 
+     * @throws PersistenciaException
      */
-   @Override
+    @Override
     public boolean actualizarEstadoComanda(Comanda comanda, Estado nuevoEstado) throws PersistenciaException {
         EntityManager em = Conexion.crearConexion();
         try {
@@ -179,6 +198,76 @@ public class ComandaDAO implements IComandaDAO {
         }
     }
 
-    
+    @Override
+    public List<DetalleReporteComandaDTO> generarReporteComandas(Periodo periodo) throws PersistenciaException {
+        EntityManager em = Conexion.crearConexion();
+        List<DetalleReporteComandaDTO> detallesReporteComandaDTO = new ArrayList<>();
+        try {
+            em.getTransaction().begin();
+            List<Object[]> resultados = em.createQuery(
+                    "SELECT c.id, c.fechaHora, m.numero, c.totalVenta, c.estado, cl.nombre FROM Comanda c "
+                    + "LEFT JOIN c.mesa m "
+                    + "LEFT JOIN c.cliente cl WHERE c.fechaHora BETWEEN :fechaInicio AND :fechaFin", Object[].class)
+                    .setParameter("fechaInicio", periodo.getFechaInicio().getTime())
+                    .setParameter("fechaFin", periodo.getFechaFin().getTime())
+                    .getResultList();
+            em.getTransaction().commit();
+            for (Object[] row : resultados) {
+                DetalleReporteComandaDTO detalleReporteComandaDTO = new DetalleReporteComandaDTO(
+                        (Long) row[0], // id de la comanda
+                        (Calendar) row[1], // fecha y hora de la comanda
+                        (Long) row[2], // numero de mesa
+                        (Double) row[3], // total de la comanda
+                        (Estado) row[4], // estado de la comanda
+                        (String) row[5]); // cliente asociado
+                detallesReporteComandaDTO.add(detalleReporteComandaDTO);
+            }
+        } catch (Exception e) {
+            throw new PersistenciaException("Error al intentar consultar los detalles del reporte de comandas: " + e.getMessage());
+        } finally {
+            em.close();
+        }
+        return detallesReporteComandaDTO;
+    }
+
+    @Override
+    public Calendar obtenerFechaPrimerComanda() throws PersistenciaException {
+        EntityManager em = Conexion.crearConexion();
+        List<DetalleReporteComandaDTO> detallesReporteComandaDTO = new ArrayList<>();
+        try {
+            try {
+                return em.createQuery(
+                        "SELECT c.fechaHora FROM Comanda c ORDER BY c.fechaHora ASC", Calendar.class)
+                        .setMaxResults(1)
+                        .getSingleResult();
+            } catch (NoResultException e) {
+                return null; // No hay comandas en la base de datos
+            }
+        } catch (Exception e) {
+            throw new PersistenciaException("Error al intentar consultar la fecha de la primer comanda" + e.getMessage());
+        } finally {
+            em.close();
+        }
+    }
+
+    @Override
+    public Calendar obtenerFechaUltimaComanda() throws PersistenciaException {
+        EntityManager em = Conexion.crearConexion();
+        List<DetalleReporteComandaDTO> detallesReporteComandaDTO = new ArrayList<>();
+        try {
+            try {
+                return em.createQuery(
+                        "SELECT c.fechaHora FROM Comanda c ORDER BY c.fechaHora DESC", Calendar.class)
+                        .setMaxResults(1)
+                        .getSingleResult();
+            } catch (NoResultException e) {
+                return null; // No hay comandas en la base de datos
+            }
+        } catch (Exception e) {
+            throw new PersistenciaException("Error al intentar consultar la fecha de la primer comanda" + e.getMessage());
+        } finally {
+            em.close();
+        }
+    }
 
 }

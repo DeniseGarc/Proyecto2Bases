@@ -4,6 +4,7 @@
  */
 package GUIs;
 
+import control.CoordinadorAplicacion;
 import java.awt.Image;
 import javax.swing.ImageIcon;
 
@@ -12,6 +13,8 @@ import javax.swing.ImageIcon;
  * @author Maryr
  */
 public class ReporteSeleccionCliente extends javax.swing.JFrame {
+    
+    private CoordinadorAplicacion control = new CoordinadorAplicacion();
 
     /**
      * Creates new form ReporteSeleccionClientes
@@ -37,6 +40,9 @@ public class ReporteSeleccionCliente extends javax.swing.JFrame {
         btnReporteNumVisitas = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setMaximumSize(new java.awt.Dimension(1070, 700));
+        setMinimumSize(new java.awt.Dimension(1070, 700));
+        setResizable(false);
 
         jPanel1.setBackground(new java.awt.Color(255, 254, 245));
         jPanel1.setPreferredSize(new java.awt.Dimension(1070, 700));
@@ -65,14 +71,24 @@ public class ReporteSeleccionCliente extends javax.swing.JFrame {
 
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
+        btnReporteCliente.setText("Por cliente");
         btnReporteCliente.setBackground(new java.awt.Color(255, 178, 217));
         btnReporteCliente.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 18)); // NOI18N
-        btnReporteCliente.setText("Por cliente");
+        btnReporteCliente.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnReporteClienteMouseClicked(evt);
+            }
+        });
         jPanel1.add(btnReporteCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 260, 210, 200));
 
+        btnReporteNumVisitas.setText("Por número de visitas");
         btnReporteNumVisitas.setBackground(new java.awt.Color(255, 178, 217));
         btnReporteNumVisitas.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 18)); // NOI18N
-        btnReporteNumVisitas.setText("Por número de visitas");
+        btnReporteNumVisitas.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnReporteNumVisitasMouseClicked(evt);
+            }
+        });
         jPanel1.add(btnReporteNumVisitas, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 260, -1, 200));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -91,47 +107,21 @@ public class ReporteSeleccionCliente extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void lblRegresarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblRegresarMouseClicked
-        
+        control.pantallaReportes(this);
     }//GEN-LAST:event_lblRegresarMouseClicked
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(ReporteSeleccionCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(ReporteSeleccionCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(ReporteSeleccionCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(ReporteSeleccionCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
+    private void btnReporteClienteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnReporteClienteMouseClicked
+        control.pantallaReportesClientes(this);
+    }//GEN-LAST:event_btnReporteClienteMouseClicked
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new ReporteSeleccionCliente().setVisible(true);
-            }
-        });
-    }
+    private void btnReporteNumVisitasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnReporteNumVisitasMouseClicked
+        control.pantallaClienteVisitas(this);
+    }//GEN-LAST:event_btnReporteNumVisitasMouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnReporteCliente;

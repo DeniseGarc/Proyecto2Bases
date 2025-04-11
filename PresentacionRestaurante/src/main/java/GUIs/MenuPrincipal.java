@@ -88,21 +88,27 @@ public class MenuPrincipal extends javax.swing.JFrame {
         btnReportes.setForeground(new java.awt.Color(255, 255, 255));
         btnReportes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgs/reporte-icono.png"))); // NOI18N
         btnReportes.setPreferredSize(new java.awt.Dimension(150, 150));
+        btnReportes.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnReportesMouseClicked(evt);
+            }
+        });
         jPanel1.add(btnReportes, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 160, 240, 220));
 
         btnMesas.setBackground(new java.awt.Color(201, 220, 249));
         btnMesas.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 24)); // NOI18N
         btnMesas.setForeground(new java.awt.Color(255, 255, 255));
+        btnMesas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgs/mesas-icon.png"))); // NOI18N
+        btnMesas.setMaximumSize(new java.awt.Dimension(240, 220));
+        btnMesas.setMinimumSize(new java.awt.Dimension(240, 220));
+        btnMesas.setPreferredSize(new java.awt.Dimension(240, 220));
         btnMesas.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnMesasMouseClicked(evt);
             }
         });
-        btnMesas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgs/mesas-icon.png"))); // NOI18N
-        btnMesas.setMaximumSize(new java.awt.Dimension(240, 220));
-        btnMesas.setMinimumSize(new java.awt.Dimension(240, 220));
-        btnMesas.setPreferredSize(new java.awt.Dimension(240, 220));
         jPanel1.add(btnMesas, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 160, 240, 220));
+
         btnIngredientes.setBackground(new java.awt.Color(255, 178, 217));
         btnIngredientes.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 18)); // NOI18N
         btnIngredientes.setForeground(new java.awt.Color(255, 255, 255));
@@ -209,6 +215,10 @@ public class MenuPrincipal extends javax.swing.JFrame {
     private void btnMesasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnMesasMouseClicked
         insertarMesas();
     }//GEN-LAST:event_btnMesasMouseClicked
+
+    private void btnReportesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnReportesMouseClicked
+        coordinador.pantallaReportes(this);
+    }//GEN-LAST:event_btnReportesMouseClicked
 
     private void verificarMesas() {
         try {

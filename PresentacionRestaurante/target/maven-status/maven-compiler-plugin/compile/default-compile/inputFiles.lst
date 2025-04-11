@@ -1,13 +1,17 @@
 C:\Users\Alici\OneDrive\Escritorio\Trabajos ITSON\Semestre IV\Bases de datos avanzada\Proyecto2Bases_HelloKittyCafe\PresentacionRestaurante\src\main\java\moduloBusquedaProductos\PanelVistaGridProductos.java
 C:\Users\Alici\OneDrive\Escritorio\Trabajos ITSON\Semestre IV\Bases de datos avanzada\Proyecto2Bases_HelloKittyCafe\PresentacionRestaurante\src\main\java\plantillas\PanelIngredienteProducto.java
+C:\Users\Alici\OneDrive\Escritorio\Trabajos ITSON\Semestre IV\Bases de datos avanzada\Proyecto2Bases_HelloKittyCafe\PresentacionRestaurante\src\main\java\GUIs\ReporteComandas.java
 C:\Users\Alici\OneDrive\Escritorio\Trabajos ITSON\Semestre IV\Bases de datos avanzada\Proyecto2Bases_HelloKittyCafe\PresentacionRestaurante\src\main\java\GUIs\frmAgregarIngrediente.java
+C:\Users\Alici\OneDrive\Escritorio\Trabajos ITSON\Semestre IV\Bases de datos avanzada\Proyecto2Bases_HelloKittyCafe\PresentacionRestaurante\src\main\java\GUIs\ReporteClienteVisitas.java
 C:\Users\Alici\OneDrive\Escritorio\Trabajos ITSON\Semestre IV\Bases de datos avanzada\Proyecto2Bases_HelloKittyCafe\PresentacionRestaurante\src\main\java\modos\Modo.java
 C:\Users\Alici\OneDrive\Escritorio\Trabajos ITSON\Semestre IV\Bases de datos avanzada\Proyecto2Bases_HelloKittyCafe\PresentacionRestaurante\src\main\java\listeners\AgregarProductoComandaListener.java
 C:\Users\Alici\OneDrive\Escritorio\Trabajos ITSON\Semestre IV\Bases de datos avanzada\Proyecto2Bases_HelloKittyCafe\PresentacionRestaurante\src\main\java\plantillas\PanelProducto.java
+C:\Users\Alici\OneDrive\Escritorio\Trabajos ITSON\Semestre IV\Bases de datos avanzada\Proyecto2Bases_HelloKittyCafe\PresentacionRestaurante\src\main\java\GUIs\ReporteSeleccionCliente.java
 C:\Users\Alici\OneDrive\Escritorio\Trabajos ITSON\Semestre IV\Bases de datos avanzada\Proyecto2Bases_HelloKittyCafe\PresentacionRestaurante\src\main\java\GUIs\PantallaReportes.java
 C:\Users\Alici\OneDrive\Escritorio\Trabajos ITSON\Semestre IV\Bases de datos avanzada\Proyecto2Bases_HelloKittyCafe\PresentacionRestaurante\src\main\java\moduloBusquedaClientes\PanelBusquedaClientes.java
 C:\Users\Alici\OneDrive\Escritorio\Trabajos ITSON\Semestre IV\Bases de datos avanzada\Proyecto2Bases_HelloKittyCafe\PresentacionRestaurante\src\main\java\GUIs\ComandaAgregarCliente.java
 C:\Users\Alici\OneDrive\Escritorio\Trabajos ITSON\Semestre IV\Bases de datos avanzada\Proyecto2Bases_HelloKittyCafe\PresentacionRestaurante\src\main\java\GUIs\PantallaInicio.java
+C:\Users\Alici\OneDrive\Escritorio\Trabajos ITSON\Semestre IV\Bases de datos avanzada\Proyecto2Bases_HelloKittyCafe\PresentacionRestaurante\src\main\java\GUIs\ReporteCliente.java
 C:\Users\Alici\OneDrive\Escritorio\Trabajos ITSON\Semestre IV\Bases de datos avanzada\Proyecto2Bases_HelloKittyCafe\PresentacionRestaurante\src\main\java\GUIs\PantallaTomaComanda.java
 C:\Users\Alici\OneDrive\Escritorio\Trabajos ITSON\Semestre IV\Bases de datos avanzada\Proyecto2Bases_HelloKittyCafe\PresentacionRestaurante\src\main\java\PlantillaIngredientes\PanelIngredientes.java
 C:\Users\Alici\OneDrive\Escritorio\Trabajos ITSON\Semestre IV\Bases de datos avanzada\Proyecto2Bases_HelloKittyCafe\PresentacionRestaurante\src\main\java\GUIs\PantallaAdministrarProducto.java
@@ -18,6 +22,8 @@ C:\Users\Alici\OneDrive\Escritorio\Trabajos ITSON\Semestre IV\Bases de datos ava
 C:\Users\Alici\OneDrive\Escritorio\Trabajos ITSON\Semestre IV\Bases de datos avanzada\Proyecto2Bases_HelloKittyCafe\PresentacionRestaurante\src\main\java\GUIs\MenuPrincipal.java
 C:\Users\Alici\OneDrive\Escritorio\Trabajos ITSON\Semestre IV\Bases de datos avanzada\Proyecto2Bases_HelloKittyCafe\PresentacionRestaurante\src\main\java\PlantillaComandas\PanelComandasActivas.java
 C:\Users\Alici\OneDrive\Escritorio\Trabajos ITSON\Semestre IV\Bases de datos avanzada\Proyecto2Bases_HelloKittyCafe\PresentacionRestaurante\src\main\java\GUIs\EliminarIngrediente.java
+C:\Users\Alici\OneDrive\Escritorio\Trabajos ITSON\Semestre IV\Bases de datos avanzada\Proyecto2Bases_HelloKittyCafe\PresentacionRestaurante\src\main\java\Reportes\JasperViewerFrame.java
+C:\Users\Alici\OneDrive\Escritorio\Trabajos ITSON\Semestre IV\Bases de datos avanzada\Proyecto2Bases_HelloKittyCafe\PresentacionRestaurante\src\main\java\Reportes\Prueba.java
 C:\Users\Alici\OneDrive\Escritorio\Trabajos ITSON\Semestre IV\Bases de datos avanzada\Proyecto2Bases_HelloKittyCafe\PresentacionRestaurante\src\main\java\control\CoordinadorAplicacion.java
 C:\Users\Alici\OneDrive\Escritorio\Trabajos ITSON\Semestre IV\Bases de datos avanzada\Proyecto2Bases_HelloKittyCafe\PresentacionRestaurante\src\main\java\moduloBusquedaProductos\PanelBusquedaProducto.java
 C:\Users\Alici\OneDrive\Escritorio\Trabajos ITSON\Semestre IV\Bases de datos avanzada\Proyecto2Bases_HelloKittyCafe\PresentacionRestaurante\src\main\java\plantillas\Titulo.java

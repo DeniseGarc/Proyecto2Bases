@@ -18,6 +18,7 @@ public class PantallaReportes extends javax.swing.JFrame {
      * Creates new form PantallaReportes
      */
     CoordinadorAplicacion coordinador = new CoordinadorAplicacion();
+    
     public PantallaReportes() {
         initComponents();
     }
@@ -39,6 +40,9 @@ public class PantallaReportes extends javax.swing.JFrame {
         btnClientes = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setMaximumSize(new java.awt.Dimension(1070, 700));
+        setMinimumSize(new java.awt.Dimension(1070, 700));
+        setResizable(false);
 
         jPanel1.setBackground(new java.awt.Color(255, 254, 245));
         jPanel1.setPreferredSize(new java.awt.Dimension(1070, 700));
@@ -69,12 +73,22 @@ public class PantallaReportes extends javax.swing.JFrame {
 
         btnComandas.setBackground(new java.awt.Color(255, 178, 217));
         btnComandas.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 18)); // NOI18N
-        btnComandas.setText("Reportes");
+        btnComandas.setText("Comandas");
+        btnComandas.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnComandasMouseClicked(evt);
+            }
+        });
         jPanel1.add(btnComandas, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 260, 210, 200));
 
         btnClientes.setBackground(new java.awt.Color(255, 178, 217));
         btnClientes.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 18)); // NOI18N
         btnClientes.setText("Clientes Frecuentes");
+        btnClientes.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnClientesMouseClicked(evt);
+            }
+        });
         jPanel1.add(btnClientes, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 260, -1, 200));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -93,13 +107,21 @@ public class PantallaReportes extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void lblRegresarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblRegresarMouseClicked
         coordinador.PantallaPrinicipal(this);
     }//GEN-LAST:event_lblRegresarMouseClicked
 
-    
+    private void btnComandasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnComandasMouseClicked
+        coordinador.pantallaReporteComandas(this);
+    }//GEN-LAST:event_btnComandasMouseClicked
+
+    private void btnClientesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnClientesMouseClicked
+        coordinador.pantallaReporteSeleccionCliente(this);
+    }//GEN-LAST:event_btnClientesMouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnClientes;

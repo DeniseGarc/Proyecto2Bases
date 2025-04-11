@@ -5,8 +5,10 @@
 package interfaces;
 
 import DTOs.ComandaDTO;
+import DTOs.DetalleReporteComandaDTO;
 import enumeradores.Estado;
 import exception.NegocioException;
+import extras.Periodo;
 import java.util.List;
 
 /**
@@ -22,6 +24,8 @@ public interface IComandaBO {
     public boolean actualizarComanda(ComandaDTO comandaActualizar) throws NegocioException;
 
     public boolean agregarComanda(ComandaDTO comandaNueva) throws NegocioException;
-    
+
     public boolean actualizarEstadoComanda(ComandaDTO comanda, Estado nuevoEstado) throws NegocioException;
+
+    public List<DetalleReporteComandaDTO> obtenerDetallesReporteComanda(Periodo periodo) throws NegocioException;
 }

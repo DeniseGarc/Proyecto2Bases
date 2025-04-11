@@ -6,6 +6,7 @@ package control;
 
 import DTOs.ClienteFrecuenteDTO;
 import DTOs.ComandaDTO;
+import DTOs.DetalleReporteComandaDTO;
 import DTOs.IngredienteDTO;
 import DTOs.MesaDTO;
 import DTOs.ProductoDTO;
@@ -20,14 +21,20 @@ import GUIs.PantallaDetallesProducto;
 import GUIs.PantallaIngredientes;
 import GUIs.PantallaInicio;
 import GUIs.PantallaProductos;
+import GUIs.PantallaReportes;
 import GUIs.PantallaTomaComanda;
 import GUIs.RegistrarClienteNuevo;
+import GUIs.ReporteCliente;
+import GUIs.ReporteClienteVisitas;
+import GUIs.ReporteComandas;
+import GUIs.ReporteSeleccionCliente;
 import GUIs.frmAgregarIngrediente;
 import control.exception.CoordinadorException;
 import enumeradores.Estado;
 import enumeradores.TipoProducto;
 import enumeradores.UnidadMedida;
 import exception.NegocioException;
+import extras.Periodo;
 import interfaces.IClienteFrecuenteBO;
 import interfaces.IComandaBO;
 import interfaces.IIngredienteBO;
@@ -182,8 +189,36 @@ public class CoordinadorAplicacion {
         pantallaComandaAgregarCliente.setVisible(true);
         frame.dispose();
     }
-    
-    
+
+    public void pantallaReportes(JFrame frame) {
+        PantallaReportes pantallaReportes = new PantallaReportes();
+        pantallaReportes.setVisible(true);
+        frame.dispose();
+    }
+
+    public void pantallaReportesClientes(JFrame frame) {
+        ReporteCliente reporteCliente = new ReporteCliente();
+        reporteCliente.setVisible(true);
+        frame.dispose();
+    }
+
+    public void pantallaReporteComandas(JFrame frame) {
+        ReporteComandas reporteComandas = new ReporteComandas();
+        reporteComandas.setVisible(true);
+        frame.dispose();
+    }
+
+    public void pantallaReporteSeleccionCliente(JFrame frame) {
+        ReporteSeleccionCliente reporteSeleccionCliente = new ReporteSeleccionCliente();
+        reporteSeleccionCliente.setVisible(true);
+        frame.dispose();
+    }
+
+    public void pantallaClienteVisitas(JFrame frame) {
+        ReporteClienteVisitas reporteClienteVisitas = new ReporteClienteVisitas();
+        reporteClienteVisitas.setVisible(true);
+        frame.dispose();
+    }
 
     /**
      * Obtiene todos los productos registrados en el sistema.
@@ -650,20 +685,37 @@ public class CoordinadorAplicacion {
             throw new CoordinadorException("Error al consultar los ingredientes: ", e);
         }
     }
-    
-    public boolean actualizarEstadoComanda (ComandaDTO comanda, Estado nuevoEstado)throws CoordinadorException{
-         try {
+
+    public boolean actualizarEstadoComanda(ComandaDTO comanda, Estado nuevoEstado) throws CoordinadorException {
+        try {
             return comandaBO.actualizarEstadoComanda(comanda, nuevoEstado);
         } catch (NegocioException e) {
             throw new CoordinadorException("Error al actualizar el estado: ", e);
         }
     }
-    
+
     public ClienteFrecuenteDTO obtenerClientePorId(int id) throws CoordinadorException {
         try {
             return clienteFrecuenteBO.obtenerClientePorId(id);
         } catch (NegocioException e) {
             throw new CoordinadorException("Error al obtener el cliente: ", e);
+        }
+    }
+
+    public List<DetalleReporteComandaDTO> obtenerDetallesReporteComandas(Periodo periodo) throws CoordinadorException {
+        if (periodo != null) {
+            if (periodo.getFechaInicio() == null || periodo.getFechaFin() == null) {
+                throw new CoordinadorException("Las fechas del periodo no deben ser nulas");
+            }
+            if (periodo.getFechaFin().before(periodo.getFechaInicio())) {
+                throw new CoordinadorException("La fecha de fin del periodo no debe estar despues de la fecha de inicio");
+            }
+        }
+        try {
+            return comandaBO.obtenerDetallesReporteComanda(periodo);
+        } catch (NegocioException ex) {
+            Logger.getLogger(CoordinadorAplicacion.class.getName()).log(Level.SEVERE, null, ex);
+            throw new CoordinadorException("Error al obtener los detalles del reporte", ex);
         }
     }
 }
