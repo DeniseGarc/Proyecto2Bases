@@ -63,6 +63,7 @@ public class CoordinadorAplicacion {
         target.setVisible(true);
         padre.dispose();
     }
+
     /**
      * Metodo para redirigir a la pantalla de inicio
      */
@@ -70,8 +71,10 @@ public class CoordinadorAplicacion {
         PantallaInicio inicio = new PantallaInicio();
         inicio.setVisible(true);
     }
+
     /**
      * Metodo para redirigir a la pantalla Principal
+     *
      * @param frame Frame padre desde el cual se invoca la siguiente pantalla.
      */
     public void PantallaPrinicipal(JFrame frame) {
@@ -79,8 +82,10 @@ public class CoordinadorAplicacion {
         menu.setVisible(true);
         frame.dispose();
     }
+
     /**
      * Metodo para redirigir a la pantalla de comandas
+     *
      * @param frame Frame padre desde el cual se invoca la siguiente pantalla.
      */
     public void PantallaComandas(JFrame frame) {
@@ -88,8 +93,10 @@ public class CoordinadorAplicacion {
         comandas.setVisible(true);
         frame.dispose();
     }
+
     /**
      * Metodo para redirigir a la pantalla de ingredientes
+     *
      * @param frame Frame padre desde el cual se invoca la siguiente pantalla.
      */
     public void PantallaIngredientes(JFrame frame) {
@@ -97,8 +104,10 @@ public class CoordinadorAplicacion {
         pantallaIngredientes.setVisible(true);
         frame.dispose();
     }
+
     /**
      * Metodo para redirigir a la pantalla de agregar Ingredientes
+     *
      * @param frame Frame padre desde el cual se invoca la siguiente pantalla.
      */
     public void PantallaAgregarIngrediente(JFrame frame) {
@@ -106,8 +115,10 @@ public class CoordinadorAplicacion {
         pantallaAgregar.setVisible(true);
         frame.dispose();
     }
+
     /**
      * Metodo para redirigir a la pantalla de eliminar ingredientes
+     *
      * @param frame Frame padre desde el cual se invoca la siguiente pantalla.
      */
     public void PantallaEliminarIngrediente(JFrame frame) {
@@ -115,8 +126,10 @@ public class CoordinadorAplicacion {
         pantallaEliminar.setVisible(true);
         frame.dispose();
     }
+
     /**
      * Metodo para redirigir a la pantalla de clientes frecuentes
+     *
      * @param frame Frame padre desde el cual se invoca la siguiente pantalla.
      */
     public void PantallaClienteFrecuente(JFrame frame) {
@@ -124,8 +137,10 @@ public class CoordinadorAplicacion {
         pantallaCliente.setVisible(true);
         frame.dispose();
     }
+
     /**
      * Metodo para redirigir a la pantalla de agregar comandas
+     *
      * @param frame Frame padre desde el cual se invoca la siguiente pantalla.
      * @param comandaAgregar comanda a agregar
      */
@@ -134,8 +149,10 @@ public class CoordinadorAplicacion {
         pantallaComanda.setVisible(true);
         frame.dispose();
     }
+
     /**
      * Metodo para redirigir a la pantalla de modificar comandas
+     *
      * @param frame Frame padre desde el cual se invoca la siguiente pantalla.
      * @param comandaModificar comanda a modificar
      */
@@ -144,8 +161,10 @@ public class CoordinadorAplicacion {
         pantallaComanda.setVisible(true);
         frame.dispose();
     }
+
     /**
      * Metodo para redirigir a la pantalla de registrar cliente
+     *
      * @param frame Frame padre desde el cual se invoca la siguiente pantalla.
      */
     public void PantallaRegistrarCliente(JFrame frame) {
@@ -213,8 +232,6 @@ public class CoordinadorAplicacion {
         pantallaComandaAgregarCliente.setVisible(true);
         frame.dispose();
     }
-    
-    
 
     /**
      * Obtiene todos los productos registrados en el sistema.
@@ -334,8 +351,10 @@ public class CoordinadorAplicacion {
         }
         return false;
     }
+
     /**
      * Actualiza los datos de la comanda
+     *
      * @param comanda DTO con los datos actualizados de la comanda
      * @return true si la actualizacion fue exitosa
      * @throws CoordinadorException Si los datos son invalidos o ocurre un error
@@ -351,8 +370,10 @@ public class CoordinadorAplicacion {
         }
         return false;
     }
+
     /**
      * Metodo para agregar una nueva comanda
+     *
      * @param comanda ComandaDTO a agregar
      * @return true si se agrego de manera exitosa
      * @throws CoordinadorException Si los datos son invalidos o ocurre un error
@@ -396,8 +417,10 @@ public class CoordinadorAplicacion {
         }
         return true;
     }
+
     /**
      * Valida los datos de la comanda
+     *
      * @param comanda DTO a validar
      * @return true si los datos son correctos
      * @throws CoordinadorException Si los datos son invalidos o ocurre un error
@@ -611,10 +634,13 @@ public class CoordinadorAplicacion {
             throw new CoordinadorException("Ha ocurrido un error al consultar los clientes.");
         }
     }
+
     /**
      * Obtiene una lista de las comandas cuyo estado es ACTIVA
+     *
      * @return lIsta de comanda DTO con estado activa
-     * @throws CoordinadorException si ocurre algun error al recuperar las comandas
+     * @throws CoordinadorException si ocurre algun error al recuperar las
+     * comandas
      */
     public List<ComandaDTO> obtenerComandasActivas() throws CoordinadorException {
         try {
@@ -623,7 +649,7 @@ public class CoordinadorAplicacion {
             throw new CoordinadorException("Ha ocurrido un error al consultar las comandas activas");
         }
     }
-    
+
     public ProductoDTO obtenerProductoPorNombre(String nombre) throws CoordinadorException {
         if (nombre == null || nombre.trim().isEmpty()) {
             throw new CoordinadorException("Nombre del producto no ha sido ingresado");
@@ -634,7 +660,7 @@ public class CoordinadorAplicacion {
             throw new CoordinadorException("Ha ocurrido un error al obtener el producto por su nombre");
         }
     }
-    
+
     /**
      * Método que valida si el producto puede ser editado. Un producto puede ser
      * actualizado siempre y cuando no se encuentre dentro de una comanda
@@ -684,8 +710,10 @@ public class CoordinadorAplicacion {
             throw new CoordinadorException("Error al consultar las mesas: ", e);
         }
     }
+
     /**
      * Obtiene las mesas disponibles
+     *
      * @return Lista de mesasDTO disponibles
      * @throws CoordinadorException Si ocurre algun error al obtener las mesas
      */
@@ -696,12 +724,15 @@ public class CoordinadorAplicacion {
             throw new CoordinadorException("Error al obtener las mesas: ", e);
         }
     }
+
     /**
-     * Metodo para buscar ingredientes con diferentes filtros de nombre y uniad de medida
+     * Metodo para buscar ingredientes con diferentes filtros de nombre y uniad
+     * de medida
+     *
      * @param nombre Nombre del ingrediente a buscar
-     * @param unidad Unidad de medida del ingrediente 
+     * @param unidad Unidad de medida del ingrediente
      * @return Lista de ingredientes DTO filtrados
-     * @throws CoordinadorException 
+     * @throws CoordinadorException
      */
     public List<IngredienteDTO> buscarIngredientes(String nombre, UnidadMedida unidad) throws CoordinadorException {
         try {
@@ -710,26 +741,51 @@ public class CoordinadorAplicacion {
             throw new CoordinadorException("Error al consultar los ingredientes: ", e);
         }
     }
+
     /**
      * Actualiza el estado de la comanda
+     *
      * @param comanda Comanda a actualizar
      * @param nuevoEstado estado al que se va a modificar
      * @return true si se modifico correctamente el estado
-     * @throws CoordinadorException si no se puede modificar o ocurre algun error
+     * @throws CoordinadorException si no se puede modificar o ocurre algun
+     * error
      */
-    public boolean actualizarEstadoComanda (ComandaDTO comanda, Estado nuevoEstado)throws CoordinadorException{
-         try {
+    public boolean actualizarEstadoComanda(ComandaDTO comanda, Estado nuevoEstado) throws CoordinadorException {
+        try {
             return comandaBO.actualizarEstadoComanda(comanda, nuevoEstado);
         } catch (NegocioException e) {
             throw new CoordinadorException("Error al actualizar el estado: ", e);
         }
     }
-    
+
+    /**
+     * Método para recuperar el cliente por medio de su id
+     *
+     * @param id del cliente a ser obtenido
+     * @return el cliente asociado al id
+     * @throws CoordinadorException si ocurre un error
+     */
     public ClienteFrecuenteDTO obtenerClientePorId(Long id) throws CoordinadorException {
         try {
             return clienteFrecuenteBO.obtenerClientePorId(id);
         } catch (NegocioException e) {
             throw new CoordinadorException("Error al obtener el cliente: ", e);
+        }
+    }
+
+    /**
+     * Método para actualizar el estado de la mesa
+     *
+     * @param idMesa id de la mesa a ser actualizada
+     * @param estado estado al que se declarará
+     * @throws CoordinadorException Si ocurre un error
+     */
+    public void actualizarEstadoMesa(Long idMesa, boolean estado) throws CoordinadorException {
+        try {
+            mesaBO.actualizarEstadoMesa(idMesa, estado);
+        } catch (NegocioException e) {
+            throw new CoordinadorException("No se pudo actualizar el estado de la mesa:", e);
         }
     }
 }

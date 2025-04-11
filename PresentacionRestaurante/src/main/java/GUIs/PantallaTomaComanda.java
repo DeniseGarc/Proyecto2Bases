@@ -36,6 +36,7 @@ public class PantallaTomaComanda extends javax.swing.JFrame {
     private List<DetalleComandaDTO> productosAgrupados = new ArrayList<>();
     private final Modo modo;
     private final ComandaDTO comanda;
+    private final CoordinadorAplicacion coordinador = new CoordinadorAplicacion();
 
     public PantallaTomaComanda(Modo modo, ComandaDTO comanda) {
         this.modo = modo;
@@ -162,6 +163,10 @@ public class PantallaTomaComanda extends javax.swing.JFrame {
 
     private void btnAccionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAccionActionPerformed
         generarDetallesComanda();
+        try {
+            coordinador.actualizarEstadoMesa(Long.valueOf(comanda.getNumeroMesa()), false);
+        } catch (CoordinadorException ex) {
+        }
     }//GEN-LAST:event_btnAccionActionPerformed
 
     private void cargarProductosMenu() {
