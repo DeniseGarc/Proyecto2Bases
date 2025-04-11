@@ -4,16 +4,38 @@
  */
 package GUIs;
 
+import DTOs.DetalleReporteComandaDTO;
 import control.CoordinadorAplicacion;
+import control.exception.CoordinadorException;
+import extras.Periodo;
 import java.awt.Image;
+import java.io.File;
+import java.io.InputStream;
+import java.time.ZoneId;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperExportManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 
 /**
  *
  * @author Maryr
  */
 public class ReporteComandas extends javax.swing.JFrame {
-    
+
     private CoordinadorAplicacion control = new CoordinadorAplicacion();
 
     /**
@@ -44,7 +66,7 @@ public class ReporteComandas extends javax.swing.JFrame {
         btnGenReporte = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tablaComandas = new javax.swing.JTable();
-        jButton2 = new javax.swing.JButton();
+        btnGenerarPDF = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMaximumSize(new java.awt.Dimension(1070, 700));
@@ -85,12 +107,22 @@ public class ReporteComandas extends javax.swing.JFrame {
         btnLimpiar.setBorder(null);
         btnLimpiar.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         btnLimpiar.setForeground(new java.awt.Color(255, 255, 255));
+        btnLimpiar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLimpiarActionPerformed(evt);
+            }
+        });
 
         btnGenReporte.setText("Generar reporte");
         btnGenReporte.setBackground(new java.awt.Color(255, 119, 170));
         btnGenReporte.setBorder(null);
         btnGenReporte.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         btnGenReporte.setForeground(new java.awt.Color(255, 255, 255));
+        btnGenReporte.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGenReporteActionPerformed(evt);
+            }
+        });
 
         tablaComandas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -107,11 +139,16 @@ public class ReporteComandas extends javax.swing.JFrame {
         tablaComandas.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         jScrollPane1.setViewportView(tablaComandas);
 
-        jButton2.setText("Imprimir PDF");
-        jButton2.setBackground(new java.awt.Color(255, 119, 170));
-        jButton2.setBorder(null);
-        jButton2.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        jButton2.setForeground(new java.awt.Color(255, 255, 255));
+        btnGenerarPDF.setText("Imprimir PDF");
+        btnGenerarPDF.setBackground(new java.awt.Color(255, 119, 170));
+        btnGenerarPDF.setBorder(null);
+        btnGenerarPDF.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        btnGenerarPDF.setForeground(new java.awt.Color(255, 255, 255));
+        btnGenerarPDF.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGenerarPDFActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -139,7 +176,7 @@ public class ReporteComandas extends javax.swing.JFrame {
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(btnGenReporte, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 822, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(btnGenerarPDF, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(0, 0, Short.MAX_VALUE))))
         );
         jPanel2Layout.setVerticalGroup(
@@ -159,7 +196,7 @@ public class ReporteComandas extends javax.swing.JFrame {
                 .addGap(32, 32, 32)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnGenerarPDF, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(39, Short.MAX_VALUE))
         );
 
@@ -182,13 +219,159 @@ public class ReporteComandas extends javax.swing.JFrame {
         control.pantallaReportes(this);
     }//GEN-LAST:event_lblRegresarMouseClicked
 
+    private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
+        limpiarFiltros();
+    }//GEN-LAST:event_btnLimpiarActionPerformed
+
+    private void btnGenReporteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenReporteActionPerformed
+        generarReportePDF();
+    }//GEN-LAST:event_btnGenReporteActionPerformed
+
+    private void btnGenerarPDFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenerarPDFActionPerformed
+        generarReportePDF();
+    }//GEN-LAST:event_btnGenerarPDFActionPerformed
+
+    private void limpiarFiltros() {
+        dpDesde.clear();
+        dpHasta.clear();
+    }
+
+    /**
+     * Método que obtiene las fechas del periodo seleccionado
+     *
+     * @return
+     */
+    private Periodo obtenerPeriodo() {
+        if (dpDesde.getDate() == null && dpHasta.getDate() == null) {
+            return null;
+        }
+        Calendar fechaInicio = Calendar.getInstance();
+        Calendar fechaFin = Calendar.getInstance();
+        // Se convierte la LocalDate obtenida del datePicker y se convierte a Date para poder settear al Calendar
+        fechaInicio.setTime(Date.from(dpDesde.getDate().atStartOfDay(ZoneId.systemDefault()).toInstant()));
+        fechaFin.setTime(Date.from(dpHasta.getDate().atStartOfDay(ZoneId.systemDefault()).toInstant()));
+
+        return new Periodo(fechaInicio, fechaFin);
+    }
+
+    private boolean validarCamposFecha() {
+        if ((dpDesde.getDate() != null && dpHasta.getDate() == null) || (dpDesde.getDate() == null && dpHasta.getDate() != null)) {
+            JOptionPane.showMessageDialog(null, "Debe seleccionar ambas fechas si es que desea filtrar por periodo", "Seleccione ambas fechas", JOptionPane.INFORMATION_MESSAGE);
+            return false;
+        }
+        if (dpDesde.getDate() != null && dpHasta != null) {
+            if (dpHasta.getDate().isBefore(dpDesde.getDate())) {
+                JOptionPane.showMessageDialog(null, "La fecha de fin del periodo no puede estas antes de la fecha de inicio", "Periodo incorrect", JOptionPane.INFORMATION_MESSAGE);
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /**
+     * Devuelve la lista de comandas del periodo seleccionado en la pantalla
+     *
+     * @return Lista de comandas filtradas por el periodo seleccionado
+     */
+    private List<DetalleReporteComandaDTO> obtenerComandas() {
+        List<DetalleReporteComandaDTO> detallesReporteComandaLista = new ArrayList<>();
+        try {
+            return control.obtenerDetallesReporteComandas(obtenerPeriodo());
+        } catch (CoordinadorException ex) {
+            JOptionPane.showMessageDialog(null, "Ha ocurrido un error al intentar recuperar los datos necesarios para el reporte", "Ha ocurrido un error inesperado", JOptionPane.ERROR_MESSAGE);
+        }
+        return detallesReporteComandaLista;
+    }
+
+    /**
+     * Método que devuelve el total de ventas acumuladas de la lista de comandas
+     * del periodo seleccionado
+     *
+     * @param detallesReporteComandaLista Lista de comandas ya filtradas por el
+     * periodo
+     * @return total acumulado de ventas de las comandas con estado "ENTREGADA"
+     */
+    private double obtenerTotalVentas(List<DetalleReporteComandaDTO> detallesReporteComandaLista) {
+        return control.calcularTotalVentasPeriodo(detallesReporteComandaLista);
+    }
+
+    /**
+     * Método que genera un reporte de las comandas indicadas
+     */
+    private void generarReportePDF() {
+        if (!validarCamposFecha()) {
+            return;
+        }
+        // obtiene la lista de comandas del reporte
+        List<DetalleReporteComandaDTO> detallesReporteComandaLista = obtenerComandas();
+
+        // se obtiene el periodo seleccionado del reporte de comandas
+        Periodo periodoFechas = obtenerPeriodo();
+        // Si no seleccionó un periodo se cambia el mensaje
+        String periodo = periodoFechas == null ? "Todas las comandas" : periodoFechas.toString();
+        // Se obtiene el total acumulado de ventas de las comandas del periodo
+        double totalAcumuladoVentas = obtenerTotalVentas(detallesReporteComandaLista);
+
+        // Se le agrega un elemento al inicio de la lista de comandas que llena la tabla debido que la tabla se "come" el primer registro
+        detallesReporteComandaLista.add(0, new DetalleReporteComandaDTO());
+
+        try {
+            // Se carga el archivo .jrxml del reporte desde los recursos del proyecto
+            InputStream jrxmlStream = getClass().getClassLoader().getResourceAsStream("reportes/ReporteDeComandas.jrxml");
+
+            // Si no se encuentra se muestra mensaje
+            if (jrxmlStream == null) {
+                JOptionPane.showMessageDialog(null, "No se encontró el archivo .jrxml del reporte", "Ha ocurrido un error inesperado", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            // Se crea la fuente de datos para el reporte a partir de la lista de comandas
+            JRBeanCollectionDataSource detallesReporteComanda = new JRBeanCollectionDataSource(detallesReporteComandaLista);
+
+            // Se crea el mapa de parámetros que se enviarán al reporte
+            Map<String, Object> parametros = new HashMap<>();
+            parametros.put("periodo", periodo);
+            parametros.put("totalAcumuladoVentas", totalAcumuladoVentas);
+
+            // Se compila el archivo .jrxml
+            JasperReport reporte = JasperCompileManager.compileReport(jrxmlStream);
+            // Se llena el reporte con los datos y parametros
+            JasperPrint print = JasperFillManager.fillReport(reporte, parametros, detallesReporteComanda);
+            // Se crea un JFileChooser para que el usuario seleccione donde quiere guardar el reporte
+            JFileChooser fileChooser = new JFileChooser();
+            fileChooser.setDialogTitle("Guardar reporte como...");
+            fileChooser.setFileFilter(new FileNameExtensionFilter("Archivos PDF", "pdf"));
+
+            int userSelection = fileChooser.showSaveDialog(null);
+            if (userSelection == JFileChooser.APPROVE_OPTION) {
+                // Si se acepta la accion, se obtiene el archivo seleccionado por el usuario
+                File fileToSave = fileChooser.getSelectedFile();
+                // Se guarda la ruta 
+                String filePath = fileToSave.getAbsolutePath();
+                // Se asegura que el archivo tenga extensión .pdf
+                if (!filePath.toLowerCase().endsWith(".pdf")) {
+                    filePath += ".pdf";
+                }
+                // Se exporta el reporte a PDF y se guarda en la ruta guardada
+                JasperExportManager.exportReportToPdfFile(print, filePath);
+                // Se muetra mensaje de exito
+                JOptionPane.showMessageDialog(null, "PDF generado correctamente en: " + filePath, "Reporte de comandas", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                // Si se cancela la operación se muestra mensaje
+                JOptionPane.showMessageDialog(null, "Se a cancelado la operación", "Reporte de comandas", JOptionPane.INFORMATION_MESSAGE);
+            }
+        } catch (JRException e) {
+            JOptionPane.showMessageDialog(null, "Ha ocurrido un error al intentar generar el pdf del reporte", "Ha ocurrido un error inesperado", JOptionPane.ERROR_MESSAGE);
+        }
+
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnGenReporte;
+    private javax.swing.JButton btnGenerarPDF;
     private javax.swing.JButton btnLimpiar;
     private com.github.lgooddatepicker.components.DatePicker dpDesde;
     private com.github.lgooddatepicker.components.DatePicker dpHasta;
-    private javax.swing.JButton jButton2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;

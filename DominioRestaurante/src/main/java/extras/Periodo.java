@@ -4,6 +4,7 @@
  */
 package extras;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 /**
@@ -38,7 +39,8 @@ public class Periodo {
 
     @Override
     public String toString() {
-        return "Periodo{" + "fechaInicio=" + fechaInicio + ", fechaFin=" + fechaFin + '}';
+        SimpleDateFormat formatoFecha = new SimpleDateFormat("dd-MM-yyyy");
+        return formatoFecha.format(fechaInicio.getTime()) + " / " + formatoFecha.format(fechaFin.getTime());
     }
 
 }

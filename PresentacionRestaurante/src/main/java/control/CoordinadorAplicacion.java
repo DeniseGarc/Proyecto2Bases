@@ -718,4 +718,27 @@ public class CoordinadorAplicacion {
             throw new CoordinadorException("Error al obtener los detalles del reporte", ex);
         }
     }
+
+    /**
+     * Método el cual calcula el total de ventas acumulado de las comandas de un
+     * periodo determinado.
+     *
+     * @param comandasPeriodo Lista de comandas de un periodo determinado
+     * @return Suma total de las ventas de las comandas cuyo estado es
+     * "ENTREGADA"
+     */
+    public double calcularTotalVentasPeriodo(List<DetalleReporteComandaDTO> comandasPeriodo) {
+        // Si la lista de comandas esta vacia devuelve 0 como total
+        if (comandasPeriodo == null || comandasPeriodo.isEmpty()) {
+            return 0;
+        }
+        return comandasPeriodo.stream()
+                // filtra las comandas que tienen estado "ENTREGADA"
+                .filter(registro -> registro.getEstadoComanda().equals("ENTREGADA"))
+                // Obtiene el importeTotal de cada comanda
+                .mapToDouble(DetalleReporteComandaDTO::getTotalVenta)
+                // Lo va sumando
+                .sum();
+
+    }
 }

@@ -30,6 +30,7 @@ GUIs\PantallaReportes$1.class
 plantillas\Titulo.class
 PlantillaComandas\PanelComandasActivas$2.class
 GUIs\ReporteSeleccionCliente.class
+GUIs\ReporteComandas$2.class
 moduloBusquedaProductos\VistaProductos.class
 moduloBusquedaClientes\PanelBusquedaClientes.class
 GUIs\RegistrarClienteNuevo.class
@@ -38,7 +39,7 @@ GUIs\MenuPrincipal$2.class
 GUIs\ReporteComandas.class
 GUIs\EliminarIngrediente.class
 moduloBusquedaIngredientes\PanelBuscarIngrediente.class
-com\presentacionrestaurante\PresentacionRestaurante.class
+GUIs\ReporteComandas$3.class
 GUIs\frmAgregarIngrediente$1.class
 GUIs\MenuPrincipal$1.class
 GUIs\PantallaDetallesProducto.class
@@ -47,6 +48,7 @@ GUIs\PantallaAdministrarProducto$1.class
 GUIs\PantallaIngredientes$3.class
 GUIs\ComandaAgregarCliente.class
 GUIs\PantallaAdministrarProducto$3.class
+GUIs\ReporteComandas$4.class
 PlantillaIngredientes\PanelIngredientes.class
 GUIs\MenuPrincipal$3.class
 GUIs\EliminarIngrediente$2.class
@@ -62,10 +64,8 @@ GUIs\PantallaComandas$1.class
 GUIs\PantallaIngredientes$1.class
 GUIs\PantallaComandas.class
 GUIs\MenuPrincipal$6.class
-reportes\Prueba.class
 moduloBusquedaClientes\PanelBusquedaClientes$1.class
 GUIs\frmAgregarIngrediente$3.class
-reportes\JasperViewerFrame.class
 moduloBusquedaIngredientes\PanelBuscarIngrediente$3.class
 GUIs\MenuPrincipal.class
 GUIs\MenuPrincipal$5.class
@@ -82,6 +82,7 @@ moduloBusquedaIngredientes\PanelBuscarIngrediente$4.class
 GUIs\frmAgregarIngrediente$4.class
 GUIs\MenuPrincipal$4.class
 GUIs\PantallaReportes$3.class
+Inicio\PresentacionRestaurante.class
 GUIs\ReporteCliente.class
 GUIs\ComandaAgregarCliente$2.class
 listeners\AgregarProductoComandaListener.class

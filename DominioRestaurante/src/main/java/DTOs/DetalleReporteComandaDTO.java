@@ -4,9 +4,9 @@
  */
 package DTOs;
 
-import entidades.Comanda;
 import enumeradores.Estado;
 import java.util.Calendar;
+import java.util.Date;
 
 /**
  *
@@ -15,23 +15,22 @@ import java.util.Calendar;
 public class DetalleReporteComandaDTO {
 
     private String folio;
-    private Calendar fechaHora;
-    private String numeroMesa;
+    private Date fechaHora;
+    private String mesa;
     private double totalVenta;
     private String estadoComanda;
-    private String nombreClienteAsociado;
+    private String nombreCompletoCliente;
 
-    public DetalleReporteComandaDTO(Comanda comanda) {
-        this.folio = comanda.getId().toString();
+    public DetalleReporteComandaDTO() {
     }
 
     public DetalleReporteComandaDTO(Long folio, Calendar fechaHora, Long numeroMesa, Double totalVenta, Estado estadoComanda, String nombreClienteAsociado) {
         this.folio = folio.toString();
-        this.fechaHora = fechaHora;
-        this.numeroMesa = numeroMesa.toString();
+        this.fechaHora = fechaHora.getTime();
+        this.mesa = numeroMesa.toString();
         this.totalVenta = totalVenta;
         this.estadoComanda = estadoComanda.toString();
-        this.nombreClienteAsociado = nombreClienteAsociado;
+        this.nombreCompletoCliente = nombreClienteAsociado;
     }
 
     public String getFolio() {
@@ -42,20 +41,20 @@ public class DetalleReporteComandaDTO {
         this.folio = folio;
     }
 
-    public Calendar getFechaHora() {
+    public Date getFechaHora() {
         return fechaHora;
     }
 
-    public void setFechaHora(Calendar fechaHora) {
+    public void setFechaHora(Date fechaHora) {
         this.fechaHora = fechaHora;
     }
 
-    public String getNumeroMesa() {
-        return numeroMesa;
+    public String getMesa() {
+        return mesa;
     }
 
-    public void setNumeroMesa(String numeroMesa) {
-        this.numeroMesa = numeroMesa;
+    public void setMesa(String mesa) {
+        this.mesa = mesa;
     }
 
     public double getTotalVenta() {
@@ -74,17 +73,17 @@ public class DetalleReporteComandaDTO {
         this.estadoComanda = estadoComanda;
     }
 
-    public String getNombreClienteAsociado() {
-        return nombreClienteAsociado;
+    public String getNombreCompletoCliente() {
+        return nombreCompletoCliente;
     }
 
-    public void setNombreClienteAsociado(String nombreClienteAsociado) {
-        this.nombreClienteAsociado = nombreClienteAsociado;
+    public void setNombreCompletoCliente(String nombreCompletoCliente) {
+        this.nombreCompletoCliente = nombreCompletoCliente;
     }
 
     @Override
     public String toString() {
-        return "DetalleReporteComandaDTO{" + "folio=" + folio + ", fechaHora=" + fechaHora + ", numeroMesa=" + numeroMesa + ", totalVenta=" + totalVenta + ", estadoComanda=" + estadoComanda + ", nombreClienteAsociado=" + nombreClienteAsociado + '}';
+        return "DetalleReporteComandaDTO{" + "folio=" + folio + ", fechaHora=" + fechaHora + ", numeroMesa=" + mesa + ", totalVenta=" + totalVenta + ", estadoComanda=" + estadoComanda + ", nombreClienteAsociado=" + nombreCompletoCliente + '}';
     }
 
 }
