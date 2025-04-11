@@ -30,6 +30,7 @@ public class frmAgregarIngrediente extends javax.swing.JFrame {
     
     public frmAgregarIngrediente() {
         initComponents();
+        setLocationRelativeTo(null);
         String[] unidades = Arrays.stream(UnidadMedida.values())
                           .map(Enum::name)
                           .toArray(String[]::new);

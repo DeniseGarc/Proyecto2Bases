@@ -44,6 +44,7 @@ public class PantallaIngredientes extends javax.swing.JFrame {
      */
     public PantallaIngredientes() {
         initComponents();
+        setLocationRelativeTo(null);
         try {
             cargarYMostrarIngredientes();
         } catch (NegocioException ex) {
