@@ -4,21 +4,19 @@
  */
 package GUIs;
 
-import control.CoordinadorAplicacion;
 import java.awt.Image;
 import javax.swing.ImageIcon;
 
 /**
  *
- * @author erika
+ * @author Maryr
  */
-public class PantallaReportes extends javax.swing.JFrame {
+public class ReporteSeleccionCliente extends javax.swing.JFrame {
 
     /**
-     * Creates new form PantallaReportes
+     * Creates new form ReporteSeleccionClientes
      */
-    CoordinadorAplicacion coordinador = new CoordinadorAplicacion();
-    public PantallaReportes() {
+    public ReporteSeleccionCliente() {
         initComponents();
     }
 
@@ -35,8 +33,8 @@ public class PantallaReportes extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         lblTitulo = new javax.swing.JLabel();
         lblRegresar = new javax.swing.JLabel();
-        btnComandas = new javax.swing.JButton();
-        btnClientes = new javax.swing.JButton();
+        btnReporteCliente = new javax.swing.JButton();
+        btnReporteNumVisitas = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -50,7 +48,7 @@ public class PantallaReportes extends javax.swing.JFrame {
 
         lblTitulo.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 36)); // NOI18N
         lblTitulo.setForeground(new java.awt.Color(255, 255, 255));
-        lblTitulo.setText("Reportes");
+        lblTitulo.setText("Reportes de clientes");
         jPanel2.add(lblTitulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 20, 500, 40));
 
         ImageIcon iconoOriginal = new ImageIcon(getClass().getResource("/imgs/flecha-regresar.png"));
@@ -67,15 +65,15 @@ public class PantallaReportes extends javax.swing.JFrame {
 
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
-        btnComandas.setBackground(new java.awt.Color(255, 178, 217));
-        btnComandas.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 18)); // NOI18N
-        btnComandas.setText("Reportes");
-        jPanel1.add(btnComandas, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 260, 210, 200));
+        btnReporteCliente.setBackground(new java.awt.Color(255, 178, 217));
+        btnReporteCliente.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 18)); // NOI18N
+        btnReporteCliente.setText("Por cliente");
+        jPanel1.add(btnReporteCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 260, 210, 200));
 
-        btnClientes.setBackground(new java.awt.Color(255, 178, 217));
-        btnClientes.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 18)); // NOI18N
-        btnClientes.setText("Clientes Frecuentes");
-        jPanel1.add(btnClientes, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 260, -1, 200));
+        btnReporteNumVisitas.setBackground(new java.awt.Color(255, 178, 217));
+        btnReporteNumVisitas.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 18)); // NOI18N
+        btnReporteNumVisitas.setText("Por número de visitas");
+        jPanel1.add(btnReporteNumVisitas, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 260, -1, 200));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -96,14 +94,48 @@ public class PantallaReportes extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void lblRegresarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblRegresarMouseClicked
-        coordinador.PantallaPrinicipal(this);
+        
     }//GEN-LAST:event_lblRegresarMouseClicked
 
-    
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(ReporteSeleccionCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(ReporteSeleccionCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(ReporteSeleccionCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(ReporteSeleccionCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+        //</editor-fold>
+
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new ReporteSeleccionCliente().setVisible(true);
+            }
+        });
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnClientes;
-    private javax.swing.JButton btnComandas;
+    private javax.swing.JButton btnReporteCliente;
+    private javax.swing.JButton btnReporteNumVisitas;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JLabel lblRegresar;

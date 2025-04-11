@@ -14,16 +14,25 @@ import java.util.List;
 import javax.persistence.EntityManager;
 
 /**
- *
+ *Clase que implementa las operaciones de acceso a datos para la entidad
+ * Producto, utilizando JPA para persistencia.
  * @author Maryr
  */
 public class ComandaDAO implements IComandaDAO {
-
+    /**
+     * Instancia única de la clase ComandaDAO
+     */
     public static ComandaDAO instanciaComandaDAO;
-
+    /**
+     * Constructor privado para aplicar el patrón Singleton
+     */
     public ComandaDAO() {
     }
-
+    /**
+     * Metodo que devuelve la instancia única de ComandaDAO
+     *
+     * @return instancia única de ComandaDAO
+     */
     public static ComandaDAO getInstanciaDAO() {
         if (instanciaComandaDAO == null) {
             instanciaComandaDAO = new ComandaDAO();
@@ -71,6 +80,11 @@ public class ComandaDAO implements IComandaDAO {
         }
     }
 
+    /**
+     * Obtiene las comanda de la base de datos cuyo estado sea activa
+     * @return Lista de comandas con estado activas
+     * @throws PersistenciaException si ocurre algun error inesperado
+     */
     @Override
     public List<Comanda> obtenerComandasActivas() throws PersistenciaException {
         EntityManager em = Conexion.crearConexion();
@@ -84,7 +98,12 @@ public class ComandaDAO implements IComandaDAO {
             em.close();
         }
     }
-
+    /**
+     * Registra una nueva comanda en la base de datos 
+     * @param comandaNueva Comanda nueva a registrar
+     * @return True si se inserto correctamente la comanda en la base de datos
+     * @throws PersistenciaException Si ocurre algun error inesperado
+     */
     @Override
     public boolean registrarComanda(Comanda comandaNueva) throws PersistenciaException {
         EntityManager em = Conexion.crearConexion();
@@ -101,7 +120,12 @@ public class ComandaDAO implements IComandaDAO {
         }
 
     }
-
+    /**
+     * Metodo que actualiza una comanda
+     * @param comanda Comanda a actualizar
+     * @return True si se actualizo correctamente la comanda
+     * @throws PersistenciaException si ocurre algun error inesperado
+     */
     @Override
     public boolean actualizarComanda(Comanda comanda) throws PersistenciaException {
         EntityManager em = Conexion.crearConexion();
