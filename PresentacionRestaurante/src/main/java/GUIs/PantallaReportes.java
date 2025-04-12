@@ -9,7 +9,7 @@ import java.awt.Image;
 import javax.swing.ImageIcon;
 
 /**
- *
+ *Pantalla para accesar a los diferentes tipos de reportes que ofrece el sistema
  * @author erika
  */
 public class PantallaReportes extends javax.swing.JFrame {
@@ -109,15 +109,23 @@ public class PantallaReportes extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-
+    /**
+     * Boton para regresar a la pantalla prinicipal
+     */
     private void lblRegresarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblRegresarMouseClicked
         coordinador.PantallaPrinicipal(this);
     }//GEN-LAST:event_lblRegresarMouseClicked
-
+    /**
+     * Boton para acceder a la pantalla de reportes de comandas
+     * @param evt 
+     */
     private void btnComandasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnComandasMouseClicked
         coordinador.pantallaReporteComandas(this);
     }//GEN-LAST:event_btnComandasMouseClicked
-
+    /**
+     * Boton para acceder a la pantalla de reportes de clientes
+     * @param evt 
+     */
     private void btnClientesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnClientesMouseClicked
         coordinador.pantallaReporteSeleccionCliente(this);
     }//GEN-LAST:event_btnClientesMouseClicked

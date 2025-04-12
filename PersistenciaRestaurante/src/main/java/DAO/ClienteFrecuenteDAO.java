@@ -115,5 +115,7 @@ public class ClienteFrecuenteDAO implements IClienteFrecuenteDAO {
             em.close();
         }
     }
+    
+    
 
 }

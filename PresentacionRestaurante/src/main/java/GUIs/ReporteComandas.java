@@ -1,6 +1,7 @@
 package GUIs;
 
 import DTOs.DetalleReporteComandaDTO;
+import static com.mysql.cj.conf.PropertyKey.logger;
 import control.CoordinadorAplicacion;
 import control.exception.CoordinadorException;
 import extras.Periodo;
@@ -13,6 +14,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import net.sf.jasperreports.engine.JRException;
@@ -283,9 +286,10 @@ public class ReporteComandas extends javax.swing.JFrame {
             // posicion para que salga al centro de la pantalla
             viewer.setLocationRelativeTo(this);
         } catch (JRException e) {
+            Logger.getLogger(ReporteComandas.class.getName()).log(Level.SEVERE, null, e);
             JOptionPane.showMessageDialog(null, "Ha ocurrido un error al intentar generar el pdf del reporte", "Ha ocurrido un error inesperado", JOptionPane.ERROR_MESSAGE);
         }
-    }
+    }   
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnGenerarPDF;
