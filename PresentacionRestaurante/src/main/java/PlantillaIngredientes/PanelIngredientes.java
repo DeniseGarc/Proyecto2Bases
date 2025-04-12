@@ -25,13 +25,14 @@ public class PanelIngredientes extends javax.swing.JPanel {
     public PanelIngredientes(IngredienteDTO ingrediente) {
         this.ingrediente = ingrediente;
         initComponents();
+        //listener para actualizar el texto de stock en el panel segun los botones
          ActionListener actualizarStockListener = e -> {
             int nuevoStock = ingrediente.getStock() + (e.getSource() == btnMas ? 1 : -1);
             if (nuevoStock >= 0) {
                 try {
                     IngredienteDTO actualizado = coordinador.modificarStock(ingrediente.getId(), nuevoStock);
                     ingrediente.setStock(actualizado.getStock());
-                    lblStock.setText("Stock: " + actualizado.getStock());
+                    lblStock.setText(actualizado.getStock().toString());
                 } catch (CoordinadorException ex) {
                     JOptionPane.showMessageDialog(this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
                 }
