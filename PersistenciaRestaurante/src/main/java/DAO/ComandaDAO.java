@@ -88,10 +88,14 @@ public class ComandaDAO implements IComandaDAO {
     public Calendar obtenerFechaUltimaComandaCliente(ClienteFrecuente clienteF) throws PersistenciaException {
         EntityManager em = Conexion.crearConexion();
         try {
-            return em.createQuery("SELECT c FROM Comanda c WHERE c.cliente = :clienteF ORDER BY c.fechaHora DESC", Calendar.class)
+            List<Calendar> resultados = em.createQuery(
+                    "SELECT c.fechaHora FROM Comanda c WHERE c.cliente = :clienteF ORDER BY c.fechaHora DESC", Calendar.class)
                     .setParameter("clienteF", clienteF)
                     .setMaxResults(1)
-                    .getSingleResult();
+                    .getResultList();
+
+            return resultados.isEmpty() ? null : resultados.get(0);
+
         } catch (Exception e) {
             throw new PersistenciaException("Hubo un error al obtener la fecha de la ultima comanda del cliente: ", e);
         } finally {
