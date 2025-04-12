@@ -31,6 +31,15 @@ public interface IComandaDAO {
     public List<Comanda> obtenerComandasPorCliente(ClienteFrecuente clienteFrecuente) throws PersistenciaException;
 
     /**
+     * Obtiene la fecha de la ultima comanda hecha por el cliente dado
+     *
+     * @param clienteF cliente del cual se requiere la fecha
+     * @return la fecha de la ultima comanda del cliente
+     * @throws PersistenciaException
+     */
+    public Calendar obtenerFechaUltimaComandaCliente(ClienteFrecuente clienteF) throws PersistenciaException;
+
+    /**
      * Metodo para obtener todas las comandas de la base de datos
      *
      * @return Lista de todas las comandas en la base de datos

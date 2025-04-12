@@ -12,11 +12,13 @@ import exception.NegocioException;
 import exception.PersistenciaException;
 import interfaces.IClienteFrecuenteBO;
 import interfaces.IClienteFrecuenteDAO;
+import interfaces.IComandaBO;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import manejadorBO.ManejadorBO;
 import mappers.ClienteMapper;
 import seguridad.Seguridad;
 
@@ -27,6 +29,8 @@ import seguridad.Seguridad;
 public class ClienteFrecuenteBO implements IClienteFrecuenteBO {
 
     private IClienteFrecuenteDAO clienteFrecuenteDAO;
+    private IComandaBO comandaBO = ManejadorBO.crearComandaBo();
+    
 
     public ClienteFrecuenteBO(IClienteFrecuenteDAO clienteFrecuenteDAO) {
         this.clienteFrecuenteDAO = clienteFrecuenteDAO;
@@ -130,7 +134,7 @@ public class ClienteFrecuenteBO implements IClienteFrecuenteBO {
             List<ReporteClienteDTO> clientesR = new ArrayList<>();
             for (ClienteFrecuenteDTO cliente : clientes) {
                 if (cliente.getCantidadVisitas() >= numVisitas) {
-                    clientesR.add(new ReporteClienteDTO(cliente.getNombre(), cliente.getCantidadVisitas(), cliente.getGastoTotal(), cliente.getPuntosFidelidad(), Calendar.getInstance()));
+                    clientesR.add(new ReporteClienteDTO(cliente.getNombre(), cliente.getCantidadVisitas(), cliente.getGastoTotal(), cliente.getPuntosFidelidad(), comandaBO.obtenerFechaUltimaComandaCliente(cliente)));
                 }
             }
             return clientesR;

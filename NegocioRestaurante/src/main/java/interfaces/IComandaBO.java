@@ -4,11 +4,13 @@
  */
 package interfaces;
 
+import DTOs.ClienteFrecuenteDTO;
 import DTOs.ComandaDTO;
 import DTOs.DetalleReporteComandaDTO;
 import enumeradores.Estado;
 import exception.NegocioException;
 import extras.Periodo;
+import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -57,4 +59,13 @@ public interface IComandaBO {
      * @throws NegocioException si ocurre algun error al intentar obtener los datos
      */
     public List<DetalleReporteComandaDTO> obtenerDetallesReporteComanda(Periodo periodo) throws NegocioException;
+    
+    /**
+     * Obtiene la fecha de la ultima comanda hecha por el cliente dado
+     *
+     * @param clienteF cliente del cual se requiere la fecha
+     * @return la fecha de la ultima comanda del cliente
+     * @throws NegocioException
+     */
+    public Calendar obtenerFechaUltimaComandaCliente(ClienteFrecuenteDTO clienteF) throws NegocioException;
 }
