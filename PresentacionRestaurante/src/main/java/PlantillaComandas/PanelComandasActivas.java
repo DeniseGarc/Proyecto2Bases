@@ -155,6 +155,7 @@ public class PanelComandasActivas extends javax.swing.JPanel {
     private void btnEntregadaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEntregadaMouseClicked
         Estado nuevoEstado = Estado.ENTREGADA;  // Definir el nuevo estado
         try {
+            coordinador.actualizarEstadoMesa(Long.valueOf(comanda.getNumeroMesa()), true);
             coordinador.actualizarEstadoComanda(comanda, nuevoEstado);
             JOptionPane.showMessageDialog(this, "Comanda marcada como entregada");
             frame.cargarComandas();
@@ -166,6 +167,7 @@ public class PanelComandasActivas extends javax.swing.JPanel {
     private void btnCanceladaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCanceladaMouseClicked
         Estado nuevoEstado = Estado.CANCELADA;
         try {
+            coordinador.actualizarEstadoMesa(Long.valueOf(comanda.getNumeroMesa()), true);
             coordinador.actualizarEstadoComanda(comanda, nuevoEstado);
             JOptionPane.showMessageDialog(this, "Comanda marcada como cancelada");
             frame.cargarComandas();

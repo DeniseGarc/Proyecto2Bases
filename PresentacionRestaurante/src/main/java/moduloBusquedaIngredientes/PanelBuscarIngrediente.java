@@ -22,7 +22,7 @@ import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
 
 /**
- *
+ * Panel para implementar el buscador de ingredientes
  * @author erika
  */
 public class PanelBuscarIngrediente extends javax.swing.JPanel {
