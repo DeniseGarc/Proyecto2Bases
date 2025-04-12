@@ -32,12 +32,12 @@ import javax.swing.SwingConstants;
 import manejadorBO.ManejadorBO;
 
 /**
- *
+ *Pantalla para ver los ingredientes, agregar nuevos, eliminar y controlar su stock
  * @author erika
  */
 public class PantallaIngredientes extends javax.swing.JFrame {
     private final CoordinadorAplicacion coordinador = new CoordinadorAplicacion();
-    private IIngredienteBO ingredienteBO = ManejadorBO.crearIngredienteBO();
+
 
     /**
      * Creates new form PantallaIngredientes
@@ -52,10 +52,22 @@ public class PantallaIngredientes extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, ex.getMessage(), "Ha ocurrido un error inesperado", JOptionPane.ERROR_MESSAGE);
         }
     }
+    /**
+     * Metodo privado para obtener los ingredientes y mostrarlos en pantalla
+     */
     private void cargarYMostrarIngredientes() throws NegocioException {
-        List<IngredienteDTO> lista = ingredienteBO.obtenerIngredientes(); 
-        mostrarIngredientes(lista);
+        try {
+            List<IngredienteDTO> lista = coordinador.mostrarIngredientes();
+            mostrarIngredientes(lista);
+        } catch (CoordinadorException ex) {
+            Logger.getLogger(PantallaIngredientes.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, ex.getMessage(), "Ha ocurrido un error inesperado", JOptionPane.ERROR_MESSAGE);
+        }
     }
+    /**
+     * Metodo para mostrar los ingredientes en paneles
+     * @param listaIngredientes Lista de todos los ingredientesDTO
+     */
     public void mostrarIngredientes(List<IngredienteDTO> listaIngredientes) {
         
         GridBagConstraints gbc = new GridBagConstraints();
@@ -203,15 +215,21 @@ public class PantallaIngredientes extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    /**
+     * Boton para regresar a la pantalla prinicipal
+     */
     private void lblRegresarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblRegresarMouseClicked
         coordinador.PantallaPrinicipal(this);
     }//GEN-LAST:event_lblRegresarMouseClicked
-
+    /**
+     * Boton para ir a la pantala de agregar ingrediente
+     */
     private void btnAgregarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAgregarMouseClicked
       coordinador.PantallaAgregarIngrediente(this);
     }//GEN-LAST:event_btnAgregarMouseClicked
-
+    /**
+     * Boton para ir a la pantalla de agregar ingrediente
+     */
     private void btnEliminarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEliminarMouseClicked
         coordinador.PantallaEliminarIngrediente(this);
     }//GEN-LAST:event_btnEliminarMouseClicked
