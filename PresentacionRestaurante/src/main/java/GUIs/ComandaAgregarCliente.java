@@ -61,6 +61,7 @@ public class ComandaAgregarCliente extends javax.swing.JFrame {
         btnTomarComanda = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setBackground(new java.awt.Color(255, 254, 245));
         setMaximumSize(new java.awt.Dimension(1070, 700));
         setMinimumSize(new java.awt.Dimension(1070, 700));
         setResizable(false);

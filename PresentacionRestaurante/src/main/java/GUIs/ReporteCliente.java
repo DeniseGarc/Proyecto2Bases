@@ -4,9 +4,26 @@
  */
 package GUIs;
 
+import DTOs.ReporteClienteDTO;
 import control.CoordinadorAplicacion;
+import control.exception.CoordinadorException;
 import java.awt.Image;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+import net.sf.jasperreports.view.JasperViewer;
 
 /**
  *
@@ -38,17 +55,15 @@ public class ReporteCliente extends javax.swing.JFrame {
         lblRegresar = new javax.swing.JLabel();
         lblCliente = new javax.swing.JLabel();
         btnGenReporte = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        tablaClientes = new javax.swing.JTable();
-        jButton2 = new javax.swing.JButton();
-        cbBoxClientes = new javax.swing.JComboBox<>();
+        txtNombre = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMaximumSize(new java.awt.Dimension(1070, 700));
         setMinimumSize(new java.awt.Dimension(1070, 700));
         setResizable(false);
 
-        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel2.setBackground(new java.awt.Color(255, 254, 245));
+        jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setBackground(new java.awt.Color(255, 176, 217));
         jPanel1.setPreferredSize(new java.awt.Dimension(1070, 70));
@@ -71,77 +86,24 @@ public class ReporteCliente extends javax.swing.JFrame {
         });
         jPanel1.add(lblRegresar, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -10, 100, 100));
 
-        lblCliente.setText("Cliente:");
-        lblCliente.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        jPanel2.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 82));
 
-        btnGenReporte.setText("Generar reporte");
+        lblCliente.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        lblCliente.setText("Cliente:");
+        jPanel2.add(lblCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(118, 100, -1, -1));
+
         btnGenReporte.setBackground(new java.awt.Color(255, 119, 170));
-        btnGenReporte.setBorder(null);
         btnGenReporte.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         btnGenReporte.setForeground(new java.awt.Color(255, 255, 255));
-
-        tablaClientes.setBackground(new java.awt.Color(254, 255, 203));
-        tablaClientes.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        tablaClientes.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+        btnGenReporte.setText("Generar reporte");
+        btnGenReporte.setBorder(null);
+        btnGenReporte.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGenReporteActionPerformed(evt);
             }
-        ));
-        jScrollPane1.setViewportView(tablaClientes);
-
-        jButton2.setText("Imprimir PDF");
-        jButton2.setBackground(new java.awt.Color(255, 119, 170));
-        jButton2.setBorder(null);
-        jButton2.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        jButton2.setForeground(new java.awt.Color(255, 255, 255));
-
-        cbBoxClientes.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(118, 118, 118)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(cbBoxClientes, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnGenReporte, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(lblCliente)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 822, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(0, 0, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(62, 62, 62))
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(lblCliente)
-                .addGap(14, 14, 14)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnGenReporte, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cbBoxClientes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(31, 31, 31)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(29, 29, 29))
-        );
+        });
+        jPanel2.add(btnGenReporte, new org.netbeans.lib.awtextra.AbsoluteConstraints(797, 133, 143, 26));
+        jPanel2.add(txtNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 132, 650, 30));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -162,17 +124,74 @@ public class ReporteCliente extends javax.swing.JFrame {
         control.pantallaReporteSeleccionCliente(this);
     }//GEN-LAST:event_lblRegresarMouseClicked
 
+    private void btnGenReporteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenReporteActionPerformed
+        generarReportePDF();
+    }//GEN-LAST:event_btnGenReporteActionPerformed
+
+    /**
+     * Método que genera un reporte de los clientes por su nombre
+     */
+    private void generarReportePDF() {
+        String nombre = txtNombre.getText();
+        if (nombre == null || nombre.trim().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Debe ingresar el nombre a filtrar los clientes del reporte", "Ingrese el campo de nombre", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+        // obtiene la lista de clientes del reporte
+        List<ReporteClienteDTO> clientesReporte = new ArrayList<>();
+        try {
+            clientesReporte = control.obtenerClientesReporteClientes(null, nombre);
+        } catch (CoordinadorException ex) {
+            Logger.getLogger(ReporteClienteVisitas.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "Ha ocurrido un error al intentar recuperar los datos necesarios para el reporte", "Ha ocurrido un error inesperado", JOptionPane.ERROR_MESSAGE);
+        }
+
+        // Se le agrega un elemento al inicio de la lista que llena la tabla debido que la tabla se "come" el primer registro
+        clientesReporte.add(0, new ReporteClienteDTO());
+
+        try {
+            // Se carga el archivo .jrxml del reporte desde los recursos del proyecto
+            InputStream jrxmlStream = getClass().getClassLoader().getResourceAsStream("reportes/ReporteDeClientes.jrxml");
+
+            // Si no se encuentra se muestra mensaje
+            if (jrxmlStream == null) {
+                JOptionPane.showMessageDialog(null, "No se encontró el archivo .jrxml del reporte", "Ha ocurrido un error inesperado", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            // Se crea la fuente de datos para el reporte a partir de la lista de comandas
+            JRBeanCollectionDataSource detallesReporteComanda = new JRBeanCollectionDataSource(clientesReporte);
+
+            // Se crea el mapa de parámetros que se enviarán al reporte
+            Map<String, Object> parametros = new HashMap<>();
+            parametros.put("nombreClienteFiltro", nombre);
+            parametros.put("numeroVisitasFiltro", -1);
+
+            // Se compila el archivo .jrxml
+            JasperReport reporte = JasperCompileManager.compileReport(jrxmlStream);
+            // Se llena el reporte con los datos y parametros
+            JasperPrint print = JasperFillManager.fillReport(reporte, parametros, detallesReporteComanda);
+
+            // Mostramos el visor de JasperReports como ventana modal
+            JasperViewer viewer = new JasperViewer(print, false); // false para no cerrar la app al cerrar el visor
+            viewer.setTitle("Vista previa del Reporte de Clientes");
+            viewer.setVisible(true);
+            // Se le da un tamaño 
+            viewer.setSize(800, 600);
+            // posicion para que salga al centro de la pantalla
+            viewer.setLocationRelativeTo(this);
+        } catch (JRException e) {
+            JOptionPane.showMessageDialog(null, "Ha ocurrido un error al intentar generar el pdf del reporte", "Ha ocurrido un error inesperado", JOptionPane.ERROR_MESSAGE);
+        }
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnGenReporte;
-    private javax.swing.JComboBox<String> cbBoxClientes;
-    private javax.swing.JButton jButton2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblCliente;
     private javax.swing.JLabel lblRegresar;
     private javax.swing.JLabel lblTitulo;
-    private javax.swing.JTable tablaClientes;
+    private javax.swing.JTextField txtNombre;
     // End of variables declaration//GEN-END:variables
 }

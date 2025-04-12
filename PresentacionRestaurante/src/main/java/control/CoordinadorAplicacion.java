@@ -11,6 +11,7 @@ import DTOs.IngredienteDTO;
 import DTOs.MesaDTO;
 import DTOs.ProductoDTO;
 import DTOs.ProductoDetalleDTO;
+import DTOs.ReporteClienteDTO;
 import GUIs.ClienteFrecuente;
 import GUIs.ComandaAgregarCliente;
 import GUIs.EliminarIngrediente;
@@ -241,7 +242,9 @@ public class CoordinadorAplicacion {
     }
 
     /**
-     * Método para redirigir a la pantalla donde se selecciona el tipo de reporte a generar
+     * Método para redirigir a la pantalla donde se selecciona el tipo de
+     * reporte a generar
+     *
      * @param frame Frame padre desde el cual se invoca a la siguiente pantalla.
      */
     public void pantallaReportes(JFrame frame) {
@@ -251,9 +254,11 @@ public class CoordinadorAplicacion {
     }
 
     /**
-     * Método para redirigir a la pantalla donde se generan los reportes de clientes por su nombre.
-    * @param frame Frame padre desde el cual se invoca a la siguiente pantalla.
-    */
+     * Método para redirigir a la pantalla donde se generan los reportes de
+     * clientes por su nombre.
+     *
+     * @param frame Frame padre desde el cual se invoca a la siguiente pantalla.
+     */
     public void pantallaReportesClientes(JFrame frame) {
         ReporteCliente reporteCliente = new ReporteCliente();
         reporteCliente.setVisible(true);
@@ -261,7 +266,9 @@ public class CoordinadorAplicacion {
     }
 
     /**
-     * Método para redirigir a la pantalla donde se generan los reportes de comandas.
+     * Método para redirigir a la pantalla donde se generan los reportes de
+     * comandas.
+     *
      * @param frame Frame padre desde el cual se invoca a la siguiente pantalla.
      */
     public void pantallaReporteComandas(JFrame frame) {
@@ -271,7 +278,9 @@ public class CoordinadorAplicacion {
     }
 
     /**
-     * Método para redirigir a la pantalla donde se selecciona el tipo de reporte de cliente que se quiere generar.
+     * Método para redirigir a la pantalla donde se selecciona el tipo de
+     * reporte de cliente que se quiere generar.
+     *
      * @param frame Frame padre desde el cual se invoca a la siguiente pantalla.
      */
     public void pantallaReporteSeleccionCliente(JFrame frame) {
@@ -281,7 +290,9 @@ public class CoordinadorAplicacion {
     }
 
     /**
-     * Método para redirigir a la pantalla donde se generan los reportes de cliente dependiendo del número de visitas.
+     * Método para redirigir a la pantalla donde se generan los reportes de
+     * cliente dependiendo del número de visitas.
+     *
      * @param frame Frame padre desde el cual se invoca a la siguiente pantalla.
      */
     public void pantallaClienteVisitas(JFrame frame) {
@@ -709,9 +720,12 @@ public class CoordinadorAplicacion {
 
     /**
      * Método para obtener un producto por su nombre.
+     *
      * @param nombre Nombre del producto que se desea recuperar.
-     * @return Regresa un ProductoDTO con los datos del producto con el nombre ingresado.
-     * @throws CoordinadorException Si el nombre del producto no es ingresado o su ocurre un error al intentar recuperar el producto.
+     * @return Regresa un ProductoDTO con los datos del producto con el nombre
+     * ingresado.
+     * @throws CoordinadorException Si el nombre del producto no es ingresado o
+     * su ocurre un error al intentar recuperar el producto.
      */
     public ProductoDTO obtenerProductoPorNombre(String nombre) throws CoordinadorException {
         if (nombre == null || nombre.trim().isEmpty()) {
@@ -853,10 +867,36 @@ public class CoordinadorAplicacion {
     }
 
     /**
-     * Método que obtiene las comandas y sus datos necesarios para generar un reporte de comandas del periodo correspondiente.
-     * @param periodo Periodo a filtrar la comandas, si no se seleccionó un filtro se genera el periodo desde la fecha de la primera comanda registrada hasta la fecha de la última comanda registrada.
-     * @return Lista de comandas y sus detalles necesarios para generar el reporte.
-     * @throws CoordinadorException Si sucede un error al obtener las fechas para el periodo, o al consultar las comandas.
+     * Método que obtiene los clientes para generar el reporte de clientes según
+     * el número minimo de visitas o el nombre del cliente.
+     *
+     * @param numVisitas Filtro por número de visitas minima, null si no se
+     * desea obtener los clientes por este filtro
+     * @param nombre Filtro para obtener por nombre del cliente, null si no se
+     * desea obtener los clientes por este filtro
+     * @return Lista de clientes para el reporte según el filtro aplicado.
+     * @throws CoordinadorException Si ocurre un error al consultar los
+     * clientes.
+     */
+    public List<ReporteClienteDTO> obtenerClientesReporteClientes(Integer numVisitas, String nombre) throws CoordinadorException {
+//        if (nombre == null) {
+//            
+//        }
+//        clienteFrecuenteBO.
+        return null;
+    }
+
+    /**
+     * Método que obtiene las comandas y sus datos necesarios para generar un
+     * reporte de comandas del periodo correspondiente.
+     *
+     * @param periodo Periodo a filtrar la comandas, si no se seleccionó un
+     * filtro se genera el periodo desde la fecha de la primera comanda
+     * registrada hasta la fecha de la última comanda registrada.
+     * @return Lista de comandas y sus detalles necesarios para generar el
+     * reporte.
+     * @throws CoordinadorException Si sucede un error al obtener las fechas
+     * para el periodo, o al consultar las comandas.
      */
     public List<DetalleReporteComandaDTO> obtenerDetallesReporteComandas(Periodo periodo) throws CoordinadorException {
         if (periodo != null) {
