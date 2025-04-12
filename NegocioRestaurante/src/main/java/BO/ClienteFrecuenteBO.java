@@ -6,12 +6,14 @@
 package BO;
 
 import DTOs.ClienteFrecuenteDTO;
+import DTOs.ReporteClienteDTO;
 import entidades.ClienteFrecuente;
 import exception.NegocioException;
 import exception.PersistenciaException;
 import interfaces.IClienteFrecuenteBO;
 import interfaces.IClienteFrecuenteDAO;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -119,6 +121,21 @@ public class ClienteFrecuenteBO implements IClienteFrecuenteBO {
             return ClienteMapper.toDTO(clienteFrecuenteDAO.obtenerClientePorId(id));
         } catch (PersistenciaException e) {
             throw new NegocioException("No se pudo recuperar el cliente: ", e);
+        }
+    }
+    
+    public List<ReporteClienteDTO> obtenerClientesPorVisitas(int numVisitas) throws NegocioException {
+        try {
+            List<ClienteFrecuenteDTO> clientes = obtenerClientesFrecuentes("", "");
+            List<ReporteClienteDTO> clientesR = new ArrayList<>();
+            for (ClienteFrecuenteDTO cliente : clientes) {
+                if (cliente.getCantidadVisitas() >= numVisitas) {
+                    clientesR.add(new ReporteClienteDTO(cliente.getNombre(), cliente.getCantidadVisitas(), cliente.getGastoTotal(), cliente.getPuntosFidelidad(), Calendar.getInstance()));
+                }
+            }
+            return clientesR;
+        } catch (NegocioException e) {
+            throw new NegocioException("No se pudo consultar por número de visitas: ", e);
         }
     }
 
