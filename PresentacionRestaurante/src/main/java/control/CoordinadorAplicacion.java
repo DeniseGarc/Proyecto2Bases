@@ -867,6 +867,26 @@ public class CoordinadorAplicacion {
     }
 
     /**
+     * Método que obtiene los clientes para generar el reporte de clientes según
+     * el número minimo de visitas o el nombre del cliente.
+     *
+     * @param numVisitas Filtro por número de visitas minima, null si no se
+     * desea obtener los clientes por este filtro
+     * @param nombre Filtro para obtener por nombre del cliente, null si no se
+     * desea obtener los clientes por este filtro
+     * @return Lista de clientes para el reporte según el filtro aplicado.
+     * @throws CoordinadorException Si ocurre un error al consultar los
+     * clientes.
+     */
+    public List<ReporteClienteDTO> obtenerClientesReporteClientes(Integer numVisitas, String nombre) throws CoordinadorException {
+//        if (nombre == null) {
+//            
+//        }
+//        clienteFrecuenteBO.
+        return null;
+    }
+
+    /**
      * Método que obtiene las comandas y sus datos necesarios para generar un
      * reporte de comandas del periodo correspondiente.
      *

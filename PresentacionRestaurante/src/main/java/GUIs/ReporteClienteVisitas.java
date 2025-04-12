@@ -4,12 +4,31 @@
  */
 package GUIs;
 
+import DTOs.DetalleReporteComandaDTO;
+import DTOs.ReporteClienteDTO;
 import control.CoordinadorAplicacion;
+import control.exception.CoordinadorException;
+import extras.Periodo;
 import java.awt.Image;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+import net.sf.jasperreports.view.JasperViewer;
 
 /**
- *
+ * Pantalla para generar un reporte sobre las visitas del cliente frecuente
  * @author Maryr
  */
 public class ReporteClienteVisitas extends javax.swing.JFrame {
@@ -38,15 +57,11 @@ public class ReporteClienteVisitas extends javax.swing.JFrame {
         lblRegresar = new javax.swing.JLabel();
         lblNumVisitas = new javax.swing.JLabel();
         btnGenReporte = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        tablaClienteVisitas = new javax.swing.JTable();
-        jButton2 = new javax.swing.JButton();
-        txtNumVisitas = new javax.swing.JTextField();
+        spinnerVisitas = new javax.swing.JSpinner();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMaximumSize(new java.awt.Dimension(1070, 700));
         setMinimumSize(new java.awt.Dimension(1070, 700));
-        setPreferredSize(new java.awt.Dimension(1070, 700));
         setResizable(false);
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
@@ -72,35 +87,21 @@ public class ReporteClienteVisitas extends javax.swing.JFrame {
         });
         jPanel1.add(lblRegresar, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -10, 100, 100));
 
-        lblNumVisitas.setText("Número de visitas:");
         lblNumVisitas.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        lblNumVisitas.setText("Número mínimo de visitas:");
 
-        btnGenReporte.setText("Generar reporte");
         btnGenReporte.setBackground(new java.awt.Color(255, 119, 170));
-        btnGenReporte.setBorder(null);
         btnGenReporte.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         btnGenReporte.setForeground(new java.awt.Color(255, 255, 255));
-
-        tablaClienteVisitas.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+        btnGenReporte.setText("Generar reporte");
+        btnGenReporte.setBorder(null);
+        btnGenReporte.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGenReporteActionPerformed(evt);
             }
-        ));
-        tablaClienteVisitas.setBackground(new java.awt.Color(254, 255, 203));
-        tablaClienteVisitas.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        jScrollPane1.setViewportView(tablaClienteVisitas);
+        });
 
-        jButton2.setText("Imprimir PDF");
-        jButton2.setBackground(new java.awt.Color(255, 119, 170));
-        jButton2.setBorder(null);
-        jButton2.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        jButton2.setForeground(new java.awt.Color(255, 255, 255));
+        spinnerVisitas.setModel(new javax.swing.SpinnerNumberModel(0, 0, null, 1));
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -113,19 +114,11 @@ public class ReporteClienteVisitas extends javax.swing.JFrame {
                 .addGap(118, 118, 118)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(txtNumVisitas, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 822, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(btnGenReporte, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(jPanel2Layout.createSequentialGroup()
-                                        .addComponent(lblNumVisitas)
-                                        .addGap(704, 704, 704)))))
-                        .addGap(0, 0, Short.MAX_VALUE))))
+                        .addComponent(spinnerVisitas, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnGenReporte, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lblNumVisitas))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -136,12 +129,8 @@ public class ReporteClienteVisitas extends javax.swing.JFrame {
                 .addGap(14, 14, 14)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnGenReporte, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtNumVisitas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(58, Short.MAX_VALUE))
+                    .addComponent(spinnerVisitas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(541, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -163,16 +152,71 @@ public class ReporteClienteVisitas extends javax.swing.JFrame {
         control.pantallaReporteSeleccionCliente(this);
     }//GEN-LAST:event_lblRegresarMouseClicked
 
+    private void btnGenReporteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenReporteActionPerformed
+        generarReportePDF();
+    }//GEN-LAST:event_btnGenReporteActionPerformed
+
+    /**
+     * Método que genera un reporte de los clientes con el numero minimo de
+     * visitas indicadas
+     */
+    private void generarReportePDF() {
+        int numVisitas = (Integer) spinnerVisitas.getValue();
+        // obtiene la lista de clientes del reporte
+        List<ReporteClienteDTO> clientesReporte = new ArrayList<>();
+        try {
+            clientesReporte = control.obtenerClientesReporteClientes(numVisitas, null);
+        } catch (CoordinadorException ex) {
+            Logger.getLogger(ReporteClienteVisitas.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "Ha ocurrido un error al intentar recuperar los datos necesarios para el reporte", "Ha ocurrido un error inesperado", JOptionPane.ERROR_MESSAGE);
+        }
+
+        // Se le agrega un elemento al inicio de la lista que llena la tabla debido que la tabla se "come" el primer registro
+        clientesReporte.add(0, new ReporteClienteDTO());
+
+        try {
+            // Se carga el archivo .jrxml del reporte desde los recursos del proyecto
+            InputStream jrxmlStream = getClass().getClassLoader().getResourceAsStream("reportes/ReporteDeClientes.jrxml");
+
+            // Si no se encuentra se muestra mensaje
+            if (jrxmlStream == null) {
+                JOptionPane.showMessageDialog(null, "No se encontró el archivo .jrxml del reporte", "Ha ocurrido un error inesperado", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            // Se crea la fuente de datos para el reporte a partir de la lista de comandas
+            JRBeanCollectionDataSource detallesReporteComanda = new JRBeanCollectionDataSource(clientesReporte);
+
+            // Se crea el mapa de parámetros que se enviarán al reporte
+            Map<String, Object> parametros = new HashMap<>();
+            parametros.put("nombreClienteFiltro", "");
+            parametros.put("numeroVisitasFiltro", (Integer) spinnerVisitas.getValue());
+
+            // Se compila el archivo .jrxml
+            JasperReport reporte = JasperCompileManager.compileReport(jrxmlStream);
+            // Se llena el reporte con los datos y parametros
+            JasperPrint print = JasperFillManager.fillReport(reporte, parametros, detallesReporteComanda);
+
+            // Mostramos el visor de JasperReports como ventana modal
+            JasperViewer viewer = new JasperViewer(print, false); // false para no cerrar la app al cerrar el visor
+            viewer.setTitle("Vista previa del Reporte de Clientes");
+            viewer.setVisible(true);
+            // Se le da un tamaño 
+            viewer.setSize(800, 600);
+            // posicion para que salga al centro de la pantalla
+            viewer.setLocationRelativeTo(this);
+        } catch (JRException e) {
+            JOptionPane.showMessageDialog(null, "Ha ocurrido un error al intentar generar el pdf del reporte", "Ha ocurrido un error inesperado", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnGenReporte;
-    private javax.swing.JButton jButton2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblNumVisitas;
     private javax.swing.JLabel lblRegresar;
     private javax.swing.JLabel lblTitulo;
-    private javax.swing.JTable tablaClienteVisitas;
-    private javax.swing.JTextField txtNumVisitas;
+    private javax.swing.JSpinner spinnerVisitas;
     // End of variables declaration//GEN-END:variables
 }

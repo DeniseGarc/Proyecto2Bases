@@ -233,9 +233,7 @@ public class ReporteComandas extends javax.swing.JFrame {
         return control.calcularTotalVentasPeriodo(detallesReporteComandaLista);
     }
 
-    /**
-     * Método que genera un reporte de las comandas indicadas
-     */
+   
     /**
      * Método que genera un reporte de las comandas indicadas
      */
