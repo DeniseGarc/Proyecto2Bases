@@ -10,7 +10,7 @@ import java.awt.HeadlessException;
 import javax.swing.JOptionPane;
 
 /**
- *
+ *Menu prinicipal para acceder a las distintas pantallas de la aplicacion
  * @author Alici
  */
 public class MenuPrincipal extends javax.swing.JFrame {
@@ -195,31 +195,49 @@ public class MenuPrincipal extends javax.swing.JFrame {
     private void btnClientesFrecuentesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClientesFrecuentesActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnClientesFrecuentesActionPerformed
-
+    /*
+    *Boton para acceder a la pantalla de ingredientes
+    */
     private void btnIngredientesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnIngredientesMouseClicked
         coordinador.PantallaIngredientes(this);
     }//GEN-LAST:event_btnIngredientesMouseClicked
-
+    /**
+     * Boton para acceder a la pantalla de clientes frecuentes
+     */
     private void btnClientesFrecuentesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnClientesFrecuentesMouseClicked
         coordinador.PantallaClienteFrecuente(this);
     }//GEN-LAST:event_btnClientesFrecuentesMouseClicked
-
+    /**
+     * Boton para acceder a la pantalla de comandas
+     * @param evt 
+     */
     private void btnComandasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnComandasMouseClicked
         coordinador.PantallaComandas(this);
     }//GEN-LAST:event_btnComandasMouseClicked
-
+    /**
+     * Boton para acceder a la pantalla de productos
+     * @param evt 
+     */
     private void btnProductosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProductosActionPerformed
         coordinador.pantallaProductos(this);
     }//GEN-LAST:event_btnProductosActionPerformed
-
+    /**
+     * Boton para agrear 20 mesas a la base de datos
+     * @param evt 
+     */
     private void btnMesasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnMesasMouseClicked
         insertarMesas();
     }//GEN-LAST:event_btnMesasMouseClicked
-
+    /**
+     * Boton para acceder a la pantalla de reportes
+     * @param evt 
+     */
     private void btnReportesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnReportesMouseClicked
         coordinador.pantallaReportes(this);
     }//GEN-LAST:event_btnReportesMouseClicked
-
+    /**
+     * Metodo para verificar si ya estan las mesas insertadas en la base de datos
+     */
     private void verificarMesas() {
         try {
             if (coordinador.consultarMesas()) {
@@ -229,7 +247,9 @@ public class MenuPrincipal extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Error al verificar las mesas: " + e.getMessage());
         }
     }
-
+    /**
+     * Metodo para insertar las mesas en la base de datos
+     */
     private void insertarMesas() {
         try {
             if (!coordinador.consultarMesas()) {

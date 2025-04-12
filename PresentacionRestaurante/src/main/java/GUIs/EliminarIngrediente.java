@@ -17,7 +17,7 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
- *
+ * Pantalla para eliminar ingredientes
  * @author erika
  */
 public class EliminarIngrediente extends javax.swing.JFrame {
@@ -31,6 +31,10 @@ public class EliminarIngrediente extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         cargarElementos();
     }
+    /**
+     * Carga los ingredientes de la base de datos que ni tienen producto,
+     * y los carga en una tabla
+     */
     private void cargarElementos() {
     try {
         List<IngredienteDTO> ingredientes = coordinador.mostrarIngredientesSinProducto();
@@ -184,11 +188,17 @@ public class EliminarIngrediente extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    /**
+     * Boton para regresar a la pantalla de ingredientes
+     * @param evt 
+     */
     private void lblRegresarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblRegresarMouseClicked
         coordinador.PantallaIngredientes(this);
     }//GEN-LAST:event_lblRegresarMouseClicked
-
+    /**
+     * Boton para eliminar, llama al metodo de eliminar
+     * @param evt 
+     */
     private void btnEliminarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEliminarMouseClicked
         eliminarIngredienteSeleccionado();
     }//GEN-LAST:event_btnEliminarMouseClicked
