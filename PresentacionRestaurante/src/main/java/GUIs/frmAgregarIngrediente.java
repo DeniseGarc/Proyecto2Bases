@@ -231,6 +231,7 @@ public class frmAgregarIngrediente extends javax.swing.JFrame {
         try {
             coordinador.agregarIngrediente(ingrediente);
             JOptionPane.showMessageDialog(this, "Ingrediente Agregado con exito", "Ingrediente Agregado", JOptionPane.PLAIN_MESSAGE);
+            coordinador.PantallaIngredientes(this);
         } catch (CoordinadorException e) {
             Logger.getLogger(frmAgregarIngrediente.class.getName()).log(Level.SEVERE, null, e);
             JOptionPane.showMessageDialog(this, e.getMessage(), "Error al registrar", JOptionPane.ERROR_MESSAGE);
