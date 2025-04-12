@@ -13,7 +13,7 @@ import javax.swing.ImageIcon;
  * @author Maryr
  */
 public class ReporteSeleccionCliente extends javax.swing.JFrame {
-    
+
     private CoordinadorAplicacion control = new CoordinadorAplicacion();
 
     /**
@@ -71,12 +71,14 @@ public class ReporteSeleccionCliente extends javax.swing.JFrame {
 
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
-        btnReporteCliente.setText("Por cliente");
         btnReporteCliente.setBackground(new java.awt.Color(255, 178, 217));
         btnReporteCliente.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 18)); // NOI18N
-        btnReporteCliente.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnReporteClienteMouseClicked(evt);
+        btnReporteCliente.setText("Por cliente");
+        btnReporteCliente.setToolTipText("⚠ bajo construcción ⚠");
+        btnReporteCliente.setEnabled(false);
+        btnReporteCliente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnReporteClienteActionPerformed(evt);
             }
         });
         jPanel1.add(btnReporteCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 260, 210, 200));
@@ -114,13 +116,13 @@ public class ReporteSeleccionCliente extends javax.swing.JFrame {
         control.pantallaReportes(this);
     }//GEN-LAST:event_lblRegresarMouseClicked
 
-    private void btnReporteClienteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnReporteClienteMouseClicked
-        control.pantallaReportesClientes(this);
-    }//GEN-LAST:event_btnReporteClienteMouseClicked
-
     private void btnReporteNumVisitasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnReporteNumVisitasMouseClicked
         control.pantallaClienteVisitas(this);
     }//GEN-LAST:event_btnReporteNumVisitasMouseClicked
+
+    private void btnReporteClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReporteClienteActionPerformed
+        control.pantallaReportesClientes(this);
+    }//GEN-LAST:event_btnReporteClienteActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

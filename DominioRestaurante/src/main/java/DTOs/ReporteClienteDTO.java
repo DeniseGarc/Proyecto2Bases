@@ -12,7 +12,7 @@ import java.util.Date;
 public class ReporteClienteDTO {
 
     private String nombreCompletoCliente;
-    private int numeroVisitas;
+    private int numeroVisitasCliente;
     private Double totalGastado;
     private int puntosFidelidad;
     private Date fechaUltimaComanda;
@@ -35,10 +35,10 @@ public class ReporteClienteDTO {
      */
     public ReporteClienteDTO(String nombreCompletoCliente, int numeroVisitas, Double totalGastado, int puntosFidelidad, Calendar fechaUltimaComanda) {
         this.nombreCompletoCliente = nombreCompletoCliente;
-        this.numeroVisitas = numeroVisitas;
+        this.numeroVisitasCliente = numeroVisitas;
         this.totalGastado = totalGastado;
         this.puntosFidelidad = puntosFidelidad;
-        this.fechaUltimaComanda = fechaUltimaComanda.getTime();
+        this.fechaUltimaComanda = fechaUltimaComanda == null ? null : fechaUltimaComanda.getTime();
     }
 
     /**
@@ -64,8 +64,8 @@ public class ReporteClienteDTO {
      *
      * @return Entero con el total de visitas
      */
-    public int getNumeroVisitas() {
-        return numeroVisitas;
+    public int getNumeroVisitasCliente() {
+        return numeroVisitasCliente;
     }
 
     /**
@@ -73,8 +73,8 @@ public class ReporteClienteDTO {
      *
      * @param numeroVisitas Cantidad de visitas a asignar
      */
-    public void setNumeroVisitas(int numeroVisitas) {
-        this.numeroVisitas = numeroVisitas;
+    public void setNumeroVisitasCliente(int numeroVisitas) {
+        this.numeroVisitasCliente = numeroVisitas;
     }
 
     /**

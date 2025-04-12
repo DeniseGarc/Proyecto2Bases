@@ -27,9 +27,11 @@ import net.sf.jasperreports.view.JasperViewer;
 
 /**
  * Pantalla para crear un reporte sobre clientes frecuentes
+ *
  * @author Maryr
  */
 public class ReporteCliente extends javax.swing.JFrame {
+
     /**
      * Instancia unica de la clase control para aceder a los metodos BO
      */
@@ -115,7 +117,7 @@ public class ReporteCliente extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 539, Short.MAX_VALUE)
         );
 
         pack();
@@ -141,12 +143,12 @@ public class ReporteCliente extends javax.swing.JFrame {
         }
         // obtiene la lista de clientes del reporte
         List<ReporteClienteDTO> clientesReporte = new ArrayList<>();
-        try {
-            clientesReporte = control.obtenerClientesReporteClientes(null, nombre);
-        } catch (CoordinadorException ex) {
-            Logger.getLogger(ReporteClienteVisitas.class.getName()).log(Level.SEVERE, null, ex);
-            JOptionPane.showMessageDialog(null, "Ha ocurrido un error al intentar recuperar los datos necesarios para el reporte", "Ha ocurrido un error inesperado", JOptionPane.ERROR_MESSAGE);
-        }
+//        try {
+////            clientesReporte = control.obtenerClientesReporteClientes(null, nombre);
+//        } catch (CoordinadorException ex) {
+//            Logger.getLogger(ReporteClienteVisitas.class.getName()).log(Level.SEVERE, null, ex);
+//            JOptionPane.showMessageDialog(null, "Ha ocurrido un error al intentar recuperar los datos necesarios para el reporte", "Ha ocurrido un error inesperado", JOptionPane.ERROR_MESSAGE);
+//        }
 
         // Se le agrega un elemento al inicio de la lista que llena la tabla debido que la tabla se "come" el primer registro
         clientesReporte.add(0, new ReporteClienteDTO());

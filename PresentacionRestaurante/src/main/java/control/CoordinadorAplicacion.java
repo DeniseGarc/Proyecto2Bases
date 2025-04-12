@@ -868,22 +868,23 @@ public class CoordinadorAplicacion {
 
     /**
      * Método que obtiene los clientes para generar el reporte de clientes según
-     * el número minimo de visitas o el nombre del cliente.
+     * el número minimo de visitas.
      *
-     * @param numVisitas Filtro por número de visitas minima, null si no se
-     * desea obtener los clientes por este filtro
-     * @param nombre Filtro para obtener por nombre del cliente, null si no se
-     * desea obtener los clientes por este filtro
+     * @param numVisitas Filtro por número de visitas minima.
      * @return Lista de clientes para el reporte según el filtro aplicado.
      * @throws CoordinadorException Si ocurre un error al consultar los
      * clientes.
      */
-    public List<ReporteClienteDTO> obtenerClientesReporteClientes(Integer numVisitas, String nombre) throws CoordinadorException {
-//        if (nombre == null) {
-//            
-//        }
-//        clienteFrecuenteBO.
-        return null;
+    public List<ReporteClienteDTO> obtenerClientesReporteClientes(Integer numVisitas) throws CoordinadorException {
+        if (numVisitas == null) {
+            throw new CoordinadorException("El número minimo de visitas es nulo");
+        }
+        try {
+            return clienteFrecuenteBO.obtenerClientesPorVisitas(numVisitas);
+        } catch (NegocioException ex) {
+            Logger.getLogger(CoordinadorAplicacion.class.getName()).log(Level.SEVERE, null, ex);
+            throw new CoordinadorException("Ha ocurrido un error al obtener los datos de los clientes");
+        }
     }
 
     /**

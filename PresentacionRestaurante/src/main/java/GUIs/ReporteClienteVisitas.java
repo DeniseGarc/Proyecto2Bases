@@ -29,6 +29,7 @@ import net.sf.jasperreports.view.JasperViewer;
 
 /**
  * Pantalla para generar un reporte sobre las visitas del cliente frecuente
+ *
  * @author Maryr
  */
 public class ReporteClienteVisitas extends javax.swing.JFrame {
@@ -161,14 +162,15 @@ public class ReporteClienteVisitas extends javax.swing.JFrame {
      * visitas indicadas
      */
     private void generarReportePDF() {
-        int numVisitas = (Integer) spinnerVisitas.getValue();
+        int numeroVisitasFiltro = (Integer) spinnerVisitas.getValue();
         // obtiene la lista de clientes del reporte
         List<ReporteClienteDTO> clientesReporte = new ArrayList<>();
         try {
-            clientesReporte = control.obtenerClientesReporteClientes(numVisitas, null);
+            clientesReporte = control.obtenerClientesReporteClientes(numeroVisitasFiltro);
         } catch (CoordinadorException ex) {
             Logger.getLogger(ReporteClienteVisitas.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(null, "Ha ocurrido un error al intentar recuperar los datos necesarios para el reporte", "Ha ocurrido un error inesperado", JOptionPane.ERROR_MESSAGE);
+            return;
         }
 
         // Se le agrega un elemento al inicio de la lista que llena la tabla debido que la tabla se "come" el primer registro
@@ -185,17 +187,17 @@ public class ReporteClienteVisitas extends javax.swing.JFrame {
             }
 
             // Se crea la fuente de datos para el reporte a partir de la lista de comandas
-            JRBeanCollectionDataSource detallesReporteComanda = new JRBeanCollectionDataSource(clientesReporte);
+            JRBeanCollectionDataSource dsReporteClientes = new JRBeanCollectionDataSource(clientesReporte);
 
             // Se crea el mapa de parámetros que se enviarán al reporte
             Map<String, Object> parametros = new HashMap<>();
-            parametros.put("nombreClienteFiltro", "");
-            parametros.put("numeroVisitasFiltro", (Integer) spinnerVisitas.getValue());
+            parametros.put("nombreClienteFiltro", null);
+            parametros.put("numeroVisitasFiltro", numeroVisitasFiltro);
 
             // Se compila el archivo .jrxml
             JasperReport reporte = JasperCompileManager.compileReport(jrxmlStream);
             // Se llena el reporte con los datos y parametros
-            JasperPrint print = JasperFillManager.fillReport(reporte, parametros, detallesReporteComanda);
+            JasperPrint print = JasperFillManager.fillReport(reporte, parametros, dsReporteClientes);
 
             // Mostramos el visor de JasperReports como ventana modal
             JasperViewer viewer = new JasperViewer(print, false); // false para no cerrar la app al cerrar el visor
@@ -206,10 +208,11 @@ public class ReporteClienteVisitas extends javax.swing.JFrame {
             // posicion para que salga al centro de la pantalla
             viewer.setLocationRelativeTo(this);
         } catch (JRException e) {
+            Logger.getLogger(ReporteComandas.class.getName()).log(Level.SEVERE, null, e);
             JOptionPane.showMessageDialog(null, "Ha ocurrido un error al intentar generar el pdf del reporte", "Ha ocurrido un error inesperado", JOptionPane.ERROR_MESSAGE);
         }
     }
-    
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnGenReporte;
     private javax.swing.JPanel jPanel1;

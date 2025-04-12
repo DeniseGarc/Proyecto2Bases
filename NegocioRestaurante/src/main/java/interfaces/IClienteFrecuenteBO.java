@@ -5,6 +5,7 @@
 package interfaces;
 
 import DTOs.ClienteFrecuenteDTO;
+import DTOs.ReporteClienteDTO;
 import exception.NegocioException;
 import java.util.Calendar;
 import java.util.List;
@@ -51,5 +52,17 @@ public interface IClienteFrecuenteBO {
      * @throws NegocioException
      */
     public ClienteFrecuenteDTO obtenerClientePorId(Long id) throws NegocioException;
+
+    /**
+     * Obtiene los clientes filtrados por el minimo de visitas para generar el
+     * reporte de clientes.
+     *
+     * @param numVisitas Numero de minimo de visitas que deben tener los
+     * clientes.
+     * @return Lista de clientes con sus datos para realizar el reporte
+     * @throws NegocioException Si ocurre un error al obtener el cliente y sus
+     * datos.
+     */
+    public List<ReporteClienteDTO> obtenerClientesPorVisitas(int numVisitas) throws NegocioException;
 
 }
