@@ -24,11 +24,13 @@ import modos.Modo;
 import plantillas.PanelProductoComanda;
 
 /**
- *
+ *Pantalla para regitrar los productos de una comanda
  * @author Alici
  */
 public class PantallaTomaComanda extends javax.swing.JFrame {
-
+    /**
+     * Instancia del coordinador de la aplicacion para acceder a los metodos de negocio
+     */
     CoordinadorAplicacion control = new CoordinadorAplicacion();
 
     private List<PanelProductoComanda> panelesProductoComanda = new ArrayList<>();
@@ -37,7 +39,11 @@ public class PantallaTomaComanda extends javax.swing.JFrame {
     private final Modo modo;
     private final ComandaDTO comanda;
     private final CoordinadorAplicacion coordinador = new CoordinadorAplicacion();
-
+    /**
+     * Metodo para configurar la pantallam modo tomar comanda o modificar
+     * @param modo modo de la pantalla
+     * @param comanda comanda a modificar o tomar
+     */
     public PantallaTomaComanda(Modo modo, ComandaDTO comanda) {
         this.modo = modo;
         this.comanda = comanda;
@@ -160,7 +166,10 @@ public class PantallaTomaComanda extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-
+    /**
+     * Actualiza el estado de la mesa 
+     * @param evt 
+     */
     private void btnAccionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAccionActionPerformed
         generarDetallesComanda();
         try {
@@ -168,7 +177,9 @@ public class PantallaTomaComanda extends javax.swing.JFrame {
         } catch (CoordinadorException ex) {
         }
     }//GEN-LAST:event_btnAccionActionPerformed
-
+    /**
+     * Muestra los productos del menu
+     */
     private void cargarProductosMenu() {
         try {
             panelProductos.mostrarProductos(control.obtenerProductos());
@@ -177,7 +188,10 @@ public class PantallaTomaComanda extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, ex, "Ha ocurrido un error inesperado", JOptionPane.ERROR);
         }
     }
-
+    /**
+     * Agrega producto a la comanda
+     * @param producto producto a agregar
+     */
     private void agregarProducto(ProductoDTO producto) {
         PanelProductoComanda panelProductoComanda = new PanelProductoComanda(producto);
         panelContenedorProductosComanda.add(panelProductoComanda);
@@ -187,7 +201,10 @@ public class PantallaTomaComanda extends javax.swing.JFrame {
         panelContenedorProductosComanda.repaint();
         actualizarTotal();
     }
-
+    /**
+     * Listener para la pantalla
+     * @param panelProductoComanda  
+     */
     private void agregarListener(PanelProductoComanda panelProductoComanda) {
         panelProductoComanda.getBtnEliminar().addActionListener(new ActionListener() {
             @Override
@@ -196,19 +213,26 @@ public class PantallaTomaComanda extends javax.swing.JFrame {
             }
         });
     }
-
+    /**
+     * Metodo para calcular el total de la venta con la sumatoria de el precio de los productos
+     * @return  precio total de la venta
+     */
     private double calcularTotalVenta() {
         return productosAgrupados.stream()
                 .mapToDouble(DetalleComandaDTO::getImporteTotal)
                 .sum();
     }
-
+    /**
+     * Metodo para configurar el modo de vista de la pantalla cuando es modo actualizar una comanda existente
+     */
     private void configurarModoActualizar() {
         btnAccion.setText("Actualizar pedido");
         cargarProductosComanda();
         actualizarTotal();
     }
-
+    /**
+     * Muestra los productos que ya tiene una comanda
+     */
     private void cargarProductosComanda() {
         if (comanda.getDetallesComanda() != null) {
             for (DetalleComandaDTO detalle : comanda.getDetallesComanda()) {
@@ -227,7 +251,11 @@ public class PantallaTomaComanda extends javax.swing.JFrame {
             panelContenedorProductosComanda.repaint();
         }
     }
-
+    /**
+     * Obtiene los productos por nombre
+     * @param nombre nombre del producto a buscar
+     * @return producto dto encontrado
+     */
     private ProductoDTO obtenerProductoPorNombre(String nombre) {
         try {
             return control.obtenerProductoPorNombre(nombre);
@@ -236,7 +264,10 @@ public class PantallaTomaComanda extends javax.swing.JFrame {
             return null;
         }
     }
-
+    /**
+     * Metodo para elimianar un producto de la comanda
+     * @param panelProductoComanda 
+     */
     private void eliminarProducto(PanelProductoComanda panelProductoComanda) {
         panelContenedorProductosComanda.remove(panelProductoComanda);
         panelesProductoComanda.remove(panelProductoComanda);
@@ -244,12 +275,16 @@ public class PantallaTomaComanda extends javax.swing.JFrame {
         panelContenedorProductosComanda.repaint();
         actualizarTotal();
     }
-
+    /**
+     * Configuracion para la barra de busqueda
+     */
     private void configurarBarraBusqueda() {
         panelBusquedaProducto.setVista(panelProductos);
         panelBusquedaProducto.setBackground(new Color(255, 176, 217));
     }
-
+    /**
+     * Carga el banner con los datos del cliente y mesa
+     */
     private void cargarBanner() {
         banner.getLblTitulo().setText("Mesa:");
         banner.setFrmPadre(this);
@@ -258,7 +293,9 @@ public class PantallaTomaComanda extends javax.swing.JFrame {
         lblNumeroMesa.setText(comanda.getNumeroMesa());
         System.out.println(comanda.getIdCliente());
     }
-
+    /**
+     * Metodo para guardar el producto en la comanda
+     */
     private void mandarComanda() {
         for (PanelProductoComanda panelProductoComanda : panelesProductoComanda) {
             DetalleComandaDTO detalleComanda = new DetalleComandaDTO();
@@ -268,7 +305,9 @@ public class PantallaTomaComanda extends javax.swing.JFrame {
             productosComandaSeleccionados.add(detalleComanda);
         }
     }
-
+    /**
+     * Metodo para actualizar el total de la venta
+     */
     private void actualizarTotal() {
         double total = 0.0;
         for (PanelProductoComanda panel : panelesProductoComanda) {
@@ -276,7 +315,9 @@ public class PantallaTomaComanda extends javax.swing.JFrame {
         }
         lblTotal.setText(String.format("$ %.2f", total));
     }
-
+    /**
+     * Metodo para generar los detalles de la comanda 
+     */
     private void generarDetallesComanda() {
         if (panelesProductoComanda.isEmpty()) {
             JOptionPane.showMessageDialog(null, "Seleccione al menos un producto para la comanda", "", JOptionPane.INFORMATION_MESSAGE);
@@ -297,7 +338,9 @@ public class PantallaTomaComanda extends javax.swing.JFrame {
         agruparDetalles(); // agrupamos productos repetidos
         generarComanda();
     }
-
+    /**
+     * Metodo para agrupar los detalles de los diferentes productos
+     */
     private void agruparDetalles() {
         for (DetalleComandaDTO detalle : productosComandaSeleccionados) {
             DetalleComandaDTO existente = productosAgrupados.stream()
@@ -314,7 +357,9 @@ public class PantallaTomaComanda extends javax.swing.JFrame {
             }
         }
     }
-
+    /**
+     * Obtiene todos los detalles de la comanda y la guarda en la base de datos
+     */
     private void generarComanda() {
         double totalVenta = calcularTotalVenta();
 

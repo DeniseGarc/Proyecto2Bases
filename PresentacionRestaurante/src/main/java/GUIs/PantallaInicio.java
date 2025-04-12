@@ -7,7 +7,7 @@ package GUIs;
 import control.CoordinadorAplicacion;
 
 /**
- *
+ *Pantalla de inicio de la aplicacion, muestra botones para acceder a las dos vistas de la aplicacion
  * @author erika
  */
 public class PantallaInicio extends javax.swing.JFrame {
@@ -95,11 +95,16 @@ public class PantallaInicio extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-
+    /**
+     * Muestra vista de mesero(solo acceso a comandas)
+     */
     private void btnMeseroMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnMeseroMouseClicked
         coordinador.PantallaComandas(this);
     }//GEN-LAST:event_btnMeseroMouseClicked
-
+    /**
+     * Muestra vista de administrador (acceso completo a la aplicacion)
+     * @param evt 
+     */
     private void btnAdministradorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAdministradorMouseClicked
         coordinador.PantallaPrinicipal(this);
     }//GEN-LAST:event_btnAdministradorMouseClicked

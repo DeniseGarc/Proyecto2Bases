@@ -18,7 +18,7 @@ import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 
 /**
- *
+ *Pantalla para ver las comandas activas y agregar nuevas comandas
  * @author erika
  */
 public class PantallaComandas extends javax.swing.JFrame {
@@ -33,7 +33,9 @@ public class PantallaComandas extends javax.swing.JFrame {
         jPanel3.setLayout(new GridBagLayout());
         cargarComandas();
     }
-
+    /**
+     * Metodo para cargar las comandas activas 
+     */
     public void cargarComandas() {
         try {
             List<ComandaDTO> comandas = coordinador.obtenerComandasActivas();
@@ -42,7 +44,9 @@ public class PantallaComandas extends javax.swing.JFrame {
             Logger.getLogger(PantallaComandas.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
+    /**
+     * Metodo para mostrar las comandas activas en un panel con botones para controlar su estado y modificarla
+     */
     private void mostrarComandas(List<ComandaDTO> comandas) {
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(10, 10, 10, 10); // Espacio entre tarjetas
