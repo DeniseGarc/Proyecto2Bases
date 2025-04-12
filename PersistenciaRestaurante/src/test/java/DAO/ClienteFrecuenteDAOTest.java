@@ -1,74 +1,96 @@
-///*
-// * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
-// * Click nbfs://nbhost/SystemFileSystem/Templates/UnitTests/JUnit5TestClass.java to edit this template
-// */
-//package DAO;
-//
-//import entidades.ClienteFrecuente;
-//import java.util.List;
-//import org.junit.jupiter.api.AfterEach;
-//import org.junit.jupiter.api.BeforeEach;
-//import org.junit.jupiter.api.Test;
-//import static org.junit.jupiter.api.Assertions.*;
-//
-///**
-// *
-// * @author Maryr
-// */
-//public class ClienteFrecuenteDAOTest {
-//    
-//    public ClienteFrecuenteDAOTest() {
-//    }
-//    
-//    @BeforeEach
-//    public void setUp() {
-//    }
-//    
-//    @AfterEach
-//    public void tearDown() {
-//    }
-//
-//    @Test
-//    public void testGetInstanciaDAO() {
-//        System.out.println("getInstanciaDAO");
-//        ClienteFrecuenteDAO expResult = null;
-//        ClienteFrecuenteDAO result = ClienteFrecuenteDAO.getInstanciaDAO();
-//        assertEquals(expResult, result);
-//        fail("The test case is a prototype.");
-//    }
-//
-//    @Test
-//    public void testRegistrarNuevoClienteFrecuente() throws Exception {
-//        System.out.println("registrarNuevoClienteFrecuente");
-//        ClienteFrecuente clienteFrecuente = null;
-//        ClienteFrecuenteDAO instance = null;
-//        ClienteFrecuente expResult = null;
-//        ClienteFrecuente result = instance.registrarNuevoClienteFrecuente(clienteFrecuente);
-//        assertEquals(expResult, result);
-//        fail("The test case is a prototype.");
-//    }
-//
-//    @Test
-//    public void testObtenerClientesFrecuentes() throws Exception {
-//        System.out.println("obtenerClientesFrecuentes");
-//        String filtro = "";
-//        String dato = "";
-//        ClienteFrecuenteDAO instance = null;
-//        List<ClienteFrecuente> expResult = null;
-//        List<ClienteFrecuente> result = instance.obtenerClientesFrecuentes(filtro, dato);
-//        assertEquals(expResult, result);
-//        fail("The test case is a prototype.");
-//    }
-//
-//    @Test
-//    public void testObtenerClientePorId() throws Exception {
-//        System.out.println("obtenerClientePorId");
-//        Long id = null;
-//        ClienteFrecuenteDAO instance = null;
-//        ClienteFrecuente expResult = null;
-//        ClienteFrecuente result = instance.obtenerClientePorId(id);
-//        assertEquals(expResult, result);
-//        fail("The test case is a prototype.");
-//    }
-//    
-//}
+package DAO;
+
+import conexion.Conexion;
+import entidades.ClienteFrecuente;
+import exception.PersistenciaException;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
+import javax.persistence.EntityManager;
+import org.junit.jupiter.api.*;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+public class ClienteFrecuenteDAOTest {
+
+    private final ClienteFrecuenteDAO clienteFrecuenteDAO = ClienteFrecuenteDAO.getInstanciaDAO();
+    private final List<ClienteFrecuente> clientesCreados = new ArrayList<>();
+
+    @BeforeEach
+    public void setUp() {
+        EntityManager em = Conexion.crearConexion();
+        try {
+            em.getTransaction().begin();
+            ClienteFrecuente c1 = new ClienteFrecuente("Juan", Calendar.getInstance(), "1234567890", "juan@mail.com");
+            ClienteFrecuente c2 = new ClienteFrecuente("Ana", Calendar.getInstance(), "0987654321", "ana@mail.com");
+            em.persist(c1);
+            em.persist(c2);
+            em.getTransaction().commit();
+            clientesCreados.add(c1);
+            clientesCreados.add(c2);
+        } catch (Exception e) {
+            em.getTransaction().rollback();
+            fail("Error en setUp: " + e.getMessage());
+        } finally {
+            em.close();
+        }
+    }
+
+    @AfterEach
+    public void tearDown() {
+        EntityManager em = Conexion.crearConexion();
+        try {
+            em.getTransaction().begin();
+            for (ClienteFrecuente c : clientesCreados) {
+                ClienteFrecuente gestionado = em.merge(c);
+                em.remove(gestionado);
+            }
+            em.getTransaction().commit();
+            clientesCreados.clear();
+        } catch (Exception e) {
+            em.getTransaction().rollback();
+            fail("Error al limpiar datos de prueba: " + e.getMessage());
+        } finally {
+            em.close();
+        }
+    }
+
+    @Test
+    public void testRegistrarNuevoClienteFrecuente() throws PersistenciaException {
+        ClienteFrecuente cliente = new ClienteFrecuente("Carlos", Calendar.getInstance(), "1112223333", "carlos@mail.com");
+        ClienteFrecuente resultado = clienteFrecuenteDAO.registrarNuevoClienteFrecuente(cliente);
+        assertNotNull(resultado.getId());
+        clientesCreados.add(resultado);  // Añadir a la lista para limpiar después
+    }
+
+    @Test
+    public void testObtenerClientePorId() throws PersistenciaException {
+        ClienteFrecuente cliente = clientesCreados.get(0);
+        ClienteFrecuente resultado = clienteFrecuenteDAO.obtenerClientePorId(cliente.getId());
+        assertNotNull(resultado);
+        assertEquals(cliente.getId(), resultado.getId());
+    }
+
+    @Test
+    public void testObtenerClientesFrecuentesPorNombre() throws PersistenciaException {
+        List<ClienteFrecuente> resultado = clienteFrecuenteDAO.obtenerClientesFrecuentes("Nombre", "Juan");
+        assertNotNull(resultado);
+        assertFalse(resultado.isEmpty());
+        assertTrue(resultado.stream().anyMatch(c -> c.getNombre().equalsIgnoreCase("Juan")));
+    }
+
+    @Test
+    public void testObtenerClientesFrecuentesPorCorreo() throws PersistenciaException {
+        List<ClienteFrecuente> resultado = clienteFrecuenteDAO.obtenerClientesFrecuentes("Correo", "ana@mail.com");
+        assertNotNull(resultado);
+        assertFalse(resultado.isEmpty());
+        assertTrue(resultado.stream().anyMatch(c -> c.getCorreoElectronico().equalsIgnoreCase("ana@mail.com")));
+    }
+
+    @Test
+    public void testObtenerTodosLosClientesFrecuentesSinFiltro() throws PersistenciaException {
+        List<ClienteFrecuente> resultado = clienteFrecuenteDAO.obtenerClientesFrecuentes("", "");
+        assertNotNull(resultado);
+        assertTrue(resultado.size() >= 2);
+    }
+}
