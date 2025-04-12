@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
- */
 package plantillas;
 
 import DTOs.ProductoDTO;
@@ -9,17 +5,21 @@ import javax.swing.JButton;
 import javax.swing.JTextArea;
 
 /**
+ * Panel que representa un producto agregado a una comanda.
  *
  * @author Alici
  */
 public class PanelProductoComanda extends javax.swing.JPanel {
 
+    /**
+     * Producto que se carga en el panel
+     */
     private final ProductoDTO producto;
 
     /**
-     * Creates new form PanelIngredienteProducto
+     * Constructor que crea el panel e inicializa sus componentes.
      *
-     * @param producto
+     * @param producto Producto que representa este panel
      */
     public PanelProductoComanda(ProductoDTO producto) {
         this.producto = producto;
@@ -80,19 +80,38 @@ public class PanelProductoComanda extends javax.swing.JPanel {
         add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 70, 260, 80));
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Regresa el botón para eliminar
+     *
+     * @return JButton que representa el botón de eliminar en este panel
+     */
     public JButton getBtnEliminar() {
         return btnEliminar;
     }
 
+    /**
+     * Carga los datos del producto ingresado en el constructor en el panel
+     */
     private void cargarDatos() {
         lblNombreProducto.setText(producto.getNombre());
         lblPrecio.setText(String.format("$ %.2f", producto.getPrecio()));
     }
 
+    /**
+     * Método que devuelve el producto asociado al panel
+     *
+     * @return Producto asociado al panel
+     */
     public ProductoDTO getProducto() {
         return producto;
     }
 
+    /**
+     * Panel que devuelve el area de texto donde se escribe el comentario del
+     * producto.
+     *
+     * @return JTextArea que representa el area de texto del comentario
+     */
     public JTextArea getTxtAreaComentario() {
         return txtAreaComentario;
     }

@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
- */
 package PlantillaComandas;
 
 import DTOs.ComandaDTO;
@@ -12,24 +8,34 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 /**
+ * Panel que representa las comandas activas.
  *
  * @author erika
  */
 public class PanelComandasActivas extends javax.swing.JPanel {
 
-    /**
-     * Creates new form PanelComandasActivas
-     */
     private ComandaDTO comanda;
     private final CoordinadorAplicacion coordinador = new CoordinadorAplicacion();
     private PantallaComandas frame;
 
+    /**
+     * Constructor que inicializa los componentes del panel y guarda el frame al
+     * que pertenece el panel y los datos de la comanda.
+     *
+     * @param frame Frame en el que se añadió el panel.
+     * @param comanda Comanda que representa este panel.
+     */
     public PanelComandasActivas(PantallaComandas frame, ComandaDTO comanda) {
         this.comanda = comanda;
         this.frame = frame;
         initComponents();
     }
 
+    /**
+     * Devuelve el label donde se escribe el número de la mesa de la comanda.
+     *
+     * @return JLabel con el número de la mesa de la comanda
+     */
     public JLabel getNumero() {
         return txtNumero;
 
@@ -152,7 +158,23 @@ public class PanelComandasActivas extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnCanceladaActionPerformed
 
+
     private void btnEntregadaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEntregadaMouseClicked
+        marcarComoEntregada();
+    }//GEN-LAST:event_btnEntregadaMouseClicked
+
+    private void btnCanceladaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCanceladaMouseClicked
+        marcarComoCancelada();
+    }//GEN-LAST:event_btnCanceladaMouseClicked
+
+    private void btnModificarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnModificarMouseClicked
+        coordinador.pantallaModificarComanda(frame, comanda);
+    }//GEN-LAST:event_btnModificarMouseClicked
+
+    /**
+     * Método que marca como entregada la comanda de este panel
+     */
+    private void marcarComoEntregada() {
         Estado nuevoEstado = Estado.ENTREGADA;  // Definir el nuevo estado
         try {
             coordinador.actualizarEstadoMesa(Long.valueOf(comanda.getNumeroMesa()), true);
@@ -162,9 +184,12 @@ public class PanelComandasActivas extends javax.swing.JPanel {
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Error al actualizar el estado: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
-    }//GEN-LAST:event_btnEntregadaMouseClicked
+    }
 
-    private void btnCanceladaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCanceladaMouseClicked
+    /**
+     * Método que marca como cancelada la comanda de este panel
+     */
+    private void marcarComoCancelada() {
         Estado nuevoEstado = Estado.CANCELADA;
         try {
             coordinador.actualizarEstadoMesa(Long.valueOf(comanda.getNumeroMesa()), true);
@@ -174,12 +199,7 @@ public class PanelComandasActivas extends javax.swing.JPanel {
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Error al actualizar el estado: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
-    }//GEN-LAST:event_btnCanceladaMouseClicked
-
-    private void btnModificarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnModificarMouseClicked
-        coordinador.pantallaModificarComanda(frame, comanda);
-    }//GEN-LAST:event_btnModificarMouseClicked
-
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancelada;

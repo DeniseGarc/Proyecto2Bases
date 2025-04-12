@@ -36,6 +36,7 @@ moduloBusquedaClientes\PanelBusquedaClientes.class
 GUIs\RegistrarClienteNuevo.class
 GUIs\PantallaIngredientes$2.class
 GUIs\MenuPrincipal$2.class
+GUIs\ReporteClienteVisitas$2.class
 GUIs\ReporteComandas.class
 GUIs\EliminarIngrediente.class
 GUIs\PantallaInicio$3.class
@@ -51,6 +52,7 @@ GUIs\ComandaAgregarCliente.class
 GUIs\PantallaAdministrarProducto$3.class
 PlantillaIngredientes\PanelIngredientes.class
 GUIs\MenuPrincipal$3.class
+GUIs\ReporteCliente$2.class
 GUIs\EliminarIngrediente$2.class
 GUIs\PantallaInicio$2.class
 GUIs\PantallaProductos$1.class
