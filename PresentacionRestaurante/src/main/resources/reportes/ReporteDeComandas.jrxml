@@ -71,7 +71,7 @@
 	<background splitType="Stretch"/>
 	<title height="131" splitType="Stretch">
 		<element kind="image" uuid="b85dae71-c849-4f8b-961a-f3218b080260" x="0" y="0" width="80" height="76">
-			<expression><![CDATA["C:/Users/Alici/Downloads/logoHelloKitty.png"]]></expression>
+			<expression><![CDATA[getClass().getResourceAsStream("/imgs/logoHelloKitty.png")]]></expression>
 		</element>
 		<element kind="staticText" uuid="e0fe80db-7427-4bb3-9737-d041f4f35346" x="90" y="0" width="379" height="25" forecolor="#C71E7E" fontName="SansSerif" fontSize="18.0" bold="true">
 			<text><![CDATA[Reporte de Comandas - Hello Kitty Cafe]]></text>
