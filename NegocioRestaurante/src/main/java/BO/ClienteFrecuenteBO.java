@@ -30,7 +30,6 @@ public class ClienteFrecuenteBO implements IClienteFrecuenteBO {
 
     private IClienteFrecuenteDAO clienteFrecuenteDAO;
     private IComandaBO comandaBO = ManejadorBO.crearComandaBo();
-    
 
     public ClienteFrecuenteBO(IClienteFrecuenteDAO clienteFrecuenteDAO) {
         this.clienteFrecuenteDAO = clienteFrecuenteDAO;
@@ -79,7 +78,7 @@ public class ClienteFrecuenteBO implements IClienteFrecuenteBO {
                 }
             } else {
                 clientes = clienteFrecuenteDAO.obtenerClientesFrecuentes(filtro, dato);
-                desencriptarTelefonos(clientes); 
+                desencriptarTelefonos(clientes);
                 filtrados = ClienteMapper.toDTOList(clientes);
             }
             return filtrados;
@@ -103,12 +102,13 @@ public class ClienteFrecuenteBO implements IClienteFrecuenteBO {
             throw new NegocioException("Error al desencriptar los teléfonos: ", e);
         }
     }
-    
+
     /**
      * Desencripta un número de celular dado
+     *
      * @param telefono el cual se quiere desencriptar
      * @return el telefono desencriptado
-     * @throws NegocioException 
+     * @throws NegocioException
      */
     @Override
     public String desencriptarTelefono(String telefono) throws NegocioException {
@@ -119,6 +119,13 @@ public class ClienteFrecuenteBO implements IClienteFrecuenteBO {
         }
     }
 
+    /**
+     * Obtiene un cliente que esté asociado al id
+     *
+     * @param id por el cual se buscará el cliente
+     * @return el cliente asociado al id
+     * @throws NegocioException
+     */
     @Override
     public ClienteFrecuenteDTO obtenerClientePorId(Long id) throws NegocioException {
         try {
@@ -127,7 +134,7 @@ public class ClienteFrecuenteBO implements IClienteFrecuenteBO {
             throw new NegocioException("No se pudo recuperar el cliente: ", e);
         }
     }
-    
+
     public List<ReporteClienteDTO> obtenerClientesPorVisitas(int numVisitas) throws NegocioException {
         try {
             List<ClienteFrecuenteDTO> clientes = obtenerClientesFrecuentes("", "");

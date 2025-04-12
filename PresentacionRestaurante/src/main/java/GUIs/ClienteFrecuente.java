@@ -21,6 +21,7 @@ public class ClienteFrecuente extends javax.swing.JFrame {
      */
     public ClienteFrecuente() {
         initComponents();
+        //llama al metodo cargar clientes del panel de busqueda para que la tabla tenga las filas llenas
         panelBuscadorClientes.cargarClientes();
         setLocationRelativeTo(null);
     }

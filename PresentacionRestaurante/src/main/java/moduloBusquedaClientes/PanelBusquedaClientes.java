@@ -144,8 +144,12 @@ public class PanelBusquedaClientes extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Método para que al cargar la pantalla la tabla ya tenga a los clientes registrados
+     */
     public void cargarClientes() {
         try {
+            // se le ponen comillas como parametro para que obtenga todos los clientes
             List<ClienteFrecuenteDTO> clientes = coordinador.obtenerClientesFrecuentes("", "");
             cargarClientesEnTabla(clientes);
         } catch (CoordinadorException ex) {
@@ -153,9 +157,16 @@ public class PanelBusquedaClientes extends javax.swing.JPanel {
         }
     }
 
+    /**
+     * Método para cargar los clientes obtenidos a la tabla
+     * @param clientes 
+     */
     private void cargarClientesEnTabla(List<ClienteFrecuenteDTO> clientes) {
+        //Se declara la lista en el inicio para poder recuperar el cliente que se seleccione en la tabla
         this.listaClientes = clientes;
+        //Se definen los nombres de las columnas
         String[] columnas = {"Nombre", "Número de visitas", "Puntos de fidelidad"};
+        //Se cargan los clientes a la tabla con sus atributos en las columnas correspondientes
         Object[][] datos = new Object[clientes.size()][4];
         for (int i = 0; i < clientes.size(); i++) {
             ClienteFrecuenteDTO cliente = clientes.get(i);
@@ -163,27 +174,39 @@ public class PanelBusquedaClientes extends javax.swing.JPanel {
             datos[i][1] = cliente.getCantidadVisitas();
             datos[i][2] = cliente.getPuntosFidelidad();
         }
+        //Se define el modelo con los clientes cargados
         tablaClientes.setModel(new javax.swing.table.DefaultTableModel(datos, columnas));
     }
 
+    //Método para usarse cada que haya un cambio en el text field del buscador
     private void realizarBusqueda() {
         try {
             String texto = buscador.getText().trim();
             String tipo = cbBoxTipoBusqueda.getSelectedItem().toString();
+            //si no hay nada en el buscador se cargan todos los clientes
             if (texto.isEmpty()) {
                 cargarClientes();
                 return;
             }
+            //se llama al metodo de obtener clientes, el que regresa una lista que refleje los filtros
             List<ClienteFrecuenteDTO> clientesFiltrados = coordinador.obtenerClientesFrecuentes(tipo, texto);
+            //Se cargan a la tabla
             cargarClientesEnTabla(clientesFiltrados);
         } catch (CoordinadorException e) {
             JOptionPane.showMessageDialog(this, "Error al realizar la búsqueda: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
+    /**
+     * Método para recuperar el cliente seleccionado de la tabla
+     * @return 
+     */
     public ClienteFrecuenteDTO getCliente() {
+        //se obtiene el indice del cliente seleccionado en la lista
         int fila = tablaClientes.getSelectedRow();
+        //se asegura que haya una fila seleccionada
         if (fila != -1) {
+            //saca el cliente de la lista declarada al inicio
             return listaClientes.get(fila);
         }
         return null;

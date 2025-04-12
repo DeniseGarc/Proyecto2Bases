@@ -193,11 +193,15 @@ public class RegistrarClienteNuevo extends javax.swing.JFrame {
 
     private void btnRegistrarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRegistrarMouseClicked
         try {
+            /**
+             * se crea el objeto del cliente y se obtienen los datos que introdujo el usuario
+             */
             ClienteFrecuenteDTO cliente = new ClienteFrecuenteDTO();
             cliente.setNombre(txtNombre.getText().trim());
             cliente.setFechaRegistro(Calendar.getInstance());
             cliente.setTelefono(txtTelefono.getText().trim());
             cliente.setCorreoElectronico(txtCorreo.getText().trim());
+            //llama al metodo del coordinador para registrar el cliente en la base de datos
             coordinador.registrarNuevoClienteFrecuente(cliente);
             JOptionPane.showMessageDialog(this, "Cliente registrado exitosamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
             coordinador.PantallaClienteFrecuente(this);
