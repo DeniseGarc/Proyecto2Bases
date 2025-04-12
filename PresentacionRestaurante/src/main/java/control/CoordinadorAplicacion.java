@@ -935,8 +935,6 @@ public class CoordinadorAplicacion {
                 .mapToDouble(DetalleReporteComandaDTO::getTotalVenta)
                 // Lo va sumando
                 .sum();
-
     }
-    
-    
+
 }

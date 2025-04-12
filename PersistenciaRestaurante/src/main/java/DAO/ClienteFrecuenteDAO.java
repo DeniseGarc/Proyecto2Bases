@@ -9,6 +9,7 @@ import entidades.ClienteFrecuente;
 import entidades.Comanda;
 import exception.PersistenciaException;
 import interfaces.IClienteFrecuenteDAO;
+import java.util.Calendar;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
@@ -97,9 +98,10 @@ public class ClienteFrecuenteDAO implements IClienteFrecuenteDAO {
 
     /**
      * Recupera al cliente de la base de datos por medio de su id
+     *
      * @param id del cliente a recuperar
      * @return el cliente asociado al id
-     * @throws PersistenciaException 
+     * @throws PersistenciaException
      */
     @Override
     public ClienteFrecuente obtenerClientePorId(Long id) throws PersistenciaException {
@@ -115,7 +117,5 @@ public class ClienteFrecuenteDAO implements IClienteFrecuenteDAO {
             em.close();
         }
     }
-    
-    
 
 }

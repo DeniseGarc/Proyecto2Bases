@@ -4,6 +4,7 @@
  */
 package BO;
 
+import DTOs.ClienteFrecuenteDTO;
 import DTOs.ComandaDTO;
 import DTOs.DetalleComandaDTO;
 import DTOs.DetalleReporteComandaDTO;
@@ -27,10 +28,13 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import mappers.ClienteMapper;
 import mappers.ComandaMapper;
 
 /**
- *Clase que implementa la lógica de negocio para operaciones relacionadas con comandas
+ * Clase que implementa la lógica de negocio para operaciones relacionadas con
+ * comandas
+ *
  * @author erika
  */
 public class ComandaBO implements IComandaBO {
@@ -39,12 +43,17 @@ public class ComandaBO implements IComandaBO {
     private IProductoDAO productoDAO;
     private IMesaDAO mesaDAO;
     private IClienteFrecuenteDAO clienteFrecuenteDAO;
+
     /**
      * Constructor que inicializa las dependencias DAO necesarias
-     * @param comandaDAO Implementación de IComandaDAO para acceso a datos de Comanda
-     * @param productoDAO Implementación de IProductoDAO para acceso a datos de Producto
+     *
+     * @param comandaDAO Implementación de IComandaDAO para acceso a datos de
+     * Comanda
+     * @param productoDAO Implementación de IProductoDAO para acceso a datos de
+     * Producto
      * @param mesaDAO Implementación de IMesaDAO para acceso a datos de Mesa
-     * @param clienteFrecuenteDAO Implementación de IClienteFrecuenteDAO para acceso a datos de Cliente Frecuente
+     * @param clienteFrecuenteDAO Implementación de IClienteFrecuenteDAO para
+     * acceso a datos de Cliente Frecuente
      */
     public ComandaBO(IComandaDAO comandaDAO, IProductoDAO productoDAO, IMesaDAO mesaDAO, IClienteFrecuenteDAO clienteFrecuenteDAO) {
         this.comandaDAO = comandaDAO;
@@ -85,8 +94,10 @@ public class ComandaBO implements IComandaBO {
             throw new NegocioException("Ocurrió un error al obtener las comandas Activas");
         }
     }
+
     /**
      * Metodo para actualizar una comanda
+     *
      * @param comandaActualizar Comanda a actualizar
      * @return True si se actualizo la comanda
      * @throws NegocioException Si ocurre algun error al actualizar
@@ -126,8 +137,10 @@ public class ComandaBO implements IComandaBO {
             throw new NegocioException("Ocurrió un error al actualizar la comanda");
         }
     }
+
     /**
-     * Metodo para agregar una comanda nueva 
+     * Metodo para agregar una comanda nueva
+     *
      * @param comandaNueva Comanda a agregar
      * @return True si se agrego la comanda
      * @throws NegocioException Si ocurre algun error al agregar la comanda
@@ -222,6 +235,22 @@ public class ComandaBO implements IComandaBO {
     private String generarFolio(DetalleReporteComandaDTO detalleReporte) {
         String fecha = new SimpleDateFormat("yyyyMMdd").format(detalleReporte.getFechaHora().getTime());
         return "OB-" + fecha + "-" + String.format("%03d", Long.valueOf(detalleReporte.getFolio()));
+    }
+
+    /**
+     * Obtiene la fecha de la ultima comanda hecha por el cliente dado
+     *
+     * @param clienteF cliente del cual se requiere la fecha
+     * @return la fecha de la ultima comanda del cliente
+     * @throws NegocioException
+     */
+    @Override
+    public Calendar obtenerFechaUltimaComandaCliente(ClienteFrecuenteDTO clienteF) throws NegocioException {
+        try {
+            return comandaDAO.obtenerFechaUltimaComandaCliente(ClienteMapper.toEntity(clienteF));
+        } catch (PersistenciaException e) {
+            throw new NegocioException("Hubo un error al recuperar la fecha de la ultima comanda del cliente: ", e);
+        }
     }
 
 }

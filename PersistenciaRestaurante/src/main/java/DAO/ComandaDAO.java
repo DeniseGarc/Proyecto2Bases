@@ -26,8 +26,9 @@ import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 
 /**
- *Clase que implementa las operaciones de acceso a datos para la entidad
+ * Clase que implementa las operaciones de acceso a datos para la entidad
  * Comanda, utilizando JPA para persistencia.
+ *
  * @author Maryr
  */
 public class ComandaDAO implements IComandaDAO {
@@ -71,6 +72,28 @@ public class ComandaDAO implements IComandaDAO {
                     .getResultList();
         } catch (Exception e) {
             throw new PersistenciaException("Error al consultar comandas por cliente: ", e);
+        } finally {
+            em.close();
+        }
+    }
+
+    /**
+     * Obtiene la fecha de la ultima comanda hecha por el cliente dado
+     *
+     * @param clienteF cliente del cual se requiere la fecha
+     * @return la fecha de la ultima comanda del cliente
+     * @throws PersistenciaException
+     */
+    @Override
+    public Calendar obtenerFechaUltimaComandaCliente(ClienteFrecuente clienteF) throws PersistenciaException {
+        EntityManager em = Conexion.crearConexion();
+        try {
+            return em.createQuery("SELECT c FROM Comanda c WHERE c.cliente = :clienteF ORDER BY c.fechaHora DESC", Calendar.class)
+                    .setParameter("clienteF", clienteF)
+                    .setMaxResults(1)
+                    .getSingleResult();
+        } catch (Exception e) {
+            throw new PersistenciaException("Hubo un error al obtener la fecha de la ultima comanda del cliente: ", e);
         } finally {
             em.close();
         }
@@ -206,12 +229,15 @@ public class ComandaDAO implements IComandaDAO {
             em.close();
         }
     }
+
     /**
-     * Metodo privado para descontar el stock de los ingredientes cuando se marca la comanda como entregada
+     * Metodo privado para descontar el stock de los ingredientes cuando se
+     * marca la comanda como entregada
+     *
      * @param comanda Comanda que se actualiza
-     * @param em 
+     * @param em
      */
-        private void descontarStock(Comanda comanda, EntityManager em) {
+    private void descontarStock(Comanda comanda, EntityManager em) {
         for (DetalleComanda detalle : comanda.getDetallesComanda()) {
             Producto producto = detalle.getProducto();
             int cantidadComanda = detalle.getCantidad();
@@ -231,9 +257,6 @@ public class ComandaDAO implements IComandaDAO {
             }
         }
     }
-
-
-
 
     @Override
     public List<DetalleReporteComandaDTO> generarReporteComandas(Periodo periodo) throws PersistenciaException {
