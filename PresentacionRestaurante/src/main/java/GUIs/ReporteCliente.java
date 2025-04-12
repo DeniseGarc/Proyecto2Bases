@@ -26,11 +26,13 @@ import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import net.sf.jasperreports.view.JasperViewer;
 
 /**
- *
+ * Pantalla para crear un reporte sobre clientes frecuentes
  * @author Maryr
  */
 public class ReporteCliente extends javax.swing.JFrame {
-
+    /**
+     * Instancia unica de la clase control para aceder a los metodos BO
+     */
     private CoordinadorAplicacion control = new CoordinadorAplicacion();
 
     /**

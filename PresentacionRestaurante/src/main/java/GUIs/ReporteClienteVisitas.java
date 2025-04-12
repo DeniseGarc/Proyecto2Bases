@@ -28,7 +28,7 @@ import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import net.sf.jasperreports.view.JasperViewer;
 
 /**
- *
+ * Pantalla para generar un reporte sobre las visitas del cliente frecuente
  * @author Maryr
  */
 public class ReporteClienteVisitas extends javax.swing.JFrame {
@@ -62,7 +62,6 @@ public class ReporteClienteVisitas extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMaximumSize(new java.awt.Dimension(1070, 700));
         setMinimumSize(new java.awt.Dimension(1070, 700));
-        setPreferredSize(new java.awt.Dimension(1070, 700));
         setResizable(false);
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
